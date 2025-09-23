@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Informational                                T. Fossati
-Expires: 20 March 2026                                            Linaro
+Expires: 27 March 2026                                            Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 20 March 2026                                            Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                       16 September 2025
+                                                       23 September 2025
 
 
          Concise Selector for Endorsements and Reference Values
@@ -65,7 +65,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 March 2026.
+   This Internet-Draft will expire on 27 March 2026.
 
 Copyright Notice
 
@@ -1100,7 +1100,7 @@ Table of Contents
 6.1.1.1.1.  Version
 
    The version field is denoted by the label "version" in JSON documents
-   and by the codepoint 1 in CBOR documents.  The is a Semantic
+   and by the codepoint 1 in CBOR documents.  It is a Semantic
    Versioning (semver) string, which denotes the version and patch level
    of the service that is providing the API endpoints described by the
    document.  The semver string MUST conform to the ABNF defined in
@@ -1170,34 +1170,34 @@ Table of Contents
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
    {
-       "version": "1.2.3-beta",
-        "capabilities": [
-         {
-           "media-type": "application/coserv+cose; profile=\"tag:vendor\
-                                         .com,2025:cc_platform#1.0.0\"",
-           "artifact-support": [
-             "source",
-             "collected"
-           ]
-         }
-       ],
-       "api-endpoints": [
-         {
-           "name": "CoSERVRequestResponse",
-           "path": "endorsement-distribution/v1/coserv"
-         }
-       ],
-       "result-verification-key": [
-         {
-           "alg": "ES256",
-           "crv": "P-256",
-           "kty": "EC",
-           "x": "usWxHK2PmfnHKwXPS54m0kTcGJ90UiglWiGahtagnv8",
-           "y": "IBOL-C3BttVivg-lSreASjpkttcsz-1rb7btKLv8EX4",
-           "kid": "key1"
-         }
-       ]
-     }
+     "version": "1.2.3-beta",
+     "capabilities": [
+       {
+         "media-type": "application/coserv+cose; profile=\"tag:vendor.\
+                                          com,2025:cc_platform#1.0.0\"",
+         "artifact-support": [
+           "source",
+           "collected"
+         ]
+       }
+     ],
+     "api-endpoints": [
+       {
+         "name": "CoSERVRequestResponse",
+         "path": "endorsement-distribution/v1/coserv"
+       }
+     ],
+     "result-verification-key": [
+       {
+         "alg": "ES256",
+         "crv": "P-256",
+         "kty": "EC",
+         "x": "usWxHK2PmfnHKwXPS54m0kTcGJ90UiglWiGahtagnv8",
+         "y": "IBOL-C3BttVivg-lSreASjpkttcsz-1rb7btKLv8EX4",
+         "kid": "key1"
+       }
+     ]
+   }
 
    Example HTTP request for retrieving the discovery document in CBOR
    format:
@@ -2615,33 +2615,79 @@ Appendix B.  OpenAPI Schema
    The OpenAPI schema for the request/response HTTP API described in
    Section 6.1 is provided below.
 
-   openapi: '3.0.0'
+openapi: '3.0.0'
 
-   info:
-     title: RR HTTP API
-     description: Request-Response API over HTTP
-     version: '1.0.0alpha'
-   paths:
-     /coserv/{query}:
-       get:
-         summary: Query the CoSERV endpoint.
-         parameters:
-           - in: path
-             name: query
-             schema:
-               type: string
-               format: base64url
-             required: true
-             description: base64url-encoded CoSERV query
-         responses:
-           '200':
-             description: >
-               A CoSERV result set has been successfully computed.
-             content:
-               application/coserv+cbor:
-                 schema:
-                   type: string
-                   format: binary
+info:
+  title: CoSERV HTTP API Binding
+  description: CoSERV HTTP API Binding, including request-response and discovery
+  version: '1.0.0alpha'
+paths:
+  /coserv/{query}:
+    get:
+      summary: Query the CoSERV endpoint.
+      parameters:
+        - in: path
+          name: query
+          schema:
+            type: string
+            format: base64url
+          required: true
+          description: base64url-encoded CoSERV query
+      responses:
+        '200':
+          description: >
+            A CoSERV result set has been successfully computed.
+          content:
+            application/coserv+cose:
+              schema:
+                type: string
+                format: binary
+                description: >
+                  A CoSERV result set enveloped in a COSE Sign1 object.
+        '400':
+          description: >
+            The request was malformed; e.g., the query was not valid base64url,
+            or the CoSERV data item could not be successfully parsed.
+          content:
+            application/concise-problem-details+cbor:
+              schema:
+                type: string
+                format: binary
+                description: >
+                  A CBOR-encoded problem details data item.
+        '406':
+          description: >
+            The server cannot produce a response matching the list of acceptable
+            values defined in the request's 'Accept' header field.  In particular,
+            the client may have specified a CoSERV profile that is not understood or
+            serviceable by the server.
+          content:
+            application/concise-problem-details+cbor:
+              schema:
+                type: string
+                format: binary
+                description: >
+                  A CBOR-encoded problem details data item.
+  /.well-known/coserv-configuration:
+    get:
+      summary: Retrieve the CoSERV configuration document.
+      responses:
+        '200':
+          description: >
+            The CoSERV configuration document has been successfully retrieved.
+          content:
+            application/coserv-discovery+json:
+              schema:
+                type: string
+                format: binary
+                description: >
+                  A JSON-encoded CoSERV configuration document.
+            application/coserv-discovery+cbor:
+              schema:
+                type: string
+                format: binary
+                description: >
+                  A CBOR-encoded CoSERV configuration document.
 
 Acknowledgments
 
