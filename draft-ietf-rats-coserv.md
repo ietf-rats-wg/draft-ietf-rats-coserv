@@ -21,8 +21,8 @@ venue:
   type: "Working Group"
   mail: "rats@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/rats/"
-  github: "rats-endorsements-distribution/draft-howard-rats-coserv"
-  latest: "https://rats-endorsements-distribution.github.io/draft-howard-rats-coserv/draft-howard-rats-coserv.html"
+  github: "ietf-rats-wg/draft-ietf-rats-coserv"
+  latest: "https://ietf-rats-wg.github.io/draft-ietf-rats-coserv/draft-ietf-rats-coserv.html"
 
 author:
 - ins: P. Howard
