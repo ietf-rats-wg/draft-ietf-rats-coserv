@@ -2,22 +2,21 @@
 
 # Concise Selector for Endorsements and Reference Values
 
-This is the working area for the individual Internet-Draft, "Concise Selector for Endorsements and Reference Values".
+This is the working area for the IETF [RATS Working Group](https://datatracker.ietf.org/group/rats/documents/) Internet-Draft, "Concise Selector for Endorsements and Reference Values".
 
-* [Editor's Copy](https://rats-endorsements-distribution.github.io/draft-howard-rats-coserv/#go.draft-howard-rats-coserv.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-howard-rats-coserv)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-howard-rats-coserv)
-* [Compare Editor's Copy to Individual Draft](https://rats-endorsements-distribution.github.io/draft-howard-rats-coserv/#go.draft-howard-rats-coserv.diff)
+* [Editor's Copy](https://ietf-rats-wg.github.io/draft-ietf-rats-coserv/#go.draft-ietf-rats-coserv.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-rats-coserv)
+* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-rats-coserv)
+* [Compare Editor's Copy to Working Group Draft](https://ietf-rats-wg.github.io/draft-ietf-rats-coserv/#go.draft-ietf-rats-coserv.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/rats-endorsements-distribution/draft-howard-rats-coserv/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/blob/main/CONTRIBUTING.md).
 
-Contributions can be made by creating pull requests.
-The GitHub interface supports creating pull requests using the Edit (✏) button.
-
+The contributing file also has tips on how to make contributions, if you
+don't already know how to do that.
 
 ## Command Line Usage
 
