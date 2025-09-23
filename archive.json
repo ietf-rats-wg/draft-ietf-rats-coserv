@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-18T00:41:31.714541+00:00",
+  "timestamp": "2025-09-23T00:42:31.718616+00:00",
   "repo": "rats-endorsements-distribution/draft-howard-rats-coserv",
   "labels": [
     {
@@ -3552,7 +3552,7 @@
       "labels": [],
       "body": "Ensure that the OpenAPI spec reflects the API described in the draft.\r\n\r\nFix #73 ",
       "createdAt": "2025-09-16T12:28:54Z",
-      "updatedAt": "2025-09-16T20:30:51Z",
+      "updatedAt": "2025-09-22T23:08:51Z",
       "baseRepository": "rats-endorsements-distribution/draft-howard-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "5b156b3002bfe6aee063f63a895f06e37027e0dd",
@@ -3577,6 +3577,13 @@
           "body": "> Why try to re-define error codes that are already defined in https://www.rfc-editor.org/rfc/rfc9110? Could this doc simply point to the existing definition of the codes in the RFC?\r\n\r\nHi, @gmandyam - the document is not defining the HTTP status codes themselves. Rather it is enumerating what status codes are possible within the semantics of the API. The descriptions are not \"pure\" HTTP descriptions (which I agree would not belong here), but they describe how the status code should be interpreted for the CoSERV API specifically.",
           "createdAt": "2025-09-16T20:30:51Z",
           "updatedAt": "2025-09-16T20:30:51Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi @gmandyam - just checking, have we resolved the review issue here? Are we good to merge?",
+          "createdAt": "2025-09-22T08:29:08Z",
+          "updatedAt": "2025-09-22T08:29:08Z"
         }
       ],
       "reviews": [
@@ -3591,6 +3598,19 @@
           "body": "Looks good. Many thanks.",
           "createdAt": "2025-09-16T14:41:55Z",
           "updatedAt": "2025-09-16T14:41:55Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M7CCvqY",
+          "commit": {
+            "abbreviatedOid": "943ba64"
+          },
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-22T23:08:51Z",
+          "updatedAt": "2025-09-22T23:08:51Z",
           "comments": []
         }
       ]
