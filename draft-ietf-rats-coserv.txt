@@ -36,10 +36,10 @@ About This Document
 
    This note is to be removed before publishing as an RFC.
 
-   The latest revision of this draft can be found at https://rats-
-   endorsements-distribution.github.io/draft-howard-rats-coserv/draft-
-   howard-rats-coserv.html.  Status information for this document may be
-   found at https://datatracker.ietf.org/doc/draft-ietf-rats-coserv/.
+   The latest revision of this draft can be found at https://ietf-rats-
+   wg.github.io/draft-ietf-rats-coserv/draft-ietf-rats-coserv.html.
+   Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-ietf-rats-coserv/.
 
    Discussion of this document takes place on the Remote ATtestation
    ProcedureS Working Group mailing list (mailto:rats@ietf.org), which
@@ -47,8 +47,7 @@ About This Document
    Subscribe at https://www.ietf.org/mailman/listinfo/rats/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/rats-endorsements-distribution/draft-howard-rats-
-   coserv.
+   https://github.com/ietf-rats-wg/draft-ietf-rats-coserv.
 
 Status of This Memo
 
