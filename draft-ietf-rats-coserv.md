@@ -3,7 +3,7 @@ title: "Concise Selector for Endorsements and Reference Values"
 abbrev: "CoSERV"
 category: info
 
-docname: draft-howard-rats-coserv-latest
+docname: draft-ietf-rats-coserv-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
