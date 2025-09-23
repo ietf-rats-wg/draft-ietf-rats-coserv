@@ -1,3 +1,4 @@
+
 .tags
 *.html
 *.pdf
@@ -17,12 +18,11 @@
 /node_modules/
 /versioned/
 archive.json
-draft-ietf-rats-coserv.xml
-Gemfile.lock
-package-lock.json
-report.xml
-!requirements.txt
-
+cddl/cmw-autogen.cddl
+cddl/comid-autogen.cddl
+cddl/coserv-autogen.cddl
+cddl/discovery-autogen.cddl
+cddl/examples/discovery-single-capability.cbor
 cddl/examples/rv-class-simple-results-source-artifacts.cbor
 cddl/examples/rv-class-simple-results.cbor
 cddl/examples/rv-class-simple.cbor
@@ -47,8 +47,8 @@ cddl/examples/signed-rv-results.diag
 cddl/jwk-autogen.cddl
 cddl/signed-coserv-autogen.cddl
 cddl/signed-coserv-headers.cddl
-cddl/cmw-autogen.cddl
-cddl/comid-autogen.cddl
-cddl/coserv-autogen.cddl
-cddl/discovery-autogen.cddl
-cddl/examples/discovery-single-capability.cbor
+draft-ietf-rats-coserv.xml
+Gemfile.lock
+package-lock.json
+report.xml
+!requirements.txt
