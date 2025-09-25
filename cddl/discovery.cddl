@@ -6,7 +6,7 @@
 coserv-well-known-info = {
   version-label => version,
   capabilities-label => [ + capability ],
-  api-endpoints-label => [ + endpoint ],
+  api-endpoints-label => { + tstr => tstr },
   result-verification-key-label => eat.JC<jwk.JWK_Set, cose.COSE_KeySet>
 }
 
@@ -27,11 +27,3 @@ artifact-support-label = eat.JC<"artifact-support", 2>
 
 non-empty-array<M> = (M) .and ([ + any ])
 artifact-support = non-empty-array<[ ? "source", ? "collected" ]>
-
-endpoint = {
-  name-label => tstr,
-  path-label => tstr
-}
-
-name-label = eat.JC<"name", 1>
-path-label = eat.JC<"path", 2>

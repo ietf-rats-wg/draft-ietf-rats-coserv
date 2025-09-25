@@ -566,7 +566,7 @@ This pairing caters for situations where the service implementation might suppor
 
 The API endpoints field is denoted by the label `"api-endpoints"` in JSON documents and by the codepoint `3` in CBOR documents.
 This field allows clients to derive the correct URL for making HTTP API calls.
-The field is conceptually a map whose keys are the symbolic names of the APIs, and whose values are the URL path for the API endpoint.
+The field is a map whose keys are the symbolic names of the APIs, and whose values are the URL path for the API endpoint.
 The symbolic name `CoSERVRequestResponse` is defined for services that offer the transactional API described in {{secrrapiquery}}.
 Service implementations that offer this API MUST include an entry with this name in the endpoints map field.
 
@@ -576,6 +576,13 @@ The result verification key is denoted by the label `"result-verification-key"` 
 This field provides one or more public keys that can be used for the cryptographic verification of CoSERV query results that are returned by the service implementation.
 In JSON-formatted discovery documents, each key is a JSON Web Key (JWK) as defined in {{RFC7517}}.
 In CBOR-formatted discovery documents, each key is a COSE Key as defined in {{-cose}}.
+
+#### Discovery Document CBOR Encoding
+
+When the discovery document is encoded as CBOR, it is exempt from the encoding rules specified in {{secencoding}}.
+These encoding rules are designed to ensure that CoSERV queries can be used as canonical and stable identifiers.
+The discovery document is an independent structure, and not part of the CoSERV data model itself.
+Therefore, these encoding rules do not apply.
 
 #### Discovery Document Examples
 

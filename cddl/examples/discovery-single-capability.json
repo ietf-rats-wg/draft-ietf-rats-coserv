@@ -9,12 +9,9 @@
       ]
     }
   ],
-  "api-endpoints": [
-    {
-      "name": "CoSERVRequestResponse",
-      "path": "endorsement-distribution/v1/coserv"
-    }
-  ],
+  "api-endpoints": {
+    "CoSERVRequestResponse": "endorsement-distribution/v1/coserv"
+  },
   "result-verification-key": [
     {
       "alg": "ES256",

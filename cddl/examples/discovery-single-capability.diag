@@ -9,12 +9,9 @@
       ]
     }
   ],
-  / api-endpoints / 3: [
-    {
-      / name / 1: "CoSERVRequestResponse",
-      / path / 2: "endorsement-distribution/v1/coserv"
-    }
-  ],
+  / api-endpoints / 3: {
+    "CoSERVRequestResponse": "endorsement-distribution/v1/coserv"
+  },
   / result-verification-key / 4: [
     {
       / kty / 1: 2,
