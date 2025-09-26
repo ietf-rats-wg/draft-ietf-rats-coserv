@@ -10,7 +10,7 @@
     }
   ],
   "api-endpoints": {
-    "CoSERVRequestResponse": "endorsement-distribution/v1/coserv/{query}"
+    "CoSERVRequestResponse": "/endorsement-distribution/v1/coserv/{query}"
   },
   "result-verification-key": [
     {
