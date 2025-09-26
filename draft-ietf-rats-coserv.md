@@ -569,7 +569,7 @@ This field allows clients to derive the correct URL for making HTTP API calls.
 The field is a map whose keys are the symbolic names of the APIs, and whose values are the URL path for the API endpoint.
 
 The symbolic name `CoSERVRequestResponse` is defined for services that offer the transactional API described in {{secrrapiquery}}.
-Service implementations that offer this API MUST include an entry with this name in the endpoints map field, and the corresponding endpoint URL path MUST end with `/{query}`.
+Service implementations that offer this API MUST include a key with this name in the endpoints map field, and the corresponding endpoint URL path MUST end with `/{query}`.
 This allows the consumer to form a valid CoSERV query URI using variable expansion as per {{!RFC6570}}, replacing the `{query}` variable with the Base64Url-encoded CoSERV query object.
 There MUST NOT be any other variables that require substitution.
 
