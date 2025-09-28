@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-25T00:43:09.315334+00:00",
+  "timestamp": "2025-09-28T00:48:55.969822+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -3614,6 +3614,99 @@
           "createdAt": "2025-09-22T23:08:51Z",
           "updatedAt": "2025-09-22T23:08:51Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 75,
+      "id": "PR_kwDOOAZd1M6qexcA",
+      "title": "Streamline the representation of api-endpoints in the discovery document",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/75",
+      "state": "OPEN",
+      "author": "paulhowardarm",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Streamline the representation of api-endpoints in the discovery document - it can be represented directly as a map, rather than an array of string pairs.\r\n\r\nAlso add a clause to exempt the discovery document from the strict CBOR encoding requirements that apply to the CoSERV data model.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
+      "createdAt": "2025-09-25T10:56:12Z",
+      "updatedAt": "2025-09-26T16:52:52Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "81826a8e1e4c15ae29d2d775b9754936a5095bf3",
+      "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
+      "headRefName": "phDiscoveryRestructure",
+      "headRefOid": "b5fc8c2c0d41702ae94eec0080e1cbe3947046e8",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M7Cu_Zh",
+          "commit": {
+            "abbreviatedOid": "f519b47"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "\ud83d\udea2 it! Thank you.",
+          "createdAt": "2025-09-25T11:04:20Z",
+          "updatedAt": "2025-09-25T11:04:20Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M7C3YDG",
+          "commit": {
+            "abbreviatedOid": "a11d593"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "The new commit a11d593e3f708e072710e4873abedb33f755f74a LGTM!",
+          "createdAt": "2025-09-25T20:01:41Z",
+          "updatedAt": "2025-09-25T20:01:41Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M7C4-4X",
+          "commit": {
+            "abbreviatedOid": "a11d593"
+          },
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-25T23:33:21Z",
+          "updatedAt": "2025-09-25T23:33:21Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": ">an entry with this name in the endpoints map field\r\n\r\nSince previous sentence had used \"map whose keys are the symbolic names\", recommend stating \"this API MUST include a key with this name\"",
+              "createdAt": "2025-09-25T23:33:21Z",
+              "updatedAt": "2025-09-25T23:33:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M7DFuXd",
+          "commit": {
+            "abbreviatedOid": "b5fc8c2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-26T16:52:52Z",
+          "updatedAt": "2025-09-26T16:52:52Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "good catch!",
+              "createdAt": "2025-09-26T16:52:52Z",
+              "updatedAt": "2025-09-26T16:52:52Z"
+            }
+          ]
         }
       ]
     }
