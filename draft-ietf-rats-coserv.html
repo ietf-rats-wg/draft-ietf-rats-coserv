@@ -1054,11 +1054,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CoSERV</td>
-<td class="right">September 2025</td>
+<td class="right">October 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Howard, et al.</td>
-<td class="center">Expires 27 March 2026</td>
+<td class="center">Expires 4 April 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1071,12 +1071,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-rats-coserv-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-09-23" class="published">23 September 2025</time>
+<time datetime="2025-10-01" class="published">1 October 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-03-27">27 March 2026</time></dd>
+<dd class="expires"><time datetime="2026-04-04">4 April 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1148,7 +1148,7 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 27 March 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 April 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2164,7 +2164,7 @@ In either case, the endpoint implementation <span class="bcp14">MUST</span> prov
 coserv-well-known-info = {
   version-label =&gt; version,
   capabilities-label =&gt; [ + capability ],
-  api-endpoints-label =&gt; [ + endpoint ],
+  api-endpoints-label =&gt; { + tstr =&gt; tstr },
   result-verification-key-label =&gt; eat.JC&lt;jwk.JWK_Set, cose.COSE_KeySet&gt;
 }
 
@@ -2185,14 +2185,6 @@ artifact-support-label = eat.JC&lt;"artifact-support", 2&gt;
 
 non-empty-array&lt;M&gt; = (M) .and ([ + any ])
 artifact-support = non-empty-array&lt;[ ? "source", ? "collected" ]&gt;
-
-endpoint = {
-  name-label =&gt; tstr,
-  path-label =&gt; tstr
-}
-
-name-label = eat.JC&lt;"name", 1&gt;
-path-label = eat.JC&lt;"path", 2&gt;
 </pre><a href="#section-6.1.1-4" class="pilcrow">¶</a>
 </div>
 <div id="discovery-document-contents">
@@ -2233,9 +2225,11 @@ This pairing caters for situations where the service implementation might suppor
               </h6>
 <p id="section-6.1.1.1.3-1">The API endpoints field is denoted by the label <code>"api-endpoints"</code> in JSON documents and by the codepoint <code>3</code> in CBOR documents.
 This field allows clients to derive the correct URL for making HTTP API calls.
-The field is conceptually a map whose keys are the symbolic names of the APIs, and whose values are the URL path for the API endpoint.
-The symbolic name <code>CoSERVRequestResponse</code> is defined for services that offer the transactional API described in <a href="#secrrapiquery" class="auto internal xref">Section 6.1.2</a>.
-Service implementations that offer this API <span class="bcp14">MUST</span> include an entry with this name in the endpoints map field.<a href="#section-6.1.1.1.3-1" class="pilcrow">¶</a></p>
+The field is a map whose keys are the symbolic names of the APIs, and whose values are the URL path for the API endpoint.<a href="#section-6.1.1.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.1.1.3-2">The symbolic name <code>CoSERVRequestResponse</code> is defined for services that offer the transactional API described in <a href="#secrrapiquery" class="auto internal xref">Section 6.1.2</a>.
+Service implementations that offer this API <span class="bcp14">MUST</span> include a key with this name in the endpoints map field, and the corresponding endpoint URL path <span class="bcp14">MUST</span> end with <code>/{query}</code>.
+This allows the consumer to form a valid CoSERV query URI using variable expansion as per <span>[<a href="#RFC6570" class="cite xref">RFC6570</a>]</span>, replacing the <code>{query}</code> variable with the Base64Url-encoded CoSERV query object.
+There <span class="bcp14">MUST NOT</span> be any other variables that require substitution.<a href="#section-6.1.1.1.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="result-verification-key">
@@ -2251,22 +2245,33 @@ In CBOR-formatted discovery documents, each key is a COSE Key as defined in <spa
 </div>
 </section>
 </div>
-<div id="discovery-document-examples">
+<div id="discovery-document-cbor-encoding">
 <section id="section-6.1.1.2">
-            <h5 id="name-discovery-document-examples">
-<a href="#section-6.1.1.2" class="section-number selfRef">6.1.1.2. </a><a href="#name-discovery-document-examples" class="section-name selfRef">Discovery Document Examples</a>
+            <h5 id="name-discovery-document-cbor-enc">
+<a href="#section-6.1.1.2" class="section-number selfRef">6.1.1.2. </a><a href="#name-discovery-document-cbor-enc" class="section-name selfRef">Discovery Document CBOR Encoding</a>
             </h5>
-<p id="section-6.1.1.2-1">In the following examples, the contents of bodies are informative examples only.<a href="#section-6.1.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.1.2-2">Example HTTP request for retrieving the discovery document in JSON format:<a href="#section-6.1.1.2-2" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.1.2-3">
+<p id="section-6.1.1.2-1">When the discovery document is encoded as CBOR, it is exempt from the encoding rules specified in <a href="#secencoding" class="auto internal xref">Section 4.5</a>.
+These encoding rules are designed to ensure that CoSERV queries can be used as canonical and stable identifiers.
+The discovery document is an independent structure, and not part of the CoSERV data model itself.
+Therefore, these encoding rules do not apply.<a href="#section-6.1.1.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="discovery-document-examples">
+<section id="section-6.1.1.3">
+            <h5 id="name-discovery-document-examples">
+<a href="#section-6.1.1.3" class="section-number selfRef">6.1.1.3. </a><a href="#name-discovery-document-examples" class="section-name selfRef">Discovery Document Examples</a>
+            </h5>
+<p id="section-6.1.1.3-1">In the following examples, the contents of bodies are informative examples only.<a href="#section-6.1.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.1.3-2">Example HTTP request for retrieving the discovery document in JSON format:<a href="#section-6.1.1.3-2" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.1.3-3">
 <pre>
 GET /.well-known/coserv-configuration HTTP/1.1
 Host: endorsements-distributor.example
 Accept: application/coserv-discovery+json
-</pre><a href="#section-6.1.1.2-3" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.1.3-3" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1.1.2-4">Corresponding HTTP response:<a href="#section-6.1.1.2-4" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.1.2-5">
+<p id="section-6.1.1.3-4">Corresponding HTTP response:<a href="#section-6.1.1.3-4" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.1.3-5">
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/coserv-discovery+json
@@ -2287,12 +2292,10 @@ Body (JSON)
       ]
     }
   ],
-  "api-endpoints": [
-    {
-      "name": "CoSERVRequestResponse",
-      "path": "endorsement-distribution/v1/coserv"
-    }
-  ],
+  "api-endpoints": {
+    "CoSERVRequestResponse": "/endorsement-distribution/v1/coserv/{\
+                                                              query}"
+  },
   "result-verification-key": [
     {
       "alg": "ES256",
@@ -2304,18 +2307,18 @@ Body (JSON)
     }
   ]
 }
-</pre><a href="#section-6.1.1.2-5" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.1.3-5" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1.1.2-6">Example HTTP request for retrieving the discovery document in CBOR format:<a href="#section-6.1.1.2-6" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.1.2-7">
+<p id="section-6.1.1.3-6">Example HTTP request for retrieving the discovery document in CBOR format:<a href="#section-6.1.1.3-6" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.1.3-7">
 <pre>
 GET /.well-known/coserv-configuration HTTP/1.1
 Host: endorsements-distributor.example
 Accept: application/coserv-discovery+cbor
-</pre><a href="#section-6.1.1.2-7" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.1.3-7" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1.1.2-8">Corresponding HTTP response:<a href="#section-6.1.1.2-8" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.1.2-9">
+<p id="section-6.1.1.3-8">Corresponding HTTP response:<a href="#section-6.1.1.3-8" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.1.3-9">
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/coserv-discovery+cbor
@@ -2336,12 +2339,10 @@ Body (in CBOR Extended Diagnostic Notation (EDN))
       ]
     }
   ],
-  / api-endpoints / 3: [
-    {
-      / name / 1: "CoSERVRequestResponse",
-      / path / 2: "endorsement-distribution/v1/coserv"
-    }
-  ],
+  / api-endpoints / 3: {
+    "CoSERVRequestResponse": "/endorsement-distribution/v1/coserv/{\
+                                                              query}"
+  },
   / result-verification-key / 4: [
     {
       / kty / 1: 2,
@@ -2353,7 +2354,7 @@ Body (in CBOR Extended Diagnostic Notation (EDN))
     }
   ]
 }
-</pre><a href="#section-6.1.1.2-9" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.1.3-9" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -2366,7 +2367,7 @@ Body (in CBOR Extended Diagnostic Notation (EDN))
           </h4>
 <p id="section-6.1.2-1">This endpoint executes a single CoSERV query and returns a CoSERV result set.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
 <p id="section-6.1.2-2">The HTTP method is <code>GET</code>.<a href="#section-6.1.2-2" class="pilcrow">¶</a></p>
-<p id="section-6.1.2-3">The URL path is formed of the discovered <code>coserv</code> endpoint (as set out in <a href="#secrrapidisco" class="auto internal xref">Section 6.1.1</a>), followed by a path separator ('/'), followed by the CoSERV query to be executed, which is represented as a Base64Url encoding of the query's serialized CBOR byte sequence.<a href="#section-6.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-6.1.2-3">The URL path is formed of the discovered <code>coserv</code> endpoint (as set out in <a href="#secrrapidisco" class="auto internal xref">Section 6.1.1</a>), where the <code>{query}</code> template variable is substituted with the CoSERV query to be executed, which is represented as a Base64Url encoding of the query's serialized CBOR byte sequence.<a href="#section-6.1.2-3" class="pilcrow">¶</a></p>
 <p id="section-6.1.2-4">There are no additional URL query parameters.<a href="#section-6.1.2-4" class="pilcrow">¶</a></p>
 <p id="section-6.1.2-5">Clients <span class="bcp14">MUST</span> set the HTTP <code>Accept</code> header to a suitably-profiled <code>application/coserv+cose</code> or <code>application/coserv+cbor</code> media type.<a href="#section-6.1.2-5" class="pilcrow">¶</a></p>
 <p id="section-6.1.2-6">Endpoint implementations <span class="bcp14">MUST</span> respond with an HTTP status code and response body according to one of the subheadings below.<a href="#section-6.1.2-6" class="pilcrow">¶</a></p>
@@ -3409,7 +3410,7 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <dd class="break"></dd>
 <dt id="I-D.ietf-rats-msg-wrap">[I-D.ietf-rats-msg-wrap]</dt>
         <dd>
-<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Smith, N.</span>, <span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Tschofenig, H.</span>, and <span class="refAuthor">D. Glaze</span>, <span class="refTitle">"RATS Conceptual Messages Wrapper (CMW)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-msg-wrap-17</span>, <time datetime="2025-08-12" class="refDate">12 August 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-msg-wrap-17">https://datatracker.ietf.org/doc/html/draft-ietf-rats-msg-wrap-17</a>&gt;</span>. </dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Smith, N.</span>, <span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Tschofenig, H.</span>, and <span class="refAuthor">D. Glaze</span>, <span class="refTitle">"RATS Conceptual Messages Wrapper (CMW)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-msg-wrap-18</span>, <time datetime="2025-09-29" class="refDate">29 September 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-msg-wrap-18">https://datatracker.ietf.org/doc/html/draft-ietf-rats-msg-wrap-18</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="IANA.core-parameters">[IANA.core-parameters]</dt>
         <dd>
@@ -3430,6 +3431,10 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <dt id="RFC4648">[RFC4648]</dt>
         <dd>
 <span class="refAuthor">Josefsson, S.</span>, <span class="refTitle">"The Base16, Base32, and Base64 Data Encodings"</span>, <span class="seriesInfo">RFC 4648</span>, <span class="seriesInfo">DOI 10.17487/RFC4648</span>, <time datetime="2006-10" class="refDate">October 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4648">https://www.rfc-editor.org/rfc/rfc4648</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6570">[RFC6570]</dt>
+        <dd>
+<span class="refAuthor">Gregorio, J.</span>, <span class="refAuthor">Fielding, R.</span>, <span class="refAuthor">Hadley, M.</span>, <span class="refAuthor">Nottingham, M.</span>, and <span class="refAuthor">D. Orchard</span>, <span class="refTitle">"URI Template"</span>, <span class="seriesInfo">RFC 6570</span>, <span class="seriesInfo">DOI 10.17487/RFC6570</span>, <time datetime="2012-03" class="refDate">March 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6570">https://www.rfc-editor.org/rfc/rfc6570</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7515">[RFC7515]</dt>
         <dd>
