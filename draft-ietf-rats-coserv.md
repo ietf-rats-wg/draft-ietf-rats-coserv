@@ -580,6 +580,14 @@ This field provides one or more public keys that can be used for the cryptograph
 In JSON-formatted discovery documents, each key is a JSON Web Key (JWK) as defined in {{RFC7517}}.
 In CBOR-formatted discovery documents, each key is a COSE Key as defined in {{-cose}}.
 
+This field is optional.
+As described in {{signed-coserv}}, there are situations where it is permissible for CoSERV result sets to be unsigned, namely when they are transacted over an end-to-end secure channel without any untrusted intermediaries.
+CoSERV service implementations MAY publish discovery documents without result-verification keys in cases where they exclusively produce unsigned CoSERV result sets.
+Unsigned CoSERV result sets are characterized by use of the `application/coserv+cbor` media type (as opposed to the `application/coserv+cose` media type).
+The supported media types, along with their profile parameters, are published in the `capabilities` field of the discovery document.
+If all supported media types are variants of `application/coserv+cbor`, indicating unsigned results only, then there is no need for the verification key set to be included in the discovery document.
+If one or more of the supported media types are variants of `application/coserv+cose`, indicating signed results, then the verification key set MUST be included.
+
 #### Discovery Document CBOR Encoding
 
 When the discovery document is encoded as CBOR, it is exempt from the encoding rules specified in {{secencoding}}.

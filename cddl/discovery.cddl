@@ -7,7 +7,7 @@ coserv-well-known-info = {
   version-label => version,
   capabilities-label => [ + capability ],
   api-endpoints-label => { + tstr => tstr },
-  result-verification-key-label => eat.JC<jwk.JWK_Set, cose.COSE_KeySet>
+  ? result-verification-key-label => eat.JC<jwk.JWK_Set, cose.COSE_KeySet>
 }
 
 version-label = eat.JC<"version", 1>
