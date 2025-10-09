@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-02T00:41:52.701106+00:00",
+  "timestamp": "2025-10-09T00:43:14.898038+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -998,6 +998,38 @@
       "body": "",
       "createdAt": "2025-09-30T11:29:40Z",
       "updatedAt": "2025-09-30T11:29:40Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 92,
+      "id": "I_kwDOOAZd1M7QKyqO",
+      "title": "Suggestion: Add origin_url field to CoSERV response for artifact provenance and auditability",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/92",
+      "state": "OPEN",
+      "author": "NandanDesai",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Hi @paulhowardarm  and team,\n\nGreat work on this draft! I especially like the introduction of the aggregator role \u2014 it\u2019s a very practical idea for distributing artifacts in a scalable way.\n\nI have a few suggestions you might want to consider.\n\nAs I understand the draft, there isn\u2019t currently a standardized way to identify the canonical source location of a received artifact, particularly when it is obtained from an aggregator. When a Verifier receives an artifact (for example, a source-artifact) from an aggregator, it can verify the artifact\u2019s signature, but there is no guarantee that the aggregator has provided the most recent version, nor is there a way for the Verifier to learn the artifact\u2019s original source location. This makes it difficult for the Verifier to (a) bypass the aggregator in future interactions \u2014 keeping the aggregator truly optional within the CoSERV architecture \u2014 or (b) audit the aggregator\u2019s behavior by comparing artifacts received directly from the source with those received via the aggregator.\n\nTo address this, I propose adding a new optional field in the CoSERV response: origin_url, which would indicate the canonical source location of each artifact.\n\nThe semantics of this field could vary depending on the trust model applied by the Verifier:\n\nDeep Trust model: origin_url MUST point to the original vendor\u2019s (Endorser\u2019s) server, regardless of whether the responding CoSERV entity is an aggregator or the vendor\u2019s own endpoint.\n\nShallow Trust model: origin_url MAY point to the aggregator that produced the collected artifacts, indicating that the aggregator is the effective \u201cauthor\u201d of those artifacts.\n\nI think this addition could strengthen the \u201ctrust-but-verify\u201d principle already mentioned in the draft by giving Verifiers a concrete way to audit or re-verify artifacts directly at their origin.\n\nLet me know what you think!\n\nBest regards,\nNandan Desai",
+      "createdAt": "2025-10-07T18:01:28Z",
+      "updatedAt": "2025-10-07T18:01:28Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 93,
+      "id": "I_kwDOOAZd1M7QY4ov",
+      "title": "Suggestion: Add last_updated field for artifact freshness",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/93",
+      "state": "OPEN",
+      "author": "NandanDesai",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Hi @paulhowardarm  and team,\n\nI wanted to share another small suggestion (in addition to #92 ) related to artifact freshness in CoSERV result sets.\n\nCurrently, the draft defines two time-related fields: the timestamp in the query (indicating when the Verifier sent the query) and the expiry field in the result set (indicating when the result becomes invalid). However, there is no field that indicates when the aggregator last fetched or validated the artifacts from their original source.\n\nThis can introduce risk in scenarios where the aggregator caches trust anchors or intermediate CA certificates. For example, if the private key of a cached intermediate CA certificate is later compromised and revoked by the vendor, the aggregator might continue serving the revoked certificate to Verifiers. Unless the Verifier already knows the OCSP or CRL endpoint of the original issuer, it would have no way to detect the revocation.\n\nTo improve transparency and freshness guarantees, I propose adding an optional last_updated (or last_refreshed) timestamp to each artifact in the CoSERV result set. This field would record the most recent time when the CoSERV producer (e.g., an aggregator) fetched and validated the artifact from its authoritative source.",
+      "createdAt": "2025-10-08T16:48:53Z",
+      "updatedAt": "2025-10-08T16:48:53Z",
       "closedAt": null,
       "comments": []
     }
@@ -3969,6 +4001,46 @@
           "body": "",
           "createdAt": "2025-09-30T23:58:46Z",
           "updatedAt": "2025-09-30T23:58:46Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 91,
+      "id": "PR_kwDOOAZd1M6seqHD",
+      "title": "Make the result-verification-key optional in the discovery document",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/91",
+      "state": "OPEN",
+      "author": "paulhowardarm",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- Adjust the CDDL for the discovery document so that the `result-verification-key` field is optional\r\n- Add CBOR and JSON examples for the case where the key is absent\r\n- Add a paragraph to the draft explaining the optionality and specifying the conditions where the keyset can be omitted.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
+      "createdAt": "2025-10-07T11:56:14Z",
+      "updatedAt": "2025-10-07T12:42:41Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "85cb9ac33373d82b40b281c7d2000022fc6c8072",
+      "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
+      "headRefName": "phDiscoveryOptionalKey",
+      "headRefOid": "6d4ff33a1cc73864a37d3e0daca6a51f011615d6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M7FR1dt",
+          "commit": {
+            "abbreviatedOid": "6d4ff33"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM, thanks!",
+          "createdAt": "2025-10-07T12:02:14Z",
+          "updatedAt": "2025-10-07T12:02:14Z",
           "comments": []
         }
       ]
