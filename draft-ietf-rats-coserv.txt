@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Informational                                T. Fossati
-Expires: 4 April 2026                                             Linaro
+Expires: 13 April 2026                                            Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 4 April 2026                                             Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                          1 October 2025
+                                                         10 October 2025
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 April 2026.
+   This Internet-Draft will expire on 13 April 2026.
 
 Copyright Notice
 
@@ -1062,7 +1062,7 @@ Table of Contents
      version-label => version,
      capabilities-label => [ + capability ],
      api-endpoints-label => { + tstr => tstr },
-     result-verification-key-label => eat.JC<jwk.JWK_Set, cose.COSE_KeySet>
+     ? result-verification-key-label => eat.JC<jwk.JWK_Set, cose.COSE_KeySet>
    }
 
    version-label = eat.JC<"version", 1>
@@ -1143,6 +1143,24 @@ Table of Contents
    discovery documents, each key is a JSON Web Key (JWK) as defined in
    [RFC7517].  In CBOR-formatted discovery documents, each key is a COSE
    Key as defined in [STD96].
+
+   This field is optional.  As described in Section 4.6, there are
+   situations where it is permissible for CoSERV result sets to be
+   unsigned, namely when they are transacted over an end-to-end secure
+   channel without any untrusted intermediaries.  CoSERV service
+   implementations MAY publish discovery documents without result-
+   verification keys in cases where they exclusively produce unsigned
+   CoSERV result sets.  Unsigned CoSERV result sets are characterized by
+   use of the application/coserv+cbor media type (as opposed to the
+   application/coserv+cose media type).  The supported media types,
+   along with their profile parameters, are published in the
+   capabilities field of the discovery document.  If all supported media
+   types are variants of application/coserv+cbor, indicating unsigned
+   results only, then there is no need for the verification key set to
+   be included in the discovery document.  If one or more of the
+   supported media types are variants of application/coserv+cose,
+   indicating signed results, then the verification key set MUST be
+   included.
 
 6.1.1.2.  Discovery Document CBOR Encoding
 
