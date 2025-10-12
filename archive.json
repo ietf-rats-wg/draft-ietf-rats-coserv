@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-09T00:43:14.898038+00:00",
+  "timestamp": "2025-10-12T00:45:33.146253+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1032,6 +1032,44 @@
       "updatedAt": "2025-10-08T16:48:53Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 94,
+      "id": "I_kwDOOAZd1M7QjmgC",
+      "title": "HTTP status code 406 needs to be permitted for discovery queries",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/94",
+      "state": "OPEN",
+      "author": "paulhowardarm",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "[\u00a76.1.1](https://www.ietf.org/archive/id/draft-ietf-rats-coserv-01.html#section-6.1.1) says that the `.well-known/coserv-configuration` discovery endpoint MUST return HTTP 200 unless there is an error condition beyond the scope of the specification.\n\nThis is probably wrong, because a poorly-behaved client might have set the `Accept` header with an inappropriate media type (e.g. one that is neither `application/coserv-discovery+json` or `application/coserv-discovery+cbor`. If this happens, then the draft needs to permit the server to return HTTP 406.\n\nRelated to this, the draft is unclear on whether it is mandatory for servers to support both JSON and CBOR for discovery documents in all cases. For example, if a service were to support only JSON, would that still be compliant? If the answer is \"yes\", then once again we need to allow the 406 return type if the client requests CBOR. And vice versa.\n",
+      "createdAt": "2025-10-09T12:36:52Z",
+      "updatedAt": "2025-10-10T08:50:31Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> [...] the draft is unclear on whether it is mandatory for servers to support both JSON and CBOR for discovery documents in all cases. For example, if a service were to support only JSON, would that still be compliant? If the answer is \"yes\", then once again we need to allow the 406 return type if the client requests CBOR. And vice versa.\n\nEffecitvely, I interpreted the current specification as meaning that it is up to the server to decide whether to implement JSON, CBOR, or both.\n\nHowever, the constrained side is likely to be the client, so it would probably make sense to place the burden on the server.\n\nAlternatively, we could be fair to both sides and remove the JSON serialisation altogether.",
+          "createdAt": "2025-10-09T12:49:53Z",
+          "updatedAt": "2025-10-09T12:49:53Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Alternatively, we could be fair to both sides and remove the JSON serialisation altogether.\n\nI suppose that's worth thinking about, given that CoSERV queries themselves obviously require CBOR support on both client and server side. But I can imagine that some clients still might find it convenient to use JSON at the point of discovery.\n\nPerhaps we could say that the server MUST support CBOR discovery documents and MAY also support JSON documents?",
+          "createdAt": "2025-10-10T08:48:39Z",
+          "updatedAt": "2025-10-10T08:48:39Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Actually, reading the above back to myself, that feels like a contradiction. I think we need to say that servers MUST support both formats.",
+          "createdAt": "2025-10-10T08:50:31Z",
+          "updatedAt": "2025-10-10T08:50:31Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -4010,24 +4048,26 @@
       "id": "PR_kwDOOAZd1M6seqHD",
       "title": "Make the result-verification-key optional in the discovery document",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/91",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "paulhowardarm",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "- Adjust the CDDL for the discovery document so that the `result-verification-key` field is optional\r\n- Add CBOR and JSON examples for the case where the key is absent\r\n- Add a paragraph to the draft explaining the optionality and specifying the conditions where the keyset can be omitted.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
       "createdAt": "2025-10-07T11:56:14Z",
-      "updatedAt": "2025-10-07T12:42:41Z",
+      "updatedAt": "2025-10-10T10:33:09Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "85cb9ac33373d82b40b281c7d2000022fc6c8072",
       "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
       "headRefName": "phDiscoveryOptionalKey",
       "headRefOid": "6d4ff33a1cc73864a37d3e0daca6a51f011615d6",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-10-10T10:33:09Z",
+      "mergedAt": "2025-10-10T10:33:09Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "4799a56bc37c9c983d5019db80f9d0c5b7c25be1"
+      },
       "comments": [],
       "reviews": [
         {
