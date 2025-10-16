@@ -16,14 +16,14 @@
 This document specifies the Concise Selector for Endorsements and Reference Values (CoSERV), a structured query/result format designed to facilitate the discovery and retrieval of these artifacts from various providers.
 CoSERV defines a query language and corresponding result structure using CDDL, which can be serialized in CBOR format, enabling efficient interoperability across diverse systems. 
     " name="description">
-<meta content="xml2rfc 3.30.1" name="generator">
+<meta content="xml2rfc 3.30.2" name="generator">
 <meta content="RATS" name="keyword">
 <meta content="attestation" name="keyword">
 <meta content="endorsement" name="keyword">
 <meta content="reference value" name="keyword">
-<meta content="draft-howard-rats-coserv-latest" name="ietf.draft">
+<meta content="draft-ietf-rats-coserv-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.30.1
+  xml2rfc 3.30.2
     Python 3.12.11
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
@@ -35,9 +35,9 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
     PyYAML 6.0.2
     requests 2.32.5
     setuptools 80.9.0
-    wcwidth 0.2.13
+    wcwidth 0.2.14
 -->
-<link href="draft-howard-rats-coserv.xml" rel="alternate" type="application/rfc+xml">
+<link href="draft-ietf-rats-coserv.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@font-face {
   font-family: 'Lora';
@@ -1054,11 +1054,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CoSERV</td>
-<td class="right">September 2025</td>
+<td class="right">October 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Howard, et al.</td>
-<td class="center">Expires 16 March 2026</td>
+<td class="center">Expires 19 April 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,15 +1068,15 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">Remote ATtestation ProcedureS</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-howard-rats-coserv-latest</dd>
+<dd class="internet-draft">draft-ietf-rats-coserv-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-09-12" class="published">12 September 2025</time>
+<time datetime="2025-10-16" class="published">16 October 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-03-16">16 March 2026</time></dd>
+<dd class="expires"><time datetime="2026-04-19">19 April 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1119,15 +1119,15 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
       </h2>
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://rats-endorsements-distribution.github.io/draft-howard-rats-coserv/draft-howard-rats-coserv.html">https://rats-endorsements-distribution.github.io/draft-howard-rats-coserv/draft-howard-rats-coserv.html</a></span>.
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-howard-rats-coserv/">https://datatracker.ietf.org/doc/draft-howard-rats-coserv/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+        The latest revision of this draft can be found at <span><a href="https://ietf-rats-wg.github.io/draft-ietf-rats-coserv/draft-ietf-rats-coserv.html">https://ietf-rats-wg.github.io/draft-ietf-rats-coserv/draft-ietf-rats-coserv.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-ietf-rats-coserv/">https://datatracker.ietf.org/doc/draft-ietf-rats-coserv/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 <p id="section-note.1-3">
         Discussion of this document takes place on the
         Remote ATtestation ProcedureS Working Group mailing list (<span><a href="mailto:rats@ietf.org">mailto:rats@ietf.org</a></span>),
         which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/rats/">https://mailarchive.ietf.org/arch/browse/rats/</a></span>.
         Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/rats/">https://www.ietf.org/mailman/listinfo/rats/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
 <p id="section-note.1-4">Source for this draft and an issue tracker can be found at
-        <span><a href="https://github.com/rats-endorsements-distribution/draft-howard-rats-coserv">https://github.com/rats-endorsements-distribution/draft-howard-rats-coserv</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+        <span><a href="https://github.com/ietf-rats-wg/draft-ietf-rats-coserv">https://github.com/ietf-rats-wg/draft-ietf-rats-coserv</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1148,7 +1148,7 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 16 March 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 19 April 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1339,7 +1339,15 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-collated-coserv-cddl" class="internal xref">Collated CoSERV CDDL</a></p>
+            <p id="section-toc.1-1.12.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-collated-cddl" class="internal xref">Collated CDDL</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
+                <p id="section-toc.1-1.12.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-coserv-data-model-2" class="internal xref">CoSERV Data Model</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2">
+                <p id="section-toc.1-1.12.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-api-discovery-data-model" class="internal xref">API Discovery Data Model</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
             <p id="section-toc.1-1.13.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-openapi-schema" class="internal xref">OpenAPI Schema</a></p>
@@ -1649,7 +1657,7 @@ profile = comid.oid-type / ~uri
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-common-data-types" class="section-name selfRef">Common Data Types</a>
         </h3>
 <p id="section-4.1-1">CoSERV inherits the following types from the CoRIM data model <code>class-map</code>, <code>$class-id-type-choice</code>, <code>$instance-id-type-choice</code> and <code>$group-id-type-choice</code>.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1-2">The collated CDDL is in <a href="#collated-cddl" class="auto internal xref">Appendix A</a>.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.1-2">The collated CDDL is in <a href="#collated-cddl-coserv" class="auto internal xref">Appendix A.1</a>.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="profile">
@@ -2164,8 +2172,8 @@ In either case, the endpoint implementation <span class="bcp14">MUST</span> prov
 coserv-well-known-info = {
   version-label =&gt; version,
   capabilities-label =&gt; [ + capability ],
-  api-endpoints-label =&gt; [ + endpoint ],
-  result-verification-key-label =&gt; eat.JC&lt;jwk.JWK_Set, cose.COSE_KeySet&gt;
+  api-endpoints-label =&gt; { + tstr =&gt; tstr },
+  ? result-verification-key-label =&gt; eat.JC&lt;jwk.JWK_Set, cose.COSE_KeySet&gt;
 }
 
 version-label = eat.JC&lt;"version", 1&gt;
@@ -2185,14 +2193,6 @@ artifact-support-label = eat.JC&lt;"artifact-support", 2&gt;
 
 non-empty-array&lt;M&gt; = (M) .and ([ + any ])
 artifact-support = non-empty-array&lt;[ ? "source", ? "collected" ]&gt;
-
-endpoint = {
-  name-label =&gt; tstr,
-  path-label =&gt; tstr
-}
-
-name-label = eat.JC&lt;"name", 1&gt;
-path-label = eat.JC&lt;"path", 2&gt;
 </pre><a href="#section-6.1.1-4" class="pilcrow">¶</a>
 </div>
 <div id="discovery-document-contents">
@@ -2201,13 +2201,14 @@ path-label = eat.JC&lt;"path", 2&gt;
 <a href="#section-6.1.1.1" class="section-number selfRef">6.1.1.1. </a><a href="#name-discovery-document-contents" class="section-name selfRef">Discovery Document Contents</a>
             </h5>
 <p id="section-6.1.1.1-1">This section defines how to populate and interpret the data fields in the discovery document.<a href="#section-6.1.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.1.1-2">The collated CDDL is in <a href="#collated-cddl-discovery" class="auto internal xref">Appendix A.2</a>.<a href="#section-6.1.1.1-2" class="pilcrow">¶</a></p>
 <div id="version">
 <section id="section-6.1.1.1.1">
               <h6 id="name-version">
 <a href="#section-6.1.1.1.1" class="section-number selfRef">6.1.1.1.1. </a><a href="#name-version" class="section-name selfRef">Version</a>
               </h6>
 <p id="section-6.1.1.1.1-1">The version field is denoted by the label <code>"version"</code> in JSON documents and by the codepoint <code>1</code> in CBOR documents.
-The is a Semantic Versioning (semver) string, which denotes the version and patch level of the service that is providing the API endpoints described by the document.
+It is a Semantic Versioning (semver) string, which denotes the version and patch level of the service that is providing the API endpoints described by the document.
 The semver string <span class="bcp14">MUST</span> conform to the ABNF defined in <span>[<a href="#SEMVER" class="cite xref">SEMVER</a>]</span>.
 Version numbers and patch levels are otherwise implementation-defined.<a href="#section-6.1.1.1.1-1" class="pilcrow">¶</a></p>
 </section>
@@ -2233,9 +2234,11 @@ This pairing caters for situations where the service implementation might suppor
               </h6>
 <p id="section-6.1.1.1.3-1">The API endpoints field is denoted by the label <code>"api-endpoints"</code> in JSON documents and by the codepoint <code>3</code> in CBOR documents.
 This field allows clients to derive the correct URL for making HTTP API calls.
-The field is conceptually a map whose keys are the symbolic names of the APIs, and whose values are the URL path for the API endpoint.
-The symbolic name <code>CoSERVRequestResponse</code> is defined for services that offer the transactional API described in <a href="#secrrapiquery" class="auto internal xref">Section 6.1.2</a>.
-Service implementations that offer this API <span class="bcp14">MUST</span> include an entry with this name in the endpoints map field.<a href="#section-6.1.1.1.3-1" class="pilcrow">¶</a></p>
+The field is a map whose keys are the symbolic names of the APIs, and whose values are the URL path for the API endpoint.<a href="#section-6.1.1.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.1.1.3-2">The symbolic name <code>CoSERVRequestResponse</code> is defined for services that offer the transactional API described in <a href="#secrrapiquery" class="auto internal xref">Section 6.1.2</a>.
+Service implementations that offer this API <span class="bcp14">MUST</span> include a key with this name in the endpoints map field, and the corresponding endpoint URL path <span class="bcp14">MUST</span> end with <code>/{query}</code>.
+This allows the consumer to form a valid CoSERV query URI using variable expansion as per <span>[<a href="#RFC6570" class="cite xref">RFC6570</a>]</span>, replacing the <code>{query}</code> variable with the Base64Url-encoded CoSERV query object.
+There <span class="bcp14">MUST NOT</span> be any other variables that require substitution.<a href="#section-6.1.1.1.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="result-verification-key">
@@ -2247,26 +2250,44 @@ Service implementations that offer this API <span class="bcp14">MUST</span> incl
 This field provides one or more public keys that can be used for the cryptographic verification of CoSERV query results that are returned by the service implementation.
 In JSON-formatted discovery documents, each key is a JSON Web Key (JWK) as defined in <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span>.
 In CBOR-formatted discovery documents, each key is a COSE Key as defined in <span>[<a href="#STD96" class="cite xref">STD96</a>]</span>.<a href="#section-6.1.1.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.1.1.4-2">This field is optional.
+As described in <a href="#signed-coserv" class="auto internal xref">Section 4.6</a>, there are situations where it is permissible for CoSERV result sets to be unsigned, namely when they are transacted over an end-to-end secure channel without any untrusted intermediaries.
+CoSERV service implementations <span class="bcp14">MAY</span> publish discovery documents without result-verification keys in cases where they exclusively produce unsigned CoSERV result sets.
+Unsigned CoSERV result sets are characterized by use of the <code>application/coserv+cbor</code> media type (as opposed to the <code>application/coserv+cose</code> media type).
+The supported media types, along with their profile parameters, are published in the <code>capabilities</code> field of the discovery document.
+If all supported media types are variants of <code>application/coserv+cbor</code>, indicating unsigned results only, then there is no need for the verification key set to be included in the discovery document.
+If one or more of the supported media types are variants of <code>application/coserv+cose</code>, indicating signed results, then the verification key set <span class="bcp14">MUST</span> be included.<a href="#section-6.1.1.1.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
+</section>
+</div>
+<div id="discovery-document-cbor-encoding">
+<section id="section-6.1.1.2">
+            <h5 id="name-discovery-document-cbor-enc">
+<a href="#section-6.1.1.2" class="section-number selfRef">6.1.1.2. </a><a href="#name-discovery-document-cbor-enc" class="section-name selfRef">Discovery Document CBOR Encoding</a>
+            </h5>
+<p id="section-6.1.1.2-1">When the discovery document is encoded as CBOR, it is exempt from the encoding rules specified in <a href="#secencoding" class="auto internal xref">Section 4.5</a>.
+These encoding rules are designed to ensure that CoSERV queries can be used as canonical and stable identifiers.
+The discovery document is an independent structure, and not part of the CoSERV data model itself.
+Therefore, these encoding rules do not apply.<a href="#section-6.1.1.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="discovery-document-examples">
-<section id="section-6.1.1.2">
+<section id="section-6.1.1.3">
             <h5 id="name-discovery-document-examples">
-<a href="#section-6.1.1.2" class="section-number selfRef">6.1.1.2. </a><a href="#name-discovery-document-examples" class="section-name selfRef">Discovery Document Examples</a>
+<a href="#section-6.1.1.3" class="section-number selfRef">6.1.1.3. </a><a href="#name-discovery-document-examples" class="section-name selfRef">Discovery Document Examples</a>
             </h5>
-<p id="section-6.1.1.2-1">In the following examples, the contents of bodies are informative examples only.<a href="#section-6.1.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.1.2-2">Example HTTP request for retrieving the discovery document in JSON format:<a href="#section-6.1.1.2-2" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.1.2-3">
+<p id="section-6.1.1.3-1">In the following examples, the contents of bodies are informative examples only.<a href="#section-6.1.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.1.3-2">Example HTTP request for retrieving the discovery document in JSON format:<a href="#section-6.1.1.3-2" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.1.3-3">
 <pre>
 GET /.well-known/coserv-configuration HTTP/1.1
 Host: endorsements-distributor.example
 Accept: application/coserv-discovery+json
-</pre><a href="#section-6.1.1.2-3" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.1.3-3" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1.1.2-4">Corresponding HTTP response:<a href="#section-6.1.1.2-4" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.1.2-5">
+<p id="section-6.1.1.3-4">Corresponding HTTP response:<a href="#section-6.1.1.3-4" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.1.3-5">
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/coserv-discovery+json
@@ -2276,47 +2297,44 @@ Body (JSON)
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
 {
-    "version": "1.2.3-beta",
-     "capabilities": [
-      {
-        "media-type": "application/coserv+cose; profile=\"tag:vendor\
-                                      .com,2025:cc_platform#1.0.0\"",
-        "artifact-support": [
-          "source",
-          "collected"
-        ]
-      }
-    ],
-    "api-endpoints": [
-      {
-        "name": "CoSERVRequestResponse",
-        "path": "endorsement-distribution/v1/coserv"
-      }
-    ],
-    "result-verification-key": [
-      {
-        "alg": "ES256",
-        "crv": "P-256",
-        "kty": "EC",
-        "x": "usWxHK2PmfnHKwXPS54m0kTcGJ90UiglWiGahtagnv8",
-        "y": "IBOL-C3BttVivg-lSreASjpkttcsz-1rb7btKLv8EX4",
-        "kid": "key1"
-      }
-    ]
-  }
-
-</pre><a href="#section-6.1.1.2-5" class="pilcrow">¶</a>
+  "version": "1.2.3-beta",
+  "capabilities": [
+    {
+      "media-type": "application/coserv+cose; profile=\"tag:vendor.\
+                                       com,2025:cc_platform#1.0.0\"",
+      "artifact-support": [
+        "source",
+        "collected"
+      ]
+    }
+  ],
+  "api-endpoints": {
+    "CoSERVRequestResponse": "/endorsement-distribution/v1/coserv/{\
+                                                              query}"
+  },
+  "result-verification-key": [
+    {
+      "alg": "ES256",
+      "crv": "P-256",
+      "kty": "EC",
+      "x": "usWxHK2PmfnHKwXPS54m0kTcGJ90UiglWiGahtagnv8",
+      "y": "IBOL-C3BttVivg-lSreASjpkttcsz-1rb7btKLv8EX4",
+      "kid": "key1"
+    }
+  ]
+}
+</pre><a href="#section-6.1.1.3-5" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1.1.2-6">Example HTTP request for retrieving the discovery document in CBOR format:<a href="#section-6.1.1.2-6" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.1.2-7">
+<p id="section-6.1.1.3-6">Example HTTP request for retrieving the discovery document in CBOR format:<a href="#section-6.1.1.3-6" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.1.3-7">
 <pre>
 GET /.well-known/coserv-configuration HTTP/1.1
 Host: endorsements-distributor.example
 Accept: application/coserv-discovery+cbor
-</pre><a href="#section-6.1.1.2-7" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.1.3-7" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1.1.2-8">Corresponding HTTP response:<a href="#section-6.1.1.2-8" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.1.2-9">
+<p id="section-6.1.1.3-8">Corresponding HTTP response:<a href="#section-6.1.1.3-8" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.1.3-9">
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/coserv-discovery+cbor
@@ -2337,12 +2355,10 @@ Body (in CBOR Extended Diagnostic Notation (EDN))
       ]
     }
   ],
-  / api-endpoints / 3: [
-    {
-      / name / 1: "CoSERVRequestResponse",
-      / path / 2: "endorsement-distribution/v1/coserv"
-    }
-  ],
+  / api-endpoints / 3: {
+    "CoSERVRequestResponse": "/endorsement-distribution/v1/coserv/{\
+                                                              query}"
+  },
   / result-verification-key / 4: [
     {
       / kty / 1: 2,
@@ -2354,7 +2370,7 @@ Body (in CBOR Extended Diagnostic Notation (EDN))
     }
   ]
 }
-</pre><a href="#section-6.1.1.2-9" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.1.3-9" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -2367,7 +2383,7 @@ Body (in CBOR Extended Diagnostic Notation (EDN))
           </h4>
 <p id="section-6.1.2-1">This endpoint executes a single CoSERV query and returns a CoSERV result set.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
 <p id="section-6.1.2-2">The HTTP method is <code>GET</code>.<a href="#section-6.1.2-2" class="pilcrow">¶</a></p>
-<p id="section-6.1.2-3">The URL path is formed of the discovered <code>coserv</code> endpoint (as set out in <a href="#secrrapidisco" class="auto internal xref">Section 6.1.1</a>), followed by a path separator ('/'), followed by the CoSERV query to be executed, which is represented as a Base64Url encoding of the query's serialized CBOR byte sequence.<a href="#section-6.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-6.1.2-3">The URL path is formed of the discovered <code>coserv</code> endpoint (as set out in <a href="#secrrapidisco" class="auto internal xref">Section 6.1.1</a>), where the <code>{query}</code> template variable is substituted with the CoSERV query to be executed, which is represented as a Base64Url encoding of the query's serialized CBOR byte sequence.<a href="#section-6.1.2-3" class="pilcrow">¶</a></p>
 <p id="section-6.1.2-4">There are no additional URL query parameters.<a href="#section-6.1.2-4" class="pilcrow">¶</a></p>
 <p id="section-6.1.2-5">Clients <span class="bcp14">MUST</span> set the HTTP <code>Accept</code> header to a suitably-profiled <code>application/coserv+cose</code> or <code>application/coserv+cbor</code> media type.<a href="#section-6.1.2-5" class="pilcrow">¶</a></p>
 <p id="section-6.1.2-6">Endpoint implementations <span class="bcp14">MUST</span> respond with an HTTP status code and response body according to one of the subheadings below.<a href="#section-6.1.2-6" class="pilcrow">¶</a></p>
@@ -3410,7 +3426,7 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <dd class="break"></dd>
 <dt id="I-D.ietf-rats-msg-wrap">[I-D.ietf-rats-msg-wrap]</dt>
         <dd>
-<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Smith, N.</span>, <span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Tschofenig, H.</span>, and <span class="refAuthor">D. Glaze</span>, <span class="refTitle">"RATS Conceptual Messages Wrapper (CMW)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-msg-wrap-17</span>, <time datetime="2025-08-12" class="refDate">12 August 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-msg-wrap-17">https://datatracker.ietf.org/doc/html/draft-ietf-rats-msg-wrap-17</a>&gt;</span>. </dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Smith, N.</span>, <span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Tschofenig, H.</span>, and <span class="refAuthor">D. Glaze</span>, <span class="refTitle">"RATS Conceptual Messages Wrapper (CMW)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-msg-wrap-18</span>, <time datetime="2025-09-29" class="refDate">29 September 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-msg-wrap-18">https://datatracker.ietf.org/doc/html/draft-ietf-rats-msg-wrap-18</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="IANA.core-parameters">[IANA.core-parameters]</dt>
         <dd>
@@ -3431,6 +3447,10 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <dt id="RFC4648">[RFC4648]</dt>
         <dd>
 <span class="refAuthor">Josefsson, S.</span>, <span class="refTitle">"The Base16, Base32, and Base64 Data Encodings"</span>, <span class="seriesInfo">RFC 4648</span>, <span class="seriesInfo">DOI 10.17487/RFC4648</span>, <time datetime="2006-10" class="refDate">October 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4648">https://www.rfc-editor.org/rfc/rfc4648</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6570">[RFC6570]</dt>
+        <dd>
+<span class="refAuthor">Gregorio, J.</span>, <span class="refAuthor">Fielding, R.</span>, <span class="refAuthor">Hadley, M.</span>, <span class="refAuthor">Nottingham, M.</span>, and <span class="refAuthor">D. Orchard</span>, <span class="refTitle">"URI Template"</span>, <span class="seriesInfo">RFC 6570</span>, <span class="seriesInfo">DOI 10.17487/RFC6570</span>, <time datetime="2012-03" class="refDate">March 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6570">https://www.rfc-editor.org/rfc/rfc6570</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7515">[RFC7515]</dt>
         <dd>
@@ -3520,628 +3540,789 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 </div>
 <div id="collated-cddl">
 <section id="appendix-A">
-      <h2 id="name-collated-coserv-cddl">
-<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-collated-coserv-cddl" class="section-name selfRef">Collated CoSERV CDDL</a>
+      <h2 id="name-collated-cddl">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-collated-cddl" class="section-name selfRef">Collated CDDL</a>
       </h2>
-<div class="alignLeft art-text artwork" id="appendix-A-1">
+<div id="collated-cddl-coserv">
+<section id="appendix-A.1">
+        <h3 id="name-coserv-data-model-2">
+<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-coserv-data-model-2" class="section-name selfRef">CoSERV Data Model</a>
+        </h3>
+<div class="alignLeft art-text artwork" id="appendix-A.1-1">
 <pre>
-;# import comid-autogen
+=============== NOTE: '\' line wrapping per RFC 8792 ================
 
-coserv = {
-  &amp;(profile: 0) =&gt; profile
-  &amp;(query: 1) =&gt; query
-  ? &amp;(results: 2) =&gt; results
-}
-
-profile = comid.oid-type / ~uri
-
-;# import comid-autogen
-
-environment-selector-map = { selector }
-
-stateful-class = [
-  class: comid.class-map
-  ? measurements: [ + comid.measurement-map ]
-]
-
-selector //= ( &amp;(class: 0) =&gt; [
-  + stateful-class
-] )
-
-stateful-instance = [
-  instance: comid.$instance-id-type-choice
-  ? measurements: [ + comid.measurement-map ]
-]
-
-selector //= ( &amp;(instance: 1) =&gt; [
-  + stateful-instance
-] )
-
-stateful-group = [
-  group: comid.$group-id-type-choice
-  ? measurements: [ + comid.measurement-map ]
-]
-
-selector //= ( &amp;(group: 2) =&gt; [
-  + stateful-group
-] )
-
-concise-mid-tag = {
-  ? &amp;(language: 0) =&gt; text
-  &amp;(tag-identity: 1) =&gt; tag-identity-map
-  ? &amp;(entities: 2) =&gt; [ + comid-entity-map ]
-  ? &amp;(linked-tags: 3) =&gt; [ + linked-tag-map ]
-  &amp;(triples: 4) =&gt; triples-map
-  * $$concise-mid-tag-extension
-}
-
-attest-key-triple-record = [
-  environment: environment-map
-  key-list: [ + $crypto-key-type-choice ]
-  ? conditions: non-empty&lt; {
-    ? &amp;(mkey: 0) =&gt; $measured-element-type-choice,
-    ? &amp;(authorized-by: 1) =&gt; [ + $crypto-key-type-choice ]
-  }&gt;
-]
-
-$class-id-type-choice /= tagged-oid-type
-$class-id-type-choice /= tagged-uuid-type
-$class-id-type-choice /= tagged-bytes
-
-class-map = non-empty&lt;{
-  ? &amp;(class-id: 0) =&gt; $class-id-type-choice
-  ? &amp;(vendor: 1) =&gt; tstr
-  ? &amp;(model: 2) =&gt; tstr
-  ? &amp;(layer: 3) =&gt; uint
-  ? &amp;(index: 4) =&gt; uint
-}&gt;
-
-comid-entity-map =
-  entity-map&lt;$comid-role-type-choice, $$comid-entity-map-extension&gt;
-
-$comid-role-type-choice /= &amp;(tag-creator: 0)
-$comid-role-type-choice /= &amp;(creator: 1)
-$comid-role-type-choice /= &amp;(maintainer: 2)
-
-conditional-endorsement-series-triple-record = [
-  condition: stateful-environment-record
-  series: [ + conditional-series-record ]
-]
-
-conditional-series-record = [
-  selection: [ + measurement-map]
-  addition: [ + measurement-map ]
-]
-
-COSE_KeySet = [ + COSE_Key ]
-
-COSE_Key = {
-    1 =&gt; tstr / int
-    ? 2 =&gt; bstr
-    ? 3 =&gt; tstr / int
-    ? 4 =&gt; [+ (tstr / int) ]
-    ? 5 =&gt; bstr
-    * cose-label =&gt; cose-value
-}
-
-cose-label = int / tstr
-cose-value = any
-
-coswid-triple-record = [
-  environment-map
-  [ + concise-swid-tag-id ]
-]
-
-concise-swid-tag-id = text / bstr .size 16
-
-$crypto-key-type-choice /= tagged-pkix-base64-key-type
-$crypto-key-type-choice /= tagged-pkix-base64-cert-type
-$crypto-key-type-choice /= tagged-pkix-base64-cert-path-type
-$crypto-key-type-choice /= tagged-cose-key-type
-$crypto-key-type-choice /= tagged-thumbprint-type
-$crypto-key-type-choice /= tagged-cert-thumbprint-type
-$crypto-key-type-choice /= tagged-cert-path-thumbprint-type
-$crypto-key-type-choice /= tagged-pkix-asn1der-cert-type
-$crypto-key-type-choice /= tagged-bytes
-
-tagged-pkix-base64-key-type = #6.554(tstr)
-tagged-pkix-base64-cert-type = #6.555(tstr)
-tagged-pkix-base64-cert-path-type = #6.556(tstr)
-tagged-thumbprint-type = #6.557(digest)
-tagged-cose-key-type = #6.558(COSE_KeySet / COSE_Key)
-tagged-cert-thumbprint-type = #6.559(digest)
-tagged-cert-path-thumbprint-type = #6.561(digest)
-tagged-pkix-asn1der-cert-type = #6.562(bstr)
-
-domain-dependency-triple-record = [
-  $domain-type-choice
-  [ + $domain-type-choice ]
-]
-
-domain-membership-triple-record = [
-  $domain-type-choice
-  [ + environment-map ]
-]
-
-conditional-endorsement-triple-record = [
-  conditions: [ + stateful-environment-record ]
-  endorsements: [ + endorsed-triple-record ]
-]
-
-$domain-type-choice /= uint
-$domain-type-choice /= text
-$domain-type-choice /= tagged-uuid-type
-$domain-type-choice /= tagged-oid-type
-
-endorsed-triple-record = [
-  condition: environment-map
-  endorsement: [ + measurement-map ]
-]
-
-entity-map&lt;role-type-choice, extension-socket&gt; = {
-  &amp;(entity-name: 0) =&gt; $entity-name-type-choice
-  ? &amp;(reg-id: 1) =&gt; uri
-  &amp;(role: 2) =&gt; [ + role-type-choice ]
-  * extension-socket
-}
-
-$entity-name-type-choice /= text
-
-environment-map = non-empty&lt;{
-  ? &amp;(class: 0) =&gt; class-map
-  ? &amp;(instance: 1) =&gt; $instance-id-type-choice
-  ? &amp;(group: 2) =&gt; $group-id-type-choice
-}&gt;
-
-flags-map = {
-  ? &amp;(is-configured: 0) =&gt; bool
-  ? &amp;(is-secure: 1) =&gt; bool
-  ? &amp;(is-recovery: 2) =&gt; bool
-  ? &amp;(is-debug: 3) =&gt; bool
-  ? &amp;(is-replay-protected: 4) =&gt; bool
-  ? &amp;(is-integrity-protected: 5) =&gt; bool
-  ? &amp;(is-runtime-meas: 6) =&gt; bool
-  ? &amp;(is-immutable: 7) =&gt; bool
-  ? &amp;(is-tcb: 8) =&gt; bool
-  ? &amp;(is-confidentiality-protected: 9) =&gt; bool
-  * $$flags-map-extension
-}
-
-$group-id-type-choice /= tagged-uuid-type
-$group-id-type-choice /= tagged-bytes
-
-identity-triple-record = [
-  environment: environment-map
-  key-list: [ + $crypto-key-type-choice ]
-  ? conditions: non-empty&lt;{
-    ? &amp;(mkey: 0) =&gt; $measured-element-type-choice,
-    ? &amp;(authorized-by: 1) =&gt; [ + $crypto-key-type-choice ]
-  }&gt;
-]
-
-$instance-id-type-choice /= tagged-ueid-type
-$instance-id-type-choice /= tagged-uuid-type
-$instance-id-type-choice /= $crypto-key-type-choice
-$instance-id-type-choice /= tagged-bytes
-
-ip-addr-type-choice = ip4-addr-type / ip6-addr-type
-ip4-addr-type = bytes .size 4
-ip6-addr-type = bytes .size 16
-
-raw-int-type-choice = int / tagged-int-range
-int-range = [min: int / negative-inf, max: int / positive-inf]
-tagged-int-range = #6.564(int-range)
-positive-inf = null
-negative-inf = null
-
-linked-tag-map = {
-  &amp;(linked-tag-id: 0) =&gt; $tag-id-type-choice
-  &amp;(tag-rel: 1) =&gt; $tag-rel-type-choice
-}
-
-mac-addr-type-choice = eui48-addr-type / eui64-addr-type
-eui48-addr-type = bytes .size 6
-eui64-addr-type = bytes .size 8
-
-$measured-element-type-choice /= tagged-oid-type
-$measured-element-type-choice /= tagged-uuid-type
-$measured-element-type-choice /= uint
-$measured-element-type-choice /= tstr
-
-measurement-map = {
-  ? &amp;(mkey: 0) =&gt; $measured-element-type-choice
-  &amp;(mval: 1) =&gt; measurement-values-map
-  ? &amp;(authorized-by: 2) =&gt; [ + $crypto-key-type-choice ]
-}
-
-measurement-values-map = non-empty&lt;{
-  ? &amp;(version: 0) =&gt; version-map
-  ? &amp;(svn: 1) =&gt; svn-type-choice
-  ? &amp;(digests: 2) =&gt; digests-type
-  ? &amp;(flags: 3) =&gt; flags-map
-  ? (
-      &amp;(raw-value: 4) =&gt; $raw-value-type-choice,
-      ? &amp;(raw-value-mask: 5) =&gt; raw-value-mask-type
-    )
-  ? &amp;(mac-addr: 6) =&gt; mac-addr-type-choice
-  ? &amp;(ip-addr: 7) =&gt;  ip-addr-type-choice
-  ? &amp;(serial-number: 8) =&gt; text
-  ? &amp;(ueid: 9) =&gt; ueid-type
-  ? &amp;(uuid: 10) =&gt; uuid-type
-  ? &amp;(name: 11) =&gt; text
-  ? &amp;(cryptokeys: 13) =&gt; [ + $crypto-key-type-choice ]
-  ? &amp;(integrity-registers: 14) =&gt; integrity-registers
-  ? &amp;(raw-int: 15) =&gt; raw-int-type-choice
-  * $$measurement-values-map-extension
-}&gt;
-
-non-empty&lt;M&gt; = (M) .and ({ + any =&gt; any })
-
-oid-type = bytes
-tagged-oid-type = #6.111(oid-type)
-
-$raw-value-type-choice /= tagged-bytes
-$raw-value-type-choice /= tagged-masked-raw-value
-
-raw-value-mask-type = bytes
-
-tagged-masked-raw-value = #6.563([
-  value: bytes
-  mask : bytes
+signed-coserv = #6.18([
+    protected: bytes .cbor signed-coserv-protected-hdr,
+    unprotected: signed-coserv-unprotected-hdr,
+    payload: bytes .cbor coserv,
+    signature: bytes,
 ])
-
-reference-triple-record = [
-  ref-env: environment-map
-  ref-claims: [ + measurement-map ]
-]
-
-stateful-environment-record = [
-  environment: environment-map,
-  claims-list: [ + measurement-map ]
-]
-
-svn-type = uint
-svn = svn-type
-min-svn = svn-type
-tagged-svn = #6.552(svn)
-tagged-min-svn = #6.553(min-svn)
-svn-type-choice = svn / tagged-svn / tagged-min-svn
-
-$tag-id-type-choice /= tstr
-$tag-id-type-choice /= uuid-type
-
-tag-identity-map = {
-  &amp;(tag-id: 0) =&gt; $tag-id-type-choice
-  ? &amp;(tag-version: 1) =&gt; tag-version-type
+signed-coserv-protected-hdr = {
+  1 =&gt; int,
+  2 =&gt; "application/coserv+cbor" / 10000,
+  * cose.label =&gt; cose.values,
 }
+signed-coserv-unprotected-hdr = {* cose.label =&gt; cose.values}
+cose.label = int / text
+cose.values = any
+coserv = {
+  &amp;(profile: 0) =&gt; profile,
+  &amp;(query: 1) =&gt; query,
+  ? &amp;(results: 2) =&gt; results,
+}
+profile = comid.oid-type / ~uri
+query = {
+  &amp;(artifact-type: 0) =&gt; artifact-type,
+  &amp;(environment-selector: 1) =&gt; environment-selector-map,
+  &amp;(timestamp: 2) =&gt; tdate,
+  &amp;(result-type: 3) =&gt; result-type,
+}
+artifact-type = &amp;(endorsed-values: 0) / &amp;(trust-anchors: 1) / &amp;(\
+                                                 reference-values: 2)
+result-type = &amp;(collected-artifacts: 0) / &amp;(source-artifacts: 1) / &amp;\
+                                                            (both: 2)
+results = {
+  result-set,
+  &amp;(expiry: 10) =&gt; tdate,
+  ? &amp;(source-artifacts: 11) =&gt; [+ cmw.cbor-record],
+}
+result-set //= (reference-values // endorsed-values // trust-\
+                                  anchors // $$result-set-extensions)
+refval-quad = {
+  &amp;(authorities: 1) =&gt; [+ comid.$crypto-key-type-choice],
+  &amp;(rv-triple: 2) =&gt; comid.reference-triple-record,
+}
+reference-values = (&amp;(rvq: 0) =&gt; [* refval-quad])
+endval-quad = {
+  &amp;(authorities: 1) =&gt; [+ comid.$crypto-key-type-choice],
+  &amp;(ev-triple: 2) =&gt; comid.endorsed-triple-record,
+}
+cond-endval-quad = {
+  &amp;(authorities: 1) =&gt; [+ comid.$crypto-key-type-choice],
+  &amp;(ce-triple: 2) =&gt; comid.conditional-endorsement-triple-record,
+}
+endorsed-values = (
+  &amp;(evq: 1) =&gt; [* endval-quad],
+  &amp;(ceq: 2) =&gt; [* cond-endval-quad],
+  )
+ak-quad = {
+  &amp;(authorities: 1) =&gt; [+ comid.$crypto-key-type-choice],
+  &amp;(ak-triple: 2) =&gt; comid.attest-key-triple-record,
+}
+cots-stmt = {
+  &amp;(authorities: 1) =&gt; [+ comid.$crypto-key-type-choice],
+  &amp;(cots: 2) =&gt; cots,
+}
+trust-anchors = (
+  &amp;(akq: 3) =&gt; [* ak-quad],
+  &amp;(tas: 4) =&gt; [* cots-stmt],
+  )
+cots = "TODO COTS"
+environment-selector-map = {selector}
+stateful-class = [
+  class: comid.class-map,
+  ? measurements: [+ comid.measurement-map],
+]
+selector //= (&amp;(class: 0) =&gt; [+ stateful-class] // &amp;(instance: 1) =\
+        &gt; [+ stateful-instance] // &amp;(group: 2) =&gt; [+ stateful-group])
+stateful-instance = [
+  instance: comid.$instance-id-type-choice,
+  ? measurements: [+ comid.measurement-map],
+]
+stateful-group = [
+  group: comid.$group-id-type-choice,
+  ? measurements: [+ comid.measurement-map],
+]
+cmw.start = cmw.cmw
+cmw.cmw = cmw.json-cmw / cmw.cbor-cmw
+cmw.json-cmw = cmw.json-record / cmw.json-collection
+cmw.cbor-cmw = cmw.cbor-record / cmw.cbor-collection / cmw.$cbor-tag
+cmw.json-record = [
+  type: cmw.media-type,
+  value: cmw.base64url-string,
+  ? ind: uint .bits cmw.cm-type,
+]
+cmw.cbor-record = [
+  type: cmw.coap-content-format-type / cmw.media-type,
+  value: bytes,
+  ? ind: uint .bits cmw.cm-type,
+]
+cmw.tag-cm-cbor&lt;tn, fmt&gt; = #6.&lt;tn&gt;(bytes .cbor fmt)
+cmw.tag-cm-data&lt;tn&gt; = #6.&lt;tn&gt;(bytes)
+cmw.json-collection = {
+  ? __cmwc_t: ~uri / cmw.oid,
+  + &amp;(label: text) =&gt; cmw.json-cmw,
+}
+cmw.cbor-collection = {
+  ? __cmwc_t: ~uri / cmw.oid,
+  + &amp;(label: int / text) =&gt; cmw.cbor-cmw,
+}
+cmw.media-type = text .abnf ("Content-Type" .cat cmw.Content-Type-\
+                                                                ABNF)
+cmw.base64url-string = text .regexp "[A-Za-z0-9_-]+"
+cmw.coap-content-format-type = uint .size 2
+cmw.oid = text .regexp "([0-2])((\\.0)|(\\.[1-9][0-9]*))*"
+cmw.cm-type = &amp;(
+  reference-values: 0,
+  endorsements: 1,
+  evidence: 2,
+  attestation-results: 3,
+)
+cmw.Content-Type-ABNF = '
 
-$tag-rel-type-choice /= &amp;(supplements: 0)
-$tag-rel-type-choice /= &amp;(replaces: 1)
+Content-Type   = Media-Type-Name *( *SP ";" *SP parameter )
+parameter      = token "=" ( token / quoted-string )
 
-tag-version-type = uint .default 0
+token          = 1*tchar
+tchar          = "!" / "#" / "$" / "%" / "&amp;" / "\'" / "*"
+               / "+" / "-" / "." / "^" / "_" / "`" / "|" / "~"
+               / DIGIT / ALPHA
+quoted-string  = %x22 *( qdtext / quoted-pair ) %x22
+qdtext         = SP / %x21 / %x23-5B / %x5D-7E
+quoted-pair    = "\\" ( SP / VCHAR )
 
-tagged-bytes = #6.560(bytes)
+Media-Type-Name = type-name "/" subtype-name
 
-triples-map = non-empty&lt;{
-  ? &amp;(reference-triples: 0) =&gt;
-    [ + reference-triple-record ]
-  ? &amp;(endorsed-triples: 1) =&gt;
-    [ + endorsed-triple-record ]
-  ? &amp;(identity-triples: 2) =&gt;
-    [ + identity-triple-record ]
-  ? &amp;(attest-key-triples: 3) =&gt;
-    [ + attest-key-triple-record ]
-  ? &amp;(dependency-triples: 4) =&gt;
-    [ + domain-dependency-triple-record ]
-  ? &amp;(membership-triples: 5) =&gt;
-    [ + domain-membership-triple-record ]
-  ? &amp;(coswid-triples: 6) =&gt;
-    [ + coswid-triple-record ]
-  ? &amp;(conditional-endorsement-series-triples: 8) =&gt;
-    [ + conditional-endorsement-series-triple-record ]
-  ? &amp;(conditional-endorsement-triples: 10) =&gt;
-    [ + conditional-endorsement-triple-record ]
-  * $$triples-map-extension
+type-name = restricted-name
+subtype-name = restricted-name
+
+restricted-name = restricted-name-first *126restricted-name-chars
+restricted-name-first  = ALPHA / DIGIT
+restricted-name-chars  = ALPHA / DIGIT / "!" / "#" /
+                         "$" / "&amp;" / "-" / "^" / "_"
+restricted-name-chars =/ "." ; Characters before first dot always
+                             ; specify a facet name
+restricted-name-chars =/ "+" ; Characters after last plus always
+                             ; specify a structured syntax suffix
+
+DIGIT     =  %x30-39           ; 0 - 9
+POS-DIGIT =  %x31-39           ; 1 - 9
+ALPHA     =  %x41-5A / %x61-7A ; A - Z / a - z
+SP        =  %x20
+VCHAR     =  %x21-7E           ; printable ASCII (no SP)
+'
+cmw.$cbor-tag /= cmw.tag-cm-data&lt;1668576935&gt; / cmw.tag-cm-cbor&lt;\
+                                         1668576819, cmw.my-evidence&gt;
+cmw.my-evidence = {&amp;(eat_nonce: 10) =&gt; bstr .size (8 .. 64)}
+comid.concise-mid-tag = {
+  ? &amp;(language: 0) =&gt; text,
+  &amp;(tag-identity: 1) =&gt; comid.tag-identity-map,
+  ? &amp;(entities: 2) =&gt; [+ comid.comid-entity-map],
+  ? &amp;(linked-tags: 3) =&gt; [+ comid.linked-tag-map],
+  &amp;(triples: 4) =&gt; comid.triples-map,
+  * $$concise-mid-tag-extension,
+}
+comid.attest-key-triple-record = [
+  environment: comid.environment-map,
+  key-list: [+ comid.$crypto-key-type-choice],
+  ? conditions: comid.non-empty&lt;{
+            ? &amp;(mkey: 0) =&gt; comid.$measured-element-type-choice,
+            ? &amp;(authorized-by: 1) =&gt; [+ comid.$crypto-key-type-\
+                                                             choice],
+}&gt;,
+]
+comid.$class-id-type-choice /= comid.tagged-oid-type / comid.tagged-\
+                                       uuid-type / comid.tagged-bytes
+comid.class-map = comid.non-empty&lt;{
+    ? &amp;(class-id: 0) =&gt; comid.$class-id-type-choice,
+    ? &amp;(vendor: 1) =&gt; tstr,
+    ? &amp;(model: 2) =&gt; tstr,
+    ? &amp;(layer: 3) =&gt; uint,
+    ? &amp;(index: 4) =&gt; uint,
 }&gt;
-
-ueid-type = bytes .size (7..33)
-tagged-ueid-type = #6.550(ueid-type)
-
-uuid-type = bytes .size 16
-tagged-uuid-type = #6.37(uuid-type)
-
-version-map = {
-  &amp;(version: 0) =&gt; text
-  ? &amp;(version-scheme: 1) =&gt; $version-scheme
-}
-
-digest = [
-  alg: (int / text),
-  val: bytes
+comid.comid-entity-map = comid.entity-map&lt;comid.$comid-role-type-\
+                                choice, $$comid-entity-map-extension&gt;
+comid.$comid-role-type-choice /= &amp;(tag-creator: 0) / &amp;(creator: 1) \
+                                                   / &amp;(maintainer: 2)
+comid.conditional-endorsement-series-triple-record = [
+  condition: comid.stateful-environment-record,
+  series: [+ comid.conditional-series-record],
 ]
-
-digests-type = [ + digest ]
-
-integrity-register-id-type-choice = uint / text
-
-integrity-registers = {
-  + integrity-register-id-type-choice =&gt; digests-type
+comid.conditional-series-record = [
+  selection: [+ comid.measurement-map],
+  addition: [+ comid.measurement-map],
+]
+comid.COSE_KeySet = [+ comid.COSE_Key]
+comid.COSE_Key = {
+  1 =&gt; tstr / int,
+  ? 2 =&gt; bstr,
+  ? 3 =&gt; tstr / int,
+  ? 4 =&gt; [+ tstr / int],
+  ? 5 =&gt; bstr,
+  * comid.cose-label =&gt; comid.cose-value,
 }
-
-concise-swid-tag = {
-  tag-id =&gt; text / bstr .size 16,
-  tag-version =&gt; integer,
-  ? corpus =&gt; bool,
-  ? patch =&gt; bool,
-  ? supplemental =&gt; bool,
-  software-name =&gt; text,
-  ? software-version =&gt; text,
-  ? version-scheme =&gt; $version-scheme,
-  ? media =&gt; text,
-  ? software-meta =&gt; one-or-more&lt;software-meta-entry&gt;,
-  entity =&gt; one-or-more&lt;entity-entry&gt;,
-  ? link =&gt; one-or-more&lt;link-entry&gt;,
-  ? payload-or-evidence,
+comid.cose-label = int / tstr
+comid.cose-value = any
+comid.coswid-triple-record = [
+  comid.environment-map,
+  [+ comid.concise-swid-tag-id],
+]
+comid.concise-swid-tag-id = text / bstr .size 16
+comid.$crypto-key-type-choice /= comid.tagged-pkix-base64-key-type \
+/ comid.tagged-pkix-base64-cert-type / comid.tagged-pkix-base64-cert\
+-path-type / comid.tagged-cose-key-type / comid.tagged-thumbprint-\
+type / comid.tagged-cert-thumbprint-type / comid.tagged-cert-path-\
+thumbprint-type / comid.tagged-pkix-asn1der-cert-type / comid.tagged\
+                                                               -bytes
+comid.tagged-pkix-base64-key-type = #6.554(tstr)
+comid.tagged-pkix-base64-cert-type = #6.555(tstr)
+comid.tagged-pkix-base64-cert-path-type = #6.556(tstr)
+comid.tagged-thumbprint-type = #6.557(comid.digest)
+comid.tagged-cose-key-type = #6.558(comid.COSE_KeySet / comid.\
+                                                            COSE_Key)
+comid.tagged-cert-thumbprint-type = #6.559(comid.digest)
+comid.tagged-cert-path-thumbprint-type = #6.561(comid.digest)
+comid.tagged-pkix-asn1der-cert-type = #6.562(bstr)
+comid.domain-dependency-triple-record = [
+  comid.$domain-type-choice,
+  [+ comid.$domain-type-choice],
+]
+comid.domain-membership-triple-record = [
+  comid.$domain-type-choice,
+  [+ comid.environment-map],
+]
+comid.conditional-endorsement-triple-record = [
+  conditions: [+ comid.stateful-environment-record],
+  endorsements: [+ comid.endorsed-triple-record],
+]
+comid.$domain-type-choice /= uint / text / comid.tagged-uuid-type / \
+                                                comid.tagged-oid-type
+comid.endorsed-triple-record = [
+  condition: comid.environment-map,
+  endorsement: [+ comid.measurement-map],
+]
+comid.entity-map&lt;role-type-choice, extension-socket&gt; = {
+    &amp;(entity-name: 0) =&gt; comid.$entity-name-type-choice,
+    ? &amp;(reg-id: 1) =&gt; uri,
+    &amp;(role: 2) =&gt; [+ role-type-choice],
+    * extension-socket,
+}
+comid.$entity-name-type-choice /= text
+comid.environment-map = comid.non-empty&lt;{
+    ? &amp;(class: 0) =&gt; comid.class-map,
+    ? &amp;(instance: 1) =&gt; comid.$instance-id-type-choice,
+    ? &amp;(group: 2) =&gt; comid.$group-id-type-choice,
+}&gt;
+comid.flags-map = {
+  ? &amp;(is-configured: 0) =&gt; bool,
+  ? &amp;(is-secure: 1) =&gt; bool,
+  ? &amp;(is-recovery: 2) =&gt; bool,
+  ? &amp;(is-debug: 3) =&gt; bool,
+  ? &amp;(is-replay-protected: 4) =&gt; bool,
+  ? &amp;(is-integrity-protected: 5) =&gt; bool,
+  ? &amp;(is-runtime-meas: 6) =&gt; bool,
+  ? &amp;(is-immutable: 7) =&gt; bool,
+  ? &amp;(is-tcb: 8) =&gt; bool,
+  ? &amp;(is-confidentiality-protected: 9) =&gt; bool,
+  * $$flags-map-extension,
+}
+comid.$group-id-type-choice /= comid.tagged-uuid-type / comid.tagged\
+                                                               -bytes
+comid.identity-triple-record = [
+  environment: comid.environment-map,
+  key-list: [+ comid.$crypto-key-type-choice],
+  ? conditions: comid.non-empty&lt;{
+            ? &amp;(mkey: 0) =&gt; comid.$measured-element-type-choice,
+            ? &amp;(authorized-by: 1) =&gt; [+ comid.$crypto-key-type-\
+                                                             choice],
+}&gt;,
+]
+comid.$instance-id-type-choice /= comid.tagged-ueid-type / comid.\
+tagged-uuid-type / comid.$crypto-key-type-choice / comid.tagged-bytes
+comid.ip-addr-type-choice = comid.ip4-addr-type / comid.ip6-addr-type
+comid.ip4-addr-type = bytes .size 4
+comid.ip6-addr-type = bytes .size 16
+comid.raw-int-type-choice = int / comid.tagged-int-range
+comid.int-range = [
+  min: int / comid.negative-inf,
+  max: int / comid.positive-inf,
+]
+comid.tagged-int-range = #6.564(comid.int-range)
+comid.positive-inf = null
+comid.negative-inf = null
+comid.linked-tag-map = {
+  &amp;(linked-tag-id: 0) =&gt; comid.$tag-id-type-choice,
+  &amp;(tag-rel: 1) =&gt; comid.$tag-rel-type-choice,
+}
+comid.mac-addr-type-choice = comid.eui48-addr-type / comid.eui64-\
+                                                            addr-type
+comid.eui48-addr-type = bytes .size 6
+comid.eui64-addr-type = bytes .size 8
+comid.$measured-element-type-choice /= comid.tagged-oid-type / comid\
+                                      .tagged-uuid-type / uint / tstr
+comid.measurement-map = {
+  ? &amp;(mkey: 0) =&gt; comid.$measured-element-type-choice,
+  &amp;(mval: 1) =&gt; comid.measurement-values-map,
+  ? &amp;(authorized-by: 2) =&gt; [+ comid.$crypto-key-type-choice],
+}
+comid.measurement-values-map = comid.non-empty&lt;{
+    ? &amp;(version: 0) =&gt; comid.version-map,
+    ? &amp;(svn: 1) =&gt; comid.svn-type-choice,
+    ? &amp;(digests: 2) =&gt; comid.digests-type,
+    ? &amp;(flags: 3) =&gt; comid.flags-map,
+    ? (
+                  &amp;(raw-value: 4) =&gt; comid.$raw-value-type-choice,
+                  ? &amp;(raw-value-mask: 5) =&gt; comid.raw-value-mask-\
+                                                                type,
+          ),
+    ? &amp;(mac-addr: 6) =&gt; comid.mac-addr-type-choice,
+    ? &amp;(ip-addr: 7) =&gt; comid.ip-addr-type-choice,
+    ? &amp;(serial-number: 8) =&gt; text,
+    ? &amp;(ueid: 9) =&gt; comid.ueid-type,
+    ? &amp;(uuid: 10) =&gt; comid.uuid-type,
+    ? &amp;(name: 11) =&gt; text,
+    ? &amp;(cryptokeys: 13) =&gt; [+ comid.$crypto-key-type-choice],
+    ? &amp;(integrity-registers: 14) =&gt; comid.integrity-registers,
+    ? &amp;(raw-int: 15) =&gt; comid.raw-int-type-choice,
+    * $$measurement-values-map-extension,
+}&gt;
+comid.non-empty&lt;M&gt; = M .and ({+ any =&gt; any})
+comid.oid-type = bytes
+comid.tagged-oid-type = #6.111(comid.oid-type)
+comid.$raw-value-type-choice /= comid.tagged-bytes / comid.tagged-\
+                                                     masked-raw-value
+comid.raw-value-mask-type = bytes
+comid.tagged-masked-raw-value = #6.563([
+    value: bytes,
+    mask: bytes,
+])
+comid.reference-triple-record = [
+  ref-env: comid.environment-map,
+  ref-claims: [+ comid.measurement-map],
+]
+comid.stateful-environment-record = [
+  environment: comid.environment-map,
+  claims-list: [+ comid.measurement-map],
+]
+comid.svn-type = uint
+comid.svn = comid.svn-type
+comid.min-svn = comid.svn-type
+comid.tagged-svn = #6.552(comid.svn)
+comid.tagged-min-svn = #6.553(comid.min-svn)
+comid.svn-type-choice = comid.svn / comid.tagged-svn / comid.tagged-\
+                                                              min-svn
+comid.$tag-id-type-choice /= tstr / comid.uuid-type
+comid.tag-identity-map = {
+  &amp;(tag-id: 0) =&gt; comid.$tag-id-type-choice,
+  ? &amp;(tag-version: 1) =&gt; comid.tag-version-type,
+}
+comid.$tag-rel-type-choice /= &amp;(supplements: 0) / &amp;(replaces: 1)
+comid.tag-version-type = uint .default 0
+comid.tagged-bytes = #6.560(bytes)
+comid.triples-map = comid.non-empty&lt;{
+    ? &amp;(reference-triples: 0) =&gt; [+ comid.reference-triple-record],
+    ? &amp;(endorsed-triples: 1) =&gt; [+ comid.endorsed-triple-record],
+    ? &amp;(identity-triples: 2) =&gt; [+ comid.identity-triple-record],
+    ? &amp;(attest-key-triples: 3) =&gt; [+ comid.attest-key-triple-record],
+    ? &amp;(dependency-triples: 4) =&gt; [+ comid.domain-dependency-triple-\
+                                                             record],
+    ? &amp;(membership-triples: 5) =&gt; [+ comid.domain-membership-triple-\
+                                                             record],
+    ? &amp;(coswid-triples: 6) =&gt; [+ comid.coswid-triple-record],
+    ? &amp;(conditional-endorsement-series-triples: 8) =&gt; [+ comid.\
+                       conditional-endorsement-series-triple-record],
+    ? &amp;(conditional-endorsement-triples: 10) =&gt; [+ comid.conditional\
+                                         -endorsement-triple-record],
+    * $$triples-map-extension,
+}&gt;
+comid.ueid-type = bytes .size (7 .. 33)
+comid.tagged-ueid-type = #6.550(comid.ueid-type)
+comid.uuid-type = bytes .size 16
+comid.tagged-uuid-type = #6.37(comid.uuid-type)
+comid.version-map = {
+  &amp;(version: 0) =&gt; text,
+  ? &amp;(version-scheme: 1) =&gt; comid.$version-scheme,
+}
+comid.digest = [
+  alg: int / text,
+  val: bytes,
+]
+comid.digests-type = [+ comid.digest]
+comid.integrity-register-id-type-choice = uint / text
+comid.integrity-registers = {+ comid.integrity-register-id-type-\
+                                        choice =&gt; comid.digests-type}
+comid.concise-swid-tag = {
+  comid.tag-id =&gt; text / bstr .size 16,
+  comid.tag-version =&gt; integer,
+  ? comid.corpus =&gt; bool,
+  ? comid.patch =&gt; bool,
+  ? comid.supplemental =&gt; bool,
+  comid.software-name =&gt; text,
+  ? comid.software-version =&gt; text,
+  ? comid.version-scheme =&gt; comid.$version-scheme,
+  ? comid.media =&gt; text,
+  ? comid.software-meta =&gt; comid.one-or-more&lt;comid.software-meta-\
+                                                              entry&gt;,
+  comid.entity =&gt; comid.one-or-more&lt;comid.entity-entry&gt;,
+  ? comid.link =&gt; comid.one-or-more&lt;comid.link-entry&gt;,
+  ? comid.payload-or-evidence,
   * $$coswid-extension,
-  global-attributes,
+  comid.global-attributes,
 }
-
-payload-or-evidence //= ( payload =&gt; payload-entry )
-payload-or-evidence //= ( evidence =&gt; evidence-entry )
-
-any-uri = uri
-label = text / int
-
-$version-scheme /= multipartnumeric
-$version-scheme /= multipartnumeric-suffix
-$version-scheme /= alphanumeric
-$version-scheme /= decimal
-$version-scheme /= semver
-$version-scheme /= int / text
-
-any-attribute = (
-  label =&gt; one-or-more&lt;text&gt; / one-or-more&lt;int&gt;
-)
-
-one-or-more&lt;T&gt; = T / [ 2* T ]
-
-global-attributes = (
-  ? lang =&gt; text,
-  * any-attribute,
-)
-
-hash-entry = [
+comid.payload-or-evidence //= (comid.payload =&gt; comid.payload-entry \
+                           // comid.evidence =&gt; comid.evidence-entry)
+comid.any-uri = uri
+comid.label = text / int
+comid.$version-scheme /= comid.multipartnumeric / comid.\
+multipartnumeric-suffix / comid.alphanumeric / comid.decimal / comid\
+                                                 .semver / int / text
+comid.any-attribute = (comid.label =&gt; comid.one-or-more&lt;text&gt; / \
+                                              comid.one-or-more&lt;int&gt;)
+comid.one-or-more&lt;T&gt; = T / [2*T]
+comid.global-attributes = (
+  ? comid.lang =&gt; text,
+  * comid.any-attribute,
+  )
+comid.hash-entry = [
   hash-alg-id: int,
   hash-value: bytes,
 ]
-
-entity-entry = {
-  entity-name =&gt; text,
-  ? reg-id =&gt; any-uri,
-  role =&gt; one-or-more&lt;$role&gt;,
-  ? thumbprint =&gt; hash-entry,
+comid.entity-entry = {
+  comid.entity-name =&gt; text,
+  ? comid.reg-id =&gt; comid.any-uri,
+  comid.role =&gt; comid.one-or-more&lt;comid.$role&gt;,
+  ? comid.thumbprint =&gt; comid.hash-entry,
   * $$entity-extension,
-  global-attributes,
+  comid.global-attributes,
 }
-
-$role /= tag-creator
-$role /= software-creator
-$role /= aggregator
-$role /= distributor
-$role /= licensor
-$role /= maintainer
-$role /= int / text
-
-link-entry = {
-  ? artifact =&gt; text,
-  href =&gt; any-uri,
-  ? media =&gt; text,
-  ? ownership =&gt; $ownership,
-  rel =&gt; $rel,
-  ? media-type =&gt; text,
-  ? use =&gt; $use,
+comid.$role /= comid.tag-creator / comid.software-creator / comid.\
+aggregator / comid.distributor / comid.licensor / comid.maintainer \
+                                                         / int / text
+comid.link-entry = {
+  ? comid.artifact =&gt; text,
+  comid.href =&gt; comid.any-uri,
+  ? comid.media =&gt; text,
+  ? comid.ownership =&gt; comid.$ownership,
+  comid.rel =&gt; comid.$rel,
+  ? comid.media-type =&gt; text,
+  ? comid.use =&gt; comid.$use,
   * $$link-extension,
-  global-attributes,
+  comid.global-attributes,
 }
-
-$ownership /= shared
-$ownership /= private
-$ownership /= abandon
-$ownership /= int / text
-
-$rel /= ancestor
-$rel /= component
-$rel /= feature
-$rel /= installationmedia
-$rel /= packageinstaller
-$rel /= parent
-$rel /= patches
-$rel /= requires
-$rel /= see-also
-$rel /= supersedes
-$rel /= supplemental
-$rel /= -256..64436 / text
-
-$use /= optional
-$use /= required
-$use /= recommended
-$use /= int / text
-
-software-meta-entry = {
-  ? activation-status =&gt; text,
-  ? channel-type =&gt; text,
-  ? colloquial-version =&gt; text,
-  ? description =&gt; text,
-  ? edition =&gt; text,
-  ? entitlement-data-required =&gt; bool,
-  ? entitlement-key =&gt; text,
-  ? generator =&gt;  text / bstr .size 16,
-  ? persistent-id =&gt; text,
-  ? product =&gt; text,
-  ? product-family =&gt; text,
-  ? revision =&gt; text,
-  ? summary =&gt; text,
-  ? unspsc-code =&gt; text,
-  ? unspsc-version =&gt; text,
+comid.$ownership /= comid.shared / comid.private / comid.abandon / \
+                                                           int / text
+comid.$rel /= comid.ancestor / comid.component / comid.feature / \
+comid.installationmedia / comid.packageinstaller / comid.parent / \
+comid.patches / comid.requires / comid.see-also / comid.supersedes \
+                          / comid.supplemental / -256 .. 64436 / text
+comid.$use /= comid.optional / comid.required / comid.recommended / \
+                                                           int / text
+comid.software-meta-entry = {
+  ? comid.activation-status =&gt; text,
+  ? comid.channel-type =&gt; text,
+  ? comid.colloquial-version =&gt; text,
+  ? comid.description =&gt; text,
+  ? comid.edition =&gt; text,
+  ? comid.entitlement-data-required =&gt; bool,
+  ? comid.entitlement-key =&gt; text,
+  ? comid.generator =&gt; text / bstr .size 16,
+  ? comid.persistent-id =&gt; text,
+  ? comid.product =&gt; text,
+  ? comid.product-family =&gt; text,
+  ? comid.revision =&gt; text,
+  ? comid.summary =&gt; text,
+  ? comid.unspsc-code =&gt; text,
+  ? comid.unspsc-version =&gt; text,
   * $$software-meta-extension,
-  global-attributes,
+  comid.global-attributes,
 }
-
-path-elements-group = ( ? directory =&gt; one-or-more&lt;directory-entry&gt;,
-                        ? file =&gt; one-or-more&lt;file-entry&gt;,
-                      )
-
-resource-collection = (
-  path-elements-group,
-  ? process =&gt; one-or-more&lt;process-entry&gt;,
-  ? resource =&gt; one-or-more&lt;resource-entry&gt;,
+comid.path-elements-group = (
+  ? comid.directory =&gt; comid.one-or-more&lt;comid.directory-entry&gt;,
+  ? comid.file =&gt; comid.one-or-more&lt;comid.file-entry&gt;,
+  )
+comid.resource-collection = (
+  comid.path-elements-group,
+  ? comid.process =&gt; comid.one-or-more&lt;comid.process-entry&gt;,
+  ? comid.resource =&gt; comid.one-or-more&lt;comid.resource-entry&gt;,
   * $$resource-collection-extension,
-)
-
-file-entry = {
-  filesystem-item,
-  ? size =&gt; uint,
-  ? file-version =&gt; text,
-  ? hash =&gt; hash-entry,
+  )
+comid.file-entry = {
+  comid.filesystem-item,
+  ? comid.size =&gt; uint,
+  ? comid.file-version =&gt; text,
+  ? comid.hash =&gt; comid.hash-entry,
   * $$file-extension,
-  global-attributes,
+  comid.global-attributes,
 }
-
-directory-entry = {
-  filesystem-item,
-  ? path-elements =&gt; { path-elements-group },
+comid.directory-entry = {
+  comid.filesystem-item,
+  ? comid.path-elements =&gt; {comid.path-elements-group},
   * $$directory-extension,
-  global-attributes,
+  comid.global-attributes,
 }
-
-process-entry = {
-  process-name =&gt; text,
-  ? pid =&gt; integer,
+comid.process-entry = {
+  comid.process-name =&gt; text,
+  ? comid.pid =&gt; integer,
   * $$process-extension,
-  global-attributes,
+  comid.global-attributes,
 }
-
-resource-entry = {
-  type =&gt; text,
+comid.resource-entry = {
+  comid.type =&gt; text,
   * $$resource-extension,
-  global-attributes,
+  comid.global-attributes,
 }
-
-filesystem-item = (
-  ? key =&gt; bool,
-  ? location =&gt; text,
-  fs-name =&gt; text,
-  ? root =&gt; text,
-)
-
-payload-entry = {
-  resource-collection,
+comid.filesystem-item = (
+  ? comid.key =&gt; bool,
+  ? comid.location =&gt; text,
+  comid.fs-name =&gt; text,
+  ? comid.root =&gt; text,
+  )
+comid.payload-entry = {
+  comid.resource-collection,
   * $$payload-extension,
-  global-attributes,
+  comid.global-attributes,
 }
-
-evidence-entry = {
-  resource-collection,
-  ? date =&gt; integer-time,
-  ? device-id =&gt; text,
-  ? location =&gt; text,
+comid.evidence-entry = {
+  comid.resource-collection,
+  ? comid.date =&gt; comid.integer-time,
+  ? comid.device-id =&gt; text,
+  ? comid.location =&gt; text,
   * $$evidence-extension,
-  global-attributes,
+  comid.global-attributes,
 }
+comid.integer-time = #6.1(int)
+comid.tag-id = 0
+comid.software-name = 1
+comid.entity = 2
+comid.evidence = 3
+comid.link = 4
+comid.software-meta = 5
+comid.payload = 6
+comid.hash = 7
+comid.corpus = 8
+comid.patch = 9
+comid.media = 10
+comid.supplemental = 11
+comid.tag-version = 12
+comid.software-version = 13
+comid.version-scheme = 14
+comid.lang = 15
+comid.directory = 16
+comid.file = 17
+comid.process = 18
+comid.resource = 19
+comid.size = 20
+comid.file-version = 21
+comid.key = 22
+comid.location = 23
+comid.fs-name = 24
+comid.root = 25
+comid.path-elements = 26
+comid.process-name = 27
+comid.pid = 28
+comid.type = 29
+comid.entity-name = 31
+comid.reg-id = 32
+comid.role = 33
+comid.thumbprint = 34
+comid.date = 35
+comid.device-id = 36
+comid.artifact = 37
+comid.href = 38
+comid.ownership = 39
+comid.rel = 40
+comid.media-type = 41
+comid.use = 42
+comid.activation-status = 43
+comid.channel-type = 44
+comid.colloquial-version = 45
+comid.description = 46
+comid.edition = 47
+comid.entitlement-data-required = 48
+comid.entitlement-key = 49
+comid.generator = 50
+comid.persistent-id = 51
+comid.product = 52
+comid.product-family = 53
+comid.revision = 54
+comid.summary = 55
+comid.unspsc-code = 56
+comid.unspsc-version = 57
+comid.multipartnumeric = 1
+comid.multipartnumeric-suffix = 2
+comid.alphanumeric = 3
+comid.decimal = 4
+comid.semver = 16384
+comid.tag-creator = 1
+comid.software-creator = 2
+comid.aggregator = 3
+comid.distributor = 4
+comid.licensor = 5
+comid.maintainer = 6
+comid.abandon = 1
+comid.private = 2
+comid.shared = 3
+comid.ancestor = 1
+comid.component = 2
+comid.feature = 3
+comid.installationmedia = 4
+comid.packageinstaller = 5
+comid.parent = 6
+comid.patches = 7
+comid.requires = 8
+comid.see-also = 9
+comid.supersedes = 10
+comid.optional = 1
+comid.required = 2
+comid.recommended = 3
+</pre><a href="#appendix-A.1-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="collated-cddl-discovery">
+<section id="appendix-A.2">
+        <h3 id="name-api-discovery-data-model">
+<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-api-discovery-data-model" class="section-name selfRef">API Discovery Data Model</a>
+        </h3>
+<div class="alignLeft art-text artwork" id="appendix-A.2-1">
+<pre>
+=============== NOTE: '\' line wrapping per RFC 8792 ================
 
-integer-time = #6.1(int)
+coserv-well-known-info = {
+  version-label =&gt; version,
+  capabilities-label =&gt; [+ capability],
+  api-endpoints-label =&gt; {+ tstr =&gt; tstr},
+  ? result-verification-key-label =&gt; eat.JC&lt;jwk.JWK_Set, cose.\
+                                                        COSE_KeySet&gt;,
+}
+version-label = eat.JC&lt;"version", 1&gt;
+capabilities-label = eat.JC&lt;"capabilities", 2&gt;
+api-endpoints-label = eat.JC&lt;"api-endpoints", 3&gt;
+result-verification-key-label = eat.JC&lt;"result-verification-key", 4&gt;
+version = tstr
+capability = {
+  media-type-label =&gt; cmw.media-type,
+  artifact-support-label =&gt; artifact-support,
+}
+media-type-label = eat.JC&lt;"media-type", 1&gt;
+artifact-support-label = eat.JC&lt;"artifact-support", 2&gt;
+non-empty-array&lt;M&gt; = M .and ([+ any])
+artifact-support = non-empty-array&lt;[
+    ? "source",
+    ? "collected",
+]&gt;
+cmw.start = cmw.cmw
+cmw.cmw = cmw.json-cmw / cmw.cbor-cmw
+cmw.json-cmw = cmw.json-record / cmw.json-collection
+cmw.cbor-cmw = cmw.cbor-record / cmw.cbor-collection / cmw.$cbor-tag
+cmw.json-record = [
+  type: cmw.media-type,
+  value: cmw.base64url-string,
+  ? ind: uint .bits cmw.cm-type,
+]
+cmw.cbor-record = [
+  type: cmw.coap-content-format-type / cmw.media-type,
+  value: bytes,
+  ? ind: uint .bits cmw.cm-type,
+]
+cmw.tag-cm-cbor&lt;tn, fmt&gt; = #6.&lt;tn&gt;(bytes .cbor fmt)
+cmw.tag-cm-data&lt;tn&gt; = #6.&lt;tn&gt;(bytes)
+cmw.json-collection = {
+  ? __cmwc_t: ~uri / cmw.oid,
+  + &amp;(label: text) =&gt; cmw.json-cmw,
+}
+cmw.cbor-collection = {
+  ? __cmwc_t: ~uri / cmw.oid,
+  + &amp;(label: int / text) =&gt; cmw.cbor-cmw,
+}
+cmw.media-type = text .abnf ("Content-Type" .cat cmw.Content-Type-\
+                                                                ABNF)
+cmw.base64url-string = text .regexp "[A-Za-z0-9_-]+"
+cmw.coap-content-format-type = uint .size 2
+cmw.oid = text .regexp "([0-2])((\\.0)|(\\.[1-9][0-9]*))*"
+cmw.cm-type = &amp;(
+  reference-values: 0,
+  endorsements: 1,
+  evidence: 2,
+  attestation-results: 3,
+)
+cmw.Content-Type-ABNF = '
 
-tag-id = 0
-software-name = 1
-entity = 2
-evidence = 3
-link = 4
-software-meta = 5
-payload = 6
-hash = 7
-corpus = 8
-patch = 9
-media = 10
-supplemental = 11
-tag-version = 12
-software-version = 13
-version-scheme = 14
-lang = 15
-directory = 16
-file = 17
-process = 18
-resource = 19
-size = 20
-file-version = 21
-key = 22
-location = 23
-fs-name = 24
-root = 25
-path-elements = 26
-process-name = 27
-pid = 28
-type = 29
-entity-name = 31
-reg-id = 32
-role = 33
-thumbprint = 34
-date = 35
-device-id = 36
-artifact = 37
-href = 38
-ownership = 39
-rel = 40
-media-type = 41
-use = 42
-activation-status = 43
-channel-type = 44
-colloquial-version = 45
-description = 46
-edition = 47
-entitlement-data-required = 48
-entitlement-key = 49
-generator = 50
-persistent-id = 51
-product = 52
-product-family = 53
-revision = 54
-summary = 55
-unspsc-code = 56
-unspsc-version = 57
+Content-Type   = Media-Type-Name *( *SP ";" *SP parameter )
+parameter      = token "=" ( token / quoted-string )
 
-multipartnumeric = 1
-multipartnumeric-suffix = 2
-alphanumeric = 3
-decimal = 4
-semver = 16384
+token          = 1*tchar
+tchar          = "!" / "#" / "$" / "%" / "&amp;" / "\'" / "*"
+               / "+" / "-" / "." / "^" / "_" / "`" / "|" / "~"
+               / DIGIT / ALPHA
+quoted-string  = %x22 *( qdtext / quoted-pair ) %x22
+qdtext         = SP / %x21 / %x23-5B / %x5D-7E
+quoted-pair    = "\\" ( SP / VCHAR )
 
-tag-creator=1
-software-creator=2
-aggregator=3
-distributor=4
-licensor=5
-maintainer=6
+Media-Type-Name = type-name "/" subtype-name
 
-abandon=1
-private=2
-shared=3
+type-name = restricted-name
+subtype-name = restricted-name
 
-ancestor=1
-component=2
-feature=3
-installationmedia=4
-packageinstaller=5
-parent=6
-patches=7
-requires=8
-see-also=9
-supersedes=10
+restricted-name = restricted-name-first *126restricted-name-chars
+restricted-name-first  = ALPHA / DIGIT
+restricted-name-chars  = ALPHA / DIGIT / "!" / "#" /
+                         "$" / "&amp;" / "-" / "^" / "_"
+restricted-name-chars =/ "." ; Characters before first dot always
+                             ; specify a facet name
+restricted-name-chars =/ "+" ; Characters after last plus always
+                             ; specify a structured syntax suffix
 
-optional=1
-required=2
-recommended=3
-
-</pre><a href="#appendix-A-1" class="pilcrow">¶</a>
+DIGIT     =  %x30-39           ; 0 - 9
+POS-DIGIT =  %x31-39           ; 1 - 9
+ALPHA     =  %x41-5A / %x61-7A ; A - Z / a - z
+SP        =  %x20
+VCHAR     =  %x21-7E           ; printable ASCII (no SP)
+'
+cmw.$cbor-tag /= cmw.tag-cm-data&lt;1668576935&gt; / cmw.tag-cm-cbor&lt;\
+                                         1668576819, cmw.my-evidence&gt;
+cmw.my-evidence = {&amp;(eat_nonce: 10) =&gt; bstr .size (8 .. 64)}
+jwk.JWK = {
+  "kty" =&gt; tstr,
+  ? "use" =&gt; tstr,
+  ? "key_ops" =&gt; [* tstr],
+  ? "alg" =&gt; tstr,
+  ? "kid" =&gt; tstr,
+  ? "x5u" =&gt; tstr,
+  ? "x5c" =&gt; [* jwk.bytes-b64u],
+  ? "x5t" =&gt; jwk.bytes-b64u,
+  ? "x5t#S256" =&gt; jwk.bytes-b64u,
+  ? jwk.RSA-Key-Fields,
+  ? jwk.EC-Key-Fields,
+  ? jwk.Symmetric-Key-Fields,
+}
+jwk.JWK_Set = [+ jwk.JWK]
+jwk.RSA-Key-Fields = (
+  "n" =&gt; jwk.bytes-b64u,
+  "e" =&gt; jwk.bytes-b64u,
+  ? "d" =&gt; jwk.bytes-b64u,
+  ? "p" =&gt; jwk.bytes-b64u,
+  ? "q" =&gt; jwk.bytes-b64u,
+  ? "dp" =&gt; jwk.bytes-b64u,
+  ? "dq" =&gt; jwk.bytes-b64u,
+  ? "qi" =&gt; jwk.bytes-b64u,
+  )
+jwk.EC-Key-Fields = (
+  "crv" =&gt; tstr,
+  "x" =&gt; jwk.bytes-b64u,
+  "y" =&gt; jwk.bytes-b64u,
+  ? "d" =&gt; jwk.bytes-b64u,
+  )
+jwk.Symmetric-Key-Fields = ("k" =&gt; jwk.bytes-b64u)
+jwk.bytes-b64u = tstr .b64u bytes
+eat.JC&lt;J, C&gt; = eat.JSON-ONLY&lt;J&gt; / eat.CBOR-ONLY&lt;C&gt;
+eat.JSON-ONLY&lt;J&gt; = J .feature "json"
+eat.CBOR-ONLY&lt;C&gt; = C .feature "cbor"
+cose.COSE_KeySet = [+ cose.COSE_Key]
+cose.COSE_Key = {
+  1 =&gt; tstr / int,
+  ? 2 =&gt; bstr,
+  ? 3 =&gt; tstr / int,
+  ? 4 =&gt; [+ tstr / int],
+  ? 5 =&gt; bstr,
+  * cose.label =&gt; cose.values,
+}
+cose.label = int / tstr
+cose.values = any
+</pre><a href="#appendix-A.2-1" class="pilcrow">¶</a>
+</div>
+</section>
 </div>
 </section>
 </div>
@@ -4156,8 +4337,8 @@ recommended=3
 openapi: '3.0.0'
 
 info:
-  title: RR HTTP API
-  description: Request-Response API over HTTP
+  title: CoSERV HTTP API Binding
+  description: CoSERV HTTP API Binding, including request-response and discovery
   version: '1.0.0alpha'
 paths:
   /coserv/{query}:
@@ -4176,10 +4357,56 @@ paths:
           description: &gt;
             A CoSERV result set has been successfully computed.
           content:
-            application/coserv+cbor:
+            application/coserv+cose:
               schema:
                 type: string
                 format: binary
+                description: &gt;
+                  A CoSERV result set enveloped in a COSE Sign1 object.
+        '400':
+          description: &gt;
+            The request was malformed; e.g., the query was not valid base64url,
+            or the CoSERV data item could not be successfully parsed.
+          content:
+            application/concise-problem-details+cbor:
+              schema:
+                type: string
+                format: binary
+                description: &gt;
+                  A CBOR-encoded problem details data item.
+        '406':
+          description: &gt;
+            The server cannot produce a response matching the list of acceptable
+            values defined in the request's 'Accept' header field.  In particular,
+            the client may have specified a CoSERV profile that is not understood or
+            serviceable by the server.
+          content:
+            application/concise-problem-details+cbor:
+              schema:
+                type: string
+                format: binary
+                description: &gt;
+                  A CBOR-encoded problem details data item.
+  /.well-known/coserv-configuration:
+    get:
+      summary: Retrieve the CoSERV configuration document.
+      responses:
+        '200':
+          description: &gt;
+            The CoSERV configuration document has been successfully retrieved.
+          content:
+            application/coserv-discovery+json:
+              schema:
+                type: string
+                format: binary
+                description: &gt;
+                  A JSON-encoded CoSERV configuration document.
+            application/coserv-discovery+cbor:
+              schema:
+                type: string
+                format: binary
+                description: &gt;
+                  A CBOR-encoded CoSERV configuration document.
 </pre><a href="#appendix-B-2" class="pilcrow">¶</a>
 </div>
 </section>

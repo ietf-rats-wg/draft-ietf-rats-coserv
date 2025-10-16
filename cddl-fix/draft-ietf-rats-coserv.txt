@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Informational                                T. Fossati
-Expires: 16 March 2026                                            Linaro
+Expires: 19 April 2026                                            Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,11 +14,11 @@ Expires: 16 March 2026                                            Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                       12 September 2025
+                                                         16 October 2025
 
 
          Concise Selector for Endorsements and Reference Values
-                    draft-howard-rats-coserv-latest
+                     draft-ietf-rats-coserv-latest
 
 Abstract
 
@@ -36,10 +36,10 @@ About This Document
 
    This note is to be removed before publishing as an RFC.
 
-   The latest revision of this draft can be found at https://rats-
-   endorsements-distribution.github.io/draft-howard-rats-coserv/draft-
-   howard-rats-coserv.html.  Status information for this document may be
-   found at https://datatracker.ietf.org/doc/draft-howard-rats-coserv/.
+   The latest revision of this draft can be found at https://ietf-rats-
+   wg.github.io/draft-ietf-rats-coserv/draft-ietf-rats-coserv.html.
+   Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-ietf-rats-coserv/.
 
    Discussion of this document takes place on the Remote ATtestation
    ProcedureS Working Group mailing list (mailto:rats@ietf.org), which
@@ -47,8 +47,7 @@ About This Document
    Subscribe at https://www.ietf.org/mailman/listinfo/rats/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/rats-endorsements-distribution/draft-howard-rats-
-   coserv.
+   https://github.com/ietf-rats-wg/draft-ietf-rats-coserv.
 
 Status of This Memo
 
@@ -65,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 March 2026.
+   This Internet-Draft will expire on 19 April 2026.
 
 Copyright Notice
 
@@ -128,7 +127,9 @@ Table of Contents
    11. References
      11.1.  Normative References
      11.2.  Informative References
-   Appendix A.  Collated CoSERV CDDL
+   Appendix A.  Collated CDDL
+     A.1.  CoSERV Data Model
+     A.2.  API Discovery Data Model
    Appendix B.  OpenAPI Schema
    Acknowledgments
    Authors' Addresses
@@ -522,7 +523,7 @@ Table of Contents
    map, $class-id-type-choice, $instance-id-type-choice and $group-id-
    type-choice.
 
-   The collated CDDL is in Appendix A.
+   The collated CDDL is in Appendix A.1.
 
 4.2.  Profile
 
@@ -1062,8 +1063,8 @@ Table of Contents
    coserv-well-known-info = {
      version-label => version,
      capabilities-label => [ + capability ],
-     api-endpoints-label => [ + endpoint ],
-     result-verification-key-label => eat.JC<jwk.JWK_Set, cose.COSE_KeySet>
+     api-endpoints-label => { + tstr => tstr },
+     ? result-verification-key-label => eat.JC<jwk.JWK_Set, cose.COSE_KeySet>
    }
 
    version-label = eat.JC<"version", 1>
@@ -1084,23 +1085,17 @@ Table of Contents
    non-empty-array<M> = (M) .and ([ + any ])
    artifact-support = non-empty-array<[ ? "source", ? "collected" ]>
 
-   endpoint = {
-     name-label => tstr,
-     path-label => tstr
-   }
-
-   name-label = eat.JC<"name", 1>
-   path-label = eat.JC<"path", 2>
-
 6.1.1.1.  Discovery Document Contents
 
    This section defines how to populate and interpret the data fields in
    the discovery document.
 
+   The collated CDDL is in Appendix A.2.
+
 6.1.1.1.1.  Version
 
    The version field is denoted by the label "version" in JSON documents
-   and by the codepoint 1 in CBOR documents.  The is a Semantic
+   and by the codepoint 1 in CBOR documents.  It is a Semantic
    Versioning (semver) string, which denotes the version and patch level
    of the service that is providing the API endpoints described by the
    document.  The semver string MUST conform to the ABNF defined in
@@ -1130,12 +1125,17 @@ Table of Contents
    The API endpoints field is denoted by the label "api-endpoints" in
    JSON documents and by the codepoint 3 in CBOR documents.  This field
    allows clients to derive the correct URL for making HTTP API calls.
-   The field is conceptually a map whose keys are the symbolic names of
-   the APIs, and whose values are the URL path for the API endpoint.
+   The field is a map whose keys are the symbolic names of the APIs, and
+   whose values are the URL path for the API endpoint.
+
    The symbolic name CoSERVRequestResponse is defined for services that
    offer the transactional API described in Section 6.1.2.  Service
-   implementations that offer this API MUST include an entry with this
-   name in the endpoints map field.
+   implementations that offer this API MUST include a key with this name
+   in the endpoints map field, and the corresponding endpoint URL path
+   MUST end with /{query}. This allows the consumer to form a valid
+   CoSERV query URI using variable expansion as per [RFC6570], replacing
+   the {query} variable with the Base64Url-encoded CoSERV query object.
+   There MUST NOT be any other variables that require substitution.
 
 6.1.1.1.4.  Result Verification Key
 
@@ -1148,7 +1148,34 @@ Table of Contents
    [RFC7517].  In CBOR-formatted discovery documents, each key is a COSE
    Key as defined in [STD96].
 
-6.1.1.2.  Discovery Document Examples
+   This field is optional.  As described in Section 4.6, there are
+   situations where it is permissible for CoSERV result sets to be
+   unsigned, namely when they are transacted over an end-to-end secure
+   channel without any untrusted intermediaries.  CoSERV service
+   implementations MAY publish discovery documents without result-
+   verification keys in cases where they exclusively produce unsigned
+   CoSERV result sets.  Unsigned CoSERV result sets are characterized by
+   use of the application/coserv+cbor media type (as opposed to the
+   application/coserv+cose media type).  The supported media types,
+   along with their profile parameters, are published in the
+   capabilities field of the discovery document.  If all supported media
+   types are variants of application/coserv+cbor, indicating unsigned
+   results only, then there is no need for the verification key set to
+   be included in the discovery document.  If one or more of the
+   supported media types are variants of application/coserv+cose,
+   indicating signed results, then the verification key set MUST be
+   included.
+
+6.1.1.2.  Discovery Document CBOR Encoding
+
+   When the discovery document is encoded as CBOR, it is exempt from the
+   encoding rules specified in Section 4.5.  These encoding rules are
+   designed to ensure that CoSERV queries can be used as canonical and
+   stable identifiers.  The discovery document is an independent
+   structure, and not part of the CoSERV data model itself.  Therefore,
+   these encoding rules do not apply.
+
+6.1.1.3.  Discovery Document Examples
 
    In the following examples, the contents of bodies are informative
    examples only.
@@ -1170,34 +1197,32 @@ Table of Contents
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
    {
-       "version": "1.2.3-beta",
-        "capabilities": [
-         {
-           "media-type": "application/coserv+cose; profile=\"tag:vendor\
-                                         .com,2025:cc_platform#1.0.0\"",
-           "artifact-support": [
-             "source",
-             "collected"
-           ]
-         }
-       ],
-       "api-endpoints": [
-         {
-           "name": "CoSERVRequestResponse",
-           "path": "endorsement-distribution/v1/coserv"
-         }
-       ],
-       "result-verification-key": [
-         {
-           "alg": "ES256",
-           "crv": "P-256",
-           "kty": "EC",
-           "x": "usWxHK2PmfnHKwXPS54m0kTcGJ90UiglWiGahtagnv8",
-           "y": "IBOL-C3BttVivg-lSreASjpkttcsz-1rb7btKLv8EX4",
-           "kid": "key1"
-         }
-       ]
-     }
+     "version": "1.2.3-beta",
+     "capabilities": [
+       {
+         "media-type": "application/coserv+cose; profile=\"tag:vendor.\
+                                          com,2025:cc_platform#1.0.0\"",
+         "artifact-support": [
+           "source",
+           "collected"
+         ]
+       }
+     ],
+     "api-endpoints": {
+       "CoSERVRequestResponse": "/endorsement-distribution/v1/coserv/{\
+                                                                 query}"
+     },
+     "result-verification-key": [
+       {
+         "alg": "ES256",
+         "crv": "P-256",
+         "kty": "EC",
+         "x": "usWxHK2PmfnHKwXPS54m0kTcGJ90UiglWiGahtagnv8",
+         "y": "IBOL-C3BttVivg-lSreASjpkttcsz-1rb7btKLv8EX4",
+         "kid": "key1"
+       }
+     ]
+   }
 
    Example HTTP request for retrieving the discovery document in CBOR
    format:
@@ -1227,12 +1252,10 @@ Table of Contents
          ]
        }
      ],
-     / api-endpoints / 3: [
-       {
-         / name / 1: "CoSERVRequestResponse",
-         / path / 2: "endorsement-distribution/v1/coserv"
-       }
-     ],
+     / api-endpoints / 3: {
+       "CoSERVRequestResponse": "/endorsement-distribution/v1/coserv/{\
+                                                                 query}"
+     },
      / result-verification-key / 4: [
        {
          / kty / 1: 2,
@@ -1253,9 +1276,9 @@ Table of Contents
    The HTTP method is GET.
 
    The URL path is formed of the discovered coserv endpoint (as set out
-   in Section 6.1.1), followed by a path separator ('/'), followed by
-   the CoSERV query to be executed, which is represented as a Base64Url
-   encoding of the query's serialized CBOR byte sequence.
+   in Section 6.1.1), where the {query} template variable is substituted
+   with the CoSERV query to be executed, which is represented as a
+   Base64Url encoding of the query's serialized CBOR byte sequence.
 
    There are no additional URL query parameters.
 
@@ -1877,9 +1900,9 @@ Table of Contents
    [I-D.ietf-rats-msg-wrap]
               Birkholz, H., Smith, N., Fossati, T., Tschofenig, H., and
               D. Glaze, "RATS Conceptual Messages Wrapper (CMW)", Work
-              in Progress, Internet-Draft, draft-ietf-rats-msg-wrap-17,
-              12 August 2025, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-rats-msg-wrap-17>.
+              in Progress, Internet-Draft, draft-ietf-rats-msg-wrap-18,
+              29 September 2025, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-rats-msg-wrap-18>.
 
    [IANA.core-parameters]
               IANA, "Constrained RESTful Environments (CoRE)
@@ -1902,6 +1925,11 @@ Table of Contents
    [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
               Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006,
               <https://www.rfc-editor.org/rfc/rfc4648>.
+
+   [RFC6570]  Gregorio, J., Fielding, R., Hadley, M., Nottingham, M.,
+              and D. Orchard, "URI Template", RFC 6570,
+              DOI 10.17487/RFC6570, March 2012,
+              <https://www.rfc-editor.org/rfc/rfc6570>.
 
    [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
               Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
@@ -1992,656 +2020,851 @@ Table of Contents
               DOI 10.17487/RFC9111, June 2022,
               <https://www.rfc-editor.org/info/rfc9111>.
 
-Appendix A.  Collated CoSERV CDDL
+Appendix A.  Collated CDDL
 
-   ;# import comid-autogen
+A.1.  CoSERV Data Model
 
-   coserv = {
-     &(profile: 0) => profile
-     &(query: 1) => query
-     ? &(results: 2) => results
-   }
+   =============== NOTE: '\' line wrapping per RFC 8792 ================
 
-   profile = comid.oid-type / ~uri
-
-   ;# import comid-autogen
-
-   environment-selector-map = { selector }
-
-   stateful-class = [
-     class: comid.class-map
-     ? measurements: [ + comid.measurement-map ]
-   ]
-
-   selector //= ( &(class: 0) => [
-     + stateful-class
-   ] )
-
-   stateful-instance = [
-     instance: comid.$instance-id-type-choice
-     ? measurements: [ + comid.measurement-map ]
-   ]
-
-   selector //= ( &(instance: 1) => [
-     + stateful-instance
-   ] )
-
-   stateful-group = [
-     group: comid.$group-id-type-choice
-     ? measurements: [ + comid.measurement-map ]
-   ]
-
-   selector //= ( &(group: 2) => [
-     + stateful-group
-   ] )
-
-   concise-mid-tag = {
-     ? &(language: 0) => text
-     &(tag-identity: 1) => tag-identity-map
-     ? &(entities: 2) => [ + comid-entity-map ]
-     ? &(linked-tags: 3) => [ + linked-tag-map ]
-     &(triples: 4) => triples-map
-     * $$concise-mid-tag-extension
-   }
-
-   attest-key-triple-record = [
-     environment: environment-map
-     key-list: [ + $crypto-key-type-choice ]
-     ? conditions: non-empty< {
-       ? &(mkey: 0) => $measured-element-type-choice,
-       ? &(authorized-by: 1) => [ + $crypto-key-type-choice ]
-     }>
-   ]
-
-   $class-id-type-choice /= tagged-oid-type
-   $class-id-type-choice /= tagged-uuid-type
-   $class-id-type-choice /= tagged-bytes
-
-   class-map = non-empty<{
-     ? &(class-id: 0) => $class-id-type-choice
-     ? &(vendor: 1) => tstr
-     ? &(model: 2) => tstr
-     ? &(layer: 3) => uint
-     ? &(index: 4) => uint
-   }>
-
-   comid-entity-map =
-     entity-map<$comid-role-type-choice, $$comid-entity-map-extension>
-
-   $comid-role-type-choice /= &(tag-creator: 0)
-   $comid-role-type-choice /= &(creator: 1)
-   $comid-role-type-choice /= &(maintainer: 2)
-
-   conditional-endorsement-series-triple-record = [
-     condition: stateful-environment-record
-     series: [ + conditional-series-record ]
-   ]
-
-   conditional-series-record = [
-     selection: [ + measurement-map]
-     addition: [ + measurement-map ]
-   ]
-
-   COSE_KeySet = [ + COSE_Key ]
-
-   COSE_Key = {
-       1 => tstr / int
-       ? 2 => bstr
-       ? 3 => tstr / int
-       ? 4 => [+ (tstr / int) ]
-       ? 5 => bstr
-       * cose-label => cose-value
-   }
-
-   cose-label = int / tstr
-   cose-value = any
-
-   coswid-triple-record = [
-     environment-map
-     [ + concise-swid-tag-id ]
-   ]
-
-   concise-swid-tag-id = text / bstr .size 16
-
-   $crypto-key-type-choice /= tagged-pkix-base64-key-type
-   $crypto-key-type-choice /= tagged-pkix-base64-cert-type
-   $crypto-key-type-choice /= tagged-pkix-base64-cert-path-type
-   $crypto-key-type-choice /= tagged-cose-key-type
-   $crypto-key-type-choice /= tagged-thumbprint-type
-   $crypto-key-type-choice /= tagged-cert-thumbprint-type
-   $crypto-key-type-choice /= tagged-cert-path-thumbprint-type
-   $crypto-key-type-choice /= tagged-pkix-asn1der-cert-type
-   $crypto-key-type-choice /= tagged-bytes
-
-   tagged-pkix-base64-key-type = #6.554(tstr)
-   tagged-pkix-base64-cert-type = #6.555(tstr)
-   tagged-pkix-base64-cert-path-type = #6.556(tstr)
-   tagged-thumbprint-type = #6.557(digest)
-   tagged-cose-key-type = #6.558(COSE_KeySet / COSE_Key)
-   tagged-cert-thumbprint-type = #6.559(digest)
-   tagged-cert-path-thumbprint-type = #6.561(digest)
-   tagged-pkix-asn1der-cert-type = #6.562(bstr)
-
-   domain-dependency-triple-record = [
-     $domain-type-choice
-     [ + $domain-type-choice ]
-   ]
-
-   domain-membership-triple-record = [
-     $domain-type-choice
-     [ + environment-map ]
-   ]
-
-   conditional-endorsement-triple-record = [
-     conditions: [ + stateful-environment-record ]
-     endorsements: [ + endorsed-triple-record ]
-   ]
-
-   $domain-type-choice /= uint
-   $domain-type-choice /= text
-   $domain-type-choice /= tagged-uuid-type
-   $domain-type-choice /= tagged-oid-type
-
-   endorsed-triple-record = [
-     condition: environment-map
-     endorsement: [ + measurement-map ]
-   ]
-
-   entity-map<role-type-choice, extension-socket> = {
-     &(entity-name: 0) => $entity-name-type-choice
-     ? &(reg-id: 1) => uri
-     &(role: 2) => [ + role-type-choice ]
-     * extension-socket
-   }
-
-   $entity-name-type-choice /= text
-
-   environment-map = non-empty<{
-     ? &(class: 0) => class-map
-     ? &(instance: 1) => $instance-id-type-choice
-     ? &(group: 2) => $group-id-type-choice
-   }>
-
-   flags-map = {
-     ? &(is-configured: 0) => bool
-     ? &(is-secure: 1) => bool
-     ? &(is-recovery: 2) => bool
-     ? &(is-debug: 3) => bool
-     ? &(is-replay-protected: 4) => bool
-     ? &(is-integrity-protected: 5) => bool
-     ? &(is-runtime-meas: 6) => bool
-     ? &(is-immutable: 7) => bool
-     ? &(is-tcb: 8) => bool
-     ? &(is-confidentiality-protected: 9) => bool
-     * $$flags-map-extension
-   }
-
-   $group-id-type-choice /= tagged-uuid-type
-   $group-id-type-choice /= tagged-bytes
-
-   identity-triple-record = [
-     environment: environment-map
-     key-list: [ + $crypto-key-type-choice ]
-     ? conditions: non-empty<{
-       ? &(mkey: 0) => $measured-element-type-choice,
-       ? &(authorized-by: 1) => [ + $crypto-key-type-choice ]
-     }>
-   ]
-
-   $instance-id-type-choice /= tagged-ueid-type
-   $instance-id-type-choice /= tagged-uuid-type
-   $instance-id-type-choice /= $crypto-key-type-choice
-   $instance-id-type-choice /= tagged-bytes
-
-   ip-addr-type-choice = ip4-addr-type / ip6-addr-type
-   ip4-addr-type = bytes .size 4
-   ip6-addr-type = bytes .size 16
-
-   raw-int-type-choice = int / tagged-int-range
-   int-range = [min: int / negative-inf, max: int / positive-inf]
-   tagged-int-range = #6.564(int-range)
-   positive-inf = null
-   negative-inf = null
-
-   linked-tag-map = {
-     &(linked-tag-id: 0) => $tag-id-type-choice
-     &(tag-rel: 1) => $tag-rel-type-choice
-   }
-
-   mac-addr-type-choice = eui48-addr-type / eui64-addr-type
-   eui48-addr-type = bytes .size 6
-   eui64-addr-type = bytes .size 8
-
-   $measured-element-type-choice /= tagged-oid-type
-   $measured-element-type-choice /= tagged-uuid-type
-   $measured-element-type-choice /= uint
-   $measured-element-type-choice /= tstr
-
-   measurement-map = {
-     ? &(mkey: 0) => $measured-element-type-choice
-     &(mval: 1) => measurement-values-map
-     ? &(authorized-by: 2) => [ + $crypto-key-type-choice ]
-   }
-
-   measurement-values-map = non-empty<{
-     ? &(version: 0) => version-map
-     ? &(svn: 1) => svn-type-choice
-     ? &(digests: 2) => digests-type
-     ? &(flags: 3) => flags-map
-     ? (
-         &(raw-value: 4) => $raw-value-type-choice,
-         ? &(raw-value-mask: 5) => raw-value-mask-type
-       )
-     ? &(mac-addr: 6) => mac-addr-type-choice
-     ? &(ip-addr: 7) =>  ip-addr-type-choice
-     ? &(serial-number: 8) => text
-     ? &(ueid: 9) => ueid-type
-     ? &(uuid: 10) => uuid-type
-     ? &(name: 11) => text
-     ? &(cryptokeys: 13) => [ + $crypto-key-type-choice ]
-     ? &(integrity-registers: 14) => integrity-registers
-     ? &(raw-int: 15) => raw-int-type-choice
-     * $$measurement-values-map-extension
-   }>
-
-   non-empty<M> = (M) .and ({ + any => any })
-
-   oid-type = bytes
-   tagged-oid-type = #6.111(oid-type)
-
-   $raw-value-type-choice /= tagged-bytes
-   $raw-value-type-choice /= tagged-masked-raw-value
-
-   raw-value-mask-type = bytes
-
-   tagged-masked-raw-value = #6.563([
-     value: bytes
-     mask : bytes
+   signed-coserv = #6.18([
+       protected: bytes .cbor signed-coserv-protected-hdr,
+       unprotected: signed-coserv-unprotected-hdr,
+       payload: bytes .cbor coserv,
+       signature: bytes,
    ])
-
-   reference-triple-record = [
-     ref-env: environment-map
-     ref-claims: [ + measurement-map ]
-   ]
-
-   stateful-environment-record = [
-     environment: environment-map,
-     claims-list: [ + measurement-map ]
-   ]
-
-   svn-type = uint
-   svn = svn-type
-   min-svn = svn-type
-   tagged-svn = #6.552(svn)
-   tagged-min-svn = #6.553(min-svn)
-   svn-type-choice = svn / tagged-svn / tagged-min-svn
-
-   $tag-id-type-choice /= tstr
-   $tag-id-type-choice /= uuid-type
-
-   tag-identity-map = {
-     &(tag-id: 0) => $tag-id-type-choice
-     ? &(tag-version: 1) => tag-version-type
+   signed-coserv-protected-hdr = {
+     1 => int,
+     2 => "application/coserv+cbor" / 10000,
+     * cose.label => cose.values,
    }
+   signed-coserv-unprotected-hdr = {* cose.label => cose.values}
+   cose.label = int / text
+   cose.values = any
+   coserv = {
+     &(profile: 0) => profile,
+     &(query: 1) => query,
+     ? &(results: 2) => results,
+   }
+   profile = comid.oid-type / ~uri
+   query = {
+     &(artifact-type: 0) => artifact-type,
+     &(environment-selector: 1) => environment-selector-map,
+     &(timestamp: 2) => tdate,
+     &(result-type: 3) => result-type,
+   }
+   artifact-type = &(endorsed-values: 0) / &(trust-anchors: 1) / &(\
+                                                    reference-values: 2)
+   result-type = &(collected-artifacts: 0) / &(source-artifacts: 1) / &\
+                                                               (both: 2)
+   results = {
+     result-set,
+     &(expiry: 10) => tdate,
+     ? &(source-artifacts: 11) => [+ cmw.cbor-record],
+   }
+   result-set //= (reference-values // endorsed-values // trust-\
+                                     anchors // $$result-set-extensions)
+   refval-quad = {
+     &(authorities: 1) => [+ comid.$crypto-key-type-choice],
+     &(rv-triple: 2) => comid.reference-triple-record,
+   }
+   reference-values = (&(rvq: 0) => [* refval-quad])
+   endval-quad = {
+     &(authorities: 1) => [+ comid.$crypto-key-type-choice],
+     &(ev-triple: 2) => comid.endorsed-triple-record,
+   }
+   cond-endval-quad = {
+     &(authorities: 1) => [+ comid.$crypto-key-type-choice],
+     &(ce-triple: 2) => comid.conditional-endorsement-triple-record,
+   }
+   endorsed-values = (
+     &(evq: 1) => [* endval-quad],
+     &(ceq: 2) => [* cond-endval-quad],
+     )
+   ak-quad = {
+     &(authorities: 1) => [+ comid.$crypto-key-type-choice],
+     &(ak-triple: 2) => comid.attest-key-triple-record,
+   }
+   cots-stmt = {
+     &(authorities: 1) => [+ comid.$crypto-key-type-choice],
+     &(cots: 2) => cots,
+   }
+   trust-anchors = (
+     &(akq: 3) => [* ak-quad],
+     &(tas: 4) => [* cots-stmt],
+     )
+   cots = "TODO COTS"
+   environment-selector-map = {selector}
+   stateful-class = [
+     class: comid.class-map,
+     ? measurements: [+ comid.measurement-map],
+   ]
+   selector //= (&(class: 0) => [+ stateful-class] // &(instance: 1) =\
+           > [+ stateful-instance] // &(group: 2) => [+ stateful-group])
+   stateful-instance = [
+     instance: comid.$instance-id-type-choice,
+     ? measurements: [+ comid.measurement-map],
+   ]
+   stateful-group = [
+     group: comid.$group-id-type-choice,
+     ? measurements: [+ comid.measurement-map],
+   ]
+   cmw.start = cmw.cmw
+   cmw.cmw = cmw.json-cmw / cmw.cbor-cmw
+   cmw.json-cmw = cmw.json-record / cmw.json-collection
+   cmw.cbor-cmw = cmw.cbor-record / cmw.cbor-collection / cmw.$cbor-tag
+   cmw.json-record = [
+     type: cmw.media-type,
+     value: cmw.base64url-string,
+     ? ind: uint .bits cmw.cm-type,
+   ]
+   cmw.cbor-record = [
+     type: cmw.coap-content-format-type / cmw.media-type,
+     value: bytes,
+     ? ind: uint .bits cmw.cm-type,
+   ]
+   cmw.tag-cm-cbor<tn, fmt> = #6.<tn>(bytes .cbor fmt)
+   cmw.tag-cm-data<tn> = #6.<tn>(bytes)
+   cmw.json-collection = {
+     ? __cmwc_t: ~uri / cmw.oid,
+     + &(label: text) => cmw.json-cmw,
+   }
+   cmw.cbor-collection = {
+     ? __cmwc_t: ~uri / cmw.oid,
+     + &(label: int / text) => cmw.cbor-cmw,
+   }
+   cmw.media-type = text .abnf ("Content-Type" .cat cmw.Content-Type-\
+                                                                   ABNF)
+   cmw.base64url-string = text .regexp "[A-Za-z0-9_-]+"
+   cmw.coap-content-format-type = uint .size 2
+   cmw.oid = text .regexp "([0-2])((\\.0)|(\\.[1-9][0-9]*))*"
+   cmw.cm-type = &(
+     reference-values: 0,
+     endorsements: 1,
+     evidence: 2,
+     attestation-results: 3,
+   )
+   cmw.Content-Type-ABNF = '
 
-   $tag-rel-type-choice /= &(supplements: 0)
-   $tag-rel-type-choice /= &(replaces: 1)
+   Content-Type   = Media-Type-Name *( *SP ";" *SP parameter )
+   parameter      = token "=" ( token / quoted-string )
 
-   tag-version-type = uint .default 0
+   token          = 1*tchar
+   tchar          = "!" / "#" / "$" / "%" / "&" / "\'" / "*"
+                  / "+" / "-" / "." / "^" / "_" / "`" / "|" / "~"
+                  / DIGIT / ALPHA
+   quoted-string  = %x22 *( qdtext / quoted-pair ) %x22
+   qdtext         = SP / %x21 / %x23-5B / %x5D-7E
+   quoted-pair    = "\\" ( SP / VCHAR )
 
-   tagged-bytes = #6.560(bytes)
+   Media-Type-Name = type-name "/" subtype-name
 
-   triples-map = non-empty<{
-     ? &(reference-triples: 0) =>
-       [ + reference-triple-record ]
-     ? &(endorsed-triples: 1) =>
-       [ + endorsed-triple-record ]
-     ? &(identity-triples: 2) =>
-       [ + identity-triple-record ]
-     ? &(attest-key-triples: 3) =>
-       [ + attest-key-triple-record ]
-     ? &(dependency-triples: 4) =>
-       [ + domain-dependency-triple-record ]
-     ? &(membership-triples: 5) =>
-       [ + domain-membership-triple-record ]
-     ? &(coswid-triples: 6) =>
-       [ + coswid-triple-record ]
-     ? &(conditional-endorsement-series-triples: 8) =>
-       [ + conditional-endorsement-series-triple-record ]
-     ? &(conditional-endorsement-triples: 10) =>
-       [ + conditional-endorsement-triple-record ]
-     * $$triples-map-extension
+   type-name = restricted-name
+   subtype-name = restricted-name
+
+   restricted-name = restricted-name-first *126restricted-name-chars
+   restricted-name-first  = ALPHA / DIGIT
+   restricted-name-chars  = ALPHA / DIGIT / "!" / "#" /
+                            "$" / "&" / "-" / "^" / "_"
+   restricted-name-chars =/ "." ; Characters before first dot always
+                                ; specify a facet name
+   restricted-name-chars =/ "+" ; Characters after last plus always
+                                ; specify a structured syntax suffix
+
+   DIGIT     =  %x30-39           ; 0 - 9
+   POS-DIGIT =  %x31-39           ; 1 - 9
+   ALPHA     =  %x41-5A / %x61-7A ; A - Z / a - z
+   SP        =  %x20
+   VCHAR     =  %x21-7E           ; printable ASCII (no SP)
+   '
+   cmw.$cbor-tag /= cmw.tag-cm-data<1668576935> / cmw.tag-cm-cbor<\
+                                            1668576819, cmw.my-evidence>
+   cmw.my-evidence = {&(eat_nonce: 10) => bstr .size (8 .. 64)}
+   comid.concise-mid-tag = {
+     ? &(language: 0) => text,
+     &(tag-identity: 1) => comid.tag-identity-map,
+     ? &(entities: 2) => [+ comid.comid-entity-map],
+     ? &(linked-tags: 3) => [+ comid.linked-tag-map],
+     &(triples: 4) => comid.triples-map,
+     * $$concise-mid-tag-extension,
+   }
+   comid.attest-key-triple-record = [
+     environment: comid.environment-map,
+     key-list: [+ comid.$crypto-key-type-choice],
+     ? conditions: comid.non-empty<{
+               ? &(mkey: 0) => comid.$measured-element-type-choice,
+               ? &(authorized-by: 1) => [+ comid.$crypto-key-type-\
+                                                                choice],
+   }>,
+   ]
+   comid.$class-id-type-choice /= comid.tagged-oid-type / comid.tagged-\
+                                          uuid-type / comid.tagged-bytes
+   comid.class-map = comid.non-empty<{
+       ? &(class-id: 0) => comid.$class-id-type-choice,
+       ? &(vendor: 1) => tstr,
+       ? &(model: 2) => tstr,
+       ? &(layer: 3) => uint,
+       ? &(index: 4) => uint,
    }>
-
-   ueid-type = bytes .size (7..33)
-   tagged-ueid-type = #6.550(ueid-type)
-
-   uuid-type = bytes .size 16
-   tagged-uuid-type = #6.37(uuid-type)
-
-   version-map = {
-     &(version: 0) => text
-     ? &(version-scheme: 1) => $version-scheme
-   }
-
-   digest = [
-     alg: (int / text),
-     val: bytes
+   comid.comid-entity-map = comid.entity-map<comid.$comid-role-type-\
+                                   choice, $$comid-entity-map-extension>
+   comid.$comid-role-type-choice /= &(tag-creator: 0) / &(creator: 1) \
+                                                      / &(maintainer: 2)
+   comid.conditional-endorsement-series-triple-record = [
+     condition: comid.stateful-environment-record,
+     series: [+ comid.conditional-series-record],
    ]
-
-   digests-type = [ + digest ]
-
-   integrity-register-id-type-choice = uint / text
-
-   integrity-registers = {
-     + integrity-register-id-type-choice => digests-type
+   comid.conditional-series-record = [
+     selection: [+ comid.measurement-map],
+     addition: [+ comid.measurement-map],
+   ]
+   comid.COSE_KeySet = [+ comid.COSE_Key]
+   comid.COSE_Key = {
+     1 => tstr / int,
+     ? 2 => bstr,
+     ? 3 => tstr / int,
+     ? 4 => [+ tstr / int],
+     ? 5 => bstr,
+     * comid.cose-label => comid.cose-value,
    }
-
-   concise-swid-tag = {
-     tag-id => text / bstr .size 16,
-     tag-version => integer,
-     ? corpus => bool,
-     ? patch => bool,
-     ? supplemental => bool,
-     software-name => text,
-     ? software-version => text,
-     ? version-scheme => $version-scheme,
-     ? media => text,
-     ? software-meta => one-or-more<software-meta-entry>,
-     entity => one-or-more<entity-entry>,
-     ? link => one-or-more<link-entry>,
-     ? payload-or-evidence,
+   comid.cose-label = int / tstr
+   comid.cose-value = any
+   comid.coswid-triple-record = [
+     comid.environment-map,
+     [+ comid.concise-swid-tag-id],
+   ]
+   comid.concise-swid-tag-id = text / bstr .size 16
+   comid.$crypto-key-type-choice /= comid.tagged-pkix-base64-key-type \
+   / comid.tagged-pkix-base64-cert-type / comid.tagged-pkix-base64-cert\
+   -path-type / comid.tagged-cose-key-type / comid.tagged-thumbprint-\
+   type / comid.tagged-cert-thumbprint-type / comid.tagged-cert-path-\
+   thumbprint-type / comid.tagged-pkix-asn1der-cert-type / comid.tagged\
+                                                                  -bytes
+   comid.tagged-pkix-base64-key-type = #6.554(tstr)
+   comid.tagged-pkix-base64-cert-type = #6.555(tstr)
+   comid.tagged-pkix-base64-cert-path-type = #6.556(tstr)
+   comid.tagged-thumbprint-type = #6.557(comid.digest)
+   comid.tagged-cose-key-type = #6.558(comid.COSE_KeySet / comid.\
+                                                               COSE_Key)
+   comid.tagged-cert-thumbprint-type = #6.559(comid.digest)
+   comid.tagged-cert-path-thumbprint-type = #6.561(comid.digest)
+   comid.tagged-pkix-asn1der-cert-type = #6.562(bstr)
+   comid.domain-dependency-triple-record = [
+     comid.$domain-type-choice,
+     [+ comid.$domain-type-choice],
+   ]
+   comid.domain-membership-triple-record = [
+     comid.$domain-type-choice,
+     [+ comid.environment-map],
+   ]
+   comid.conditional-endorsement-triple-record = [
+     conditions: [+ comid.stateful-environment-record],
+     endorsements: [+ comid.endorsed-triple-record],
+   ]
+   comid.$domain-type-choice /= uint / text / comid.tagged-uuid-type / \
+                                                   comid.tagged-oid-type
+   comid.endorsed-triple-record = [
+     condition: comid.environment-map,
+     endorsement: [+ comid.measurement-map],
+   ]
+   comid.entity-map<role-type-choice, extension-socket> = {
+       &(entity-name: 0) => comid.$entity-name-type-choice,
+       ? &(reg-id: 1) => uri,
+       &(role: 2) => [+ role-type-choice],
+       * extension-socket,
+   }
+   comid.$entity-name-type-choice /= text
+   comid.environment-map = comid.non-empty<{
+       ? &(class: 0) => comid.class-map,
+       ? &(instance: 1) => comid.$instance-id-type-choice,
+       ? &(group: 2) => comid.$group-id-type-choice,
+   }>
+   comid.flags-map = {
+     ? &(is-configured: 0) => bool,
+     ? &(is-secure: 1) => bool,
+     ? &(is-recovery: 2) => bool,
+     ? &(is-debug: 3) => bool,
+     ? &(is-replay-protected: 4) => bool,
+     ? &(is-integrity-protected: 5) => bool,
+     ? &(is-runtime-meas: 6) => bool,
+     ? &(is-immutable: 7) => bool,
+     ? &(is-tcb: 8) => bool,
+     ? &(is-confidentiality-protected: 9) => bool,
+     * $$flags-map-extension,
+   }
+   comid.$group-id-type-choice /= comid.tagged-uuid-type / comid.tagged\
+                                                                  -bytes
+   comid.identity-triple-record = [
+     environment: comid.environment-map,
+     key-list: [+ comid.$crypto-key-type-choice],
+     ? conditions: comid.non-empty<{
+               ? &(mkey: 0) => comid.$measured-element-type-choice,
+               ? &(authorized-by: 1) => [+ comid.$crypto-key-type-\
+                                                                choice],
+   }>,
+   ]
+   comid.$instance-id-type-choice /= comid.tagged-ueid-type / comid.\
+   tagged-uuid-type / comid.$crypto-key-type-choice / comid.tagged-bytes
+   comid.ip-addr-type-choice = comid.ip4-addr-type / comid.ip6-addr-type
+   comid.ip4-addr-type = bytes .size 4
+   comid.ip6-addr-type = bytes .size 16
+   comid.raw-int-type-choice = int / comid.tagged-int-range
+   comid.int-range = [
+     min: int / comid.negative-inf,
+     max: int / comid.positive-inf,
+   ]
+   comid.tagged-int-range = #6.564(comid.int-range)
+   comid.positive-inf = null
+   comid.negative-inf = null
+   comid.linked-tag-map = {
+     &(linked-tag-id: 0) => comid.$tag-id-type-choice,
+     &(tag-rel: 1) => comid.$tag-rel-type-choice,
+   }
+   comid.mac-addr-type-choice = comid.eui48-addr-type / comid.eui64-\
+                                                               addr-type
+   comid.eui48-addr-type = bytes .size 6
+   comid.eui64-addr-type = bytes .size 8
+   comid.$measured-element-type-choice /= comid.tagged-oid-type / comid\
+                                         .tagged-uuid-type / uint / tstr
+   comid.measurement-map = {
+     ? &(mkey: 0) => comid.$measured-element-type-choice,
+     &(mval: 1) => comid.measurement-values-map,
+     ? &(authorized-by: 2) => [+ comid.$crypto-key-type-choice],
+   }
+   comid.measurement-values-map = comid.non-empty<{
+       ? &(version: 0) => comid.version-map,
+       ? &(svn: 1) => comid.svn-type-choice,
+       ? &(digests: 2) => comid.digests-type,
+       ? &(flags: 3) => comid.flags-map,
+       ? (
+                     &(raw-value: 4) => comid.$raw-value-type-choice,
+                     ? &(raw-value-mask: 5) => comid.raw-value-mask-\
+                                                                   type,
+             ),
+       ? &(mac-addr: 6) => comid.mac-addr-type-choice,
+       ? &(ip-addr: 7) => comid.ip-addr-type-choice,
+       ? &(serial-number: 8) => text,
+       ? &(ueid: 9) => comid.ueid-type,
+       ? &(uuid: 10) => comid.uuid-type,
+       ? &(name: 11) => text,
+       ? &(cryptokeys: 13) => [+ comid.$crypto-key-type-choice],
+       ? &(integrity-registers: 14) => comid.integrity-registers,
+       ? &(raw-int: 15) => comid.raw-int-type-choice,
+       * $$measurement-values-map-extension,
+   }>
+   comid.non-empty<M> = M .and ({+ any => any})
+   comid.oid-type = bytes
+   comid.tagged-oid-type = #6.111(comid.oid-type)
+   comid.$raw-value-type-choice /= comid.tagged-bytes / comid.tagged-\
+                                                        masked-raw-value
+   comid.raw-value-mask-type = bytes
+   comid.tagged-masked-raw-value = #6.563([
+       value: bytes,
+       mask: bytes,
+   ])
+   comid.reference-triple-record = [
+     ref-env: comid.environment-map,
+     ref-claims: [+ comid.measurement-map],
+   ]
+   comid.stateful-environment-record = [
+     environment: comid.environment-map,
+     claims-list: [+ comid.measurement-map],
+   ]
+   comid.svn-type = uint
+   comid.svn = comid.svn-type
+   comid.min-svn = comid.svn-type
+   comid.tagged-svn = #6.552(comid.svn)
+   comid.tagged-min-svn = #6.553(comid.min-svn)
+   comid.svn-type-choice = comid.svn / comid.tagged-svn / comid.tagged-\
+                                                                 min-svn
+   comid.$tag-id-type-choice /= tstr / comid.uuid-type
+   comid.tag-identity-map = {
+     &(tag-id: 0) => comid.$tag-id-type-choice,
+     ? &(tag-version: 1) => comid.tag-version-type,
+   }
+   comid.$tag-rel-type-choice /= &(supplements: 0) / &(replaces: 1)
+   comid.tag-version-type = uint .default 0
+   comid.tagged-bytes = #6.560(bytes)
+   comid.triples-map = comid.non-empty<{
+       ? &(reference-triples: 0) => [+ comid.reference-triple-record],
+       ? &(endorsed-triples: 1) => [+ comid.endorsed-triple-record],
+       ? &(identity-triples: 2) => [+ comid.identity-triple-record],
+       ? &(attest-key-triples: 3) => [+ comid.attest-key-triple-record],
+       ? &(dependency-triples: 4) => [+ comid.domain-dependency-triple-\
+                                                                record],
+       ? &(membership-triples: 5) => [+ comid.domain-membership-triple-\
+                                                                record],
+       ? &(coswid-triples: 6) => [+ comid.coswid-triple-record],
+       ? &(conditional-endorsement-series-triples: 8) => [+ comid.\
+                          conditional-endorsement-series-triple-record],
+       ? &(conditional-endorsement-triples: 10) => [+ comid.conditional\
+                                            -endorsement-triple-record],
+       * $$triples-map-extension,
+   }>
+   comid.ueid-type = bytes .size (7 .. 33)
+   comid.tagged-ueid-type = #6.550(comid.ueid-type)
+   comid.uuid-type = bytes .size 16
+   comid.tagged-uuid-type = #6.37(comid.uuid-type)
+   comid.version-map = {
+     &(version: 0) => text,
+     ? &(version-scheme: 1) => comid.$version-scheme,
+   }
+   comid.digest = [
+     alg: int / text,
+     val: bytes,
+   ]
+   comid.digests-type = [+ comid.digest]
+   comid.integrity-register-id-type-choice = uint / text
+   comid.integrity-registers = {+ comid.integrity-register-id-type-\
+                                           choice => comid.digests-type}
+   comid.concise-swid-tag = {
+     comid.tag-id => text / bstr .size 16,
+     comid.tag-version => integer,
+     ? comid.corpus => bool,
+     ? comid.patch => bool,
+     ? comid.supplemental => bool,
+     comid.software-name => text,
+     ? comid.software-version => text,
+     ? comid.version-scheme => comid.$version-scheme,
+     ? comid.media => text,
+     ? comid.software-meta => comid.one-or-more<comid.software-meta-\
+                                                                 entry>,
+     comid.entity => comid.one-or-more<comid.entity-entry>,
+     ? comid.link => comid.one-or-more<comid.link-entry>,
+     ? comid.payload-or-evidence,
      * $$coswid-extension,
-     global-attributes,
+     comid.global-attributes,
    }
-
-   payload-or-evidence //= ( payload => payload-entry )
-   payload-or-evidence //= ( evidence => evidence-entry )
-
-   any-uri = uri
-   label = text / int
-
-   $version-scheme /= multipartnumeric
-   $version-scheme /= multipartnumeric-suffix
-   $version-scheme /= alphanumeric
-   $version-scheme /= decimal
-   $version-scheme /= semver
-   $version-scheme /= int / text
-
-   any-attribute = (
-     label => one-or-more<text> / one-or-more<int>
-   )
-
-   one-or-more<T> = T / [ 2* T ]
-
-   global-attributes = (
-     ? lang => text,
-     * any-attribute,
-   )
-
-   hash-entry = [
+   comid.payload-or-evidence //= (comid.payload => comid.payload-entry \
+                              // comid.evidence => comid.evidence-entry)
+   comid.any-uri = uri
+   comid.label = text / int
+   comid.$version-scheme /= comid.multipartnumeric / comid.\
+   multipartnumeric-suffix / comid.alphanumeric / comid.decimal / comid\
+                                                    .semver / int / text
+   comid.any-attribute = (comid.label => comid.one-or-more<text> / \
+                                                 comid.one-or-more<int>)
+   comid.one-or-more<T> = T / [2*T]
+   comid.global-attributes = (
+     ? comid.lang => text,
+     * comid.any-attribute,
+     )
+   comid.hash-entry = [
      hash-alg-id: int,
      hash-value: bytes,
    ]
-
-   entity-entry = {
-     entity-name => text,
-     ? reg-id => any-uri,
-     role => one-or-more<$role>,
-     ? thumbprint => hash-entry,
+   comid.entity-entry = {
+     comid.entity-name => text,
+     ? comid.reg-id => comid.any-uri,
+     comid.role => comid.one-or-more<comid.$role>,
+     ? comid.thumbprint => comid.hash-entry,
      * $$entity-extension,
-     global-attributes,
+     comid.global-attributes,
    }
-
-   $role /= tag-creator
-   $role /= software-creator
-   $role /= aggregator
-   $role /= distributor
-   $role /= licensor
-   $role /= maintainer
-   $role /= int / text
-
-   link-entry = {
-     ? artifact => text,
-     href => any-uri,
-     ? media => text,
-     ? ownership => $ownership,
-     rel => $rel,
-     ? media-type => text,
-     ? use => $use,
+   comid.$role /= comid.tag-creator / comid.software-creator / comid.\
+   aggregator / comid.distributor / comid.licensor / comid.maintainer \
+                                                            / int / text
+   comid.link-entry = {
+     ? comid.artifact => text,
+     comid.href => comid.any-uri,
+     ? comid.media => text,
+     ? comid.ownership => comid.$ownership,
+     comid.rel => comid.$rel,
+     ? comid.media-type => text,
+     ? comid.use => comid.$use,
      * $$link-extension,
-     global-attributes,
+     comid.global-attributes,
    }
-
-   $ownership /= shared
-   $ownership /= private
-   $ownership /= abandon
-   $ownership /= int / text
-
-   $rel /= ancestor
-   $rel /= component
-   $rel /= feature
-   $rel /= installationmedia
-   $rel /= packageinstaller
-   $rel /= parent
-   $rel /= patches
-   $rel /= requires
-   $rel /= see-also
-   $rel /= supersedes
-   $rel /= supplemental
-   $rel /= -256..64436 / text
-
-   $use /= optional
-   $use /= required
-   $use /= recommended
-   $use /= int / text
-
-   software-meta-entry = {
-     ? activation-status => text,
-     ? channel-type => text,
-     ? colloquial-version => text,
-     ? description => text,
-     ? edition => text,
-     ? entitlement-data-required => bool,
-     ? entitlement-key => text,
-     ? generator =>  text / bstr .size 16,
-     ? persistent-id => text,
-     ? product => text,
-     ? product-family => text,
-     ? revision => text,
-     ? summary => text,
-     ? unspsc-code => text,
-     ? unspsc-version => text,
+   comid.$ownership /= comid.shared / comid.private / comid.abandon / \
+                                                              int / text
+   comid.$rel /= comid.ancestor / comid.component / comid.feature / \
+   comid.installationmedia / comid.packageinstaller / comid.parent / \
+   comid.patches / comid.requires / comid.see-also / comid.supersedes \
+                             / comid.supplemental / -256 .. 64436 / text
+   comid.$use /= comid.optional / comid.required / comid.recommended / \
+                                                              int / text
+   comid.software-meta-entry = {
+     ? comid.activation-status => text,
+     ? comid.channel-type => text,
+     ? comid.colloquial-version => text,
+     ? comid.description => text,
+     ? comid.edition => text,
+     ? comid.entitlement-data-required => bool,
+     ? comid.entitlement-key => text,
+     ? comid.generator => text / bstr .size 16,
+     ? comid.persistent-id => text,
+     ? comid.product => text,
+     ? comid.product-family => text,
+     ? comid.revision => text,
+     ? comid.summary => text,
+     ? comid.unspsc-code => text,
+     ? comid.unspsc-version => text,
      * $$software-meta-extension,
-     global-attributes,
+     comid.global-attributes,
    }
-
-   path-elements-group = ( ? directory => one-or-more<directory-entry>,
-                           ? file => one-or-more<file-entry>,
-                         )
-
-   resource-collection = (
-     path-elements-group,
-     ? process => one-or-more<process-entry>,
-     ? resource => one-or-more<resource-entry>,
+   comid.path-elements-group = (
+     ? comid.directory => comid.one-or-more<comid.directory-entry>,
+     ? comid.file => comid.one-or-more<comid.file-entry>,
+     )
+   comid.resource-collection = (
+     comid.path-elements-group,
+     ? comid.process => comid.one-or-more<comid.process-entry>,
+     ? comid.resource => comid.one-or-more<comid.resource-entry>,
      * $$resource-collection-extension,
-   )
-
-   file-entry = {
-     filesystem-item,
-     ? size => uint,
-     ? file-version => text,
-     ? hash => hash-entry,
+     )
+   comid.file-entry = {
+     comid.filesystem-item,
+     ? comid.size => uint,
+     ? comid.file-version => text,
+     ? comid.hash => comid.hash-entry,
      * $$file-extension,
-     global-attributes,
+     comid.global-attributes,
    }
-
-   directory-entry = {
-     filesystem-item,
-     ? path-elements => { path-elements-group },
+   comid.directory-entry = {
+     comid.filesystem-item,
+     ? comid.path-elements => {comid.path-elements-group},
      * $$directory-extension,
-     global-attributes,
+     comid.global-attributes,
    }
-
-   process-entry = {
-     process-name => text,
-     ? pid => integer,
+   comid.process-entry = {
+     comid.process-name => text,
+     ? comid.pid => integer,
      * $$process-extension,
-     global-attributes,
+     comid.global-attributes,
    }
-
-   resource-entry = {
-     type => text,
+   comid.resource-entry = {
+     comid.type => text,
      * $$resource-extension,
-     global-attributes,
+     comid.global-attributes,
    }
-
-   filesystem-item = (
-     ? key => bool,
-     ? location => text,
-     fs-name => text,
-     ? root => text,
-   )
-
-   payload-entry = {
-     resource-collection,
+   comid.filesystem-item = (
+     ? comid.key => bool,
+     ? comid.location => text,
+     comid.fs-name => text,
+     ? comid.root => text,
+     )
+   comid.payload-entry = {
+     comid.resource-collection,
      * $$payload-extension,
-     global-attributes,
+     comid.global-attributes,
    }
-
-   evidence-entry = {
-     resource-collection,
-     ? date => integer-time,
-     ? device-id => text,
-     ? location => text,
+   comid.evidence-entry = {
+     comid.resource-collection,
+     ? comid.date => comid.integer-time,
+     ? comid.device-id => text,
+     ? comid.location => text,
      * $$evidence-extension,
-     global-attributes,
+     comid.global-attributes,
    }
+   comid.integer-time = #6.1(int)
+   comid.tag-id = 0
+   comid.software-name = 1
+   comid.entity = 2
+   comid.evidence = 3
+   comid.link = 4
+   comid.software-meta = 5
+   comid.payload = 6
+   comid.hash = 7
+   comid.corpus = 8
+   comid.patch = 9
+   comid.media = 10
+   comid.supplemental = 11
+   comid.tag-version = 12
+   comid.software-version = 13
+   comid.version-scheme = 14
+   comid.lang = 15
+   comid.directory = 16
+   comid.file = 17
+   comid.process = 18
+   comid.resource = 19
+   comid.size = 20
+   comid.file-version = 21
+   comid.key = 22
+   comid.location = 23
+   comid.fs-name = 24
+   comid.root = 25
+   comid.path-elements = 26
+   comid.process-name = 27
+   comid.pid = 28
+   comid.type = 29
+   comid.entity-name = 31
+   comid.reg-id = 32
+   comid.role = 33
+   comid.thumbprint = 34
+   comid.date = 35
+   comid.device-id = 36
+   comid.artifact = 37
+   comid.href = 38
+   comid.ownership = 39
+   comid.rel = 40
+   comid.media-type = 41
+   comid.use = 42
+   comid.activation-status = 43
+   comid.channel-type = 44
+   comid.colloquial-version = 45
+   comid.description = 46
+   comid.edition = 47
+   comid.entitlement-data-required = 48
+   comid.entitlement-key = 49
+   comid.generator = 50
+   comid.persistent-id = 51
+   comid.product = 52
+   comid.product-family = 53
+   comid.revision = 54
+   comid.summary = 55
+   comid.unspsc-code = 56
+   comid.unspsc-version = 57
+   comid.multipartnumeric = 1
+   comid.multipartnumeric-suffix = 2
+   comid.alphanumeric = 3
+   comid.decimal = 4
+   comid.semver = 16384
+   comid.tag-creator = 1
+   comid.software-creator = 2
+   comid.aggregator = 3
+   comid.distributor = 4
+   comid.licensor = 5
+   comid.maintainer = 6
+   comid.abandon = 1
+   comid.private = 2
+   comid.shared = 3
+   comid.ancestor = 1
+   comid.component = 2
+   comid.feature = 3
+   comid.installationmedia = 4
+   comid.packageinstaller = 5
+   comid.parent = 6
+   comid.patches = 7
+   comid.requires = 8
+   comid.see-also = 9
+   comid.supersedes = 10
+   comid.optional = 1
+   comid.required = 2
+   comid.recommended = 3
 
-   integer-time = #6.1(int)
+A.2.  API Discovery Data Model
 
-   tag-id = 0
-   software-name = 1
-   entity = 2
-   evidence = 3
-   link = 4
-   software-meta = 5
-   payload = 6
-   hash = 7
-   corpus = 8
-   patch = 9
-   media = 10
-   supplemental = 11
-   tag-version = 12
-   software-version = 13
-   version-scheme = 14
-   lang = 15
-   directory = 16
-   file = 17
-   process = 18
-   resource = 19
-   size = 20
-   file-version = 21
-   key = 22
-   location = 23
-   fs-name = 24
-   root = 25
-   path-elements = 26
-   process-name = 27
-   pid = 28
-   type = 29
-   entity-name = 31
-   reg-id = 32
-   role = 33
-   thumbprint = 34
-   date = 35
-   device-id = 36
-   artifact = 37
-   href = 38
-   ownership = 39
-   rel = 40
-   media-type = 41
-   use = 42
-   activation-status = 43
-   channel-type = 44
-   colloquial-version = 45
-   description = 46
-   edition = 47
-   entitlement-data-required = 48
-   entitlement-key = 49
-   generator = 50
-   persistent-id = 51
-   product = 52
-   product-family = 53
-   revision = 54
-   summary = 55
-   unspsc-code = 56
-   unspsc-version = 57
+   =============== NOTE: '\' line wrapping per RFC 8792 ================
 
-   multipartnumeric = 1
-   multipartnumeric-suffix = 2
-   alphanumeric = 3
-   decimal = 4
-   semver = 16384
+   coserv-well-known-info = {
+     version-label => version,
+     capabilities-label => [+ capability],
+     api-endpoints-label => {+ tstr => tstr},
+     ? result-verification-key-label => eat.JC<jwk.JWK_Set, cose.\
+                                                           COSE_KeySet>,
+   }
+   version-label = eat.JC<"version", 1>
+   capabilities-label = eat.JC<"capabilities", 2>
+   api-endpoints-label = eat.JC<"api-endpoints", 3>
+   result-verification-key-label = eat.JC<"result-verification-key", 4>
+   version = tstr
+   capability = {
+     media-type-label => cmw.media-type,
+     artifact-support-label => artifact-support,
+   }
+   media-type-label = eat.JC<"media-type", 1>
+   artifact-support-label = eat.JC<"artifact-support", 2>
+   non-empty-array<M> = M .and ([+ any])
+   artifact-support = non-empty-array<[
+       ? "source",
+       ? "collected",
+   ]>
+   cmw.start = cmw.cmw
+   cmw.cmw = cmw.json-cmw / cmw.cbor-cmw
+   cmw.json-cmw = cmw.json-record / cmw.json-collection
+   cmw.cbor-cmw = cmw.cbor-record / cmw.cbor-collection / cmw.$cbor-tag
+   cmw.json-record = [
+     type: cmw.media-type,
+     value: cmw.base64url-string,
+     ? ind: uint .bits cmw.cm-type,
+   ]
+   cmw.cbor-record = [
+     type: cmw.coap-content-format-type / cmw.media-type,
+     value: bytes,
+     ? ind: uint .bits cmw.cm-type,
+   ]
+   cmw.tag-cm-cbor<tn, fmt> = #6.<tn>(bytes .cbor fmt)
+   cmw.tag-cm-data<tn> = #6.<tn>(bytes)
+   cmw.json-collection = {
+     ? __cmwc_t: ~uri / cmw.oid,
+     + &(label: text) => cmw.json-cmw,
+   }
+   cmw.cbor-collection = {
+     ? __cmwc_t: ~uri / cmw.oid,
+     + &(label: int / text) => cmw.cbor-cmw,
+   }
+   cmw.media-type = text .abnf ("Content-Type" .cat cmw.Content-Type-\
+                                                                   ABNF)
+   cmw.base64url-string = text .regexp "[A-Za-z0-9_-]+"
+   cmw.coap-content-format-type = uint .size 2
+   cmw.oid = text .regexp "([0-2])((\\.0)|(\\.[1-9][0-9]*))*"
+   cmw.cm-type = &(
+     reference-values: 0,
+     endorsements: 1,
+     evidence: 2,
+     attestation-results: 3,
+   )
+   cmw.Content-Type-ABNF = '
 
-   tag-creator=1
-   software-creator=2
-   aggregator=3
-   distributor=4
-   licensor=5
-   maintainer=6
+   Content-Type   = Media-Type-Name *( *SP ";" *SP parameter )
+   parameter      = token "=" ( token / quoted-string )
 
-   abandon=1
-   private=2
-   shared=3
+   token          = 1*tchar
+   tchar          = "!" / "#" / "$" / "%" / "&" / "\'" / "*"
+                  / "+" / "-" / "." / "^" / "_" / "`" / "|" / "~"
+                  / DIGIT / ALPHA
+   quoted-string  = %x22 *( qdtext / quoted-pair ) %x22
+   qdtext         = SP / %x21 / %x23-5B / %x5D-7E
+   quoted-pair    = "\\" ( SP / VCHAR )
 
-   ancestor=1
-   component=2
-   feature=3
-   installationmedia=4
-   packageinstaller=5
-   parent=6
-   patches=7
-   requires=8
-   see-also=9
-   supersedes=10
+   Media-Type-Name = type-name "/" subtype-name
 
-   optional=1
-   required=2
-   recommended=3
+   type-name = restricted-name
+   subtype-name = restricted-name
+
+   restricted-name = restricted-name-first *126restricted-name-chars
+   restricted-name-first  = ALPHA / DIGIT
+   restricted-name-chars  = ALPHA / DIGIT / "!" / "#" /
+                            "$" / "&" / "-" / "^" / "_"
+   restricted-name-chars =/ "." ; Characters before first dot always
+                                ; specify a facet name
+   restricted-name-chars =/ "+" ; Characters after last plus always
+                                ; specify a structured syntax suffix
+
+   DIGIT     =  %x30-39           ; 0 - 9
+   POS-DIGIT =  %x31-39           ; 1 - 9
+   ALPHA     =  %x41-5A / %x61-7A ; A - Z / a - z
+   SP        =  %x20
+   VCHAR     =  %x21-7E           ; printable ASCII (no SP)
+   '
+   cmw.$cbor-tag /= cmw.tag-cm-data<1668576935> / cmw.tag-cm-cbor<\
+                                            1668576819, cmw.my-evidence>
+   cmw.my-evidence = {&(eat_nonce: 10) => bstr .size (8 .. 64)}
+   jwk.JWK = {
+     "kty" => tstr,
+     ? "use" => tstr,
+     ? "key_ops" => [* tstr],
+     ? "alg" => tstr,
+     ? "kid" => tstr,
+     ? "x5u" => tstr,
+     ? "x5c" => [* jwk.bytes-b64u],
+     ? "x5t" => jwk.bytes-b64u,
+     ? "x5t#S256" => jwk.bytes-b64u,
+     ? jwk.RSA-Key-Fields,
+     ? jwk.EC-Key-Fields,
+     ? jwk.Symmetric-Key-Fields,
+   }
+   jwk.JWK_Set = [+ jwk.JWK]
+   jwk.RSA-Key-Fields = (
+     "n" => jwk.bytes-b64u,
+     "e" => jwk.bytes-b64u,
+     ? "d" => jwk.bytes-b64u,
+     ? "p" => jwk.bytes-b64u,
+     ? "q" => jwk.bytes-b64u,
+     ? "dp" => jwk.bytes-b64u,
+     ? "dq" => jwk.bytes-b64u,
+     ? "qi" => jwk.bytes-b64u,
+     )
+   jwk.EC-Key-Fields = (
+     "crv" => tstr,
+     "x" => jwk.bytes-b64u,
+     "y" => jwk.bytes-b64u,
+     ? "d" => jwk.bytes-b64u,
+     )
+   jwk.Symmetric-Key-Fields = ("k" => jwk.bytes-b64u)
+   jwk.bytes-b64u = tstr .b64u bytes
+   eat.JC<J, C> = eat.JSON-ONLY<J> / eat.CBOR-ONLY<C>
+   eat.JSON-ONLY<J> = J .feature "json"
+   eat.CBOR-ONLY<C> = C .feature "cbor"
+   cose.COSE_KeySet = [+ cose.COSE_Key]
+   cose.COSE_Key = {
+     1 => tstr / int,
+     ? 2 => bstr,
+     ? 3 => tstr / int,
+     ? 4 => [+ tstr / int],
+     ? 5 => bstr,
+     * cose.label => cose.values,
+   }
+   cose.label = int / tstr
+   cose.values = any
 
 Appendix B.  OpenAPI Schema
 
    The OpenAPI schema for the request/response HTTP API described in
    Section 6.1 is provided below.
 
-   openapi: '3.0.0'
+openapi: '3.0.0'
 
-   info:
-     title: RR HTTP API
-     description: Request-Response API over HTTP
-     version: '1.0.0alpha'
-   paths:
-     /coserv/{query}:
-       get:
-         summary: Query the CoSERV endpoint.
-         parameters:
-           - in: path
-             name: query
-             schema:
-               type: string
-               format: base64url
-             required: true
-             description: base64url-encoded CoSERV query
-         responses:
-           '200':
-             description: >
-               A CoSERV result set has been successfully computed.
-             content:
-               application/coserv+cbor:
-                 schema:
-                   type: string
-                   format: binary
+info:
+  title: CoSERV HTTP API Binding
+  description: CoSERV HTTP API Binding, including request-response and discovery
+  version: '1.0.0alpha'
+paths:
+  /coserv/{query}:
+    get:
+      summary: Query the CoSERV endpoint.
+      parameters:
+        - in: path
+          name: query
+          schema:
+            type: string
+            format: base64url
+          required: true
+          description: base64url-encoded CoSERV query
+      responses:
+        '200':
+          description: >
+            A CoSERV result set has been successfully computed.
+          content:
+            application/coserv+cose:
+              schema:
+                type: string
+                format: binary
+                description: >
+                  A CoSERV result set enveloped in a COSE Sign1 object.
+        '400':
+          description: >
+            The request was malformed; e.g., the query was not valid base64url,
+            or the CoSERV data item could not be successfully parsed.
+          content:
+            application/concise-problem-details+cbor:
+              schema:
+                type: string
+                format: binary
+                description: >
+                  A CBOR-encoded problem details data item.
+        '406':
+          description: >
+            The server cannot produce a response matching the list of acceptable
+            values defined in the request's 'Accept' header field.  In particular,
+            the client may have specified a CoSERV profile that is not understood or
+            serviceable by the server.
+          content:
+            application/concise-problem-details+cbor:
+              schema:
+                type: string
+                format: binary
+                description: >
+                  A CBOR-encoded problem details data item.
+  /.well-known/coserv-configuration:
+    get:
+      summary: Retrieve the CoSERV configuration document.
+      responses:
+        '200':
+          description: >
+            The CoSERV configuration document has been successfully retrieved.
+          content:
+            application/coserv-discovery+json:
+              schema:
+                type: string
+                format: binary
+                description: >
+                  A JSON-encoded CoSERV configuration document.
+            application/coserv-discovery+cbor:
+              schema:
+                type: string
+                format: binary
+                description: >
+                  A CBOR-encoded CoSERV configuration document.
 
 Acknowledgments
 
