@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-12T00:45:33.146253+00:00",
+  "timestamp": "2025-10-16T00:44:25.695679+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1070,6 +1070,22 @@
           "updatedAt": "2025-10-10T08:50:31Z"
         }
       ]
+    },
+    {
+      "number": 95,
+      "id": "I_kwDOOAZd1M7Ry8yN",
+      "title": "Is result-set optional in coserv results?",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/95",
+      "state": "OPEN",
+      "author": "DhanusML",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Is the `result-set` group optional in coserv result map? \n\nWhen the query artifact type is `collected-artifacts` or `both`, this field gets used, but for artifact type `source-artifacts`, wouldn't the queried results be just the `source-artifacts` (codepoint 11)? Asking this because CDDL given in section 4.4 does not have `?` prefix for `result-set`.",
+      "createdAt": "2025-10-15T22:50:59Z",
+      "updatedAt": "2025-10-15T22:50:59Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
