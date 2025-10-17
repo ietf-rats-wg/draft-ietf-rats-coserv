@@ -307,7 +307,7 @@ The top-level CoSERV data structure is given by the following CDDL:
 
 CoSERV inherits the following types from the CoRIM data model `class-map`, `$class-id-type-choice`, `$instance-id-type-choice` and `$group-id-type-choice`.
 
-The collated CDDL is in {{collated-cddl}}.
+The collated CDDL is in {{collated-cddl-coserv}}.
 
 ## Profile
 
@@ -544,6 +544,8 @@ In either case, the endpoint implementation MUST provide a document that conform
 #### Discovery Document Contents
 
 This section defines how to populate and interpret the data fields in the discovery document.
+
+The collated CDDL is in {{collated-cddl-discovery}}.
 
 ##### Version
 
@@ -1195,14 +1197,18 @@ Related information: N/A
 
 --- back
 
-# Collated CoSERV CDDL {#collated-cddl}
+# Collated CDDL
+
+## CoSERV Data Model {#collated-cddl-coserv}
 
 ~~~
-{::include-fold cddl/coserv.cddl}
+{::include-fold cddl/signed-coserv-autogen.cddl}
+~~~
 
-{::include-fold cddl/environment-selector.cddl}
+## API Discovery Data Model {#collated-cddl-discovery}
 
-{::include-fold cddl/comid-autogen.cddl}
+~~~
+{::include-fold cddl/discovery-autogen.cddl}
 ~~~
 
 # OpenAPI Schema
