@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-16T00:44:25.695679+00:00",
+  "timestamp": "2025-10-19T00:50:59.038206+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1083,9 +1083,17 @@
       "labels": [],
       "body": "Is the `result-set` group optional in coserv result map? \n\nWhen the query artifact type is `collected-artifacts` or `both`, this field gets used, but for artifact type `source-artifacts`, wouldn't the queried results be just the `source-artifacts` (codepoint 11)? Asking this because CDDL given in section 4.4 does not have `?` prefix for `result-set`.",
       "createdAt": "2025-10-15T22:50:59Z",
-      "updatedAt": "2025-10-15T22:50:59Z",
+      "updatedAt": "2025-10-16T07:59:22Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi @DhanusML, thanks for your question!\n\nThe short answer is \"yes, it is optional.\"\n\nThe slightly longer answer is that, in CDDL, the `result-set` group choice starts empty. Then we use the `//=` operator to add alternatives. However, the initial \"empty choice\" remains and accounts for the optionality of the entire group. That's why we don\u2019t need to use `?` here.\n\nPlease note that we ensure the build system checks all examples in the document against the CDDL schema. The second example in [Section 5.2](https://www.ietf.org/archive/id/draft-ietf-rats-coserv-01.html#section-5.2), which contains only source artefacts, illustrates this *checked* behaviour.",
+          "createdAt": "2025-10-16T07:59:22Z",
+          "updatedAt": "2025-10-16T07:59:22Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -4097,6 +4105,48 @@
           "body": "LGTM, thanks!",
           "createdAt": "2025-10-07T12:02:14Z",
           "updatedAt": "2025-10-07T12:02:14Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 96,
+      "id": "PR_kwDOOAZd1M6uB_h5",
+      "title": "use auto generated schemas for the \"collated CDDL\" sections",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/96",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* Instead of joining the relevant pieces together by hand, use the automatically generated (and fully checked) schema files.\r\n\r\n* Add the collated CDDL for the discovery API.\r\n\r\n* Fix refs in the body accordingly.",
+      "createdAt": "2025-10-16T08:19:55Z",
+      "updatedAt": "2025-10-17T13:03:29Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "4799a56bc37c9c983d5019db80f9d0c5b7c25be1",
+      "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "headRefName": "cddl-fix",
+      "headRefOid": "cce6002da0c14283b4adffa58f2d9d528a783ff1",
+      "closedAt": "2025-10-17T11:16:24Z",
+      "mergedAt": "2025-10-17T11:16:24Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "9f5f46b362d676f67a83b9d9c5c44f190cddc46d"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M7HTSx_",
+          "commit": {
+            "abbreviatedOid": "cce6002"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM and much tidier, thanks.",
+          "createdAt": "2025-10-16T08:47:54Z",
+          "updatedAt": "2025-10-16T08:47:54Z",
           "comments": []
         }
       ]
