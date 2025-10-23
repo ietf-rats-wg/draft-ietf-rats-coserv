@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-19T00:50:59.038206+00:00",
+  "timestamp": "2025-10-23T00:44:44.141254+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1029,9 +1029,17 @@
       "labels": [],
       "body": "Hi @paulhowardarm  and team,\n\nI wanted to share another small suggestion (in addition to #92 ) related to artifact freshness in CoSERV result sets.\n\nCurrently, the draft defines two time-related fields: the timestamp in the query (indicating when the Verifier sent the query) and the expiry field in the result set (indicating when the result becomes invalid). However, there is no field that indicates when the aggregator last fetched or validated the artifacts from their original source.\n\nThis can introduce risk in scenarios where the aggregator caches trust anchors or intermediate CA certificates. For example, if the private key of a cached intermediate CA certificate is later compromised and revoked by the vendor, the aggregator might continue serving the revoked certificate to Verifiers. Unless the Verifier already knows the OCSP or CRL endpoint of the original issuer, it would have no way to detect the revocation.\n\nTo improve transparency and freshness guarantees, I propose adding an optional last_updated (or last_refreshed) timestamp to each artifact in the CoSERV result set. This field would record the most recent time when the CoSERV producer (e.g., an aggregator) fetched and validated the artifact from its authoritative source.",
       "createdAt": "2025-10-08T16:48:53Z",
-      "updatedAt": "2025-10-08T16:48:53Z",
+      "updatedAt": "2025-10-21T12:36:34Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi, @NandanDesai - thanks for your interest in CoSERV and for raising these issues. I'm sorry for the delay in getting back to you.\n\nTaking this and https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/92 together, I'd like to explore the possibility that these additional audit-relevant annotations could belong somewhere other than directly in the CoSERV result set data model.\n\nSomething that @thomas-fossati and I have discussed during our work on this draft is the possibility that all CoSERV transactions could be logged by the server as an additional transparency mechanism. Such a log could have additional data fields beyond just the request/response - it could contain detailed records of how, where and when the aggregator contacted the various leaf services within the aggregation process. I tend to think that such things are implementation details of the aggregator, and probably not something that we would expose within the semantics of the result set. I'm a little concerned about bloating the result set, but also about what the downstream consumer would realistically be able to do with such data. Keeping it squirrelled away in a separate transparency log means that the information is available if some kind of disaster happens that requires such a deep level of scrutiny, while keeping the CoSERV result set still reasonably lightweight and focused on the artifacts themselves.\n\nRemember that an aggregator can set caching policies for clients, and should do so based on intelligence about the contributing supply chain actors. For instance, if one of the leaf supply chain actors says that results can be cached for one hour, then the aggregator should not permit its own aggregated results to be cached for longer than that. The validity of aggregated results can never outlive the shortest-lived contributor. I think this invariant probably needs to hold true for both the shallow and deep trust models. These are things that the draft should state more explicitly in its security considerations for aggregators, for which we have another issue logged: https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/67 ",
+          "createdAt": "2025-10-21T12:36:34Z",
+          "updatedAt": "2025-10-21T12:36:34Z"
+        }
+      ]
     },
     {
       "number": 94,
@@ -1076,15 +1084,15 @@
       "id": "I_kwDOOAZd1M7Ry8yN",
       "title": "Is result-set optional in coserv results?",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/95",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DhanusML",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Is the `result-set` group optional in coserv result map? \n\nWhen the query artifact type is `collected-artifacts` or `both`, this field gets used, but for artifact type `source-artifacts`, wouldn't the queried results be just the `source-artifacts` (codepoint 11)? Asking this because CDDL given in section 4.4 does not have `?` prefix for `result-set`.",
       "createdAt": "2025-10-15T22:50:59Z",
-      "updatedAt": "2025-10-16T07:59:22Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-21T18:11:23Z",
+      "closedAt": "2025-10-21T18:11:23Z",
       "comments": [
         {
           "author": "thomas-fossati",
