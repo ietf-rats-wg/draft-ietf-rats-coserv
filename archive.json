@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-09T00:50:11.710196+00:00",
+  "timestamp": "2025-11-16T00:51:33.084325+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1014,15 +1014,15 @@
       "id": "I_kwDOOAZd1M7QKyqO",
       "title": "Suggestion: Add origin_url field to CoSERV response for artifact provenance and auditability",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/92",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "NandanDesai",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Hi @paulhowardarm  and team,\n\nGreat work on this draft! I especially like the introduction of the aggregator role \u2014 it\u2019s a very practical idea for distributing artifacts in a scalable way.\n\nI have a few suggestions you might want to consider.\n\nAs I understand the draft, there isn\u2019t currently a standardized way to identify the canonical source location of a received artifact, particularly when it is obtained from an aggregator. When a Verifier receives an artifact (for example, a source-artifact) from an aggregator, it can verify the artifact\u2019s signature, but there is no guarantee that the aggregator has provided the most recent version, nor is there a way for the Verifier to learn the artifact\u2019s original source location. This makes it difficult for the Verifier to (a) bypass the aggregator in future interactions \u2014 keeping the aggregator truly optional within the CoSERV architecture \u2014 or (b) audit the aggregator\u2019s behavior by comparing artifacts received directly from the source with those received via the aggregator.\n\nTo address this, I propose adding a new optional field in the CoSERV response: origin_url, which would indicate the canonical source location of each artifact.\n\nThe semantics of this field could vary depending on the trust model applied by the Verifier:\n\nDeep Trust model: origin_url MUST point to the original vendor\u2019s (Endorser\u2019s) server, regardless of whether the responding CoSERV entity is an aggregator or the vendor\u2019s own endpoint.\n\nShallow Trust model: origin_url MAY point to the aggregator that produced the collected artifacts, indicating that the aggregator is the effective \u201cauthor\u201d of those artifacts.\n\nI think this addition could strengthen the \u201ctrust-but-verify\u201d principle already mentioned in the draft by giving Verifiers a concrete way to audit or re-verify artifacts directly at their origin.\n\nLet me know what you think!\n\nBest regards,\nNandan Desai",
       "createdAt": "2025-10-07T18:01:28Z",
-      "updatedAt": "2025-10-07T18:01:28Z",
-      "closedAt": null,
+      "updatedAt": "2025-11-15T06:51:18Z",
+      "closedAt": "2025-11-15T06:51:18Z",
       "comments": []
     },
     {
@@ -1030,15 +1030,15 @@
       "id": "I_kwDOOAZd1M7QY4ov",
       "title": "Suggestion: Add last_updated field for artifact freshness",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/93",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "NandanDesai",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Hi @paulhowardarm  and team,\n\nI wanted to share another small suggestion (in addition to #92 ) related to artifact freshness in CoSERV result sets.\n\nCurrently, the draft defines two time-related fields: the timestamp in the query (indicating when the Verifier sent the query) and the expiry field in the result set (indicating when the result becomes invalid). However, there is no field that indicates when the aggregator last fetched or validated the artifacts from their original source.\n\nThis can introduce risk in scenarios where the aggregator caches trust anchors or intermediate CA certificates. For example, if the private key of a cached intermediate CA certificate is later compromised and revoked by the vendor, the aggregator might continue serving the revoked certificate to Verifiers. Unless the Verifier already knows the OCSP or CRL endpoint of the original issuer, it would have no way to detect the revocation.\n\nTo improve transparency and freshness guarantees, I propose adding an optional last_updated (or last_refreshed) timestamp to each artifact in the CoSERV result set. This field would record the most recent time when the CoSERV producer (e.g., an aggregator) fetched and validated the artifact from its authoritative source.",
       "createdAt": "2025-10-08T16:48:53Z",
-      "updatedAt": "2025-10-21T12:36:34Z",
-      "closedAt": null,
+      "updatedAt": "2025-11-15T06:51:00Z",
+      "closedAt": "2025-11-15T06:51:00Z",
       "comments": [
         {
           "author": "paulhowardarm",
