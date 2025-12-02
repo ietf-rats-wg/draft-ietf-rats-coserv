@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-18T00:46:24.993343+00:00",
+  "timestamp": "2025-12-02T00:48:35.961816+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1117,6 +1117,22 @@
           "updatedAt": "2025-10-16T07:59:22Z"
         }
       ]
+    },
+    {
+      "number": 97,
+      "id": "I_kwDOOAZd1M7bUE9x",
+      "title": "Some examples do not use deterministic encoding",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/97",
+      "state": "OPEN",
+      "author": "DhanusML",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The examples `rv-class-simple-results.diag` and `rv-class-stateful.diag` (in `/cddl/examples/`) do not follow deterministic encoding requirements because keys in their measurement values map are not ordered. These examples do not appear in the draft, but they are used by implementations as test vectors.",
+      "createdAt": "2025-12-01T06:32:50Z",
+      "updatedAt": "2025-12-01T06:32:50Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
