@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Informational                                T. Fossati
-Expires: 19 April 2026                                            Linaro
+Expires: 14 June 2026                                             Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 19 April 2026                                            Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                         16 October 2025
+                                                        11 December 2025
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 April 2026.
+   This Internet-Draft will expire on 14 June 2026.
 
 Copyright Notice
 
@@ -1893,16 +1893,16 @@ Table of Contents
    [I-D.ietf-rats-corim]
               Birkholz, H., Fossati, T., Deshpande, Y., Smith, N., and
               W. Pan, "Concise Reference Integrity Manifest", Work in
-              Progress, Internet-Draft, draft-ietf-rats-corim-08, 7 July
-              2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              rats-corim-08>.
+              Progress, Internet-Draft, draft-ietf-rats-corim-09, 20
+              October 2025, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-rats-corim-09>.
 
    [I-D.ietf-rats-msg-wrap]
               Birkholz, H., Smith, N., Fossati, T., Tschofenig, H., and
               D. Glaze, "RATS Conceptual Messages Wrapper (CMW)", Work
-              in Progress, Internet-Draft, draft-ietf-rats-msg-wrap-18,
-              29 September 2025, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-rats-msg-wrap-18>.
+              in Progress, Internet-Draft, draft-ietf-rats-msg-wrap-23,
+              11 December 2025, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-rats-msg-wrap-23>.
 
    [IANA.core-parameters]
               IANA, "Constrained RESTful Environments (CoRE)
@@ -2142,6 +2142,7 @@ A.1.  CoSERV Data Model
      endorsements: 1,
      evidence: 2,
      attestation-results: 3,
+     appraisal-policy: 4,
    )
    cmw.Content-Type-ABNF = '
 
@@ -2176,9 +2177,9 @@ A.1.  CoSERV Data Model
    SP        =  %x20
    VCHAR     =  %x21-7E           ; printable ASCII (no SP)
    '
-   cmw.$cbor-tag /= cmw.tag-cm-data<1668576935> / cmw.tag-cm-cbor<\
-                                            1668576819, cmw.my-evidence>
-   cmw.my-evidence = {&(eat_nonce: 10) => bstr .size (8 .. 64)}
+   cmw.$cbor-tag /= cmw.tag-cm-data<1668612070> / cmw.tag-cm-cbor<\
+                                            1668612069, cmw.my-evidence>
+   cmw.my-evidence = {&(eat_nonce: 10) => bytes .size (8 .. 64)}
    comid.concise-mid-tag = {
      ? &(language: 0) => text,
      &(tag-identity: 1) => comid.tag-identity-map,
@@ -2217,7 +2218,6 @@ A.1.  CoSERV Data Model
      selection: [+ comid.measurement-map],
      addition: [+ comid.measurement-map],
    ]
-   comid.COSE_KeySet = [+ comid.COSE_Key]
    comid.COSE_Key = {
      1 => tstr / int,
      ? 2 => bstr,
@@ -2235,33 +2235,31 @@ A.1.  CoSERV Data Model
    comid.concise-swid-tag-id = text / bstr .size 16
    comid.$crypto-key-type-choice /= comid.tagged-pkix-base64-key-type \
    / comid.tagged-pkix-base64-cert-type / comid.tagged-pkix-base64-cert\
-   -path-type / comid.tagged-cose-key-type / comid.tagged-thumbprint-\
-   type / comid.tagged-cert-thumbprint-type / comid.tagged-cert-path-\
-   thumbprint-type / comid.tagged-pkix-asn1der-cert-type / comid.tagged\
-                                                                  -bytes
+   -path-type / comid.tagged-cose-key-type / comid.tagged-pkix-asn1der-\
+   cert-type / comid.tagged-key-thumbprint-type / comid.tagged-cert-\
+   thumbprint-type / comid.tagged-cert-path-thumbprint-type / comid.\
+                                                            tagged-bytes
    comid.tagged-pkix-base64-key-type = #6.554(tstr)
    comid.tagged-pkix-base64-cert-type = #6.555(tstr)
    comid.tagged-pkix-base64-cert-path-type = #6.556(tstr)
-   comid.tagged-thumbprint-type = #6.557(comid.digest)
-   comid.tagged-cose-key-type = #6.558(comid.COSE_KeySet / comid.\
-                                                               COSE_Key)
+   comid.tagged-key-thumbprint-type = #6.557(comid.digest)
+   comid.tagged-cose-key-type = #6.558(comid.COSE_Key)
    comid.tagged-cert-thumbprint-type = #6.559(comid.digest)
    comid.tagged-cert-path-thumbprint-type = #6.561(comid.digest)
    comid.tagged-pkix-asn1der-cert-type = #6.562(bstr)
    comid.domain-dependency-triple-record = [
-     comid.$domain-type-choice,
-     [+ comid.$domain-type-choice],
+     comid.domain-type,
+     [+ comid.domain-type],
    ]
    comid.domain-membership-triple-record = [
-     comid.$domain-type-choice,
-     [+ comid.environment-map],
+     domain-id: comid.domain-type,
+     members: [+ comid.domain-type],
    ]
    comid.conditional-endorsement-triple-record = [
      conditions: [+ comid.stateful-environment-record],
      endorsements: [+ comid.endorsed-triple-record],
    ]
-   comid.$domain-type-choice /= uint / text / comid.tagged-uuid-type / \
-                                                   comid.tagged-oid-type
+   comid.domain-type = comid.environment-map
    comid.endorsed-triple-record = [
      condition: comid.environment-map,
      endorsement: [+ comid.measurement-map],
@@ -2303,11 +2301,14 @@ A.1.  CoSERV Data Model
    }>,
    ]
    comid.$instance-id-type-choice /= comid.tagged-ueid-type / comid.\
-   tagged-uuid-type / comid.$crypto-key-type-choice / comid.tagged-bytes
+   tagged-uuid-type / comid.tagged-bytes / comid.tagged-pkix-base64-key\
+   -type / comid.tagged-pkix-base64-cert-type / comid.tagged-cose-key-\
+   type / comid.tagged-key-thumbprint-type / comid.tagged-cert-\
+                   thumbprint-type / comid.tagged-pkix-asn1der-cert-type
    comid.ip-addr-type-choice = comid.ip4-addr-type / comid.ip6-addr-type
    comid.ip4-addr-type = bytes .size 4
    comid.ip6-addr-type = bytes .size 16
-   comid.raw-int-type-choice = int / comid.tagged-int-range
+   comid.int-range-type-choice = int / comid.tagged-int-range
    comid.int-range = [
      min: int / comid.negative-inf,
      max: int / comid.positive-inf,
@@ -2337,8 +2338,8 @@ A.1.  CoSERV Data Model
        ? &(flags: 3) => comid.flags-map,
        ? (
                      &(raw-value: 4) => comid.$raw-value-type-choice,
-                     ? &(raw-value-mask: 5) => comid.raw-value-mask-\
-                                                                   type,
+                     ? &(raw-value-mask-DEPRECATED: 5) => comid.raw-\
+                                                        value-mask-type,
              ),
        ? &(mac-addr: 6) => comid.mac-addr-type-choice,
        ? &(ip-addr: 7) => comid.ip-addr-type-choice,
@@ -2348,7 +2349,7 @@ A.1.  CoSERV Data Model
        ? &(name: 11) => text,
        ? &(cryptokeys: 13) => [+ comid.$crypto-key-type-choice],
        ? &(integrity-registers: 14) => comid.integrity-registers,
-       ? &(raw-int: 15) => comid.raw-int-type-choice,
+       ? &(int-range: 15) => comid.int-range-type-choice,
        * $$measurement-values-map-extension,
    }>
    comid.non-empty<M> = M .and ({+ any => any})
@@ -2702,6 +2703,7 @@ A.2.  API Discovery Data Model
      endorsements: 1,
      evidence: 2,
      attestation-results: 3,
+     appraisal-policy: 4,
    )
    cmw.Content-Type-ABNF = '
 
@@ -2736,9 +2738,9 @@ A.2.  API Discovery Data Model
    SP        =  %x20
    VCHAR     =  %x21-7E           ; printable ASCII (no SP)
    '
-   cmw.$cbor-tag /= cmw.tag-cm-data<1668576935> / cmw.tag-cm-cbor<\
-                                            1668576819, cmw.my-evidence>
-   cmw.my-evidence = {&(eat_nonce: 10) => bstr .size (8 .. 64)}
+   cmw.$cbor-tag /= cmw.tag-cm-data<1668612070> / cmw.tag-cm-cbor<\
+                                            1668612069, cmw.my-evidence>
+   cmw.my-evidence = {&(eat_nonce: 10) => bytes .size (8 .. 64)}
    jwk.JWK = {
      "kty" => tstr,
      ? "use" => tstr,
