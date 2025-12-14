@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-02T00:48:35.961816+00:00",
+  "timestamp": "2025-12-14T00:54:57.486544+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -4186,6 +4186,99 @@
           "body": "LGTM and much tidier, thanks.",
           "createdAt": "2025-10-16T08:47:54Z",
           "updatedAt": "2025-10-16T08:47:54Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 98,
+      "id": "PR_kwDOOAZd1M64Xx3M",
+      "title": "chore: update CDDL deps",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/98",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* CMW-23\r\n* CoRIM-09",
+      "createdAt": "2025-12-11T14:31:23Z",
+      "updatedAt": "2025-12-12T08:19:29Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "9f5f46b362d676f67a83b9d9c5c44f190cddc46d",
+      "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "headRefName": "refresh-cddl-deps",
+      "headRefOid": "6d8928aba987ef654e144f09ad017aaf5284281a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M7U0_UU",
+          "commit": {
+            "abbreviatedOid": "6d8928a"
+          },
+          "author": "Xynnn007",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-12-12T07:31:25Z",
+          "updatedAt": "2025-12-12T07:31:29Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I tried locally \n```\ncurl https://github.com/ietf-rats-wg/draft-ietf-rats-msg-wrap/releases/download/cddl-draft-ietf-rats-msg-wrap-23\n```\n\nbut it's \"Not Found\"\n\nIs this expected?",
+              "createdAt": "2025-12-12T07:31:25Z",
+              "updatedAt": "2025-12-12T07:31:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M7U1MAl",
+          "commit": {
+            "abbreviatedOid": "6d8928a"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-12-12T07:50:18Z",
+          "updatedAt": "2025-12-12T07:50:18Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "The URL you tried is not complete. You need to append `/cmw-autogen.cddl`, which is done by `/$@` in the target's recipe in the Makefile.\r\n\r\nIf you try:\r\n```sh\r\ncurl -L https://github.com/ietf-rats-wg/draft-ietf-rats-msg-wrap/releases/download/cddl-draft-ietf-rats-msg-wrap-23/cmw-autogen.cddl\r\n```\r\nit should work.",
+              "createdAt": "2025-12-12T07:50:18Z",
+              "updatedAt": "2025-12-12T07:50:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M7U1a_h",
+          "commit": {
+            "abbreviatedOid": "6d8928a"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks good. Thanks.",
+          "createdAt": "2025-12-12T08:08:57Z",
+          "updatedAt": "2025-12-12T08:08:57Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M7U1ib1",
+          "commit": {
+            "abbreviatedOid": "6d8928a"
+          },
+          "author": "Xynnn007",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-12-12T08:19:29Z",
+          "updatedAt": "2025-12-12T08:19:29Z",
           "comments": []
         }
       ]
