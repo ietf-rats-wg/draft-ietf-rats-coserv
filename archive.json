@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-14T00:54:57.486544+00:00",
+  "timestamp": "2025-12-23T00:50:47.612025+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1131,6 +1131,22 @@
       "body": "The examples `rv-class-simple-results.diag` and `rv-class-stateful.diag` (in `/cddl/examples/`) do not follow deterministic encoding requirements because keys in their measurement values map are not ordered. These examples do not appear in the draft, but they are used by implementations as test vectors.",
       "createdAt": "2025-12-01T06:32:50Z",
       "updatedAt": "2025-12-01T06:32:50Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 99,
+      "id": "I_kwDOOAZd1M7fq49f",
+      "title": "Purpose of having EAT-profile in `ACCEPT` header and inside top-level CoSERV data structure.",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/99",
+      "state": "OPEN",
+      "author": "ajay-fuji",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "## Title\nClarify necessity of CoSERV profile in both media type/Accept header and top-level CoSERV data structure\n## Body\n### Issue\nThe CoSERV EAT-profile identifier appears in two places:\n\n1. top-level CoSERV data structure\n2. \"profile\" parameter in media types (used in Content-Type/Accept headers).\n\nQuestions\n\nWhy both locations? Is the media type parameter for content negotiation, and the top-level field for per-object use?\nWhat problems arise if we remove the media type parameter and use only the top-level field?\n\n\nThanks!",
+      "createdAt": "2025-12-22T06:59:09Z",
+      "updatedAt": "2025-12-22T06:59:09Z",
       "closedAt": null,
       "comments": []
     }
