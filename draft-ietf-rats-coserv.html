@@ -16,25 +16,24 @@
 This document specifies the Concise Selector for Endorsements and Reference Values (CoSERV), a structured query/result format designed to facilitate the discovery and retrieval of these artifacts from various providers.
 CoSERV defines a query language and corresponding result structure using CDDL, which can be serialized in CBOR format, enabling efficient interoperability across diverse systems. 
     " name="description">
-<meta content="xml2rfc 3.30.2" name="generator">
+<meta content="xml2rfc 3.31.0" name="generator">
 <meta content="RATS" name="keyword">
 <meta content="attestation" name="keyword">
 <meta content="endorsement" name="keyword">
 <meta content="reference value" name="keyword">
 <meta content="draft-ietf-rats-coserv-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.30.2
-    Python 3.12.11
+  xml2rfc 3.31.0
+    Python 3.12.12
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
-    intervaltree 3.1.0
+    intervaltree 3.2.1
     Jinja2 3.1.6
-    lxml 5.3.1
-    platformdirs 4.4.0
+    lxml 6.0.2
+    platformdirs 4.5.1
     pycountry 24.6.1
-    PyYAML 6.0.2
+    PyYAML 6.0.3
     requests 2.32.5
-    setuptools 80.9.0
     wcwidth 0.2.14
 -->
 <link href="draft-ietf-rats-coserv.xml" rel="alternate" type="application/rfc+xml">
@@ -1054,11 +1053,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CoSERV</td>
-<td class="right">October 2025</td>
+<td class="right">January 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Howard, et al.</td>
-<td class="center">Expires 20 April 2026</td>
+<td class="center">Expires 20 July 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1071,12 +1070,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-rats-coserv-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-10-17" class="published">17 October 2025</time>
+<time datetime="2026-01-16" class="published">16 January 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-04-20">20 April 2026</time></dd>
+<dd class="expires"><time datetime="2026-07-20">20 July 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1148,7 +1147,7 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 20 April 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 20 July 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1157,7 +1156,7 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2025 IETF Trust and the persons identified as the
+            Copyright (c) 2026 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1398,7 +1397,7 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 <p id="section-1.1-2">This document uses terms and concepts defined by the RATS architecture.
 For a complete glossary, see <span><a href="https://rfc-editor.org/rfc/rfc9334#section-4" class="relref">Section 4</a> of [<a href="#RFC9334" class="cite xref">RFC9334</a>]</span>.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.1-3">This document uses terms and concepts defined by the CoRIM specification.
-For a complete glossary, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-08#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+For a complete glossary, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
 <p id="section-1.1-4">This document uses the terms <em>"actual state"</em> and <em>"reference state"</em> as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-07#section-2" class="relref">Section 2</a> of [<a href="#I-D.ietf-rats-endorsements" class="cite xref">I-D.ietf-rats-endorsements</a>]</span>.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
 <p id="section-1.1-5">The terminology from CBOR <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>, CDDL <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> and COSE <span>[<a href="#STD96" class="cite xref">STD96</a>]</span> applies;
 in particular, CBOR diagnostic notation is defined in <span><a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">Section 8</a> of [<a href="#STD94" class="cite xref">STD94</a>]</span>
@@ -1485,11 +1484,11 @@ These correspond to the three categories of endorsement artifact that can be ide
 An example of a trust anchor would be the public part of the asymmetric signing key that is used by the Attester to sign Evidence, such that the Verifier can verify the cryptographic signature.<a href="#section-3.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.2-2.2">
-            <p id="section-3.2-2.2.1"><strong>Endorsed Value</strong>: An endorsed value is as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-08#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
+            <p id="section-3.2-2.2.1"><strong>Endorsed Value</strong>: An endorsed value is as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
 This represents a characteristic of the Attester that is not directly presented in the Evidence, such as certification data related to a hardware or firmware module.<a href="#section-3.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.2-2.3">
-            <p id="section-3.2-2.3.1"><strong>Reference Value</strong>: A reference value is as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-08#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
+            <p id="section-3.2-2.3.1"><strong>Reference Value</strong>: A reference value is as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
 A reference value specifies an individual aspect of the Attester's desired state.
 Reference values are sometimes informally called "golden values".
 An example of a reference value would be the expected hash or checksum of a binary firmware or software image running in the Attester's environment.
@@ -1618,7 +1617,7 @@ Source materials would typically be requested in cases where the consumer is not
 </li>
         </ul>
 <p id="section-3.5-3">Each individual result entry combines a CoMID triple with an authority delegation chain.
-CoMID triples are exactly as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-08#section-5.1.4" class="relref">Section 5.1.4</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
+CoMID triples are exactly as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09#section-5.1.4" class="relref">Section 5.1.4</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
 Each CoMID triple will demonstrate the association between an environment matching that of the CoSERV query, and a single artifact such as a reference value, trust anchor or endorsed value.
 The authority delegation chain is composed of one or more authority delegates.
 Each authority delegate is represented by a public key or key identifier, which the consumer can check against its own set of trusted authorities.
@@ -3422,11 +3421,11 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <dl class="references">
 <dt id="I-D.ietf-rats-corim">[I-D.ietf-rats-corim]</dt>
         <dd>
-<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Deshpande, Y.</span>, <span class="refAuthor">Smith, N.</span>, and <span class="refAuthor">W. Pan</span>, <span class="refTitle">"Concise Reference Integrity Manifest"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-corim-08</span>, <time datetime="2025-07-07" class="refDate">7 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-08">https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-08</a>&gt;</span>. </dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Deshpande, Y.</span>, <span class="refAuthor">Smith, N.</span>, and <span class="refAuthor">W. Pan</span>, <span class="refTitle">"Concise Reference Integrity Manifest"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-corim-09</span>, <time datetime="2025-10-20" class="refDate">20 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09">https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-rats-msg-wrap">[I-D.ietf-rats-msg-wrap]</dt>
         <dd>
-<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Smith, N.</span>, <span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Tschofenig, H.</span>, and <span class="refAuthor">D. Glaze</span>, <span class="refTitle">"RATS Conceptual Messages Wrapper (CMW)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-msg-wrap-18</span>, <time datetime="2025-09-29" class="refDate">29 September 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-msg-wrap-18">https://datatracker.ietf.org/doc/html/draft-ietf-rats-msg-wrap-18</a>&gt;</span>. </dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Smith, N.</span>, <span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Tschofenig, H.</span>, and <span class="refAuthor">D. Glaze</span>, <span class="refTitle">"RATS Conceptual Messages Wrapper (CMW)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-msg-wrap-23</span>, <time datetime="2025-12-11" class="refDate">11 December 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-msg-wrap-23">https://datatracker.ietf.org/doc/html/draft-ietf-rats-msg-wrap-23</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="IANA.core-parameters">[IANA.core-parameters]</dt>
         <dd>
@@ -3668,6 +3667,7 @@ cmw.cm-type = &amp;(
   endorsements: 1,
   evidence: 2,
   attestation-results: 3,
+  appraisal-policy: 4,
 )
 cmw.Content-Type-ABNF = '
 
@@ -3702,9 +3702,9 @@ ALPHA     =  %x41-5A / %x61-7A ; A - Z / a - z
 SP        =  %x20
 VCHAR     =  %x21-7E           ; printable ASCII (no SP)
 '
-cmw.$cbor-tag /= cmw.tag-cm-data&lt;1668576935&gt; / cmw.tag-cm-cbor&lt;\
-                                         1668576819, cmw.my-evidence&gt;
-cmw.my-evidence = {&amp;(eat_nonce: 10) =&gt; bstr .size (8 .. 64)}
+cmw.$cbor-tag /= cmw.tag-cm-data&lt;1668612070&gt; / cmw.tag-cm-cbor&lt;\
+                                         1668612069, cmw.my-evidence&gt;
+cmw.my-evidence = {&amp;(eat_nonce: 10) =&gt; bytes .size (8 .. 64)}
 comid.concise-mid-tag = {
   ? &amp;(language: 0) =&gt; text,
   &amp;(tag-identity: 1) =&gt; comid.tag-identity-map,
@@ -3743,7 +3743,6 @@ comid.conditional-series-record = [
   selection: [+ comid.measurement-map],
   addition: [+ comid.measurement-map],
 ]
-comid.COSE_KeySet = [+ comid.COSE_Key]
 comid.COSE_Key = {
   1 =&gt; tstr / int,
   ? 2 =&gt; bstr,
@@ -3761,33 +3760,31 @@ comid.coswid-triple-record = [
 comid.concise-swid-tag-id = text / bstr .size 16
 comid.$crypto-key-type-choice /= comid.tagged-pkix-base64-key-type \
 / comid.tagged-pkix-base64-cert-type / comid.tagged-pkix-base64-cert\
--path-type / comid.tagged-cose-key-type / comid.tagged-thumbprint-\
-type / comid.tagged-cert-thumbprint-type / comid.tagged-cert-path-\
-thumbprint-type / comid.tagged-pkix-asn1der-cert-type / comid.tagged\
-                                                               -bytes
+-path-type / comid.tagged-cose-key-type / comid.tagged-pkix-asn1der-\
+cert-type / comid.tagged-key-thumbprint-type / comid.tagged-cert-\
+thumbprint-type / comid.tagged-cert-path-thumbprint-type / comid.\
+                                                         tagged-bytes
 comid.tagged-pkix-base64-key-type = #6.554(tstr)
 comid.tagged-pkix-base64-cert-type = #6.555(tstr)
 comid.tagged-pkix-base64-cert-path-type = #6.556(tstr)
-comid.tagged-thumbprint-type = #6.557(comid.digest)
-comid.tagged-cose-key-type = #6.558(comid.COSE_KeySet / comid.\
-                                                            COSE_Key)
+comid.tagged-key-thumbprint-type = #6.557(comid.digest)
+comid.tagged-cose-key-type = #6.558(comid.COSE_Key)
 comid.tagged-cert-thumbprint-type = #6.559(comid.digest)
 comid.tagged-cert-path-thumbprint-type = #6.561(comid.digest)
 comid.tagged-pkix-asn1der-cert-type = #6.562(bstr)
 comid.domain-dependency-triple-record = [
-  comid.$domain-type-choice,
-  [+ comid.$domain-type-choice],
+  comid.domain-type,
+  [+ comid.domain-type],
 ]
 comid.domain-membership-triple-record = [
-  comid.$domain-type-choice,
-  [+ comid.environment-map],
+  domain-id: comid.domain-type,
+  members: [+ comid.domain-type],
 ]
 comid.conditional-endorsement-triple-record = [
   conditions: [+ comid.stateful-environment-record],
   endorsements: [+ comid.endorsed-triple-record],
 ]
-comid.$domain-type-choice /= uint / text / comid.tagged-uuid-type / \
-                                                comid.tagged-oid-type
+comid.domain-type = comid.environment-map
 comid.endorsed-triple-record = [
   condition: comid.environment-map,
   endorsement: [+ comid.measurement-map],
@@ -3829,11 +3826,14 @@ comid.identity-triple-record = [
 }&gt;,
 ]
 comid.$instance-id-type-choice /= comid.tagged-ueid-type / comid.\
-tagged-uuid-type / comid.$crypto-key-type-choice / comid.tagged-bytes
+tagged-uuid-type / comid.tagged-bytes / comid.tagged-pkix-base64-key\
+-type / comid.tagged-pkix-base64-cert-type / comid.tagged-cose-key-\
+type / comid.tagged-key-thumbprint-type / comid.tagged-cert-\
+                thumbprint-type / comid.tagged-pkix-asn1der-cert-type
 comid.ip-addr-type-choice = comid.ip4-addr-type / comid.ip6-addr-type
 comid.ip4-addr-type = bytes .size 4
 comid.ip6-addr-type = bytes .size 16
-comid.raw-int-type-choice = int / comid.tagged-int-range
+comid.int-range-type-choice = int / comid.tagged-int-range
 comid.int-range = [
   min: int / comid.negative-inf,
   max: int / comid.positive-inf,
@@ -3863,8 +3863,8 @@ comid.measurement-values-map = comid.non-empty&lt;{
     ? &amp;(flags: 3) =&gt; comid.flags-map,
     ? (
                   &amp;(raw-value: 4) =&gt; comid.$raw-value-type-choice,
-                  ? &amp;(raw-value-mask: 5) =&gt; comid.raw-value-mask-\
-                                                                type,
+                  ? &amp;(raw-value-mask-DEPRECATED: 5) =&gt; comid.raw-\
+                                                     value-mask-type,
           ),
     ? &amp;(mac-addr: 6) =&gt; comid.mac-addr-type-choice,
     ? &amp;(ip-addr: 7) =&gt; comid.ip-addr-type-choice,
@@ -3874,7 +3874,7 @@ comid.measurement-values-map = comid.non-empty&lt;{
     ? &amp;(name: 11) =&gt; text,
     ? &amp;(cryptokeys: 13) =&gt; [+ comid.$crypto-key-type-choice],
     ? &amp;(integrity-registers: 14) =&gt; comid.integrity-registers,
-    ? &amp;(raw-int: 15) =&gt; comid.raw-int-type-choice,
+    ? &amp;(int-range: 15) =&gt; comid.int-range-type-choice,
     * $$measurement-values-map-extension,
 }&gt;
 comid.non-empty&lt;M&gt; = M .and ({+ any =&gt; any})
@@ -4236,6 +4236,7 @@ cmw.cm-type = &amp;(
   endorsements: 1,
   evidence: 2,
   attestation-results: 3,
+  appraisal-policy: 4,
 )
 cmw.Content-Type-ABNF = '
 
@@ -4270,9 +4271,9 @@ ALPHA     =  %x41-5A / %x61-7A ; A - Z / a - z
 SP        =  %x20
 VCHAR     =  %x21-7E           ; printable ASCII (no SP)
 '
-cmw.$cbor-tag /= cmw.tag-cm-data&lt;1668576935&gt; / cmw.tag-cm-cbor&lt;\
-                                         1668576819, cmw.my-evidence&gt;
-cmw.my-evidence = {&amp;(eat_nonce: 10) =&gt; bstr .size (8 .. 64)}
+cmw.$cbor-tag /= cmw.tag-cm-data&lt;1668612070&gt; / cmw.tag-cm-cbor&lt;\
+                                         1668612069, cmw.my-evidence&gt;
+cmw.my-evidence = {&amp;(eat_nonce: 10) =&gt; bytes .size (8 .. 64)}
 jwk.JWK = {
   "kty" =&gt; tstr,
   ? "use" =&gt; tstr,
