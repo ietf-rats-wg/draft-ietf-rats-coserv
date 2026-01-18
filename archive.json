@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-23T00:50:47.612025+00:00",
+  "timestamp": "2026-01-18T00:56:49.178887+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -4211,24 +4211,26 @@
       "id": "PR_kwDOOAZd1M64Xx3M",
       "title": "chore: update CDDL deps",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/98",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "* CMW-23\r\n* CoRIM-09",
       "createdAt": "2025-12-11T14:31:23Z",
-      "updatedAt": "2025-12-12T08:19:29Z",
+      "updatedAt": "2026-01-16T16:38:19Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "9f5f46b362d676f67a83b9d9c5c44f190cddc46d",
       "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "headRefName": "refresh-cddl-deps",
       "headRefOid": "6d8928aba987ef654e144f09ad017aaf5284281a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-01-16T16:38:15Z",
+      "mergedAt": "2026-01-16T16:38:14Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "cfda3fce3cc6ea3eb810134c839de15ba67ac05a"
+      },
       "comments": [],
       "reviews": [
         {
