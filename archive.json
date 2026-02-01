@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-18T00:56:49.178887+00:00",
+  "timestamp": "2026-02-01T01:11:35.293972+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -575,11 +575,13 @@
       "state": "OPEN",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "Queries have a non-optional RFC3339 timestamp attached.\n\nThe rationale is captured in #28.\n\nAt the time, we overlooked the fact that this field may adversely affect the caching properties that the coserv payloads require.\n\nLong story short: we should remove the field and add something SCITT-y, instead.\n",
       "createdAt": "2025-07-25T09:33:26Z",
-      "updatedAt": "2025-07-25T09:33:41Z",
+      "updatedAt": "2026-01-30T12:22:40Z",
       "closedAt": null,
       "comments": []
     },
@@ -820,9 +822,17 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:28:52Z",
-      "updatedAt": "2025-09-30T11:28:52Z",
+      "updatedAt": "2026-01-30T15:26:22Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "While this is an important question, I'm not sure it's in scope for the CoSERV draft itself, and also I doubt there's a single answer.\n\nPerhaps the draft could have an illustrative section on this, at least to acknowledge the problem and cover possible solutions (but without prescribing a solution).\n\nWe certainly can't put it into the CoSERV data model, because that would obviously be circular!\n\n@henkbirkholz has a draft for [MUD-based discovery of RATS resources](https://datatracker.ietf.org/doc/draft-ietf-iotops-mud-rats/) which might provide one possible solution.\n\nAlternatively, there could be one or more data fields in the evidence which provide a reference to the suitable CoSERV endpoint(s).\n\nIt could also be done out of band, wherein it effectively becomes a-priori knowledge at the Verifier.",
+          "createdAt": "2026-01-30T15:26:22Z",
+          "updatedAt": "2026-01-30T15:26:22Z"
+        }
+      ]
     },
     {
       "number": 79,
@@ -832,13 +842,23 @@
       "state": "OPEN",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:28:55Z",
-      "updatedAt": "2025-09-30T11:28:55Z",
+      "updatedAt": "2026-01-30T15:30:37Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The draft is agnostic on this point, and it's an implementation detail really.\n\nThere could be a situation where a CoSERV-enabled aggregator needs to use proprietary (non-CoSERV) APIs to talk to particular vendor services to get the source information.\n\nOr, in the future, maybe one or more of those vendor services are themselves CoSERV native.\n\nIt doesn't really matter.\n\nBut we can certainly add text to this effect into the draft.",
+          "createdAt": "2026-01-30T15:30:30Z",
+          "updatedAt": "2026-01-30T15:30:30Z"
+        }
+      ]
     },
     {
       "number": 80,
@@ -900,9 +920,17 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:10Z",
-      "updatedAt": "2025-09-30T11:29:10Z",
+      "updatedAt": "2026-01-30T15:15:08Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This is similar although not identical to https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/93.\n\nWe've previously thought about a SCITT-based mechanism for logging all CoSERV queries and results, which would be in a data structure distinct from the results themselves. This could include timestamps and additional audit information.\n\nThen again, maybe just adding a timestamp to the result set is simple and informative enough to be worth doing.\n\n@thomas-fossati any opinion here?",
+          "createdAt": "2026-01-30T15:15:08Z",
+          "updatedAt": "2026-01-30T15:15:08Z"
+        }
+      ]
     },
     {
       "number": 84,
@@ -912,13 +940,23 @@
       "state": "OPEN",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:13Z",
-      "updatedAt": "2025-09-30T11:29:13Z",
+      "updatedAt": "2026-01-30T15:07:46Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We want to avoid being opinionated on the specific use of trust anchors. This is more of a deployment question, as is the number of \"buckets\" of trust anchors needed.\n\nPerhaps we could document some illustrative examples here, although we'd have to be clear that they are informative examples only. The current definition of \"trust anchor\" doesn't make this clear enough.\n\nFor example, one common pattern might be for the evidence to be signed by a leaf certificate that is bundled with the evidence (such as in a COSE x5 header). With this certificate arriving at the verifier in same breath as the evidence, there wouldn't then be a need to obtain it through a CoSERV query. However, CoSERV might be the source of the intermediate/root certificates needed to complete the chain. This might result in a class-level CoSERV query based on the entire product family or something.\n\nWe probably should make it clear in the draft that multiple distinct CoSERV queries might be needed to obtain all of the artifacts needed to perform a verification. This is especially the case given the constraints in the data model: it's not possible to get instance-level and class-level artifacts in the same query.",
+          "createdAt": "2026-01-30T15:07:39Z",
+          "updatedAt": "2026-01-30T15:07:39Z"
+        }
+      ]
     },
     {
       "number": 85,
@@ -928,11 +966,13 @@
       "state": "OPEN",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:16Z",
-      "updatedAt": "2025-09-30T11:29:16Z",
+      "updatedAt": "2026-01-30T14:47:08Z",
       "closedAt": null,
       "comments": []
     },
@@ -944,13 +984,23 @@
       "state": "OPEN",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:19Z",
-      "updatedAt": "2025-09-30T11:29:19Z",
+      "updatedAt": "2026-01-30T14:55:17Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The terms \"producer\" and \"consumer\" are used consistently (I hope) throughout the draft to refer to the two participants in a CoSERV transaction. The consumer creates the query and handles the result. The producer receives the query and generates the result (even if it's an aggregated result).\n\nI suppose it's possible for an aggregator to be both a consumer and a producer simultaneously, if it needs to reach out to other CoSERV endpoints in order to build the query result. But this does not change the fact that it's a producer.\n\nHowever, maybe \"the recipient of the query\" is clearer than \"the implementation of the artifact producer\".",
+          "createdAt": "2026-01-30T14:55:06Z",
+          "updatedAt": "2026-01-30T14:55:06Z"
+        }
+      ]
     },
     {
       "number": 87,
@@ -964,9 +1014,17 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:22Z",
-      "updatedAt": "2025-09-30T11:29:22Z",
+      "updatedAt": "2026-01-30T14:45:10Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This might effectively be the same observation as https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/12 \n\nThere is currently a dissonance in the draft with regards to whether profile-defined result extensions are supported. In https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/12 we argue that we should not tread the extension path lightly.\n\nPerhaps the correct fix here is to remove the `$$result-set-extensions` socket from the result type CDDL, given that there is no clear need for it.\n\nCoSERV results are permitted to carry arbitrary CMW-wrapped \"source artifacts\", labelled by media type. This might be the only extension mechanism that we need.\n\nThe classification into \"trust anchors\", \"reference values\" and \"endorsed values\" is more of a RATS conceptual thing, rather than a baseline list that we expect people to extend.\n\n@thomas-fossati what do you think?",
+          "createdAt": "2026-01-30T14:45:10Z",
+          "updatedAt": "2026-01-30T14:45:10Z"
+        }
+      ]
     },
     {
       "number": 88,
@@ -976,11 +1034,13 @@
       "state": "OPEN",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:28Z",
-      "updatedAt": "2025-09-30T11:29:28Z",
+      "updatedAt": "2026-01-30T14:36:26Z",
       "closedAt": null,
       "comments": []
     },
@@ -992,13 +1052,23 @@
       "state": "OPEN",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:32Z",
-      "updatedAt": "2025-09-30T11:29:32Z",
+      "updatedAt": "2026-01-30T14:31:31Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Agree this is confusing, and I think it dates from the more embryonic phases of the CoSERV definition, where it was only a query language, and the output was left unspecified. The way it's defined now, it clearly is a conveyor of Endorsements and Reference Values.\n\nAs I read it now, I think maybe that whole first paragraph in sec-cons needs to be scrapped. I can think of better ways to introduce the sec-cons section now that CoSERV has evolved somewhat.",
+          "createdAt": "2026-01-30T14:31:19Z",
+          "updatedAt": "2026-01-30T14:31:19Z"
+        }
+      ]
     },
     {
       "number": 90,
@@ -1012,9 +1082,24 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:40Z",
-      "updatedAt": "2025-09-30T11:29:40Z",
+      "updatedAt": "2026-01-30T23:05:29Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi @carl-wallace - could you help me to understand this point that we captured from your review of CoSERV last year?\n\nIs there a threat scenario that you had in mind with this comment?\n\nAt the moment, CoSERV is just a mechanism for querying and carrying artifacts, and we've tried to keep it quite generic in the sense that we don't differentiate between the different types of artifact (trust anchors, refvals, endorsed vals).\n\nCan you spell out the \"very different\" security considerations with trust anchors? I get that they are foundational to any trust model, but I'm unclear on why this means they need to be conveyed differently.",
+          "createdAt": "2026-01-30T14:20:26Z",
+          "updatedAt": "2026-01-30T14:20:26Z"
+        },
+        {
+          "author": "carl-wallace",
+          "authorAssociation": "NONE",
+          "body": "I was not suggesting they need to be conveyed differently but that a CoSERV instance responsible for delivering trust anchors may be operated with more rigor than one that distributes artifacts that are otherwise secured. There're lots of words about trust anchor management requirements in the PKIX document archive, including the draft you referenced and RFCs 5914 and 5934. To some extent, you could argue the security considerations from RFC 5934 apply to a CoSERV instance doing TA management.\n\nAs a simple example, it may be perfectly fine to operate a CoSERV instance that mirrors endorsements (which are \"secure statements\") using a key secured by a software crypto module but you may want to use a hardware crypto module for an instance handling TA management.",
+          "createdAt": "2026-01-30T23:05:29Z",
+          "updatedAt": "2026-01-30T23:05:29Z"
+        }
+      ]
     },
     {
       "number": 92,
@@ -1064,11 +1149,13 @@
       "state": "OPEN",
       "author": "paulhowardarm",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "[\u00a76.1.1](https://www.ietf.org/archive/id/draft-ietf-rats-coserv-01.html#section-6.1.1) says that the `.well-known/coserv-configuration` discovery endpoint MUST return HTTP 200 unless there is an error condition beyond the scope of the specification.\n\nThis is probably wrong, because a poorly-behaved client might have set the `Accept` header with an inappropriate media type (e.g. one that is neither `application/coserv-discovery+json` or `application/coserv-discovery+cbor`. If this happens, then the draft needs to permit the server to return HTTP 406.\n\nRelated to this, the draft is unclear on whether it is mandatory for servers to support both JSON and CBOR for discovery documents in all cases. For example, if a service were to support only JSON, would that still be compliant? If the answer is \"yes\", then once again we need to allow the 406 return type if the client requests CBOR. And vice versa.\n",
       "createdAt": "2025-10-09T12:36:52Z",
-      "updatedAt": "2025-10-10T08:50:31Z",
+      "updatedAt": "2026-01-30T12:23:18Z",
       "closedAt": null,
       "comments": [
         {
@@ -1126,13 +1213,30 @@
       "state": "OPEN",
       "author": "DhanusML",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "The examples `rv-class-simple-results.diag` and `rv-class-stateful.diag` (in `/cddl/examples/`) do not follow deterministic encoding requirements because keys in their measurement values map are not ordered. These examples do not appear in the draft, but they are used by implementations as test vectors.",
       "createdAt": "2025-12-01T06:32:50Z",
-      "updatedAt": "2025-12-01T06:32:50Z",
+      "updatedAt": "2026-01-30T18:46:06Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi @DhanusML - can I just double check? Is the problem that the `name` field (code point 11) is above the `digests` field (code point 2)? This is the only potential issue I can see, but I want to make sure I'm not missing anything.",
+          "createdAt": "2026-01-30T15:37:12Z",
+          "updatedAt": "2026-01-30T15:37:12Z"
+        },
+        {
+          "author": "DhanusML",
+          "authorAssociation": "NONE",
+          "body": "Yes, that is the issue.",
+          "createdAt": "2026-01-30T18:44:25Z",
+          "updatedAt": "2026-01-30T18:44:25Z"
+        }
+      ]
     },
     {
       "number": 99,
