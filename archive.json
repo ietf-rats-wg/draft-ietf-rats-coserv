@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-01T01:11:35.293972+00:00",
+  "timestamp": "2026-02-03T01:05:01.489727+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -790,9 +790,17 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:28:36Z",
-      "updatedAt": "2025-09-30T11:28:36Z",
+      "updatedAt": "2026-02-02T14:41:20Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Not sure about the underlying assumption that:\n\n> _\"Endorsements are secure statements and Reference Values are not\u201d_\n\nI interpret \"secure statement\u201d as meaning \u201ca statement that is signed by a trusted source\u201d.  Therefore, I am unsure why endorsements (i.e., statements about the _actual_ state of an attester) would be different from reference values (i.e., statements about the _expected_ state of an attester) in terms of their security.\n\n@carl-wallace can you please explain what you mean by \u201csecure statement\u201d in this context?\n\nSee also https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/80#issuecomment-3833955393",
+          "createdAt": "2026-02-02T14:41:20Z",
+          "updatedAt": "2026-02-02T14:41:20Z"
+        }
+      ]
     },
     {
       "number": 77,
@@ -806,9 +814,17 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:28:49Z",
-      "updatedAt": "2025-09-30T11:28:49Z",
+      "updatedAt": "2026-02-02T16:19:53Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm not sure I understand the suggestion: the attestation results are not computed by the CoSERV endpoint.\n\nMoreover, the SCVP analogy seems more suited to the role of verifier than a supply chain interface.",
+          "createdAt": "2026-02-02T16:19:53Z",
+          "updatedAt": "2026-02-02T16:19:53Z"
+        }
+      ]
     },
     {
       "number": 78,
@@ -872,9 +888,17 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:00Z",
-      "updatedAt": "2025-09-30T11:29:00Z",
+      "updatedAt": "2026-02-02T13:00:44Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We expect the aggregator to sign the `coserv` object, thereby taking responsibility for any endorsements and reference values contained in the result. In other words, they are producing a _\"secure statement\u201d_ about the attester's actual and expected state.  So, at a high level, I don't think we're talking rubbish.\n\nThat said, there are effectively two slightly different cases:\n\n1. The client doesn\u2019t ask for source artefacts (\"shallow trust\u201d).  In this case, the aggregator is the sole source of authority for the specific endorsements/reference values \u2014 it's a \u201cpure\" endorser in the client's eyes.\n3. The client asks for source artefacts (\u201cdeep trust\").  In this case, the client can independently verify the statement made by the aggregator against what the upstream endorser/reference value provider said.  However, the aggregator is still trusted to provide complete and up-to-date source artefacts, so I don't think the aggregator's ability to produce \u201ctrusted & secure statements\" about the attester's actual and expected state is significantly reduced to justify changing its label.",
+          "createdAt": "2026-02-02T09:26:08Z",
+          "updatedAt": "2026-02-02T13:00:44Z"
+        }
+      ]
     },
     {
       "number": 81,
@@ -888,9 +912,17 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:03Z",
-      "updatedAt": "2025-09-30T11:29:03Z",
+      "updatedAt": "2026-02-02T08:47:58Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm not sure that I understand the comment.\n\nCaching is one of CoSERV's goals.  As we state in the overview:\n\n> _\u201dIt might be expensive to compute the result set for a query, which would make caching desirable.\"_\n\nAdding a nonce would prevent caching altogether.",
+          "createdAt": "2026-02-02T08:47:58Z",
+          "updatedAt": "2026-02-02T08:47:58Z"
+        }
+      ]
     },
     {
       "number": 82,
