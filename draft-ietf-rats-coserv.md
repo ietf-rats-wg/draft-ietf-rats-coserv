@@ -194,6 +194,10 @@ These correspond to the three categories of endorsement artifact that can be ide
 
 - **Trust Anchor**: A trust anchor is as defined in {{RFC6024}}.
 An example of a trust anchor would be the public part of the asymmetric signing key that is used by the Attester to sign Evidence, such that the Verifier can verify the cryptographic signature.
+This is just one example.
+Other forms of trust anchor are possible.
+CoSERV does not place any additional requirements or constraints on the conveyance or use of trust anchors, beyond what is already described in {{RFC9334}} and {{-rats-endorsements}}.
+{{Section 4 of -rats-endorsements}} sets out the applicable patterns for the endorsement of verification keys, all of which apply equally here.
 - **Endorsed Value**: An endorsed value is as defined in {{Section 1.1.1 of -rats-corim}}.
 This represents a characteristic of the Attester that is not directly presented in the Evidence, such as certification data related to a hardware or firmware module.
 - **Reference Value**: A reference value is as defined in {{Section 1.1.1 of -rats-corim}}.
