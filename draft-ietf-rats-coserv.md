@@ -103,9 +103,6 @@ This facilitates the efficient discovery and retrieval of relevant Endorsements 
 The CoSERV query language is intended to form the input data type for tools and services that provide access to Endorsements and Reference Values.
 The CoSERV result set is intended to form the corresponding output data type from those tools and services.
 
-Both the query language and the result set are designed for extensibility.
-This addresses the need for a common baseline format to optimise for interoperability and software reuse, while maintaining the flexibility demanded by a dynamic and diverse ecosystem.
-
 The environment characteristics of Endorsements and Reference Values are derived from the equivalent concepts in CoRIM {{-rats-corim}}.
 CoSERV therefore borrows heavily from CoRIM, and shares some data types for its fields.
 And, like CoRIM, the CoSERV schema is defined using CDDL {{-cddl}}. A CoSERV query can be serialized in CBOR {{-cbor}} format.
@@ -270,7 +267,6 @@ The top-level structure of the result set consists of the following three items:
 - A collection of one or more result entries.
 This will be a collection of either reference values, endorsed values or trust anchors.
 See {{secartifacts}} for definitions of artifact types.
-In the future, it may be possible to support additional artifact types via an extension mechanism.
 Artifact types are never mixed in any single CoSERV result set.
 The artifacts in the result collection therefore MUST match the single artifact type specified in the original CoSERV query.
 - A timestamp indicating the expiry time of the entire result set.

@@ -10,7 +10,6 @@ results = {
 result-set //= reference-values
 result-set //= endorsed-values
 result-set //= trust-anchors
-result-set //= $$result-set-extensions
 
 refval-quad = {
   &(authorities: 1) => [ + comid.$crypto-key-type-choice ]
