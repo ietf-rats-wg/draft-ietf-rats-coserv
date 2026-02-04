@@ -143,6 +143,9 @@ Evidence would be likewise structured, with contributions from different segment
 A Verifier for such Evidence may find it convenient to contact an aggregator as a single source of truth for Endorsements and Reference Values.
 An aggregator would have intelligence about the Attester's complete anatomy and supply chain.
 It would have the ability to contact all contributing supply chain actors for their individual Endorsements and Reference Values, before collecting them into a cohesive set, and delivering them to the Verifier as a single, ergonomic package.
+The contributing supply chain actors might themselves be CoSERV-enabled, in which case the aggregator would send one or more separate CoSERV queries to those actors as part of the aggregation process.
+Alternatively, it might be necessary to use vendor-specific protocols to gather these artifacts and convert them into the aggregated CoSERV response.
+The choice between these approaches is deployment-dependent, and is considered to be an implementation detail of the aggregator.
 In pure RATS terms, an aggregator is still an Endorser or a Reference Value Provider - or, more likely, both.
 It is not a distinct role, and so there is no distinctly-modeled conveyance between an aggregator and a Verifier.
 However, when consuming from an aggregator, the Verifier may need visibility of the aggregation process, possibly to the extent of needing to audit the results by inspecting the individual inputs that came from the original supply chain actors.
