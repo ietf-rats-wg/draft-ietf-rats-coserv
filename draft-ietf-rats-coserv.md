@@ -75,8 +75,9 @@ informative:
   RFC6024: TA requirements
   RFC7942: Improving Awareness of Running Code
   RFC7252: The Constrained Application Protocol (CoAP)
+  RFC9711: The Entity Attestation Token (EAT)
   I-D.ietf-rats-endorsements: rats-endorsements
-  I-D.ietf-rats-eat: rats-eat
+  I-D.ietf-iotops-mud-rats: iotops-mud-rats
 
 entity:
   SELF: "RFCthis"
@@ -322,7 +323,7 @@ In common with EAT and CoRIM, CoSERV supports the notion of profiles.
 As with EAT and CoRIM, profiles are a way to extend or specialize the structure of a generic CoSERV query in order to cater for a specific use case or environment.
 
 In a CoSERV query, the profile can be identified by either a Uniform Resource Identifier (URI) or an Object Identifier (OID).
-This convention is identical to how EAT profiles are identified using the `eat_profile` claim as described in {{Section 4.3.2 of -rats-eat}}.
+This convention is identical to how EAT profiles are identified using the `eat_profile` claim as described in {{Section 4.3.2 of RFC9711}}.
 
 ## Query Structure
 
