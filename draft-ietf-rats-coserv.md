@@ -538,11 +538,14 @@ Clients discover CoSERV HTTP API endpoints by means of a well-known URI that is 
 This URI supplies a single discovery document that clients can use to locate the URIs of other API endpoints, in addition to finding out other relevant information about the configuration and capabilities of the service.
 
 Implementations that provide CoSERV HTTP API endpoints MUST also provide the discovery endpoint at the path `/.well-known/coserv-configuration`.
-This endpoint MUST be available via an HTTP GET method with no additional query parameters, and MUST return an HTTP 200 (OK) response code unless prevented by an error condition outside the scope of this specification.
+This endpoint MUST be available via an HTTP GET method with no additional query parameters.
 
 The response body can be formatted using either JSON or CBOR, governed by standard HTTP content-type negotiation.
 The media types defined for this purpose are `application/coserv-discovery+json` (for JSON-formatted documents) or `application/coserv-discovery+cbor` (for CBOR-formatted documents).
-In either case, the endpoint implementation MUST provide a document that conforms to the CDDL schema as follows:
+If the client presents any media type other than these two options in its HTTP `Accept` header, the implementation SHOULD respond with an HTTP 406 (Not Acceptable) status code.
+If the client presents one of the two valid media types, then the implementation MUST respond with an HTTP 200 (OK) status code, unless it is prevented from doing so by an error condition beyond the scope of this specification.
+When the 200 (OK) status code is returned, the response body MUST contain exactly one discovery document in the requested format (JSON or CBOR).
+The contents of the discovery document MUST conform to the CDDL data model given below, which is common to both the JSON and CBOR encodings.
 
 ~~~ cddl
 {::include cddl/discovery.cddl}
