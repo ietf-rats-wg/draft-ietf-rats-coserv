@@ -1220,6 +1220,22 @@ The OpenAPI schema for the request/response HTTP API described in {{secrrapi}} i
 {::include openapi/rr.yaml}
 ~~~
 
+# Locating CoSERV Services
+
+CoSERV facilitates the conveyance of Endorsements and Reference Values to the Verifier.
+The question of how the Verifier locates the CoSERV-enabled service(s) that it needs is beyond the scope of this specification.
+But it is an important consideration for successful deployments.
+When aggregators are used (see {{secaggregation}}), those might also need to locate upstream CoSERV-enabled services.
+This non-normative appendix sets out some illustrative examples of how services might be located.
+This list is neither exhaustive nor prescriptive.
+Deployments are free to use whatever logistics are sensible.
+Note that the goal here is solely one of bootstrapping.
+Once the base URL of a suitable service is known, CoSERV provides in-protocol discovery mechanisms, such as the one described in {{secrrapidisco}}, which cater for the discovery of more specific API endpoints and capabilities.
+
+- Some CoSERV-enabled services might exist in locations that are documented publicly by supply chain actors. A hardware vendor, for example, might document the base URL for the service that endorses their products. In such a case, the location would be prior knowledge within the Verifier or aggregator that needs to consume the service. It could be hard-coded, or made available via a configuration file.
+- The locations of suitable services might be carried within the Evidence produced by an Attester. An example would be a specific claim within an attestation report that is reserved and documented for this purpose. As part of the verification process, the Verifier would process this claim and use it to locate the required service(s).
+- Services could be located via Manufacturer Usage Description (MUD) files as per {{-iotops-mud-rats}}.
+
 # Acknowledgments
 {:numbered="false"}
 
