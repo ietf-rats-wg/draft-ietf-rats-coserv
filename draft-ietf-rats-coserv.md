@@ -365,7 +365,7 @@ See {{secstateful}} for a description of stateful environments.
 
 #### Selector Semantics
 
-When multiple environment selectors are present in a single query, such as multiple instances or multiple groups, the implementation of the artifact producer MUST consider these to be alternatives, and hence use a logical `OR` operation when applying the query to its internal data stores.
+When multiple environment selectors are present in a single query, such as multiple instances or multiple groups, the recipient of the query MUST consider these to be alternatives, and hence use a logical `OR` operation when applying the query to its internal data stores.
 
 Below is an illustrative example of how a CoSERV query for endorsed values, selecting for multiple Attester instances, might be transformed into a semantically-equivalent SQL database query:
 
@@ -376,7 +376,7 @@ SELECT *
        ( instance-id = "iZl4ZVY=" )`
 ~~~
 
-The same applies for class-based selectors; however, since class selectors are themselves composed of multiple inner fields, the implementation of the artifact producer MUST use a logical `AND` operation in consideration of the inner fields for each class.
+The same applies for class-based selectors; however, since class selectors are themselves composed of multiple inner fields, the recipient of the query MUST use a logical `AND` operation in consideration of the inner fields for each class.
 
 Also, for class-based selectors, any unset fields in the class are assumed to be wildcard (`*`), and therefore match any value.
 
