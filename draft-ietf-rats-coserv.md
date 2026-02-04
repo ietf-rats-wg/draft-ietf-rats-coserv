@@ -962,7 +962,7 @@ Examples of such desirable characteristics might be:
 
 CoSERV's data model inherits heavily from that of {{-rats-corim}}.
 CoSERV responses can contain one or more complete CoRIM artifacts.
-They can also aggregated views that are composed of multiple CoRIM fragments.
+They can also contain aggregated views that are composed of multiple CoRIM fragments.
 The security and privacy considerations set out in {{Section 11 of -rats-corim}} therefore apply equally to CoSERV.
 
 ## Forming Native Database Queries from CoSERV
@@ -1252,8 +1252,13 @@ Deployments are free to use whatever logistics are sensible.
 Note that the goal here is solely one of bootstrapping.
 Once the base URL of a suitable service is known, CoSERV provides in-protocol discovery mechanisms, such as the one described in {{secrrapidisco}}, which cater for the discovery of more specific API endpoints and capabilities.
 
-- Some CoSERV-enabled services might exist in locations that are documented publicly by supply chain actors. A hardware vendor, for example, might document the base URL for the service that endorses their products. In such a case, the location would be prior knowledge within the Verifier or aggregator that needs to consume the service. It could be hard-coded, or made available via a configuration file.
-- The locations of suitable services might be carried within the Evidence produced by an Attester. An example would be a specific claim within an attestation report that is reserved and documented for this purpose. As part of the verification process, the Verifier would process this claim and use it to locate the required service(s).
+- Some CoSERV-enabled services might exist in locations that are documented publicly by supply chain actors.
+A hardware vendor, for example, might document the base URL for the service that endorses their products.
+In such a case, the location would be prior knowledge within the Verifier or aggregator that needs to consume the service.
+It could be hard-coded, or made available via a configuration file.
+- The locations of suitable services might be carried within the Evidence produced by an Attester.
+An example would be a specific claim within an attestation report that is reserved and documented for this purpose.
+As part of the verification process, the Verifier would process this claim and use it to locate the required service(s).
 - Services could be located via Manufacturer Usage Description (MUD) files as per {{-iotops-mud-rats}}.
 
 # Acknowledgments
