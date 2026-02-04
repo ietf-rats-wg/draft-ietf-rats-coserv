@@ -400,7 +400,7 @@ Implementations SHOULD populate this field with the current date and time when f
 
 ### Result Type
 
-The `result-type` field selects for either `collected-artifacts` (codepoint 0), `source-artifacts` (codepoint 1) or `both` (codepoint 2).
+The `result-type` field selects for the desired type(s) of results: `collected-artifacts` (codepoint 0), `source-artifacts` (codepoint 1) or `both` (codepoint 2).
 See {{secaggregation}} for definitions of source and collected artifacts.
 
 ## Result Set Structure
