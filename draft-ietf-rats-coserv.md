@@ -943,10 +943,10 @@ Coverage: This implementation covers all aspects of the CoSERV query language.
 Contact: Thomas Fossati, Thomas.Fossati@linaro.org
 
 # Security Considerations {#seccons}
-The CoSERV data type serves an auxiliary function in the RATS architecture.
-It does not directly convey Evidence, Endorsements, Reference Values, Policies or Attestation Results.
-CoSERV exists only to facilitate the interactions between the Verifier and the Endorser or Reference Value Provider roles.
-Consequently, there are fewer security considerations for CoSERV, particularly when compared with data objects such as EAT or CoRIM.
+
+CoSERV implements a conveyance protocol for specific categories of Conceptual Message in {{RFC9334}}, namely Endorsements and Reference Values.
+Consequently, it is used only between the Endorser and Verifier roles, or between the Reference Value Provider and Verifier roles of the RATS architecture.
+The relevant security considerations are therefore the ones associated with those roles and their interactions.
 
 Certain security characteristics are desirable for interactions between the Verifier and the Endorser or Reference Value Provider.
 However, these characteristics would be the province of the specific implementations of these roles, and of the transport protocols in between them.
@@ -957,12 +957,21 @@ Examples of such desirable characteristics might be:
 - The Verifier is authorised to query data from the Endorser or Reference Value Provider.
 - Queries cannot be intercepted or undetectably modified by an entity that is interposed between the Verifier and the Endorser or Reference Value Provider.
 
+## In Relation to CoRIM
+
+CoSERV's data model inherits heavily from that of {{-rats-corim}}.
+CoSERV responses can contain one or more complete CoRIM artifacts.
+They can also aggregated views that are composed of multiple CoRIM fragments.
+The security and privacy considerations set out in {{Section 11 of -rats-corim}} therefore apply equally to CoSERV.
+
 ## Forming Native Database Queries from CoSERV
+
 Implementations should take care when transforming CoSERV queries into native query types that are compatible with their underlying storage technology (such as SQL queries).
 There is a risk of injection attacks arising from poorly-formed or maliciously-formed CoSERV queries.
 Implementations must ensure that suitable sanitization procedures are in place when performing such translations.
 
 # Privacy Considerations
+
 A CoSERV query can potentially contain privacy-sensitive information.
 Specifically, the `environment-selector` field of the query may reference identifiable Attester instances in some cases.
 This concern naturally also extends to the data objects that might be returned to the consumer in response to the query, although the specifications of such data objects are beyond the scope of this document.
