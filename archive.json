@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-03T01:05:01.489727+00:00",
+  "timestamp": "2026-02-05T01:02:01.921619+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -527,11 +527,13 @@
       "state": "OPEN",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "In \u00a74.3.2.1 (Selector Semantics), we probably want to add an example that shows how a complete stateful environment (including measurements) is mapped into the query syntax.",
       "createdAt": "2025-07-11T08:43:28Z",
-      "updatedAt": "2025-07-11T08:43:28Z",
+      "updatedAt": "2026-02-03T09:27:16Z",
       "closedAt": null,
       "comments": []
     },
@@ -559,11 +561,13 @@
       "state": "OPEN",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "thomas-fossati"
+      ],
       "labels": [],
       "body": "Since #44, the ability to query using a stateful environment has been a CoSERV feature.\n\nThe examples section may benefit from a practical illustration of the concept.\n\n(Noting that this could build on the `rv-class-stateful.diag` test vector introduced in #48.)",
       "createdAt": "2025-07-17T07:27:39Z",
-      "updatedAt": "2025-07-17T07:27:39Z",
+      "updatedAt": "2026-02-03T09:29:22Z",
       "closedAt": null,
       "comments": []
     },
@@ -834,11 +838,13 @@
       "state": "OPEN",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:28:52Z",
-      "updatedAt": "2026-01-30T15:26:22Z",
+      "updatedAt": "2026-02-03T15:42:33Z",
       "closedAt": null,
       "comments": [
         {
@@ -847,6 +853,13 @@
           "body": "While this is an important question, I'm not sure it's in scope for the CoSERV draft itself, and also I doubt there's a single answer.\n\nPerhaps the draft could have an illustrative section on this, at least to acknowledge the problem and cover possible solutions (but without prescribing a solution).\n\nWe certainly can't put it into the CoSERV data model, because that would obviously be circular!\n\n@henkbirkholz has a draft for [MUD-based discovery of RATS resources](https://datatracker.ietf.org/doc/draft-ietf-iotops-mud-rats/) which might provide one possible solution.\n\nAlternatively, there could be one or more data fields in the evidence which provide a reference to the suitable CoSERV endpoint(s).\n\nIt could also be done out of band, wherein it effectively becomes a-priori knowledge at the Verifier.",
           "createdAt": "2026-01-30T15:26:22Z",
           "updatedAt": "2026-01-30T15:26:22Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Suggest we add this in a non-normative appendix.",
+          "createdAt": "2026-02-03T09:31:30Z",
+          "updatedAt": "2026-02-03T09:31:30Z"
         }
       ]
     },
@@ -1042,11 +1055,13 @@
       "state": "OPEN",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "thomas-fossati"
+      ],
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:22Z",
-      "updatedAt": "2026-01-30T14:45:10Z",
+      "updatedAt": "2026-02-03T09:28:56Z",
       "closedAt": null,
       "comments": [
         {
@@ -1246,12 +1261,12 @@
       "author": "DhanusML",
       "authorAssociation": "NONE",
       "assignees": [
-        "paulhowardarm"
+        "thomas-fossati"
       ],
       "labels": [],
       "body": "The examples `rv-class-simple-results.diag` and `rv-class-stateful.diag` (in `/cddl/examples/`) do not follow deterministic encoding requirements because keys in their measurement values map are not ordered. These examples do not appear in the draft, but they are used by implementations as test vectors.",
       "createdAt": "2025-12-01T06:32:50Z",
-      "updatedAt": "2026-01-30T18:46:06Z",
+      "updatedAt": "2026-02-03T09:26:58Z",
       "closedAt": null,
       "comments": [
         {
@@ -4433,6 +4448,147 @@
           "body": "",
           "createdAt": "2025-12-12T08:19:29Z",
           "updatedAt": "2025-12-12T08:19:29Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 100,
+      "id": "PR_kwDOOAZd1M7BcQsC",
+      "title": "Address multiple points from Carl Wallace's review",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/100",
+      "state": "OPEN",
+      "author": "paulhowardarm",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Addresses the following:\r\n\r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/94 (not part of Carl's review, but folded in here)\r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/89 \r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/88 \r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/86 \r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/85 \r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/84 \r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/79 \r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/78 \r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>\r\n",
+      "createdAt": "2026-02-04T11:29:06Z",
+      "updatedAt": "2026-02-04T15:14:21Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "cfda3fce3cc6ea3eb810134c839de15ba67ac05a",
+      "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
+      "headRefName": "phWGFeedback1",
+      "headRefOid": "3f91dac0297c536f525a95a2c23740335b72902e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M7fmuEv",
+          "commit": {
+            "abbreviatedOid": "e1d8a3e"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Nice stuff!\n\nA couple of nits inlined.",
+          "createdAt": "2026-02-04T14:41:05Z",
+          "updatedAt": "2026-02-04T14:48:53Z",
+          "comments": [
+            {
+              "originalPosition": 108,
+              "body": "```suggestion\nThey can also aggregate views that are composed of multiple CoRIM fragments.\n```",
+              "createdAt": "2026-02-04T14:41:05Z",
+              "updatedAt": "2026-02-04T14:48:53Z"
+            },
+            {
+              "originalPosition": 137,
+              "body": "Note: the usual NSNL convention can be applied to numbered/bulleted lists without change in rendering.",
+              "createdAt": "2026-02-04T14:48:06Z",
+              "updatedAt": "2026-02-04T14:48:53Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 101,
+      "id": "PR_kwDOOAZd1M7BfPeV",
+      "title": "fix: ensure deterministic encoding in examples",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/101",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #97",
+      "createdAt": "2026-02-04T14:56:44Z",
+      "updatedAt": "2026-02-04T15:30:23Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "cfda3fce3cc6ea3eb810134c839de15ba67ac05a",
+      "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "headRefName": "detex",
+      "headRefOid": "5a0091e6a239fb3a6ef2103e377e755ba18b33d4",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "cc @DhanusML",
+          "createdAt": "2026-02-04T14:57:28Z",
+          "updatedAt": "2026-02-04T14:57:28Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M7fnVgP",
+          "commit": {
+            "abbreviatedOid": "5a0091e"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM! Thanks.",
+          "createdAt": "2026-02-04T15:11:29Z",
+          "updatedAt": "2026-02-04T15:11:29Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 102,
+      "id": "PR_kwDOOAZd1M7BfumP",
+      "title": "feat: remove result set extensibility",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/102",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #87 ",
+      "createdAt": "2026-02-04T15:29:40Z",
+      "updatedAt": "2026-02-04T17:42:28Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "cfda3fce3cc6ea3eb810134c839de15ba67ac05a",
+      "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "headRefName": "no-result-set-extensions",
+      "headRefOid": "3e8ca1c0f8408fb9b229c63693d858982e15ea4d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M7fqWHN",
+          "commit": {
+            "abbreviatedOid": "3e8ca1c"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks as expected, thanks!",
+          "createdAt": "2026-02-04T17:42:27Z",
+          "updatedAt": "2026-02-04T17:42:27Z",
           "comments": []
         }
       ]
