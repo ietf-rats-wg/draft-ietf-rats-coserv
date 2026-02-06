@@ -257,7 +257,6 @@ Additional properties of the environment state can be specified by adding one or
 See {{secenvironments}} for full definitions.
 To facilitate efficient transactions, a single query can specify either multiple instances, multiple groups or multiple classes.
 However, it is not possible to mix instance-based selectors, group-based selectors and class-based selectors in a single query.
-- A timestamp, denoting the time at which the CoSERV query was sent.
 - A switch to select the desired supply chain depth.
 A CoSERV query can request collected artifacts, source artifacts, or both.
 This switch is especially relevant when the CoSERV query is fulfilled by an aggregator.
@@ -266,6 +265,16 @@ It is possible for a query to select for source artifacts only, without the coll
 This might happen when the consumer needs to inspect or audit artifacts from across the deep supply chain, while not requiring the convenience of the aggregated view.
 It could also happen when the consumer is acting as an intermediate broker, gathering artifacts for delivery to another aggregator.
 See {{secaggregation}} for details on aggregation, auditing and trust models.
+
+CoSERV queries do not contain timestamps or any similarly volatile or unpredictable fields.
+This is to ensure that any set of materially-identical queries will always yield the same encoded sequence of CBOR bytes, regardless of the time when they were issued, or of other volatile factors.
+Along with the other encoding rules set out in {{secencoding}}, it means that a query can be used as a stable and canonical identifier of artifacts.
+This property of queries is an important enabler of efficient CoSERV transactions.
+See, for example, the HTTP caching design described in {{secrrapicaching}}.
+
+A CoSERV implementation MAY log the time at which a query was received and fulfilled.
+This might sometimes be desirable for transparency or audit purposes.
+Implementations are free to define their own transparency events, which can then include timestamps or other suitable information.
 
 ## Result Sets
 
@@ -389,11 +398,6 @@ SELECT *
  WHERE ( class-id = "iZl4ZVY=" AND class-vendor = "ACME Inc." ) OR
        ( class-id = "31fb5abf-023e-4992-aa4e-95f9c1503bfa" )
 ~~~
-
-### Timestamp
-
-The `timestamp` field records the date and time at which the query was made, formatted according to {{Section 3.4.1 of -cbor}}.
-Implementations SHOULD populate this field with the current date and time when forming a CoSERV query.
 
 ### Result Type
 
