@@ -13,10 +13,10 @@
           / measurements / [
             / measurement-map / {
               / mval / 1: {
-                / name / 11: "Component A",
                 / digests / 2: [
                   [ 1, h'aa' ]
-                ]
+                ],
+                / name / 11: "Component A"
               }
             }
           ]

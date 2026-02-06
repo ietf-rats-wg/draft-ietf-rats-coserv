@@ -29,20 +29,20 @@
           [
             / measurement-map / {
               / mval / 1: {
-                / name / 11: "Component A",
                 / digests / 2: [
                   [ 1, h'aa' ],
                   [ 2, h'bb' ]
-                ]
+                ],
+                / name / 11: "Component A"
               }
             },
             / measurement-map / {
               / mval / 1: {
-                / name / 11: "Component B",
                 / digests / 2: [
                   [ 1, h'cc' ],
                   [ 2, h'dd' ]
-                ]
+                ],
+                / name / 11: "Component B"
               }
             }
           ]
