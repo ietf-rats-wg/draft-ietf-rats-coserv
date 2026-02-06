@@ -75,8 +75,9 @@ informative:
   RFC6024: TA requirements
   RFC7942: Improving Awareness of Running Code
   RFC7252: The Constrained Application Protocol (CoAP)
+  RFC9711: The Entity Attestation Token (EAT)
   I-D.ietf-rats-endorsements: rats-endorsements
-  I-D.ietf-rats-eat: rats-eat
+  I-D.ietf-iotops-mud-rats: iotops-mud-rats
 
 entity:
   SELF: "RFCthis"
@@ -143,6 +144,9 @@ Evidence would be likewise structured, with contributions from different segment
 A Verifier for such Evidence may find it convenient to contact an aggregator as a single source of truth for Endorsements and Reference Values.
 An aggregator would have intelligence about the Attester's complete anatomy and supply chain.
 It would have the ability to contact all contributing supply chain actors for their individual Endorsements and Reference Values, before collecting them into a cohesive set, and delivering them to the Verifier as a single, ergonomic package.
+The contributing supply chain actors might themselves be CoSERV-enabled, in which case the aggregator would send one or more separate CoSERV queries to those actors as part of the aggregation process.
+Alternatively, it might be necessary to use vendor-specific protocols to gather these artifacts and convert them into the aggregated CoSERV response.
+The choice between these approaches is deployment-dependent, and is considered to be an implementation detail of the aggregator.
 In pure RATS terms, an aggregator is still an Endorser or a Reference Value Provider - or, more likely, both.
 It is not a distinct role, and so there is no distinctly-modeled conveyance between an aggregator and a Verifier.
 However, when consuming from an aggregator, the Verifier may need visibility of the aggregation process, possibly to the extent of needing to audit the results by inspecting the individual inputs that came from the original supply chain actors.
@@ -191,6 +195,10 @@ These correspond to the three categories of endorsement artifact that can be ide
 
 - **Trust Anchor**: A trust anchor is as defined in {{RFC6024}}.
 An example of a trust anchor would be the public part of the asymmetric signing key that is used by the Attester to sign Evidence, such that the Verifier can verify the cryptographic signature.
+This is just one example.
+Other forms of trust anchor are possible.
+CoSERV does not place any additional requirements or constraints on the conveyance or use of trust anchors, beyond what is already described in {{RFC9334}} and {{-rats-endorsements}}.
+{{Section 4 of -rats-endorsements}} sets out the applicable patterns for the endorsement of verification keys, all of which apply equally here.
 - **Endorsed Value**: An endorsed value is as defined in {{Section 1.1.1 of -rats-corim}}.
 This represents a characteristic of the Attester that is not directly presented in the Evidence, such as certification data related to a hardware or firmware module.
 - **Reference Value**: A reference value is as defined in {{Section 1.1.1 of -rats-corim}}.
@@ -315,7 +323,7 @@ In common with EAT and CoRIM, CoSERV supports the notion of profiles.
 As with EAT and CoRIM, profiles are a way to extend or specialize the structure of a generic CoSERV query in order to cater for a specific use case or environment.
 
 In a CoSERV query, the profile can be identified by either a Uniform Resource Identifier (URI) or an Object Identifier (OID).
-This convention is identical to how EAT profiles are identified using the `eat_profile` claim as described in {{Section 4.3.2 of -rats-eat}}.
+This convention is identical to how EAT profiles are identified using the `eat_profile` claim as described in {{Section 4.3.2 of RFC9711}}.
 
 ## Query Structure
 
@@ -362,7 +370,7 @@ See {{secstateful}} for a description of stateful environments.
 
 #### Selector Semantics
 
-When multiple environment selectors are present in a single query, such as multiple instances or multiple groups, the implementation of the artifact producer MUST consider these to be alternatives, and hence use a logical `OR` operation when applying the query to its internal data stores.
+When multiple environment selectors are present in a single query, such as multiple instances or multiple groups, the recipient of the query MUST consider these to be alternatives, and hence use a logical `OR` operation when applying the query to its internal data stores.
 
 Below is an illustrative example of how a CoSERV query for endorsed values, selecting for multiple Attester instances, might be transformed into a semantically-equivalent SQL database query:
 
@@ -373,7 +381,7 @@ SELECT *
        ( instance-id = "iZl4ZVY=" )`
 ~~~
 
-The same applies for class-based selectors; however, since class selectors are themselves composed of multiple inner fields, the implementation of the artifact producer MUST use a logical `AND` operation in consideration of the inner fields for each class.
+The same applies for class-based selectors; however, since class selectors are themselves composed of multiple inner fields, the recipient of the query MUST use a logical `AND` operation in consideration of the inner fields for each class.
 
 Also, for class-based selectors, any unset fields in the class are assumed to be wildcard (`*`), and therefore match any value.
 
@@ -393,7 +401,7 @@ Implementations SHOULD populate this field with the current date and time when f
 
 ### Result Type
 
-The `result-type` field selects for either `collected-artifacts` (codepoint 0), `source-artifacts` (codepoint 1) or `both` (codepoint 2).
+The `result-type` field selects for the desired type(s) of results: `collected-artifacts` (codepoint 0), `source-artifacts` (codepoint 1) or `both` (codepoint 2).
 See {{secaggregation}} for definitions of source and collected artifacts.
 
 ## Result Set Structure
@@ -531,11 +539,14 @@ Clients discover CoSERV HTTP API endpoints by means of a well-known URI that is 
 This URI supplies a single discovery document that clients can use to locate the URIs of other API endpoints, in addition to finding out other relevant information about the configuration and capabilities of the service.
 
 Implementations that provide CoSERV HTTP API endpoints MUST also provide the discovery endpoint at the path `/.well-known/coserv-configuration`.
-This endpoint MUST be available via an HTTP GET method with no additional query parameters, and MUST return an HTTP 200 (OK) response code unless prevented by an error condition outside the scope of this specification.
+This endpoint MUST be available via an HTTP GET method with no additional query parameters.
 
 The response body can be formatted using either JSON or CBOR, governed by standard HTTP content-type negotiation.
 The media types defined for this purpose are `application/coserv-discovery+json` (for JSON-formatted documents) or `application/coserv-discovery+cbor` (for CBOR-formatted documents).
-In either case, the endpoint implementation MUST provide a document that conforms to the CDDL schema as follows:
+If the client presents any media type other than these two options in its HTTP `Accept` header, the implementation SHOULD respond with an HTTP 406 (Not Acceptable) status code.
+If the client presents one of the two valid media types, then the implementation MUST respond with an HTTP 200 (OK) status code, unless it is prevented from doing so by an error condition beyond the scope of this specification.
+When the 200 (OK) status code is returned, the response body MUST contain exactly one discovery document in the requested format (JSON or CBOR).
+The contents of the discovery document MUST conform to the CDDL data model given below, which is common to both the JSON and CBOR encodings.
 
 ~~~ cddl
 {::include cddl/discovery.cddl}
@@ -933,10 +944,10 @@ Coverage: This implementation covers all aspects of the CoSERV query language.
 Contact: Thomas Fossati, Thomas.Fossati@linaro.org
 
 # Security Considerations {#seccons}
-The CoSERV data type serves an auxiliary function in the RATS architecture.
-It does not directly convey Evidence, Endorsements, Reference Values, Policies or Attestation Results.
-CoSERV exists only to facilitate the interactions between the Verifier and the Endorser or Reference Value Provider roles.
-Consequently, there are fewer security considerations for CoSERV, particularly when compared with data objects such as EAT or CoRIM.
+
+CoSERV implements a conveyance protocol for specific categories of Conceptual Message in {{RFC9334}}, namely Endorsements and Reference Values.
+Consequently, it is used only between the Endorser and Verifier roles, or between the Reference Value Provider and Verifier roles of the RATS architecture.
+The relevant security considerations are therefore the ones associated with those roles and their interactions.
 
 Certain security characteristics are desirable for interactions between the Verifier and the Endorser or Reference Value Provider.
 However, these characteristics would be the province of the specific implementations of these roles, and of the transport protocols in between them.
@@ -947,12 +958,21 @@ Examples of such desirable characteristics might be:
 - The Verifier is authorised to query data from the Endorser or Reference Value Provider.
 - Queries cannot be intercepted or undetectably modified by an entity that is interposed between the Verifier and the Endorser or Reference Value Provider.
 
+## In Relation to CoRIM
+
+CoSERV's data model inherits heavily from that of {{-rats-corim}}.
+CoSERV responses can contain one or more complete CoRIM artifacts.
+They can also contain aggregated views that are composed of multiple CoRIM fragments.
+The security and privacy considerations set out in {{Section 11 of -rats-corim}} therefore apply equally to CoSERV.
+
 ## Forming Native Database Queries from CoSERV
+
 Implementations should take care when transforming CoSERV queries into native query types that are compatible with their underlying storage technology (such as SQL queries).
 There is a risk of injection attacks arising from poorly-formed or maliciously-formed CoSERV queries.
 Implementations must ensure that suitable sanitization procedures are in place when performing such translations.
 
 # Privacy Considerations
+
 A CoSERV query can potentially contain privacy-sensitive information.
 Specifically, the `environment-selector` field of the query may reference identifiable Attester instances in some cases.
 This concern naturally also extends to the data objects that might be returned to the consumer in response to the query, although the specifications of such data objects are beyond the scope of this document.
@@ -1219,6 +1239,27 @@ The OpenAPI schema for the request/response HTTP API described in {{secrrapi}} i
 ~~~
 {::include openapi/rr.yaml}
 ~~~
+
+# Locating CoSERV Services
+
+CoSERV facilitates the conveyance of Endorsements and Reference Values to the Verifier.
+The question of how the Verifier locates the CoSERV-enabled service(s) that it needs is beyond the scope of this specification.
+But it is an important consideration for successful deployments.
+When aggregators are used (see {{secaggregation}}), those might also need to locate upstream CoSERV-enabled services.
+This non-normative appendix sets out some illustrative examples of how services might be located.
+This list is neither exhaustive nor prescriptive.
+Deployments are free to use whatever logistics are sensible.
+Note that the goal here is solely one of bootstrapping.
+Once the base URL of a suitable service is known, CoSERV provides in-protocol discovery mechanisms, such as the one described in {{secrrapidisco}}, which cater for the discovery of more specific API endpoints and capabilities.
+
+- Some CoSERV-enabled services might exist in locations that are documented publicly by supply chain actors.
+A hardware vendor, for example, might document the base URL for the service that endorses their products.
+In such a case, the location would be prior knowledge within the Verifier or aggregator that needs to consume the service.
+It could be hard-coded, or made available via a configuration file.
+- The locations of suitable services might be carried within the Evidence produced by an Attester.
+An example would be a specific claim within an attestation report that is reserved and documented for this purpose.
+As part of the verification process, the Verifier would process this claim and use it to locate the required service(s).
+- Services could be located via Manufacturer Usage Description (MUD) files as per {{-iotops-mud-rats}}.
 
 # Acknowledgments
 {:numbered="false"}
