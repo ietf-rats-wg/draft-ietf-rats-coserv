@@ -165,12 +165,6 @@ Table of Contents
    Values.  The CoSERV result set is intended to form the corresponding
    output data type from those tools and services.
 
-   Both the query language and the result set are designed for
-   extensibility.  This addresses the need for a common baseline format
-   to optimise for interoperability and software reuse, while
-   maintaining the flexibility demanded by a dynamic and diverse
-   ecosystem.
-
    The environment characteristics of Endorsements and Reference Values
    are derived from the equivalent concepts in CoRIM
    [I-D.ietf-rats-corim].  CoSERV therefore borrows heavily from CoRIM,
@@ -472,12 +466,10 @@ Table of Contents
 
    *  A collection of one or more result entries.  This will be a
       collection of either reference values, endorsed values or trust
-      anchors.  See Section 3.2 for definitions of artifact types.  In
-      the future, it may be possible to support additional artifact
-      types via an extension mechanism.  Artifact types are never mixed
-      in any single CoSERV result set.  The artifacts in the result
-      collection therefore MUST match the single artifact type specified
-      in the original CoSERV query.
+      anchors.  See Section 3.2 for definitions of artifact types.
+      Artifact types are never mixed in any single CoSERV result set.
+      The artifacts in the result collection therefore MUST match the
+      single artifact type specified in the original CoSERV query.
 
    *  A timestamp indicating the expiry time of the entire result set.
       Consumers MUST NOT consider any part of the result set to be valid
@@ -717,7 +709,6 @@ Table of Contents
    result-set //= reference-values
    result-set //= endorsed-values
    result-set //= trust-anchors
-   result-set //= $$result-set-extensions
 
    refval-quad = {
      &(authorities: 1) => [ + comid.$crypto-key-type-choice ]
@@ -2097,8 +2088,7 @@ A.1.  CoSERV Data Model
      &(expiry: 10) => tdate,
      ? &(source-artifacts: 11) => [+ cmw.cbor-record],
    }
-   result-set //= (reference-values // endorsed-values // trust-\
-                                     anchors // $$result-set-extensions)
+   result-set //= (reference-values // endorsed-values // trust-anchors)
    refval-quad = {
      &(authorities: 1) => [+ comid.$crypto-key-type-choice],
      &(rv-triple: 2) => comid.reference-triple-record,

@@ -1382,16 +1382,14 @@ In turn, the result format allows those Endorsers and Reference Value Providers 
 This facilitates the efficient discovery and retrieval of relevant Endorsements and Reference Values from providers, maximising the re-use of common software tools and libraries within the transactions.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">The CoSERV query language is intended to form the input data type for tools and services that provide access to Endorsements and Reference Values.
 The CoSERV result set is intended to form the corresponding output data type from those tools and services.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">Both the query language and the result set are designed for extensibility.
-This addresses the need for a common baseline format to optimise for interoperability and software reuse, while maintaining the flexibility demanded by a dynamic and diverse ecosystem.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">The environment characteristics of Endorsements and Reference Values are derived from the equivalent concepts in CoRIM <span>[<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
+<p id="section-1-4">The environment characteristics of Endorsements and Reference Values are derived from the equivalent concepts in CoRIM <span>[<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
 CoSERV therefore borrows heavily from CoRIM, and shares some data types for its fields.
-And, like CoRIM, the CoSERV schema is defined using CDDL <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>. A CoSERV query can be serialized in CBOR <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> format.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">In addition to the CBOR-based data formats for CoSERV queries and responses, this specification also defines API bindings and behaviours for the exchange of CoSERV queries and responses.
+And, like CoRIM, the CoSERV schema is defined using CDDL <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>. A CoSERV query can be serialized in CBOR <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> format.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">In addition to the CBOR-based data formats for CoSERV queries and responses, this specification also defines API bindings and behaviours for the exchange of CoSERV queries and responses.
 This is to facilitate standard interactions between CoSERV producers and consumers.
 Standard API endpoints and behaviours will encourage the growth of interoperable software tools and modules, not only for parsing and emitting CoSERV-compliant data, but also for implementing the clients and services that need to exchange such data when acting in the capacity of the relevant RATS roles.
 This will be of greater benefit to the software ecosystem than the CoSERV data format alone.
-See <a href="#secapibindings" class="auto internal xref">Section 6</a> for the API binding specifications.<a href="#section-1-6" class="pilcrow">¶</a></p>
+See <a href="#secapibindings" class="auto internal xref">Section 6</a> for the API binding specifications.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <div id="terminology-and-requirements-language">
 <section id="section-1.1">
         <h3 id="name-terminology-and-requirement">
@@ -1615,7 +1613,6 @@ The top-level structure of the result set consists of the following three items:
             <p id="section-3.5-2.1.1">A collection of one or more result entries.
 This will be a collection of either reference values, endorsed values or trust anchors.
 See <a href="#secartifacts" class="auto internal xref">Section 3.2</a> for definitions of artifact types.
-In the future, it may be possible to support additional artifact types via an extension mechanism.
 Artifact types are never mixed in any single CoSERV result set.
 The artifacts in the result collection therefore <span class="bcp14">MUST</span> match the single artifact type specified in the original CoSERV query.<a href="#section-3.5-2.1.1" class="pilcrow">¶</a></p>
 </li>
@@ -1842,7 +1839,6 @@ results = {
 result-set //= reference-values
 result-set //= endorsed-values
 result-set //= trust-anchors
-result-set //= $$result-set-extensions
 
 refval-quad = {
   &amp;(authorities: 1) =&gt; [ + comid.$crypto-key-type-choice ]
@@ -3617,8 +3613,7 @@ results = {
   &amp;(expiry: 10) =&gt; tdate,
   ? &amp;(source-artifacts: 11) =&gt; [+ cmw.cbor-record],
 }
-result-set //= (reference-values // endorsed-values // trust-\
-                                  anchors // $$result-set-extensions)
+result-set //= (reference-values // endorsed-values // trust-anchors)
 refval-quad = {
   &amp;(authorities: 1) =&gt; [+ comid.$crypto-key-type-choice],
   &amp;(rv-triple: 2) =&gt; comid.reference-triple-record,
