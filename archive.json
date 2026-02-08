@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-05T01:02:01.921619+00:00",
+  "timestamp": "2026-02-08T01:21:02.623923+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -232,7 +232,7 @@
       "id": "I_kwDOOAZd1M6wqYN7",
       "title": "Result type is more extensible than the query",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/12",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "paulhowardarm",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -241,8 +241,8 @@
       "labels": [],
       "body": "The coserv query can select for `artifact-type` as being either Trust Anchor, Endorsed Value or Reference Value. This is a rigid definition that was chosen to reflect the \"RATS-native\" artifacts.\n\nHowever, we also want to support profile-defined extensions, and the result set is defined in such a way to support this via an extension socket in the CDDL.\n\nSo there's asymmetry between how extensible the query is, relative to how extensible the result is.\n\nNeed to find a good data model idiom to resolve this.\n\nOne option might be to simply add a fourth option to `artifact-type` that essentially means \"profile-specific\" and assume that the profile will handle its semantics.\n",
       "createdAt": "2025-04-01T16:03:19Z",
-      "updatedAt": "2025-04-08T14:07:06Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-06T09:07:36Z",
+      "closedAt": "2026-02-06T09:06:42Z",
       "comments": [
         {
           "author": "paulhowardarm",
@@ -250,6 +250,13 @@
           "body": "Update after chatting with @thomas-fossati - we should probably not rush to create extensibility mechanisms until such time as they can be matched to a clear use case, and in particular we should be wary of allowing profiles to introduce wholesale bespoke semantics, because that can end up leading to precisely the kind of fragmentation that we want to address with CoSERV. We should keep this issue open to track the ongoing extensibility problem in the meantime.",
           "createdAt": "2025-04-08T14:07:01Z",
           "updatedAt": "2025-04-08T14:07:01Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fixed by https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/102 ",
+          "createdAt": "2026-02-06T09:06:42Z",
+          "updatedAt": "2026-02-06T09:06:42Z"
         }
       ]
     },
@@ -794,7 +801,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:28:36Z",
-      "updatedAt": "2026-02-02T14:41:20Z",
+      "updatedAt": "2026-02-05T11:43:41Z",
       "closedAt": null,
       "comments": [
         {
@@ -803,6 +810,13 @@
           "body": "Not sure about the underlying assumption that:\n\n> _\"Endorsements are secure statements and Reference Values are not\u201d_\n\nI interpret \"secure statement\u201d as meaning \u201ca statement that is signed by a trusted source\u201d.  Therefore, I am unsure why endorsements (i.e., statements about the _actual_ state of an attester) would be different from reference values (i.e., statements about the _expected_ state of an attester) in terms of their security.\n\n@carl-wallace can you please explain what you mean by \u201csecure statement\u201d in this context?\n\nSee also https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/80#issuecomment-3833955393",
           "createdAt": "2026-02-02T14:41:20Z",
           "updatedAt": "2026-02-02T14:41:20Z"
+        },
+        {
+          "author": "carl-wallace",
+          "authorAssociation": "NONE",
+          "body": "I was parroting [RFC 9334 section 4.2](https://datatracker.ietf.org/doc/html/rfc9334#section-4.2). Endorsements are by definition \"secure\" and references values are not (but could be should one choose).",
+          "createdAt": "2026-02-05T11:43:41Z",
+          "updatedAt": "2026-02-05T11:43:41Z"
         }
       ]
     },
@@ -835,7 +849,7 @@
       "id": "I_kwDOOAZd1M7Ow8X5",
       "title": "How are verifiers (or aggregators) supposed to locate aggregators or supply chain actors?",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/78",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -844,8 +858,8 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:28:52Z",
-      "updatedAt": "2026-02-03T15:42:33Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-06T09:04:16Z",
+      "closedAt": "2026-02-06T09:04:16Z",
       "comments": [
         {
           "author": "paulhowardarm",
@@ -860,6 +874,13 @@
           "body": "Suggest we add this in a non-normative appendix.",
           "createdAt": "2026-02-03T09:31:30Z",
           "updatedAt": "2026-02-03T09:31:30Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fixed in https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/100",
+          "createdAt": "2026-02-06T09:04:16Z",
+          "updatedAt": "2026-02-06T09:04:16Z"
         }
       ]
     },
@@ -868,7 +889,7 @@
       "id": "I_kwDOOAZd1M7Ow8aU",
       "title": "Can/should CoSERV be used between aggregator and supply chain actors? If so, make this clearer in Section 2 (for example in the statement \"would have the ability to contact all contributing supply chain actors\" and in the last paragraph).",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/79",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -877,8 +898,8 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:28:55Z",
-      "updatedAt": "2026-01-30T15:30:37Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-06T09:04:06Z",
+      "closedAt": "2026-02-06T09:04:05Z",
       "comments": [
         {
           "author": "paulhowardarm",
@@ -886,6 +907,13 @@
           "body": "The draft is agnostic on this point, and it's an implementation detail really.\n\nThere could be a situation where a CoSERV-enabled aggregator needs to use proprietary (non-CoSERV) APIs to talk to particular vendor services to get the source information.\n\nOr, in the future, maybe one or more of those vendor services are themselves CoSERV native.\n\nIt doesn't really matter.\n\nBut we can certainly add text to this effect into the draft.",
           "createdAt": "2026-01-30T15:30:30Z",
           "updatedAt": "2026-01-30T15:30:30Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fixed in https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/100",
+          "createdAt": "2026-02-06T09:04:05Z",
+          "updatedAt": "2026-02-06T09:04:05Z"
         }
       ]
     },
@@ -982,7 +1010,7 @@
       "id": "I_kwDOOAZd1M7Ow8w0",
       "title": "In 3.2, do we expect trust anchor keys to be used to sign evidence? A better example may be a public key used to verify a certification oath to a certificate containing a public key used to verify evidence. This begs the questions is one bucket of trust anchors sufficient, i.e., ought they be differentiated by purpose, and are there any intermediate public keys that should also be conveyed, i.e., intermediate certificates?",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/84",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -991,8 +1019,8 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:13Z",
-      "updatedAt": "2026-01-30T15:07:46Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-06T09:03:45Z",
+      "closedAt": "2026-02-06T09:03:45Z",
       "comments": [
         {
           "author": "paulhowardarm",
@@ -1000,6 +1028,13 @@
           "body": "We want to avoid being opinionated on the specific use of trust anchors. This is more of a deployment question, as is the number of \"buckets\" of trust anchors needed.\n\nPerhaps we could document some illustrative examples here, although we'd have to be clear that they are informative examples only. The current definition of \"trust anchor\" doesn't make this clear enough.\n\nFor example, one common pattern might be for the evidence to be signed by a leaf certificate that is bundled with the evidence (such as in a COSE x5 header). With this certificate arriving at the verifier in same breath as the evidence, there wouldn't then be a need to obtain it through a CoSERV query. However, CoSERV might be the source of the intermediate/root certificates needed to complete the chain. This might result in a class-level CoSERV query based on the entire product family or something.\n\nWe probably should make it clear in the draft that multiple distinct CoSERV queries might be needed to obtain all of the artifacts needed to perform a verification. This is especially the case given the constraints in the data model: it's not possible to get instance-level and class-level artifacts in the same query.",
           "createdAt": "2026-01-30T15:07:39Z",
           "updatedAt": "2026-01-30T15:07:39Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fixed in https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/100",
+          "createdAt": "2026-02-06T09:03:45Z",
+          "updatedAt": "2026-02-06T09:03:45Z"
         }
       ]
     },
@@ -1008,7 +1043,7 @@
       "id": "I_kwDOOAZd1M7Ow8ze",
       "title": "The EAT I-D reference should be updated to RFC 9711.",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/85",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -1017,16 +1052,24 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:16Z",
-      "updatedAt": "2026-01-30T14:47:08Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-02-06T09:03:30Z",
+      "closedAt": "2026-02-06T09:03:30Z",
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fixed in https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/100",
+          "createdAt": "2026-02-06T09:03:30Z",
+          "updatedAt": "2026-02-06T09:03:30Z"
+        }
+      ]
     },
     {
       "number": 86,
       "id": "I_kwDOOAZd1M7Ow81s",
       "title": "4.3.2.1 states \"the implementation of the artifact producer MUST consider these to be alternatives.\" Is \"producer\" the right term here if the recipient of the query is an aggregator? This section may benefit from a courtesy reproduction of the class-map type (or at least a reference to it).",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/86",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -1035,8 +1078,8 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:19Z",
-      "updatedAt": "2026-01-30T14:55:17Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-06T09:03:18Z",
+      "closedAt": "2026-02-06T09:03:18Z",
       "comments": [
         {
           "author": "paulhowardarm",
@@ -1044,6 +1087,13 @@
           "body": "The terms \"producer\" and \"consumer\" are used consistently (I hope) throughout the draft to refer to the two participants in a CoSERV transaction. The consumer creates the query and handles the result. The producer receives the query and generates the result (even if it's an aggregated result).\n\nI suppose it's possible for an aggregator to be both a consumer and a producer simultaneously, if it needs to reach out to other CoSERV endpoints in order to build the query result. But this does not change the fact that it's a producer.\n\nHowever, maybe \"the recipient of the query\" is clearer than \"the implementation of the artifact producer\".",
           "createdAt": "2026-01-30T14:55:06Z",
           "updatedAt": "2026-01-30T14:55:06Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fixed in https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/100",
+          "createdAt": "2026-02-06T09:03:18Z",
+          "updatedAt": "2026-02-06T09:03:18Z"
         }
       ]
     },
@@ -1052,7 +1102,7 @@
       "id": "I_kwDOOAZd1M7Ow84W",
       "title": "Should artifact-type have an artifact-type-extensions to align with result-set? If not, what would prompt adding a new result-set type?",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/87",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -1061,8 +1111,8 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:22Z",
-      "updatedAt": "2026-02-03T09:28:56Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-06T08:59:55Z",
+      "closedAt": "2026-02-06T08:59:55Z",
       "comments": [
         {
           "author": "paulhowardarm",
@@ -1078,7 +1128,7 @@
       "id": "I_kwDOOAZd1M7Ow89z",
       "title": "In 4.3.4, suggest replacing \"either\" with \"the desired type(s) of results: \".",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/88",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -1087,16 +1137,24 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:28Z",
-      "updatedAt": "2026-01-30T14:36:26Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-02-06T09:02:59Z",
+      "closedAt": "2026-02-06T09:02:59Z",
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fixed in https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/100",
+          "createdAt": "2026-02-06T09:02:59Z",
+          "updatedAt": "2026-02-06T09:02:59Z"
+        }
+      ]
     },
     {
       "number": 89,
       "id": "I_kwDOOAZd1M7Ow9B3",
       "title": "This sentence in the Security Considerations is confusing: \"It does not directly convey Evidence, Endorsements, Reference Values, Policies or Attestation Results.\" Should Endorsements and Reference Values be removed, the entire sentence deleted, or is there some meaning of \"directly\" that makes the sentence accurate? How does this relate to \"shallow trust\"? Similarly, the statement \u201cthere are fewer security considerations for CoSERV\u201d would seem to vary with shallow or deep trust.",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/89",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -1105,8 +1163,8 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:32Z",
-      "updatedAt": "2026-01-30T14:31:31Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-06T09:02:45Z",
+      "closedAt": "2026-02-06T09:02:45Z",
       "comments": [
         {
           "author": "paulhowardarm",
@@ -1114,6 +1172,13 @@
           "body": "Agree this is confusing, and I think it dates from the more embryonic phases of the CoSERV definition, where it was only a query language, and the output was left unspecified. The way it's defined now, it clearly is a conveyor of Endorsements and Reference Values.\n\nAs I read it now, I think maybe that whole first paragraph in sec-cons needs to be scrapped. I can think of better ways to introduce the sec-cons section now that CoSERV has evolved somewhat.",
           "createdAt": "2026-01-30T14:31:19Z",
           "updatedAt": "2026-01-30T14:31:19Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fixed in https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/100",
+          "createdAt": "2026-02-06T09:02:45Z",
+          "updatedAt": "2026-02-06T09:02:45Z"
         }
       ]
     },
@@ -1193,7 +1258,7 @@
       "id": "I_kwDOOAZd1M7QjmgC",
       "title": "HTTP status code 406 needs to be permitted for discovery queries",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/94",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "paulhowardarm",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -1202,8 +1267,8 @@
       "labels": [],
       "body": "[\u00a76.1.1](https://www.ietf.org/archive/id/draft-ietf-rats-coserv-01.html#section-6.1.1) says that the `.well-known/coserv-configuration` discovery endpoint MUST return HTTP 200 unless there is an error condition beyond the scope of the specification.\n\nThis is probably wrong, because a poorly-behaved client might have set the `Accept` header with an inappropriate media type (e.g. one that is neither `application/coserv-discovery+json` or `application/coserv-discovery+cbor`. If this happens, then the draft needs to permit the server to return HTTP 406.\n\nRelated to this, the draft is unclear on whether it is mandatory for servers to support both JSON and CBOR for discovery documents in all cases. For example, if a service were to support only JSON, would that still be compliant? If the answer is \"yes\", then once again we need to allow the 406 return type if the client requests CBOR. And vice versa.\n",
       "createdAt": "2025-10-09T12:36:52Z",
-      "updatedAt": "2026-01-30T12:23:18Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-06T09:02:24Z",
+      "closedAt": "2026-02-06T09:02:24Z",
       "comments": [
         {
           "author": "thomas-fossati",
@@ -1225,6 +1290,13 @@
           "body": "Actually, reading the above back to myself, that feels like a contradiction. I think we need to say that servers MUST support both formats.",
           "createdAt": "2025-10-10T08:50:31Z",
           "updatedAt": "2025-10-10T08:50:31Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fixed in https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/100",
+          "createdAt": "2026-02-06T09:02:24Z",
+          "updatedAt": "2026-02-06T09:02:24Z"
         }
       ]
     },
@@ -1257,7 +1329,7 @@
       "id": "I_kwDOOAZd1M7bUE9x",
       "title": "Some examples do not use deterministic encoding",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/97",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DhanusML",
       "authorAssociation": "NONE",
       "assignees": [
@@ -1266,8 +1338,8 @@
       "labels": [],
       "body": "The examples `rv-class-simple-results.diag` and `rv-class-stateful.diag` (in `/cddl/examples/`) do not follow deterministic encoding requirements because keys in their measurement values map are not ordered. These examples do not appear in the draft, but they are used by implementations as test vectors.",
       "createdAt": "2025-12-01T06:32:50Z",
-      "updatedAt": "2026-02-03T09:26:58Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-06T08:59:04Z",
+      "closedAt": "2026-02-06T08:59:04Z",
       "comments": [
         {
           "author": "paulhowardarm",
@@ -1297,9 +1369,17 @@
       "labels": [],
       "body": "## Title\nClarify necessity of CoSERV profile in both media type/Accept header and top-level CoSERV data structure\n## Body\n### Issue\nThe CoSERV EAT-profile identifier appears in two places:\n\n1. top-level CoSERV data structure\n2. \"profile\" parameter in media types (used in Content-Type/Accept headers).\n\nQuestions\n\nWhy both locations? Is the media type parameter for content negotiation, and the top-level field for per-object use?\nWhat problems arise if we remove the media type parameter and use only the top-level field?\n\n\nThanks!",
       "createdAt": "2025-12-22T06:59:09Z",
-      "updatedAt": "2025-12-22T06:59:09Z",
+      "updatedAt": "2026-02-06T09:22:15Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi @ajay-fuji - thanks for raising this.\n\nYou are correct in your assessment - the appearance in the HTTP header is purely for HTTP content-type negotiation, while the appearance within the CoSERV object is to label the object correctly for consumers.\n\nBoth are necessary, for different reasons.\n\nIt is a goal of the CoSERV data object to be transport agnostic. It is not necessarily transacted via HTTP. And, even when it _is_ transacted by HTTP, the software that needs to process the CoSERV data might be some distance away from the HTTP-aware layer. The CoSERV object needs to be self-contained and self-describing for this reason.\n\nUse in the `Accept` and `Content-Type` headers is purely for standard HTTP content negotiation. The profile needs to be included as part of the media type, because differently-profiled CoSERV objects are fundamentally different data. If the client requests data from the server without specifying the profile, it might receive data for an unsuitable profile, and be unable to process it in any meaningful way.\n\nPlease let me know if you'd like some additional clarifying text in the draft to make this point.",
+          "createdAt": "2026-02-06T09:22:15Z",
+          "updatedAt": "2026-02-06T09:22:15Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -4457,25 +4537,35 @@
       "id": "PR_kwDOOAZd1M7BcQsC",
       "title": "Address multiple points from Carl Wallace's review",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/100",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "paulhowardarm",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Addresses the following:\r\n\r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/94 (not part of Carl's review, but folded in here)\r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/89 \r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/88 \r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/86 \r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/85 \r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/84 \r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/79 \r\n- https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/78 \r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>\r\n",
       "createdAt": "2026-02-04T11:29:06Z",
-      "updatedAt": "2026-02-04T15:14:21Z",
+      "updatedAt": "2026-02-06T08:58:00Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "cfda3fce3cc6ea3eb810134c839de15ba67ac05a",
       "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
       "headRefName": "phWGFeedback1",
       "headRefOid": "3f91dac0297c536f525a95a2c23740335b72902e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2026-02-06T08:58:00Z",
+      "mergedAt": "2026-02-06T08:58:00Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "5e04495ec76ba9019afa92c660cde11c98763a80"
+      },
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "cc @carl-wallace ",
+          "createdAt": "2026-02-05T09:40:30Z",
+          "updatedAt": "2026-02-05T09:40:30Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOOAZd1M7fmuEv",
@@ -4510,24 +4600,26 @@
       "id": "PR_kwDOOAZd1M7BfPeV",
       "title": "fix: ensure deterministic encoding in examples",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/101",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Fix #97",
       "createdAt": "2026-02-04T14:56:44Z",
-      "updatedAt": "2026-02-04T15:30:23Z",
+      "updatedAt": "2026-02-06T08:59:02Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "cfda3fce3cc6ea3eb810134c839de15ba67ac05a",
       "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "headRefName": "detex",
       "headRefOid": "5a0091e6a239fb3a6ef2103e377e755ba18b33d4",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-06T08:59:02Z",
+      "mergedAt": "2026-02-06T08:59:02Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "7e09c7d5d0449561f74939dc472b794f025cdbe3"
+      },
       "comments": [
         {
           "author": "thomas-fossati",
@@ -4550,6 +4642,32 @@
           "createdAt": "2026-02-04T15:11:29Z",
           "updatedAt": "2026-02-04T15:11:29Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M7fy9U5",
+          "commit": {
+            "abbreviatedOid": "5a0091e"
+          },
+          "author": "DhanusML",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-05T05:34:50Z",
+          "updatedAt": "2026-02-05T05:34:50Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M7fzDLc",
+          "commit": {
+            "abbreviatedOid": "5a0091e"
+          },
+          "author": "shefali-kamal",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-05T05:44:47Z",
+          "updatedAt": "2026-02-05T05:44:47Z",
+          "comments": []
         }
       ]
     },
@@ -4558,24 +4676,26 @@
       "id": "PR_kwDOOAZd1M7BfumP",
       "title": "feat: remove result set extensibility",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/102",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Fix #87 ",
       "createdAt": "2026-02-04T15:29:40Z",
-      "updatedAt": "2026-02-04T17:42:28Z",
+      "updatedAt": "2026-02-06T08:59:54Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "cfda3fce3cc6ea3eb810134c839de15ba67ac05a",
       "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "headRefName": "no-result-set-extensions",
       "headRefOid": "3e8ca1c0f8408fb9b229c63693d858982e15ea4d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-06T08:59:54Z",
+      "mergedAt": "2026-02-06T08:59:53Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "3c0e5c24fed9c05b047b38f3d4d1a66f60651fe5"
+      },
       "comments": [],
       "reviews": [
         {
@@ -4589,6 +4709,46 @@
           "body": "Looks as expected, thanks!",
           "createdAt": "2026-02-04T17:42:27Z",
           "updatedAt": "2026-02-04T17:42:27Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 103,
+      "id": "PR_kwDOOAZd1M7B9hLp",
+      "title": "fix!: Remove the timestamp field from the CoSERV query data model",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/103",
+      "state": "OPEN",
+      "author": "paulhowardarm",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "It was a mistake for queries to have timestamps, because it makes the encoding volatile with respect to time, which violates the stability property that is essential for caching. Text is added to the draft to make it clear that queries deliberately AVOID the use of timestamps or other volatile or unpredictable data.\r\n\r\nBREAKING CHANGE - Implementations must be updated!\r\n\r\nImplementations of the data model must remove the timestamp field. As a consequence of this removal, the integer map key of the `result-type` field also changes from 3 down to 2 (to avoid gaps in the key numbering). Serializers and De-serializers must be updated with this change, as must any test data.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
+      "createdAt": "2026-02-06T10:31:59Z",
+      "updatedAt": "2026-02-06T10:57:26Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "3c0e5c24fed9c05b047b38f3d4d1a66f60651fe5",
+      "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
+      "headRefName": "phRemoveQueryTimestamp",
+      "headRefOid": "975333cb4a698ce1bd8502f0b57a95587c222b9e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M7gQVIo",
+          "commit": {
+            "abbreviatedOid": "975333c"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM, thanks!",
+          "createdAt": "2026-02-06T10:57:26Z",
+          "updatedAt": "2026-02-06T10:57:26Z",
           "comments": []
         }
       ]
