@@ -1058,7 +1058,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Howard, et al.</td>
-<td class="center">Expires 10 August 2026</td>
+<td class="center">Expires 13 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1071,12 +1071,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-rats-coserv-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-02-06" class="published">6 February 2026</time>
+<time datetime="2026-02-09" class="published">9 February 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-08-10">10 August 2026</time></dd>
+<dd class="expires"><time datetime="2026-08-13">13 August 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1148,7 +1148,7 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 10 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 13 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1232,10 +1232,7 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
                     <p id="section-toc.1-1.4.2.3.2.2.1"><a href="#section-4.3.2" class="auto internal xref">4.3.2</a>.  <a href="#name-environment-selector" class="internal xref">Environment Selector</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3.2.3">
-                    <p id="section-toc.1-1.4.2.3.2.3.1"><a href="#section-4.3.3" class="auto internal xref">4.3.3</a>.  <a href="#name-timestamp" class="internal xref">Timestamp</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3.2.4">
-                    <p id="section-toc.1-1.4.2.3.2.4.1"><a href="#section-4.3.4" class="auto internal xref">4.3.4</a>.  <a href="#name-result-type" class="internal xref">Result Type</a></p>
+                    <p id="section-toc.1-1.4.2.3.2.3.1"><a href="#section-4.3.3" class="auto internal xref">4.3.3</a>.  <a href="#name-result-type" class="internal xref">Result Type</a></p>
 </li>
                 </ul>
 </li>
@@ -1586,19 +1583,24 @@ To facilitate efficient transactions, a single query can specify either multiple
 However, it is not possible to mix instance-based selectors, group-based selectors and class-based selectors in a single query.<a href="#section-3.4-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.4-2.3">
-            <p id="section-3.4-2.3.1">A timestamp, denoting the time at which the CoSERV query was sent.<a href="#section-3.4-2.3.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-3.4-2.4">
-            <p id="section-3.4-2.4.1">A switch to select the desired supply chain depth.
+            <p id="section-3.4-2.3.1">A switch to select the desired supply chain depth.
 A CoSERV query can request collected artifacts, source artifacts, or both.
 This switch is especially relevant when the CoSERV query is fulfilled by an aggregator.
 The collected artifacts are intended for convenient consumption (according to the shallow trust model), while the source artifacts are principally useful for auditing (according to the deep trust model).
 It is possible for a query to select for source artifacts only, without the collected artifacts.
 This might happen when the consumer needs to inspect or audit artifacts from across the deep supply chain, while not requiring the convenience of the aggregated view.
 It could also happen when the consumer is acting as an intermediate broker, gathering artifacts for delivery to another aggregator.
-See <a href="#secaggregation" class="auto internal xref">Section 2</a> for details on aggregation, auditing and trust models.<a href="#section-3.4-2.4.1" class="pilcrow">¶</a></p>
+See <a href="#secaggregation" class="auto internal xref">Section 2</a> for details on aggregation, auditing and trust models.<a href="#section-3.4-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
+<p id="section-3.4-3">CoSERV queries do not contain timestamps or any similarly volatile or unpredictable fields.
+This is to ensure that any set of materially-identical queries will always yield the same encoded sequence of CBOR bytes, regardless of the time when they were issued, or of other volatile factors.
+Along with the other encoding rules set out in <a href="#secencoding" class="auto internal xref">Section 4.5</a>, it means that a query can be used as a stable and canonical identifier of artifacts.
+This property of queries is an important enabler of efficient CoSERV transactions.
+See, for example, the HTTP caching design described in <a href="#secrrapicaching" class="auto internal xref">Section 6.1.3</a>.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
+<p id="section-3.4-4">A CoSERV implementation <span class="bcp14">MAY</span> log the time at which a query was received and fulfilled.
+This might sometimes be desirable for transparency or audit purposes.
+Implementations are free to define their own transparency events, which can then include timestamps or other suitable information.<a href="#section-3.4-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="result-sets">
@@ -1693,8 +1695,7 @@ This convention is identical to how EAT profiles are identified using the <code>
 query = {
   &amp;(artifact-type: 0) =&gt; artifact-type
   &amp;(environment-selector: 1) =&gt; environment-selector-map
-  &amp;(timestamp: 2) =&gt; tdate ; RFC3339 date
-  &amp;(result-type: 3) =&gt; result-type
+  &amp;(result-type: 2) =&gt; result-type
 }
 
 artifact-type = &amp;(endorsed-values: 0)
@@ -1799,22 +1800,13 @@ SELECT *
 </div>
 </section>
 </div>
-<div id="timestamp">
-<section id="section-4.3.3">
-          <h4 id="name-timestamp">
-<a href="#section-4.3.3" class="section-number selfRef">4.3.3. </a><a href="#name-timestamp" class="section-name selfRef">Timestamp</a>
-          </h4>
-<p id="section-4.3.3-1">The <code>timestamp</code> field records the date and time at which the query was made, formatted according to <span><a href="https://rfc-editor.org/rfc/rfc8949#section-3.4.1" class="relref">Section 3.4.1</a> of [<a href="#STD94" class="cite xref">STD94</a>]</span>.
-Implementations <span class="bcp14">SHOULD</span> populate this field with the current date and time when forming a CoSERV query.<a href="#section-4.3.3-1" class="pilcrow">¶</a></p>
-</section>
-</div>
 <div id="result-type">
-<section id="section-4.3.4">
+<section id="section-4.3.3">
           <h4 id="name-result-type">
-<a href="#section-4.3.4" class="section-number selfRef">4.3.4. </a><a href="#name-result-type" class="section-name selfRef">Result Type</a>
+<a href="#section-4.3.3" class="section-number selfRef">4.3.3. </a><a href="#name-result-type" class="section-name selfRef">Result Type</a>
           </h4>
-<p id="section-4.3.4-1">The <code>result-type</code> field selects for the desired type(s) of results: <code>collected-artifacts</code> (codepoint 0), <code>source-artifacts</code> (codepoint 1) or <code>both</code> (codepoint 2).
-See <a href="#secaggregation" class="auto internal xref">Section 2</a> for definitions of source and collected artifacts.<a href="#section-4.3.4-1" class="pilcrow">¶</a></p>
+<p id="section-4.3.3-1">The <code>result-type</code> field selects for the desired type(s) of results: <code>collected-artifacts</code> (codepoint 0), <code>source-artifacts</code> (codepoint 1) or <code>both</code> (codepoint 2).
+See <a href="#secaggregation" class="auto internal xref">Section 2</a> for definitions of source and collected artifacts.<a href="#section-4.3.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1975,8 +1967,7 @@ Finally, the <code>environment-selector</code> uses the key 0 to select for clas
         }
       ] ]
     },
-    / timestamp /   2: 0("2030-12-01T18:30:01Z"),
-    / result-type / 3: 1 / source-material /
+    / result-type / 2: 1 / source-artifacts /
   }
 }
 </pre><a href="#section-5.1-3" class="pilcrow">¶</a>
@@ -2001,8 +1992,7 @@ Finally, the <code>environment-selector</code> uses the key 0 to select for clas
         } ]
       ]
     },
-    / timestamp /   2: 0("2030-12-01T18:30:01Z"),
-    / result-type / 3: 2 / both collected and source material /
+    / result-type / 2: 2 / both collected and source artifacts /
   }
 }
 </pre><a href="#section-5.1-5" class="pilcrow">¶</a>
@@ -2021,8 +2011,7 @@ Again, the <code>artifact-type</code> is set to 2, and <code>profile</code> is g
         [ 560(h'8999786556') ]      / tagged-bytes /
       ]
     },
-    / timestamp /   2: 0("2030-12-01T18:30:01Z"),
-    / result-type / 3: 0 / collected material /
+    / result-type / 2: 0 / collected artifacts /
   }
 }
 </pre><a href="#section-5.1-7" class="pilcrow">¶</a>
@@ -2056,8 +2045,7 @@ The rest of the structure is the <code>measurement-map</code> as defined in CoRI
         }
       ] ]
     },
-    2: 0("2030-12-01T18:30:01Z"),
-    3: 0
+    2: 0
   },
   / results / 2: {
     0: [
@@ -2107,8 +2095,7 @@ This means one or more original signed manifests containing information that sat
         }
       ] ]
     },
-    / timestamp /   2: 0("2030-12-01T18:30:01Z"),
-    / result-type / 3: 1 / source-artifacts /
+    / result-type / 2: 1 / source-artifacts /
   },
   / results / 2: {
     / rvq / 0: [ ],
@@ -2452,8 +2439,7 @@ Body (in CBOR Extended Diagnostic Notation (EDN))
         }
       ] ]
     },
-    / timestamp /   2: 0("2030-12-01T18:30:01Z"),
-    / result-type / 3: 0 / collected-material /
+    / result-type / 2: 0 / collected-artifacts /
   },
   / results / 2: {
     / rvq / 0: [
@@ -3601,8 +3587,7 @@ profile = comid.oid-type / ~uri
 query = {
   &amp;(artifact-type: 0) =&gt; artifact-type,
   &amp;(environment-selector: 1) =&gt; environment-selector-map,
-  &amp;(timestamp: 2) =&gt; tdate,
-  &amp;(result-type: 3) =&gt; result-type,
+  &amp;(result-type: 2) =&gt; result-type,
 }
 artifact-type = &amp;(endorsed-values: 0) / &amp;(trust-anchors: 1) / &amp;(\
                                                  reference-values: 2)

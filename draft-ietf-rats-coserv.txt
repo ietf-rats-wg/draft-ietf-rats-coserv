@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Informational                                T. Fossati
-Expires: 10 August 2026                                           Linaro
+Expires: 13 August 2026                                           Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 10 August 2026                                           Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                         6 February 2026
+                                                         9 February 2026
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 August 2026.
+   This Internet-Draft will expire on 13 August 2026.
 
 Copyright Notice
 
@@ -98,8 +98,7 @@ Table of Contents
      4.3.  Query Structure
        4.3.1.  Artifact Type
        4.3.2.  Environment Selector
-       4.3.3.  Timestamp
-       4.3.4.  Result Type
+       4.3.3.  Result Type
      4.4.  Result Set Structure
      4.5.  Encoding Requirements
      4.6.  Cryptographic Binding Between Query and Result Set
@@ -441,8 +440,6 @@ Table of Contents
       instance-based selectors, group-based selectors and class-based
       selectors in a single query.
 
-   *  A timestamp, denoting the time at which the CoSERV query was sent.
-
    *  A switch to select the desired supply chain depth.  A CoSERV query
       can request collected artifacts, source artifacts, or both.  This
       switch is especially relevant when the CoSERV query is fulfilled
@@ -457,6 +454,22 @@ Table of Contents
       happen when the consumer is acting as an intermediate broker,
       gathering artifacts for delivery to another aggregator.  See
       Section 2 for details on aggregation, auditing and trust models.
+
+   CoSERV queries do not contain timestamps or any similarly volatile or
+   unpredictable fields.  This is to ensure that any set of materially-
+   identical queries will always yield the same encoded sequence of CBOR
+   bytes, regardless of the time when they were issued, or of other
+   volatile factors.  Along with the other encoding rules set out in
+   Section 4.5, it means that a query can be used as a stable and
+   canonical identifier of artifacts.  This property of queries is an
+   important enabler of efficient CoSERV transactions.  See, for
+   example, the HTTP caching design described in Section 6.1.3.
+
+   A CoSERV implementation MAY log the time at which a query was
+   received and fulfilled.  This might sometimes be desirable for
+   transparency or audit purposes.  Implementations are free to define
+   their own transparency events, which can then include timestamps or
+   other suitable information.
 
 3.5.  Result Sets
 
@@ -557,8 +570,7 @@ Table of Contents
    query = {
      &(artifact-type: 0) => artifact-type
      &(environment-selector: 1) => environment-selector-map
-     &(timestamp: 2) => tdate ; RFC3339 date
-     &(result-type: 3) => result-type
+     &(result-type: 2) => result-type
    }
 
    artifact-type = &(endorsed-values: 0)
@@ -679,14 +691,7 @@ Table of Contents
     WHERE ( class-id = "iZl4ZVY=" AND class-vendor = "ACME Inc." ) OR
           ( class-id = "31fb5abf-023e-4992-aa4e-95f9c1503bfa" )
 
-4.3.3.  Timestamp
-
-   The timestamp field records the date and time at which the query was
-   made, formatted according to Section 3.4.1 of [STD94].
-   Implementations SHOULD populate this field with the current date and
-   time when forming a CoSERV query.
-
-4.3.4.  Result Type
+4.3.3.  Result Type
 
    The result-type field selects for the desired type(s) of results:
    collected-artifacts (codepoint 0), source-artifacts (codepoint 1) or
@@ -838,8 +843,7 @@ Table of Contents
            }
          ] ]
        },
-       / timestamp /   2: 0("2030-12-01T18:30:01Z"),
-       / result-type / 3: 1 / source-material /
+       / result-type / 2: 1 / source-artifacts /
      }
    }
 
@@ -864,8 +868,7 @@ Table of Contents
            } ]
          ]
        },
-       / timestamp /   2: 0("2030-12-01T18:30:01Z"),
-       / result-type / 3: 2 / both collected and source material /
+       / result-type / 2: 2 / both collected and source artifacts /
      }
    }
 
@@ -885,8 +888,7 @@ Table of Contents
            [ 560(h'8999786556') ]      / tagged-bytes /
          ]
        },
-       / timestamp /   2: 0("2030-12-01T18:30:01Z"),
-       / result-type / 3: 0 / collected material /
+       / result-type / 2: 0 / collected artifacts /
      }
    }
 
@@ -921,8 +923,7 @@ Table of Contents
            }
          ] ]
        },
-       2: 0("2030-12-01T18:30:01Z"),
-       3: 0
+       2: 0
      },
      / results / 2: {
        0: [
@@ -976,8 +977,7 @@ Table of Contents
            }
          ] ]
        },
-       / timestamp /   2: 0("2030-12-01T18:30:01Z"),
-       / result-type / 3: 1 / source-artifacts /
+       / result-type / 2: 1 / source-artifacts /
      },
      / results / 2: {
        / rvq / 0: [ ],
@@ -1347,8 +1347,7 @@ Table of Contents
            }
          ] ]
        },
-       / timestamp /   2: 0("2030-12-01T18:30:01Z"),
-       / result-type / 3: 0 / collected-material /
+       / result-type / 2: 0 / collected-artifacts /
      },
      / results / 2: {
        / rvq / 0: [
@@ -2076,8 +2075,7 @@ A.1.  CoSERV Data Model
    query = {
      &(artifact-type: 0) => artifact-type,
      &(environment-selector: 1) => environment-selector-map,
-     &(timestamp: 2) => tdate,
-     &(result-type: 3) => result-type,
+     &(result-type: 2) => result-type,
    }
    artifact-type = &(endorsed-values: 0) / &(trust-anchors: 1) / &(\
                                                     reference-values: 2)
