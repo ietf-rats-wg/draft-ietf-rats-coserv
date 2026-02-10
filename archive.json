@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-08T01:21:02.623923+00:00",
+  "timestamp": "2026-02-10T01:15:03.013722+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -583,7 +583,7 @@
       "id": "I_kwDOOAZd1M7Cd3XN",
       "title": "Query timestamp removal",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/56",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -592,9 +592,17 @@
       "labels": [],
       "body": "Queries have a non-optional RFC3339 timestamp attached.\n\nThe rationale is captured in #28.\n\nAt the time, we overlooked the fact that this field may adversely affect the caching properties that the coserv payloads require.\n\nLong story short: we should remove the field and add something SCITT-y, instead.\n",
       "createdAt": "2025-07-25T09:33:26Z",
-      "updatedAt": "2026-01-30T12:22:40Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-02-09T12:34:51Z",
+      "closedAt": "2026-02-09T12:34:51Z",
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fixed with https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/103",
+          "createdAt": "2026-02-09T12:34:51Z",
+          "updatedAt": "2026-02-09T12:34:51Z"
+        }
+      ]
     },
     {
       "number": 57,
@@ -4718,24 +4726,26 @@
       "id": "PR_kwDOOAZd1M7B9hLp",
       "title": "fix!: Remove the timestamp field from the CoSERV query data model",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/103",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "paulhowardarm",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "It was a mistake for queries to have timestamps, because it makes the encoding volatile with respect to time, which violates the stability property that is essential for caching. Text is added to the draft to make it clear that queries deliberately AVOID the use of timestamps or other volatile or unpredictable data.\r\n\r\nBREAKING CHANGE - Implementations must be updated!\r\n\r\nImplementations of the data model must remove the timestamp field. As a consequence of this removal, the integer map key of the `result-type` field also changes from 3 down to 2 (to avoid gaps in the key numbering). Serializers and De-serializers must be updated with this change, as must any test data.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
       "createdAt": "2026-02-06T10:31:59Z",
-      "updatedAt": "2026-02-06T10:57:26Z",
+      "updatedAt": "2026-02-09T12:34:13Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "3c0e5c24fed9c05b047b38f3d4d1a66f60651fe5",
       "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
       "headRefName": "phRemoveQueryTimestamp",
       "headRefOid": "975333cb4a698ce1bd8502f0b57a95587c222b9e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-09T12:34:12Z",
+      "mergedAt": "2026-02-09T12:34:12Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "6cf0cb2f231a03dd0a0a9d4a63cf7277c3d1e4a2"
+      },
       "comments": [],
       "reviews": [
         {
