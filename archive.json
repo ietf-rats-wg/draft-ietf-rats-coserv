@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-10T01:15:03.013722+00:00",
+  "timestamp": "2026-02-15T01:07:56.887507+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -4759,6 +4759,46 @@
           "body": "LGTM, thanks!",
           "createdAt": "2026-02-06T10:57:26Z",
           "updatedAt": "2026-02-06T10:57:26Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 104,
+      "id": "PR_kwDOOAZd1M7DOVIJ",
+      "title": "acks += Carl Wallace",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/104",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-02-12T09:35:06Z",
+      "updatedAt": "2026-02-12T09:43:06Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "6cf0cb2f231a03dd0a0a9d4a63cf7277c3d1e4a2",
+      "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "headRefName": "acks",
+      "headRefOid": "aa4f14276e6f976a61ffe77b2d3dc9aeba7b5865",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M7h5IBv",
+          "commit": {
+            "abbreviatedOid": "aa4f142"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks for correcting this omission.",
+          "createdAt": "2026-02-12T09:43:06Z",
+          "updatedAt": "2026-02-12T09:43:06Z",
           "comments": []
         }
       ]
