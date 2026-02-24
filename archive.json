@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-15T01:07:56.887507+00:00",
+  "timestamp": "2026-02-24T01:02:37.053731+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -758,11 +758,13 @@
       "state": "OPEN",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "CoSERV \u201caggregators\" consolidate multiple entities in the upstream supply chain into a single entity.\nThis enables a complex supply chain to be presented to a verifier in a simplified and robust way.\nHowever, there are security and privacy implications that need to be explored.\n\nFor example, an aggregator is generally more _powerful_ than a vendor or single-component endorser.  Since it conveys data from multiple upstream links, it can correlate queries for different parts of a system and build a precise picture of the composite attester, which would not be available to a single-component endorser.  This could pose a privacy risk that may be tricky to mitigate.\n\nIn terms of security, an aggregator is a one-stop shop for the verifier and therefore a single point of failure. If the aggregator is successfully attacked, the entire appraisal function can be compromised.  Mitigating measures include maintaining multiple active trust links, so that a verifier can direct queries to another aggregator under a different administration.",
       "createdAt": "2025-08-28T13:25:05Z",
-      "updatedAt": "2025-11-17T17:55:39Z",
+      "updatedAt": "2026-02-23T10:05:11Z",
       "closedAt": null,
       "comments": [
         {
