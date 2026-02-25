@@ -971,6 +971,49 @@ Implementations should take care when transforming CoSERV queries into native qu
 There is a risk of injection attacks arising from poorly-formed or maliciously-formed CoSERV queries.
 Implementations must ensure that suitable sanitization procedures are in place when performing such translations.
 
+## Aggregators
+
+Aggregation (see {{secaggregation}}) is the process of combining artifacts from multiple Endorser or Reference Value Provider sources, which is a necessary step in some supply chains.
+CoSERV supports aggregation explicitly at the protocol level, but is agnostic with regards to how (or whether) such support is used.
+However, there are specific security considerations for deployments that make use of aggregators.
+
+When used, aggregators feed Endorsements and Reference Values to the Verifier (possibly via further aggregators).
+This means that they act in the Endorser and/or Reference Value Provider roles of RATS, both of which are trusted roles.
+Aggregators are therefore trusted components.
+Further, since the purpose of an aggregator is to provide a consolidated point of consumption for the Verifier, there is a risk of its becoming a single point of failure or vulnerability.
+An aggregator that is unavailable, malfunctioning, or malicious, has the potential to impact the security of the overall deployment.
+For example, a malicious aggregator might attempt to impersonate or otherwise subvert the authority of other actors in the supply chain, such as hardware or firmware vendors.
+
+The intent of CoSERV is for aggregators to provide an optional convenience layer for the Verifier, rather than to be a subversive authority.
+The design features of CoSERV can be used alongside judicious deployment practices to mitigate the risks.
+A informative and non-exhaustive list of mitigations follows:-
+
+- **Use independent chains of trust.**
+It is established above that aggregators are trusted components.
+This does not mean that they necessarily become a sole or replacement trust authority.
+CoSERV's aggregation model allows for deference to other authorities that exist in the supply chain.
+This is true even when an aggregator is acting in the Endorser role.
+A hardware Endorsement, for example, might be delivered to the Verifier via an aggregator (along with multiple other artifacts, such as Reference Values).
+But the authority of that Endorsement can still be chained back to the hardware provider, and this authority can be checked by the Verifier using an independent trust anchor.
+- **Inspect the authority delegation chains.**
+The "quads" feature of the CoSERV data model provide explicit tracking of supply chain sources.
+Each inner CoMID triple of an aggregated CoSERV response is annotated with an authority delegation chain.
+This is a sequence of delegated trust authorities, each of which might be either a further upstream aggregator or a primary supply chain actor.
+This information allows the consumer (Verifier) to inspect the provenance of each aggregated result, which can be checked against its own independent record of trustworthy sources.
+- **Use source artifacts.**
+CoSERV's aggregation model supports the pass-through of artifacts from upstream supply-chain actors, known as "source artifacts" in the data model.
+Source artifacts are passed verbatim in CoSERV, meaning that they retain any original signatures.
+This provides another means of checking the provenance and integrity of such artifacts, independently of any signature that is applied to the CoSERV result by the aggregator (see {{signed-coserv}}).
+- **Mutual trust between aggregators and primary supply chain actors.**
+The default assumption of CoSERV is that trust flows in one direction only: CoSERV consumers trust CoSERV producers, but not the reverse.
+When a Verifier sends a CoSERV query to an aggregator, the Verifier is trusting that aggregator, but not the reverse.
+Likewise, when an aggregator calls a primary supply chain source (whether using CoSERV or some proprietary mechanism), then the aggregator is trusting that primary supply chain source, but not the reverse.
+Indeed, a primary supply chain source might not even be aware of the existence of any aggregator that is consuming artifacts from it, let alone place any trust in such an aggregator.
+However, it is perfectly valid for a deployment to deviate from this baseline, provided that the suitable technical and contractual enablers are put in place.
+There could exist an aggregator that is trusted - and vouched for - by the primary supply chain actor(s) from which it consumes.
+Supply chain actors might even actively provision their artifacts into the aggregator for onward distribution.
+The clients of such an aggregator might then be able to make more use of the "shallow trust" model described in {{secaggregation}}, with a greater reliance on collected artifacts rather than source artifacts.
+
 # Privacy Considerations
 
 A CoSERV query can potentially contain privacy-sensitive information.
