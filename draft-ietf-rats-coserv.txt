@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Informational                                T. Fossati
-Expires: 13 August 2026                                           Linaro
+Expires: 29 August 2026                                           Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 13 August 2026                                           Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                         9 February 2026
+                                                        25 February 2026
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 August 2026.
+   This Internet-Draft will expire on 29 August 2026.
 
 Copyright Notice
 
@@ -3003,6 +3003,9 @@ Acknowledgments
  ++++++++====++@#%#===================================  Dionna Glaze ===
 
    Henk Birkholz and Jag Raman are puppeteering in the shadows.
+
+   The authors would like to thank Carl Wallace for their reviews and
+   suggestions.
 
 Authors' Addresses
 
