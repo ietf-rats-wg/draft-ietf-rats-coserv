@@ -986,7 +986,7 @@ For example, a malicious aggregator might attempt to impersonate or otherwise su
 
 The intent of CoSERV is for aggregators to provide an optional convenience layer for the Verifier, rather than to be a subversive authority.
 The design features of CoSERV can be used alongside judicious deployment practices to mitigate the risks.
-A informative and non-exhaustive list of mitigations follows:-
+An informative and non-exhaustive list of mitigations follows:-
 
 - **Use independent chains of trust.**
 It is established above that aggregators are trusted components.
