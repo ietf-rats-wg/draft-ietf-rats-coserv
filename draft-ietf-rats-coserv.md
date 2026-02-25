@@ -996,7 +996,7 @@ This is true even when an aggregator is acting in the Endorser role.
 A hardware Endorsement, for example, might be delivered to the Verifier via an aggregator (along with multiple other artifacts, such as Reference Values).
 But the authority of that Endorsement can still be chained back to the hardware provider, and this authority can be checked by the Verifier using an independent trust anchor.
 - **Inspect the authority delegation chains.**
-The "quads" feature of the CoSERV data model provide explicit tracking of supply chain sources.
+The "quads" feature of the CoSERV data model provides explicit tracking of supply chain sources.
 Each inner CoMID triple of an aggregated CoSERV response is annotated with an authority delegation chain.
 This is a sequence of delegated trust authorities, each of which might be either a further upstream aggregator or a primary supply chain actor.
 This information allows the consumer (Verifier) to inspect the provenance of each aggregated result, which can be checked against its own independent record of trustworthy sources.
