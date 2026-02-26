@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-24T01:02:37.053731+00:00",
+  "timestamp": "2026-02-26T01:01:48.306170+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -4770,24 +4770,26 @@
       "id": "PR_kwDOOAZd1M7DOVIJ",
       "title": "acks += Carl Wallace",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/104",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-02-12T09:35:06Z",
-      "updatedAt": "2026-02-12T09:43:06Z",
+      "updatedAt": "2026-02-25T17:48:12Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "6cf0cb2f231a03dd0a0a9d4a63cf7277c3d1e4a2",
       "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "headRefName": "acks",
       "headRefOid": "aa4f14276e6f976a61ffe77b2d3dc9aeba7b5865",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-25T17:48:12Z",
+      "mergedAt": "2026-02-25T17:48:12Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "c16e1d9cfe68e3c3711fc3fe6478deffbc2af79a"
+      },
       "comments": [],
       "reviews": [
         {
@@ -4802,6 +4804,59 @@
           "createdAt": "2026-02-12T09:43:06Z",
           "updatedAt": "2026-02-12T09:43:06Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 105,
+      "id": "PR_kwDOOAZd1M7GTXZ5",
+      "title": "docs: New subsection on aggregators in Security Considerations",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/105",
+      "state": "OPEN",
+      "author": "paulhowardarm",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR documents some of the risks and mitigations that are specific to deployments that use aggregators.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
+      "createdAt": "2026-02-25T17:59:22Z",
+      "updatedAt": "2026-02-25T20:40:08Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "c16e1d9cfe68e3c3711fc3fe6478deffbc2af79a",
+      "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
+      "headRefName": "phSecConsAgg",
+      "headRefOid": "3403d83216aad3bd1aae4ddeed9383984903b9b6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M7l1_Hi",
+          "commit": {
+            "abbreviatedOid": "d252207"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM, thanks!",
+          "createdAt": "2026-02-25T18:43:59Z",
+          "updatedAt": "2026-02-25T18:44:48Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\nAn informative and non-exhaustive list of mitigations follows:-\n```",
+              "createdAt": "2026-02-25T18:43:59Z",
+              "updatedAt": "2026-02-25T18:44:48Z"
+            },
+            {
+              "originalPosition": 29,
+              "body": "```suggestion\nThe \"quads\" feature of the CoSERV data model provides explicit tracking of supply chain sources.\n```",
+              "createdAt": "2026-02-25T18:44:25Z",
+              "updatedAt": "2026-02-25T18:44:48Z"
+            }
+          ]
         }
       ]
     }
