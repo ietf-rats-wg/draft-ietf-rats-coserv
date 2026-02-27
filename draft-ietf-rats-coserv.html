@@ -1059,7 +1059,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Howard, et al.</td>
-<td class="center">Expires 29 August 2026</td>
+<td class="center">Expires 31 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1072,12 +1072,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-rats-coserv-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-02-25" class="published">25 February 2026</time>
+<time datetime="2026-02-27" class="published">27 February 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-08-29">29 August 2026</time></dd>
+<dd class="expires"><time datetime="2026-08-31">31 August 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1149,7 +1149,7 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 29 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 31 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1295,6 +1295,9 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
                 <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-forming-native-database-que" class="internal xref">Forming Native Database Queries from CoSERV</a></p>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
+                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-aggregators" class="internal xref">Aggregators</a></p>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
@@ -1401,7 +1404,7 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 For a complete glossary, see <span><a href="https://rfc-editor.org/rfc/rfc9334#section-4" class="relref">Section 4</a> of [<a href="#RFC9334" class="cite xref">RFC9334</a>]</span>.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.1-3">This document uses terms and concepts defined by the CoRIM specification.
 For a complete glossary, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
-<p id="section-1.1-4">This document uses the terms <em>"actual state"</em> and <em>"reference state"</em> as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-07#section-2" class="relref">Section 2</a> of [<a href="#I-D.ietf-rats-endorsements" class="cite xref">I-D.ietf-rats-endorsements</a>]</span>.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+<p id="section-1.1-4">This document uses the terms <em>"actual state"</em> and <em>"reference state"</em> as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-08#section-2" class="relref">Section 2</a> of [<a href="#I-D.ietf-rats-endorsements" class="cite xref">I-D.ietf-rats-endorsements</a>]</span>.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
 <p id="section-1.1-5">The terminology from CBOR <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>, CDDL <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> and COSE <span>[<a href="#STD96" class="cite xref">STD96</a>]</span> applies;
 in particular, CBOR diagnostic notation is defined in <span><a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">Section 8</a> of [<a href="#STD94" class="cite xref">STD94</a>]</span>
 and <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>. Terms and concepts are always referenced as proper nouns, i.e., with Capital Letters.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
@@ -1491,7 +1494,7 @@ An example of a trust anchor would be the public part of the asymmetric signing 
 This is just one example.
 Other forms of trust anchor are possible.
 CoSERV does not place any additional requirements or constraints on the conveyance or use of trust anchors, beyond what is already described in <span>[<a href="#RFC9334" class="cite xref">RFC9334</a>]</span> and <span>[<a href="#I-D.ietf-rats-endorsements" class="cite xref">I-D.ietf-rats-endorsements</a>]</span>.
-<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-07#section-4" class="relref">Section 4</a> of [<a href="#I-D.ietf-rats-endorsements" class="cite xref">I-D.ietf-rats-endorsements</a>]</span> sets out the applicable patterns for the endorsement of verification keys, all of which apply equally here.<a href="#section-3.2-2.1.1" class="pilcrow">¶</a></p>
+<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-08#section-4" class="relref">Section 4</a> of [<a href="#I-D.ietf-rats-endorsements" class="cite xref">I-D.ietf-rats-endorsements</a>]</span> sets out the applicable patterns for the endorsement of verification keys, all of which apply equally here.<a href="#section-3.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.2-2.2">
             <p id="section-3.2-2.2.1"><strong>Endorsed Value</strong>: An endorsed value is as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
@@ -2934,6 +2937,60 @@ There is a risk of injection attacks arising from poorly-formed or maliciously-f
 Implementations must ensure that suitable sanitization procedures are in place when performing such translations.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="aggregators">
+<section id="section-8.3">
+        <h3 id="name-aggregators">
+<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-aggregators" class="section-name selfRef">Aggregators</a>
+        </h3>
+<p id="section-8.3-1">Aggregation (see <a href="#secaggregation" class="auto internal xref">Section 2</a>) is the process of combining artifacts from multiple Endorser or Reference Value Provider sources, which is a necessary step in some supply chains.
+CoSERV supports aggregation explicitly at the protocol level, but is agnostic with regards to how (or whether) such support is used.
+However, there are specific security considerations for deployments that make use of aggregators.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
+<p id="section-8.3-2">When used, aggregators feed Endorsements and Reference Values to the Verifier (possibly via further aggregators).
+This means that they act in the Endorser and/or Reference Value Provider roles of RATS, both of which are trusted roles.
+Aggregators are therefore trusted components.
+Further, since the purpose of an aggregator is to provide a consolidated point of consumption for the Verifier, there is a risk of its becoming a single point of failure or vulnerability.
+An aggregator that is unavailable, malfunctioning, or malicious, has the potential to impact the security of the overall deployment.
+For example, a malicious aggregator might attempt to impersonate or otherwise subvert the authority of other actors in the supply chain, such as hardware or firmware vendors.<a href="#section-8.3-2" class="pilcrow">¶</a></p>
+<p id="section-8.3-3">The intent of CoSERV is for aggregators to provide an optional convenience layer for the Verifier, rather than to be a subversive authority.
+The design features of CoSERV can be used alongside judicious deployment practices to mitigate the risks.
+An informative and non-exhaustive list of mitigations follows:-<a href="#section-8.3-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-8.3-4.1">
+            <p id="section-8.3-4.1.1"><strong>Use independent chains of trust.</strong>
+It is established above that aggregators are trusted components.
+This does not mean that they necessarily become a sole or replacement trust authority.
+CoSERV's aggregation model allows for deference to other authorities that exist in the supply chain.
+This is true even when an aggregator is acting in the Endorser role.
+A hardware Endorsement, for example, might be delivered to the Verifier via an aggregator (along with multiple other artifacts, such as Reference Values).
+But the authority of that Endorsement can still be chained back to the hardware provider, and this authority can be checked by the Verifier using an independent trust anchor.<a href="#section-8.3-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-8.3-4.2">
+            <p id="section-8.3-4.2.1"><strong>Inspect the authority delegation chains.</strong>
+The "quads" feature of the CoSERV data model provides explicit tracking of supply chain sources.
+Each inner CoMID triple of an aggregated CoSERV response is annotated with an authority delegation chain.
+This is a sequence of delegated trust authorities, each of which might be either a further upstream aggregator or a primary supply chain actor.
+This information allows the consumer (Verifier) to inspect the provenance of each aggregated result, which can be checked against its own independent record of trustworthy sources.<a href="#section-8.3-4.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-8.3-4.3">
+            <p id="section-8.3-4.3.1"><strong>Use source artifacts.</strong>
+CoSERV's aggregation model supports the pass-through of artifacts from upstream supply-chain actors, known as "source artifacts" in the data model.
+Source artifacts are passed verbatim in CoSERV, meaning that they retain any original signatures.
+This provides another means of checking the provenance and integrity of such artifacts, independently of any signature that is applied to the CoSERV result by the aggregator (see <a href="#signed-coserv" class="auto internal xref">Section 4.6</a>).<a href="#section-8.3-4.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-8.3-4.4">
+            <p id="section-8.3-4.4.1"><strong>Mutual trust between aggregators and primary supply chain actors.</strong>
+The default assumption of CoSERV is that trust flows in one direction only: CoSERV consumers trust CoSERV producers, but not the reverse.
+When a Verifier sends a CoSERV query to an aggregator, the Verifier is trusting that aggregator, but not the reverse.
+Likewise, when an aggregator calls a primary supply chain source (whether using CoSERV or some proprietary mechanism), then the aggregator is trusting that primary supply chain source, but not the reverse.
+Indeed, a primary supply chain source might not even be aware of the existence of any aggregator that is consuming artifacts from it, let alone place any trust in such an aggregator.
+However, it is perfectly valid for a deployment to deviate from this baseline, provided that the suitable technical and contractual enablers are put in place.
+There could exist an aggregator that is trusted - and vouched for - by the primary supply chain actor(s) from which it consumes.
+Supply chain actors might even actively provision their artifacts into the aggregator for onward distribution.
+The clients of such an aggregator might then be able to make more use of the "shallow trust" model described in <a href="#secaggregation" class="auto internal xref">Section 2</a>, with a greater reliance on collected artifacts rather than source artifacts.<a href="#section-8.3-4.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
 </section>
 </div>
 <div id="privacy-considerations">
@@ -3516,7 +3573,7 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <dd class="break"></dd>
 <dt id="I-D.ietf-rats-endorsements">[I-D.ietf-rats-endorsements]</dt>
         <dd>
-<span class="refAuthor">Thaler, D.</span>, <span class="refAuthor">Birkholz, H.</span>, and <span class="refAuthor">T. Fossati</span>, <span class="refTitle">"RATS Endorsements"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-endorsements-07</span>, <time datetime="2025-08-25" class="refDate">25 August 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-07">https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-07</a>&gt;</span>. </dd>
+<span class="refAuthor">Thaler, D.</span>, <span class="refAuthor">Birkholz, H.</span>, and <span class="refAuthor">T. Fossati</span>, <span class="refTitle">"RATS Endorsements"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-endorsements-08</span>, <time datetime="2026-02-25" class="refDate">25 February 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-08">https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-08</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6024">[RFC6024]</dt>
         <dd>
