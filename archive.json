@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-26T01:01:48.306170+00:00",
+  "timestamp": "2026-03-01T01:10:27.668671+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -764,7 +764,7 @@
       "labels": [],
       "body": "CoSERV \u201caggregators\" consolidate multiple entities in the upstream supply chain into a single entity.\nThis enables a complex supply chain to be presented to a verifier in a simplified and robust way.\nHowever, there are security and privacy implications that need to be explored.\n\nFor example, an aggregator is generally more _powerful_ than a vendor or single-component endorser.  Since it conveys data from multiple upstream links, it can correlate queries for different parts of a system and build a precise picture of the composite attester, which would not be available to a single-component endorser.  This could pose a privacy risk that may be tricky to mitigate.\n\nIn terms of security, an aggregator is a one-stop shop for the verifier and therefore a single point of failure. If the aggregator is successfully attacked, the entire appraisal function can be compromised.  Mitigating measures include maintaining multiple active trust links, so that a verifier can direct queries to another aggregator under a different administration.",
       "createdAt": "2025-08-28T13:25:05Z",
-      "updatedAt": "2026-02-23T10:05:11Z",
+      "updatedAt": "2026-02-27T09:12:21Z",
       "closedAt": null,
       "comments": [
         {
@@ -780,6 +780,13 @@
           "body": "CoSERV results are computed and signed dynamically.  There is an unavoidable trade-off between making the signing key highly available, high-throughput, and highly secure.\n\nNote that `artifact: both` mode can help to mitigate the risk of overreliance on a \u201cweak\" key.",
           "createdAt": "2025-11-17T17:55:39Z",
           "updatedAt": "2025-11-17T17:55:39Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Largely addressed by https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/105, but still some pending work around privacy considerations, where we have no aggregator-specific risks or mitigations as yet.",
+          "createdAt": "2026-02-27T09:12:21Z",
+          "updatedAt": "2026-02-27T09:12:21Z"
         }
       ]
     },
@@ -4812,24 +4819,26 @@
       "id": "PR_kwDOOAZd1M7GTXZ5",
       "title": "docs: New subsection on aggregators in Security Considerations",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/105",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "paulhowardarm",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This PR documents some of the risks and mitigations that are specific to deployments that use aggregators.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
       "createdAt": "2026-02-25T17:59:22Z",
-      "updatedAt": "2026-02-25T20:40:08Z",
+      "updatedAt": "2026-02-27T08:41:56Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "c16e1d9cfe68e3c3711fc3fe6478deffbc2af79a",
       "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
       "headRefName": "phSecConsAgg",
       "headRefOid": "3403d83216aad3bd1aae4ddeed9383984903b9b6",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-27T08:41:56Z",
+      "mergedAt": "2026-02-27T08:41:56Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "aaa3ba8fb984644768c0b979cf12d37914f08226"
+      },
       "comments": [],
       "reviews": [
         {
