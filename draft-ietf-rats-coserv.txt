@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Informational                                T. Fossati
-Expires: 31 August 2026                                           Linaro
+Expires: 3 September 2026                                         Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 31 August 2026                                           Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                        27 February 2026
+                                                            2 March 2026
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 August 2026.
+   This Internet-Draft will expire on 3 September 2026.
 
 Copyright Notice
 
@@ -117,6 +117,7 @@ Table of Contents
      8.2.  Forming Native Database Queries from CoSERV
      8.3.  Aggregators
    9.  Privacy Considerations
+     9.1.  Aggregators
    10. IANA Considerations
      10.1.  Media Types Registrations
        10.1.1.  application/coserv+cbor
@@ -1832,6 +1833,18 @@ Table of Contents
    *  Collating Attester instances into anonymity groups, and
       referencing the groups rather than the individual instances.
 
+9.1.  Aggregators
+
+   Aggregators (as described in Section 2) can pose a specific privacy
+   risk.  This is because they necessarily correlate inputs from
+   multiple supply-chain actors, and can observe repeated CoSERV queries
+   over time.  In doing so, an aggregator might be able to infer details
+   about the composition of an Attester's hardware, firmware or software
+   components.  Such details would not be accessible to individual
+   supply-chain actors implementing the Endorser or Reference Value
+   Provider roles.  There is consequently a risk that such inferred
+   details could be misused to create a covert channel.
+
 10.  IANA Considerations
 
 
@@ -2091,9 +2104,9 @@ Table of Contents
    [I-D.ietf-rats-endorsements]
               Thaler, D., Birkholz, H., and T. Fossati, "RATS
               Endorsements", Work in Progress, Internet-Draft, draft-
-              ietf-rats-endorsements-08, 25 February 2026,
+              ietf-rats-endorsements-09, 2 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-rats-
-              endorsements-08>.
+              endorsements-09>.
 
    [RFC6024]  Reddy, R. and C. Wallace, "Trust Anchor Management
               Requirements", RFC 6024, DOI 10.17487/RFC6024, October
