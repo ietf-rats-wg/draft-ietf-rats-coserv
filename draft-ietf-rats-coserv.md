@@ -1025,6 +1025,14 @@ Suitable mitigations include the following:
 - The use of authenticated secure channels between the producers and the consumers of CoSERV queries and returned artifacts.
 - Collating Attester instances into anonymity groups, and referencing the groups rather than the individual instances.
 
+## Aggregators
+
+Aggregators (as described in {{secaggregation}}) can pose a specific privacy risk.
+This is because they necessarily correlate inputs from multiple supply-chain actors, and can observe repeated CoSERV queries over time.
+In doing so, an aggregator might be able to infer details about the composition of an Attester's hardware, firmware or software components.
+Such details would not be available to individual supply-chain actors that might implement the Endorser or Reference Value Provider roles.
+There is consequently a risk that such inferred details could be misused to create a covert channel.
+
 # IANA Considerations
 
 [^rfced] replace "{{&SELF}}" with the RFC number assigned to this document.
