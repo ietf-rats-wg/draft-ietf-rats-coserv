@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-01T01:10:27.668671+00:00",
+  "timestamp": "2026-03-03T01:04:59.107309+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -755,7 +755,7 @@
       "id": "I_kwDOOAZd1M7IeFX3",
       "title": "Security and Privacy Considerations for aggregators",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/67",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -764,8 +764,8 @@
       "labels": [],
       "body": "CoSERV \u201caggregators\" consolidate multiple entities in the upstream supply chain into a single entity.\nThis enables a complex supply chain to be presented to a verifier in a simplified and robust way.\nHowever, there are security and privacy implications that need to be explored.\n\nFor example, an aggregator is generally more _powerful_ than a vendor or single-component endorser.  Since it conveys data from multiple upstream links, it can correlate queries for different parts of a system and build a precise picture of the composite attester, which would not be available to a single-component endorser.  This could pose a privacy risk that may be tricky to mitigate.\n\nIn terms of security, an aggregator is a one-stop shop for the verifier and therefore a single point of failure. If the aggregator is successfully attacked, the entire appraisal function can be compromised.  Mitigating measures include maintaining multiple active trust links, so that a verifier can direct queries to another aggregator under a different administration.",
       "createdAt": "2025-08-28T13:25:05Z",
-      "updatedAt": "2026-02-27T09:12:21Z",
-      "closedAt": null,
+      "updatedAt": "2026-03-02T14:04:16Z",
+      "closedAt": "2026-03-02T14:04:15Z",
       "comments": [
         {
           "author": "thomas-fossati",
@@ -787,6 +787,13 @@
           "body": "Largely addressed by https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/105, but still some pending work around privacy considerations, where we have no aggregator-specific risks or mitigations as yet.",
           "createdAt": "2026-02-27T09:12:21Z",
           "updatedAt": "2026-02-27T09:12:21Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Completed with https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/106 ",
+          "createdAt": "2026-03-02T14:04:15Z",
+          "updatedAt": "2026-03-02T14:04:15Z"
         }
       ]
     },
@@ -4864,6 +4871,57 @@
               "body": "```suggestion\nThe \"quads\" feature of the CoSERV data model provides explicit tracking of supply chain sources.\n```",
               "createdAt": "2026-02-25T18:44:25Z",
               "updatedAt": "2026-02-25T18:44:48Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 106,
+      "id": "PR_kwDOOAZd1M7HVC2K",
+      "title": "docs: New subsection on aggregators in Privacy Considerations",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/106",
+      "state": "MERGED",
+      "author": "paulhowardarm",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "paulhowardarm"
+      ],
+      "labels": [],
+      "body": "Signed-off-by: Paul Howard <paul.howard@arm.com>",
+      "createdAt": "2026-03-02T13:14:00Z",
+      "updatedAt": "2026-03-02T13:47:03Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "aaa3ba8fb984644768c0b979cf12d37914f08226",
+      "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
+      "headRefName": "phPrivConsAgg",
+      "headRefOid": "79224ed2867f958e985026c2bd19bdfdbdfba870",
+      "closedAt": "2026-03-02T13:47:03Z",
+      "mergedAt": "2026-03-02T13:47:02Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "3668e966cedf292482254e86041a5a9b2480c3bc"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M7nCXcm",
+          "commit": {
+            "abbreviatedOid": "5ab139d"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "LGTM!\n\n(Couple of editorial suggestions inline.  Feel free to ignore.)",
+          "createdAt": "2026-03-02T13:18:21Z",
+          "updatedAt": "2026-03-02T13:19:19Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "maybe\ns/that might implement/implementing/\ns/available/accessible/\n",
+              "createdAt": "2026-03-02T13:18:21Z",
+              "updatedAt": "2026-03-02T13:19:19Z"
             }
           ]
         }
