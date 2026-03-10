@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-03T01:04:59.107309+00:00",
+  "timestamp": "2026-03-10T00:59:12.810362+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -764,7 +764,7 @@
       "labels": [],
       "body": "CoSERV \u201caggregators\" consolidate multiple entities in the upstream supply chain into a single entity.\nThis enables a complex supply chain to be presented to a verifier in a simplified and robust way.\nHowever, there are security and privacy implications that need to be explored.\n\nFor example, an aggregator is generally more _powerful_ than a vendor or single-component endorser.  Since it conveys data from multiple upstream links, it can correlate queries for different parts of a system and build a precise picture of the composite attester, which would not be available to a single-component endorser.  This could pose a privacy risk that may be tricky to mitigate.\n\nIn terms of security, an aggregator is a one-stop shop for the verifier and therefore a single point of failure. If the aggregator is successfully attacked, the entire appraisal function can be compromised.  Mitigating measures include maintaining multiple active trust links, so that a verifier can direct queries to another aggregator under a different administration.",
       "createdAt": "2025-08-28T13:25:05Z",
-      "updatedAt": "2026-03-02T14:04:16Z",
+      "updatedAt": "2026-03-09T09:37:11Z",
       "closedAt": "2026-03-02T14:04:15Z",
       "comments": [
         {
@@ -1386,15 +1386,15 @@
       "id": "I_kwDOOAZd1M7fq49f",
       "title": "Purpose of having EAT-profile in `ACCEPT` header and inside top-level CoSERV data structure.",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/99",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ajay-fuji",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "## Title\nClarify necessity of CoSERV profile in both media type/Accept header and top-level CoSERV data structure\n## Body\n### Issue\nThe CoSERV EAT-profile identifier appears in two places:\n\n1. top-level CoSERV data structure\n2. \"profile\" parameter in media types (used in Content-Type/Accept headers).\n\nQuestions\n\nWhy both locations? Is the media type parameter for content negotiation, and the top-level field for per-object use?\nWhat problems arise if we remove the media type parameter and use only the top-level field?\n\n\nThanks!",
       "createdAt": "2025-12-22T06:59:09Z",
-      "updatedAt": "2026-02-06T09:22:15Z",
-      "closedAt": null,
+      "updatedAt": "2026-03-09T10:09:52Z",
+      "closedAt": "2026-03-09T10:08:28Z",
       "comments": [
         {
           "author": "paulhowardarm",
@@ -1402,6 +1402,20 @@
           "body": "Hi @ajay-fuji - thanks for raising this.\n\nYou are correct in your assessment - the appearance in the HTTP header is purely for HTTP content-type negotiation, while the appearance within the CoSERV object is to label the object correctly for consumers.\n\nBoth are necessary, for different reasons.\n\nIt is a goal of the CoSERV data object to be transport agnostic. It is not necessarily transacted via HTTP. And, even when it _is_ transacted by HTTP, the software that needs to process the CoSERV data might be some distance away from the HTTP-aware layer. The CoSERV object needs to be self-contained and self-describing for this reason.\n\nUse in the `Accept` and `Content-Type` headers is purely for standard HTTP content negotiation. The profile needs to be included as part of the media type, because differently-profiled CoSERV objects are fundamentally different data. If the client requests data from the server without specifying the profile, it might receive data for an unsuitable profile, and be unable to process it in any meaningful way.\n\nPlease let me know if you'd like some additional clarifying text in the draft to make this point.",
           "createdAt": "2026-02-06T09:22:15Z",
           "updatedAt": "2026-02-06T09:22:15Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi @ajay-fuji - just double checking on this. I will close the issue if you are happy with the explanation above.",
+          "createdAt": "2026-03-09T09:36:12Z",
+          "updatedAt": "2026-03-09T09:36:12Z"
+        },
+        {
+          "author": "ajay-fuji",
+          "authorAssociation": "NONE",
+          "body": "Sorry, I missed to respond. \nThankyou for your reply. \nYeah, above information is sufficient for my understanding. ",
+          "createdAt": "2026-03-09T10:08:28Z",
+          "updatedAt": "2026-03-09T10:08:49Z"
         }
       ]
     }
