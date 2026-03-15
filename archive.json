@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-10T00:59:12.810362+00:00",
+  "timestamp": "2026-03-15T01:12:47.117698+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1416,6 +1416,37 @@
           "body": "Sorry, I missed to respond. \nThankyou for your reply. \nYeah, above information is sufficient for my understanding. ",
           "createdAt": "2026-03-09T10:08:28Z",
           "updatedAt": "2026-03-09T10:08:49Z"
+        }
+      ]
+    },
+    {
+      "number": 107,
+      "id": "I_kwDOOAZd1M7ylanm",
+      "title": "Prepare text for HTTP directorate review",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/107",
+      "state": "OPEN",
+      "author": "paulhowardarm",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Summary\nWe will be offering up this draft for HTTP directorate review due to the inclusion of HTTP-based protocol. This request is to prep the text for such a review.\n\n### Details\nWe should comb the text for deviations from the style guide, and apply any obvious fixes before submitting for more in-depth review. Style guide is [here](https://httpwg.org/admin/editors/style-guide).\n",
+      "createdAt": "2026-03-13T09:13:15Z",
+      "updatedAt": "2026-03-13T09:59:03Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "_Analysis below from an AI tool, which was instructed to ingest the style guide and judge the published CoSERV draft version 05. The results below are verbatim as the AI tool reported, and are offered here in case they are useful:-_\n\n\n> I reviewed the HTTPWG editorial style guide and the latest published CoSERV draft version -05, with particular attention to Section 6. Overall, the draft is reasonably well aligned in substance, especially in its use of HTTP examples, use of reason phrases with status codes in many places, and inclusion of concrete request/response examples with line-wrapping notes for long lines. Section 6 is clearly written and already follows a number of HTTP-documentation conventions.\n> \n> The main gaps are editorial consistency issues rather than protocol-design problems. The strongest mismatches with the style guide are the repeated use of \u201cbody\u201d / \u201cresponse body\u201d where the guide prefers \u201ccontent\u201d, a few places where methods are described as \u201cHTTP GET verb\u201d or \u201cHTTP GET method\u201d instead of simply GET or HTTP method GET, and several places where status-code prose uses the less-preferred form \u201cHTTP 200 (OK) status code\u201d rather than \u201cthe 200 (OK) status code.\u201d These issues are concentrated in Section 6 and its examples/caching text.\n> \n> I would characterize the draft as good alignment with moderate editorial cleanup needed. It does not look stylistically out of family with HTTP documentation, but it would benefit from a polishing pass to match the HTTPWG house style more closely. One caveat: the style guide recommends labeling HTTP examples with the http-message type in the source markdown; that is not verifiable from the published HTML alone, so I have not treated that as a confirmed defect. The published draft does, however, show that the examples are in HTTP/1.1 format and already use RFC 8792 line-wrapping notices, which is directionally aligned.\n> \n> Recommended edits\n> \n> Replace \u201cbody\u201d / \u201cresponse body\u201d / \u201ccontents of bodies\u201d with \u201ccontent\u201d throughout Section 6 and example captions.\n> \n> Examples:\n> \n> \u201cThe response body can be formatted\u2026\u201d \u2192 \u201cThe response content can be formatted\u2026\u201d\n> \n> \u201cthe response body MUST contain exactly one discovery document\u2026\u201d \u2192 \u201cthe response content MUST contain exactly one discovery document\u2026\u201d\n> \n> \u201cEndpoint implementations MUST respond with an HTTP status code and response body\u2026\u201d \u2192 \u201c\u2026with a status code and response content\u2026\u201d\n> \n> \u201cIn the following examples, the contents of bodies\u2026\u201d \u2192 \u201c\u2026the example content\u2026\u201d\n> \n> This is the clearest stylistic mismatch with the guide.\n> \n> In Section 6.1, change \u201cThe HTTP GET verb is then used\u2026\u201d to \u201cThe GET method is then used\u2026\u201d or \u201cA GET request is then used\u2026\u201d.\n> \n> The guide prefers bare method names and specifically says not to quote or emphasize them.\n> \n> In Section 6.1.1, change \u201cavailable via an HTTP GET method\u201d to \u201cavailable via GET\u201d or \u201cavailable using the GET method.\u201d\n> \n> Same issue: simplify method naming to match HTTPWG style.\n> \n> In Section 6.1.2, change \u201cThe HTTP method is GET.\u201d to \u201cThe method is GET.\u201d or \u201cUse the GET method.\u201d\n> \n> This is a direct match for the guide\u2019s stated preference.\n> \n> Rewrite status-code prose to the preferred form \u201cthe 200 (OK) status code\u201d / \u201cthe 406 (Not Acceptable) status code\u201d rather than \u201can HTTP 200 (OK) status code\u201d.\n> \n> Example:\n> \n> \u201cthe implementation MUST respond with an HTTP 200 (OK) status code\u201d \u2192 \u201cthe implementation MUST respond with the 200 (OK) status code\u201d\n> \n> This is small, but it is exactly the style guide\u2019s recommendation.\n> \n> Consider revising subsection headings such as \u201cSuccessful Transaction (200)\u201d, \u201cFailure to Validate Query (400)\u201d, and \u201cFailure to Negotiate Profile (406)\u201d to include the reason phrase:\n> \n> \u201cSuccessful Transaction (200 (OK))\u201d\n> \n> \u201cFailure to Validate Query (400 (Bad Request))\u201d\n> \n> \u201cFailure to Negotiate Profile (406 (Not Acceptable))\u201d\n> \n> The guide\u2019s preferred status-code form includes both code and reason phrase. This is not mandatory for headings, but it would improve consistency.\n> \n> Refer to the Accept field more consistently as the Accept header field after first mention.\n> \n> Current wording mixes forms like \u201cHTTP Accept header\u201d.\n> \n> A more HTTPWG-like phrasing would be: \u201cthe Accept header field\u201d.\n> \n> The style guide prefers explicit field terminology and avoids repeated quotation after first mention.\n> \n> Refer to Cache-Control consistently as the Cache-Control header field, and avoid switching between prose such as \u201ccache-control headers\u201d, backticked examples, and generic \u201ccache directives\u201d without naming the field.\n> \n> This is a softer recommendation, but it would improve consistency with the guide\u2019s field-name conventions.\n> \n> In Section 6.1.3.1, change \u201ccontained within the CoSERV result set payload\u201d to \u201ccontained in the CoSERV result set content\u201d or simply \u201ccontained in the CoSERV result set.\u201d\n> \n> This aligns both with the guide\u2019s \u201ccontent\u201d preference and with the fact that this sentence is in the HTTP binding section, not the COSE structure definition.\n> \n> Consider using named references for core HTTP specifications in future source edits, especially for HTTP semantics/caching citations, rather than generic citations like [STD98] in prose.\n> \n> The guide says named references are preferred for core specifications like HTTP.\n> \n> This is a source-level/style cleanup, not a correctness issue.\n> \n> Where source markdown is next edited, verify that the HTTP examples are marked as http-message blocks.\n> \n> I cannot confirm this from the published HTML, so I would treat it as a check item rather than a definite edit. The rendered examples themselves are otherwise well structured and already use HTTP/1.1 formatting and RFC 8792 wrapping notes.",
+          "createdAt": "2026-03-13T09:57:59Z",
+          "updatedAt": "2026-03-13T09:57:59Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I've checked the markdown source, and it is correctly using the `http-message` tagging already, so we can disregard those concerns from the AI report above.",
+          "createdAt": "2026-03-13T09:59:03Z",
+          "updatedAt": "2026-03-13T09:59:03Z"
         }
       ]
     }
