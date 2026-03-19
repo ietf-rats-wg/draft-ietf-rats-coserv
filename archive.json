@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-15T01:12:47.117698+00:00",
+  "timestamp": "2026-03-19T01:07:42.032999+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1431,7 +1431,7 @@
       "labels": [],
       "body": "### Summary\nWe will be offering up this draft for HTTP directorate review due to the inclusion of HTTP-based protocol. This request is to prep the text for such a review.\n\n### Details\nWe should comb the text for deviations from the style guide, and apply any obvious fixes before submitting for more in-depth review. Style guide is [here](https://httpwg.org/admin/editors/style-guide).\n",
       "createdAt": "2026-03-13T09:13:15Z",
-      "updatedAt": "2026-03-13T09:59:03Z",
+      "updatedAt": "2026-03-18T16:35:30Z",
       "closedAt": null,
       "comments": [
         {
@@ -1447,6 +1447,13 @@
           "body": "I've checked the markdown source, and it is correctly using the `http-message` tagging already, so we can disregard those concerns from the AI report above.",
           "createdAt": "2026-03-13T09:59:03Z",
           "updatedAt": "2026-03-13T09:59:03Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We need to ensure that our requirements regarding error responses are clear.\n\nFor example, the use of concise problem details is suggested in the examples, but not mandated, even though it should be.\n\nWe should also discuss the use of HTTP-layer authentication mechanisms.",
+          "createdAt": "2026-03-18T16:35:30Z",
+          "updatedAt": "2026-03-18T16:35:30Z"
         }
       ]
     }
