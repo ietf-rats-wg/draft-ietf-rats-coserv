@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-19T01:07:42.032999+00:00",
+  "timestamp": "2026-03-26T01:12:10.798698+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1456,6 +1456,22 @@
           "updatedAt": "2026-03-18T16:35:30Z"
         }
       ]
+    },
+    {
+      "number": 108,
+      "id": "I_kwDOOAZd1M71-dKc",
+      "title": "Why doesn't CoSERV query use CoMID environment map as the environment selector?",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/108",
+      "state": "OPEN",
+      "author": "DhanusML",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "CoSERV query uses either `class-map` or `instance-id` or `group-id` to identify the attester's environment. It cannot use a combination of these. However, the CoRIM specification does not enforce the global uniqueness of any of these identifiers individually, but the combination of these (the environment map) must be globally unique. So, a CoSERV query can only encode partial details of the environment, even when complete details of the environment might be available.\n\nFor example, it is possible for a CoRIM profile to have the instance-ids namespaced by class-ids. In that case, the desired result cannot be obtained directly from a CoSERV query, without further processing of the result set.\n\n```\neg: Four valid attester environments, where the combination of class-map and instance-id uniquely identifies the environment\n\nE1 = {\n\tclass: {id: X},\n\tinstance: A\n}\n\nE2 = {\n\tclass: {id: X},\n\tinstance: B\n}\n\nE3 = {\n\tclass: {id: Y},\n\tinstance: A\n}\n\nE4 = {\n\tclass: {id: Y},\n\tinstance: B\n}\n```\n\nIn this case, it might be possible to identify the attester's environment from the evidence. But the CoSERV query can only contain partial information. So, one has to make a choice of whether to use a class based selector or instance based selector and then filter out the result to obtain the desired values. Another approach would be to make both class based and instance based queries and then take an intersection of the results. If the environment selector had been a 'stateful environment selector', then the query could have included all the information available about the environment.",
+      "createdAt": "2026-03-24T10:24:43Z",
+      "updatedAt": "2026-03-24T10:24:43Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
