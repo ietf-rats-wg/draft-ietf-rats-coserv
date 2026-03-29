@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-26T01:12:10.798698+00:00",
+  "timestamp": "2026-03-29T01:15:00.827033+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1469,9 +1469,17 @@
       "labels": [],
       "body": "CoSERV query uses either `class-map` or `instance-id` or `group-id` to identify the attester's environment. It cannot use a combination of these. However, the CoRIM specification does not enforce the global uniqueness of any of these identifiers individually, but the combination of these (the environment map) must be globally unique. So, a CoSERV query can only encode partial details of the environment, even when complete details of the environment might be available.\n\nFor example, it is possible for a CoRIM profile to have the instance-ids namespaced by class-ids. In that case, the desired result cannot be obtained directly from a CoSERV query, without further processing of the result set.\n\n```\neg: Four valid attester environments, where the combination of class-map and instance-id uniquely identifies the environment\n\nE1 = {\n\tclass: {id: X},\n\tinstance: A\n}\n\nE2 = {\n\tclass: {id: X},\n\tinstance: B\n}\n\nE3 = {\n\tclass: {id: Y},\n\tinstance: A\n}\n\nE4 = {\n\tclass: {id: Y},\n\tinstance: B\n}\n```\n\nIn this case, it might be possible to identify the attester's environment from the evidence. But the CoSERV query can only contain partial information. So, one has to make a choice of whether to use a class based selector or instance based selector and then filter out the result to obtain the desired values. Another approach would be to make both class based and instance based queries and then take an intersection of the results. If the environment selector had been a 'stateful environment selector', then the query could have included all the information available about the environment.",
       "createdAt": "2026-03-24T10:24:43Z",
-      "updatedAt": "2026-03-24T10:24:43Z",
+      "updatedAt": "2026-03-27T09:16:24Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks for raising this.\n\nWould you say that this is largely a theoretical concern, or are you looking at a use case where such name collisions would be a genuine hazard in practice?\n\nIn the real world, I would expect all of these values to be highly entropic and unique. For `instance-id` and `group-id`, the risk would be for profiles that use `tagged-bytes` with no uniqueness guarantees. But things like `tagged-uuid` or `tagged-ueid` are more likely in practice - such as in the Arm CCA profile. Other profiles might use things like public keys or digests of keys.\n\nThe current query structure makes it quite easy to build a query to get artifacts for multiple instances, multiple groups or multiple classes. Not only that, but the semantic transformation to something like a SQL DB query is fairly straightforward (as we illustrate in the draft).\n\nRemember also that the CoSERV endpoints themselves can be scoped such that they only need to worry about one kind of profile or one family of product, for example.\n\nI'd like to keep the data model easy to use for the majority of realistic use cases. Using pure comid environment queries would make the typical use cases more fiddly, only to cater for marginal cases that might not occur in practice. So I lean towards leaving it as it is. However, if you are handling a genuine use case where identity collisions are proving to be a real problem, we can certainly reconsider this.",
+          "createdAt": "2026-03-27T09:16:24Z",
+          "updatedAt": "2026-03-27T09:16:24Z"
+        }
+      ]
     }
   ],
   "pulls": [
