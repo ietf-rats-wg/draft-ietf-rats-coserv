@@ -243,6 +243,25 @@ The environment specification would need to include these critical stateful aspe
 In CoRIM {{-rats-corim}}, stateful environments are modeled as an environment identifier plus a collection of measurements, and CoSERV takes the same approach.
 Therefore, any environment selector in a CoSERV query can optionally be enhanced with a collection of one or more measurements, which specify aspects of the target environment state that might materially impact the selection of artifacts.
 
+### Environment Uniqueness
+
+Because CoSERV is a query language, the CoSERV environment structure has been designed such that it is well suited to forming queries.
+It has been optimized such that the most common query styles are also the simplest to construct.
+This design makes it very straightforward to query for artifacts by (multiples of) instance, group or class.
+It is not possible to query by combinations of these properties at the same time.
+For example, it is not possible to form a query that selects by instance or group, while simultaneously being constrained by the scope of a specific class.
+As a more precise example, it would not be possible to form a single query that selects artifacts for instance "0x010203040506", but only for devices of class "ACME SiliconPro 2000".
+This is a departure from CoRIM environments, which can optionally be modeled as combinations of instance, group or class.
+This design choice is a pragmatic one that is taken by CoSERV, but it does raise some deployment considerations in terms of environment uniqueness.
+
+In many deployments, it is expected that the identifiers used for instances and groups would be highly entropic and either universally unique, or at least unique within the scope of any given CoSERV provider/consumer pair, such that material ambiguities would not arise.
+Identifiers of type `uuid` or `ueid`, for example, are typical.
+However, this uniqueness property is not guaranteed across all possible profiles and deployments.
+Care is therefore needed when using CoSERV with such profiles.
+Where globally unambiguous identifiers are not guaranteed, a CoSERV provider SHOULD be scoped such that any identifier used in a query remains unambiguous within that provider.
+For example, a provider might be scoped to a single product family (effectively constraining the class).
+This preserves the simplicity of the CoSERV environment model while avoiding ambiguity in practice.
+
 ## Queries
 
 The purpose of a query is to allow the consumer (Verifier) to specify the artifacts that it needs.
