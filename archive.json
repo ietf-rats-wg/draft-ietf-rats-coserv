@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-29T01:15:00.827033+00:00",
+  "timestamp": "2026-03-31T01:13:29.860046+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -953,7 +953,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:00Z",
-      "updatedAt": "2026-02-02T13:00:44Z",
+      "updatedAt": "2026-03-30T09:46:26Z",
       "closedAt": null,
       "comments": [
         {
@@ -962,6 +962,13 @@
           "body": "We expect the aggregator to sign the `coserv` object, thereby taking responsibility for any endorsements and reference values contained in the result. In other words, they are producing a _\"secure statement\u201d_ about the attester's actual and expected state.  So, at a high level, I don't think we're talking rubbish.\n\nThat said, there are effectively two slightly different cases:\n\n1. The client doesn\u2019t ask for source artefacts (\"shallow trust\u201d).  In this case, the aggregator is the sole source of authority for the specific endorsements/reference values \u2014 it's a \u201cpure\" endorser in the client's eyes.\n3. The client asks for source artefacts (\u201cdeep trust\").  In this case, the client can independently verify the statement made by the aggregator against what the upstream endorser/reference value provider said.  However, the aggregator is still trusted to provide complete and up-to-date source artefacts, so I don't think the aggregator's ability to produce \u201ctrusted & secure statements\" about the attester's actual and expected state is significantly reduced to justify changing its label.",
           "createdAt": "2026-02-02T09:26:08Z",
           "updatedAt": "2026-02-02T13:00:44Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "RFC9334 defines \"Endorser\" as follows:\n\n> A role performed by an entity (typically a manufacturer)\n      whose Endorsements may help Verifiers appraise the authenticity of\n      Evidence and infer further capabilities of the Attester.\n\nSo it's \"typically\" a manufacturer, but not necessarily.\n\nCoSERV's interpretation of \"Endorser\" is \"any conveyer of endorsements to the verifier\", which is admittedly a broader interpretation, but I don't think it's out of line with RFC9334.\n\nThere isn't a term in RFC9334 for a component that mirrors or replicates things from upstream originators. So a CoSERV aggregator that mirrors endorsements from a manufacturer is still an \"Endorser\" from CoSERV's perspective.\n\nIn the latest security considerations, there's a [subsection on aggregators](https://www.ietf.org/archive/id/draft-ietf-rats-coserv-05.html#name-aggregators), which tries to make it clear that the aggregator is not necessarily a direct trust authority for endorsements. That authority can be a separate entity (e.g. a cert root that is independent of the aggregator).\n\nBut CoSERV is also very generic and flexible. We're really trying to create a single API and conveyance language for any entity in the supply chain, including \"primary\" endorsers (that are indeed manufacturers and hence direct trust authorities for things like hardware).",
+          "createdAt": "2026-03-30T09:46:25Z",
+          "updatedAt": "2026-03-30T09:46:25Z"
         }
       ]
     },
@@ -1218,7 +1225,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:40Z",
-      "updatedAt": "2026-01-30T23:05:29Z",
+      "updatedAt": "2026-03-30T10:09:22Z",
       "closedAt": null,
       "comments": [
         {
@@ -1234,6 +1241,13 @@
           "body": "I was not suggesting they need to be conveyed differently but that a CoSERV instance responsible for delivering trust anchors may be operated with more rigor than one that distributes artifacts that are otherwise secured. There're lots of words about trust anchor management requirements in the PKIX document archive, including the draft you referenced and RFCs 5914 and 5934. To some extent, you could argue the security considerations from RFC 5934 apply to a CoSERV instance doing TA management.\n\nAs a simple example, it may be perfectly fine to operate a CoSERV instance that mirrors endorsements (which are \"secure statements\") using a key secured by a software crypto module but you may want to use a hardware crypto module for an instance handling TA management.",
           "createdAt": "2026-01-30T23:05:29Z",
           "updatedAt": "2026-01-30T23:05:29Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "As far as possible, we're trying to limit the scope of CoSERV to describe **just** the query language and the API, while remaining agnostic about specific deployment considerations (such as how to secure signing keys). It's partly because such considerations apply across the various RATS roles anyway, whether CoSERV is used or not. But it's also because the scope of the document could creep into quite unwieldy spaces if we start making a lot of very specific recommendations. At worst, it could transform into some kind of practical deployment guide for RFC9334. Maybe such a document would be valuable, but I don't think draft-coserv wants to become that document.\n\nThat said, we do recognise that the aggregation model and the shallow/deep trust models have some specific deployment considerations. The latest version of the draft is trying to do a better job of addressing that. See in particular the latest security considerations [subsection on aggregation](https://www.ietf.org/archive/id/draft-ietf-rats-coserv-05.html#name-aggregators), which hopefully addresses the \"secure statements\" concern.\n\n",
+          "createdAt": "2026-03-30T10:09:22Z",
+          "updatedAt": "2026-03-30T10:09:22Z"
         }
       ]
     },
