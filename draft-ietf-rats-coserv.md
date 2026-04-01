@@ -256,7 +256,7 @@ This design choice is a pragmatic one that is taken by CoSERV, but it does raise
 
 In many deployments, it is expected that the identifiers used for instances and groups would be highly entropic and either universally unique, or at least unique within the scope of any given CoSERV provider/consumer pair, such that material ambiguities would not arise.
 Identifiers of type `uuid` or `ueid`, for example, are typical.
-However, this uniqueness property is not guaranteed across all possible profiles and deployments.
+However, some profiles might define their identifier types such that uniqueness is not guaranteed.
 Care is therefore needed when using CoSERV with such profiles.
 Where globally unambiguous identifiers are not guaranteed, a CoSERV provider SHOULD be scoped such that any identifier used in a query remains unambiguous within that provider.
 For example, a provider might be scoped to a single product family (effectively constraining the class).
