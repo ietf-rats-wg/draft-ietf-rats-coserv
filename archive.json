@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-31T01:13:29.860046+00:00",
+  "timestamp": "2026-04-02T01:10:17.721175+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1024,7 +1024,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:10Z",
-      "updatedAt": "2026-01-30T15:15:08Z",
+      "updatedAt": "2026-03-31T10:04:27Z",
       "closedAt": null,
       "comments": [
         {
@@ -1033,6 +1033,13 @@
           "body": "This is similar although not identical to https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/93.\n\nWe've previously thought about a SCITT-based mechanism for logging all CoSERV queries and results, which would be in a data structure distinct from the results themselves. This could include timestamps and additional audit information.\n\nThen again, maybe just adding a timestamp to the result set is simple and informative enough to be worth doing.\n\n@thomas-fossati any opinion here?",
           "createdAt": "2026-01-30T15:15:08Z",
           "updatedAt": "2026-01-30T15:15:08Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "On balance I am leaning towards leaving the data model as it is. I think the only information that is critical for the consumer is the expiry time of the result set. The preparation time feels incidental to me. I don't think that the consumer needs it. A logging option, as mentioned above, feels like a good enhancement for audit purposes, but that can be defined separately from the CoSERV draft.",
+          "createdAt": "2026-03-31T10:04:27Z",
+          "updatedAt": "2026-03-31T10:04:27Z"
         }
       ]
     },
@@ -1479,11 +1486,13 @@
       "state": "OPEN",
       "author": "DhanusML",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "CoSERV query uses either `class-map` or `instance-id` or `group-id` to identify the attester's environment. It cannot use a combination of these. However, the CoRIM specification does not enforce the global uniqueness of any of these identifiers individually, but the combination of these (the environment map) must be globally unique. So, a CoSERV query can only encode partial details of the environment, even when complete details of the environment might be available.\n\nFor example, it is possible for a CoRIM profile to have the instance-ids namespaced by class-ids. In that case, the desired result cannot be obtained directly from a CoSERV query, without further processing of the result set.\n\n```\neg: Four valid attester environments, where the combination of class-map and instance-id uniquely identifies the environment\n\nE1 = {\n\tclass: {id: X},\n\tinstance: A\n}\n\nE2 = {\n\tclass: {id: X},\n\tinstance: B\n}\n\nE3 = {\n\tclass: {id: Y},\n\tinstance: A\n}\n\nE4 = {\n\tclass: {id: Y},\n\tinstance: B\n}\n```\n\nIn this case, it might be possible to identify the attester's environment from the evidence. But the CoSERV query can only contain partial information. So, one has to make a choice of whether to use a class based selector or instance based selector and then filter out the result to obtain the desired values. Another approach would be to make both class based and instance based queries and then take an intersection of the results. If the environment selector had been a 'stateful environment selector', then the query could have included all the information available about the environment.",
       "createdAt": "2026-03-24T10:24:43Z",
-      "updatedAt": "2026-03-27T09:16:24Z",
+      "updatedAt": "2026-03-31T08:16:33Z",
       "closedAt": null,
       "comments": [
         {
@@ -1492,6 +1501,27 @@
           "body": "Thanks for raising this.\n\nWould you say that this is largely a theoretical concern, or are you looking at a use case where such name collisions would be a genuine hazard in practice?\n\nIn the real world, I would expect all of these values to be highly entropic and unique. For `instance-id` and `group-id`, the risk would be for profiles that use `tagged-bytes` with no uniqueness guarantees. But things like `tagged-uuid` or `tagged-ueid` are more likely in practice - such as in the Arm CCA profile. Other profiles might use things like public keys or digests of keys.\n\nThe current query structure makes it quite easy to build a query to get artifacts for multiple instances, multiple groups or multiple classes. Not only that, but the semantic transformation to something like a SQL DB query is fairly straightforward (as we illustrate in the draft).\n\nRemember also that the CoSERV endpoints themselves can be scoped such that they only need to worry about one kind of profile or one family of product, for example.\n\nI'd like to keep the data model easy to use for the majority of realistic use cases. Using pure comid environment queries would make the typical use cases more fiddly, only to cater for marginal cases that might not occur in practice. So I lean towards leaving it as it is. However, if you are handling a genuine use case where identity collisions are proving to be a real problem, we can certainly reconsider this.",
           "createdAt": "2026-03-27T09:16:24Z",
           "updatedAt": "2026-03-27T09:16:24Z"
+        },
+        {
+          "author": "DhanusML",
+          "authorAssociation": "NONE",
+          "body": ">Would you say that this is largely a theoretical concern, or are you looking at a use case where such name collisions would be a genuine hazard in practice?\n\nYes, this is purely a theoretical concern. There are no consistency issues regarding this, because CoSERV query does not claim to have the ability to uniquely describe an environment. But the expectation would be that it could. So I feel like a comment in the draft about profiles where uniqueness cannot be achieved would be useful. Otherwise, this issue can be closed.",
+          "createdAt": "2026-03-31T06:14:26Z",
+          "updatedAt": "2026-03-31T06:14:26Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> So I feel like a comment in the draft about profiles where uniqueness cannot be achieved would be useful.\n\n\ud83d\udc4d ",
+          "createdAt": "2026-03-31T06:57:39Z",
+          "updatedAt": "2026-03-31T06:57:39Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks, both, that all makes sense. I will see about putting a PR into the draft.",
+          "createdAt": "2026-03-31T08:16:25Z",
+          "updatedAt": "2026-03-31T08:16:25Z"
         }
       ]
     }
@@ -5014,6 +5044,120 @@
               "updatedAt": "2026-03-02T13:19:19Z"
             }
           ]
+        }
+      ]
+    },
+    {
+      "number": 109,
+      "id": "PR_kwDOOAZd1M7O9cGy",
+      "title": "docs: Add subsection on environment uniqueness in the query structure",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/109",
+      "state": "OPEN",
+      "author": "paulhowardarm",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Provides rationale for modelling environments somewhat differently from CoRIM.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
+      "createdAt": "2026-03-31T13:49:48Z",
+      "updatedAt": "2026-04-01T21:20:19Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "3668e966cedf292482254e86041a5a9b2480c3bc",
+      "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
+      "headRefName": "phEnvironmentUniqueness",
+      "headRefOid": "57c4f8acbafcb2186a6feed80965fcd4b69e278c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This seems overly restrictive as written.  Consider a query with group and class, where class only includes the vendor.  Then there could be a subset of attesters in the group that correspond to the designated vendor.  Why should such a query be prohibited?",
+          "createdAt": "2026-04-01T21:20:19Z",
+          "updatedAt": "2026-04-01T21:20:19Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M7wqiUF",
+          "commit": {
+            "abbreviatedOid": "2cfee3c"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM, thanks!",
+          "createdAt": "2026-03-31T14:06:21Z",
+          "updatedAt": "2026-03-31T14:06:21Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M7w5Dol",
+          "commit": {
+            "abbreviatedOid": "2cfee3c"
+          },
+          "author": "DhanusML",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-01T03:45:12Z",
+          "updatedAt": "2026-04-01T03:45:13Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "I am not sure if I understand this correctly. Uniqueness of these identifiers across profiles may not be important, since the query contains a profile field.",
+              "createdAt": "2026-04-01T03:45:12Z",
+              "updatedAt": "2026-04-01T03:45:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M7w8FWz",
+          "commit": {
+            "abbreviatedOid": "2cfee3c"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-01T07:34:15Z",
+          "updatedAt": "2026-04-01T07:34:16Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "Thanks, let me think about the wording a bit. The intention here was not to imply that there could be name collisions between different specific profiles (which I would agree is not a concern). The intention was to say that some profiles might employ identifier types that do not guarantee uniqueness by themselves.",
+              "createdAt": "2026-04-01T07:34:15Z",
+              "updatedAt": "2026-04-01T07:34:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M7w8hkU",
+          "commit": {
+            "abbreviatedOid": "57c4f8a"
+          },
+          "author": "DhanusML",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "Thanks @paulhowardarm for adding this section.",
+          "createdAt": "2026-04-01T07:57:45Z",
+          "updatedAt": "2026-04-01T07:57:45Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M7xNclo",
+          "commit": {
+            "abbreviatedOid": "57c4f8a"
+          },
+          "author": "shefali-kamal",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-04-01T20:19:13Z",
+          "updatedAt": "2026-04-01T20:19:13Z",
+          "comments": []
         }
       ]
     }
