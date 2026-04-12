@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-02T01:10:17.721175+00:00",
+  "timestamp": "2026-04-12T01:19:43.641643+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -5059,7 +5059,7 @@
       "labels": [],
       "body": "Provides rationale for modelling environments somewhat differently from CoRIM.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
       "createdAt": "2026-03-31T13:49:48Z",
-      "updatedAt": "2026-04-01T21:20:19Z",
+      "updatedAt": "2026-04-10T16:09:52Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "3668e966cedf292482254e86041a5a9b2480c3bc",
@@ -5077,6 +5077,20 @@
           "body": "This seems overly restrictive as written.  Consider a query with group and class, where class only includes the vendor.  Then there could be a subset of attesters in the group that correspond to the designated vendor.  Why should such a query be prohibited?",
           "createdAt": "2026-04-01T21:20:19Z",
           "updatedAt": "2026-04-01T21:20:19Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> This seems overly restrictive as written. Consider a query with group and class, where class only includes the vendor. Then there could be a subset of attesters in the group that correspond to the designated vendor. Why should such a query be prohibited?\r\n\r\nHi @gmandyam - are you tracking any use cases where this would occur in practice, or is it more of a theoretical concern? I'm worried about complicating the query structure. It works well for use cases that we know about, and it makes queries simple to construct. It would be quite disruptive to both the draft and to implementations to make invasive changes to the query model, so we would want to make sure that we have clear motivation for that. The case that you mention here, if it actually occurred, could probably be handled with some light post-processing of the result set. See also my comments on the [original issue](https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/108) that gave rise to this PR.",
+          "createdAt": "2026-04-09T09:46:45Z",
+          "updatedAt": "2026-04-09T09:46:45Z"
+        },
+        {
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> > This seems overly restrictive as written. Consider a query with group and class, where class only includes the vendor. Then there could be a subset of attesters in the group that correspond to the designated vendor. Why should such a query be prohibited?\r\n> \r\n> Hi @gmandyam - are you tracking any use cases where this would occur in practice, or is it more of a theoretical concern? I'm worried about complicating the query structure. It works well for use cases that we know about, and it makes queries simple to construct. It would be quite disruptive to both the draft and to implementations to make invasive changes to the query model, so we would want to make sure that we have clear motivation for that. The case that you mention here, if it actually occurred, could probably be handled with some light post-processing of the result set. See also my comments on the [original issue](https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/108) that gave rise to this PR.\r\n\r\nConsider a CCA implementation using a GUK [1].  The GUK will correspond to a set of instances.  The CPAK ID could correspond directly to a Group-ID, but the class-ID is defined by a vendor/model.  There could be multiple GUKs associated with the same vendor/model.\r\n\r\n[1] https://developer.arm.com/documentation/DEN0096/latest/.",
+          "createdAt": "2026-04-10T16:09:52Z",
+          "updatedAt": "2026-04-10T16:09:52Z"
         }
       ],
       "reviews": [
