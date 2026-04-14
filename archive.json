@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-12T01:19:43.641643+00:00",
+  "timestamp": "2026-04-14T01:19:51.020175+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -825,7 +825,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:28:36Z",
-      "updatedAt": "2026-02-05T11:43:41Z",
+      "updatedAt": "2026-04-13T14:24:46Z",
       "closedAt": null,
       "comments": [
         {
@@ -841,6 +841,20 @@
           "body": "I was parroting [RFC 9334 section 4.2](https://datatracker.ietf.org/doc/html/rfc9334#section-4.2). Endorsements are by definition \"secure\" and references values are not (but could be should one choose).",
           "createdAt": "2026-02-05T11:43:41Z",
           "updatedAt": "2026-02-05T11:43:41Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@carl-wallace to review latest \u00a78.3 (sec cons for aggregators)",
+          "createdAt": "2026-04-13T14:16:26Z",
+          "updatedAt": "2026-04-13T14:16:26Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "SUGGESTION: Small addition to \u00a72 just to reinforce what \"shallow\" and \"deep\" mean (i.e. it's not about the depth of trust placed in the aggregator, because that would result in the reverse interpretation - \"depth\" is actually about the depth to which the supply chain is interrogated)",
+          "createdAt": "2026-04-13T14:24:46Z",
+          "updatedAt": "2026-04-13T14:24:46Z"
         }
       ]
     },
@@ -849,15 +863,15 @@
       "id": "I_kwDOOAZd1M7Ow8U6",
       "title": "\"Shallow trust\" suggests a need to include Attestation Results in the result set (which in turn suggests including Evidence and Appraisal Policy in the query). CoServ seems a bit like SCVP with \"deep trust\" being analogous to \"delegated path building\" but \"shallow trust\" stopping short of \"delegated path validation.\"",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/77",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:28:49Z",
-      "updatedAt": "2026-02-02T16:19:53Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-13T14:21:22Z",
+      "closedAt": "2026-04-13T14:21:22Z",
       "comments": [
         {
           "author": "thomas-fossati",
@@ -865,6 +879,13 @@
           "body": "I'm not sure I understand the suggestion: the attestation results are not computed by the CoSERV endpoint.\n\nMoreover, the SCVP analogy seems more suited to the role of verifier than a supply chain interface.",
           "createdAt": "2026-02-02T16:19:53Z",
           "updatedAt": "2026-02-02T16:19:53Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Agreed to close in meeting of 13th April 2026, @thomas-fossati @paulhowardarm @carl-wallace ",
+          "createdAt": "2026-04-13T14:21:22Z",
+          "updatedAt": "2026-04-13T14:21:22Z"
         }
       ]
     },
@@ -953,7 +974,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:00Z",
-      "updatedAt": "2026-03-30T09:46:26Z",
+      "updatedAt": "2026-04-13T14:37:29Z",
       "closedAt": null,
       "comments": [
         {
@@ -969,6 +990,13 @@
           "body": "RFC9334 defines \"Endorser\" as follows:\n\n> A role performed by an entity (typically a manufacturer)\n      whose Endorsements may help Verifiers appraise the authenticity of\n      Evidence and infer further capabilities of the Attester.\n\nSo it's \"typically\" a manufacturer, but not necessarily.\n\nCoSERV's interpretation of \"Endorser\" is \"any conveyer of endorsements to the verifier\", which is admittedly a broader interpretation, but I don't think it's out of line with RFC9334.\n\nThere isn't a term in RFC9334 for a component that mirrors or replicates things from upstream originators. So a CoSERV aggregator that mirrors endorsements from a manufacturer is still an \"Endorser\" from CoSERV's perspective.\n\nIn the latest security considerations, there's a [subsection on aggregators](https://www.ietf.org/archive/id/draft-ietf-rats-coserv-05.html#name-aggregators), which tries to make it clear that the aggregator is not necessarily a direct trust authority for endorsements. That authority can be a separate entity (e.g. a cert root that is independent of the aggregator).\n\nBut CoSERV is also very generic and flexible. We're really trying to create a single API and conveyance language for any entity in the supply chain, including \"primary\" endorsers (that are indeed manufacturers and hence direct trust authorities for things like hardware).",
           "createdAt": "2026-03-30T09:46:25Z",
           "updatedAt": "2026-03-30T09:46:25Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@carl-wallace to review the RATS endorsements documentation and see whether there's any action still to take on this issue.",
+          "createdAt": "2026-04-13T14:37:28Z",
+          "updatedAt": "2026-04-13T14:37:28Z"
         }
       ]
     },
@@ -984,7 +1012,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:03Z",
-      "updatedAt": "2026-02-02T08:47:58Z",
+      "updatedAt": "2026-04-13T14:45:05Z",
       "closedAt": null,
       "comments": [
         {
@@ -993,6 +1021,13 @@
           "body": "I'm not sure that I understand the comment.\n\nCaching is one of CoSERV's goals.  As we state in the overview:\n\n> _\u201dIt might be expensive to compute the result set for a query, which would make caching desirable.\"_\n\nAdding a nonce would prevent caching altogether.",
           "createdAt": "2026-02-02T08:47:58Z",
           "updatedAt": "2026-02-02T08:47:58Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "ACTION: Decided that we don't need a nonce, but we should describe how the client can explicitly request fresh data and bypass caching via standard HTTP request headers.",
+          "createdAt": "2026-04-13T14:45:05Z",
+          "updatedAt": "2026-04-13T14:45:05Z"
         }
       ]
     },
@@ -1001,31 +1036,39 @@
       "id": "I_kwDOOAZd1M7Ow8mM",
       "title": "In 4.3.3, it may be worth clarifying whether the timestamp informs how a result-set is prepared, i.e., whether result-sets should be relative to the point in time indicated by the timestamp or result-sets are always relative to the current time of the result-set provider.",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/82",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:05Z",
-      "updatedAt": "2025-09-30T11:29:05Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-04-13T14:47:49Z",
+      "closedAt": "2026-04-13T14:47:49Z",
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Redundant relative to other sub-issue.",
+          "createdAt": "2026-04-13T14:47:49Z",
+          "updatedAt": "2026-04-13T14:47:49Z"
+        }
+      ]
     },
     {
       "number": 83,
       "id": "I_kwDOOAZd1M7Ow8uM",
       "title": "In 4.4, should results also have a timestamp value indicating when result set was prepared?",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/83",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:10Z",
-      "updatedAt": "2026-03-31T10:04:27Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-13T14:46:50Z",
+      "closedAt": "2026-04-13T14:46:50Z",
       "comments": [
         {
           "author": "paulhowardarm",
@@ -1040,6 +1083,13 @@
           "body": "On balance I am leaning towards leaving the data model as it is. I think the only information that is critical for the consumer is the expiry time of the result set. The preparation time feels incidental to me. I don't think that the consumer needs it. A logging option, as mentioned above, feels like a good enhancement for audit purposes, but that can be defined separately from the CoSERV draft.",
           "createdAt": "2026-03-31T10:04:27Z",
           "updatedAt": "2026-03-31T10:04:27Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closed on the strength of actions taken in one of the other sub-issues.",
+          "createdAt": "2026-04-13T14:46:49Z",
+          "updatedAt": "2026-04-13T14:46:49Z"
         }
       ]
     },
@@ -1232,7 +1282,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:40Z",
-      "updatedAt": "2026-03-30T10:09:22Z",
+      "updatedAt": "2026-04-13T14:53:20Z",
       "closedAt": null,
       "comments": [
         {
@@ -1255,6 +1305,13 @@
           "body": "As far as possible, we're trying to limit the scope of CoSERV to describe **just** the query language and the API, while remaining agnostic about specific deployment considerations (such as how to secure signing keys). It's partly because such considerations apply across the various RATS roles anyway, whether CoSERV is used or not. But it's also because the scope of the document could creep into quite unwieldy spaces if we start making a lot of very specific recommendations. At worst, it could transform into some kind of practical deployment guide for RFC9334. Maybe such a document would be valuable, but I don't think draft-coserv wants to become that document.\n\nThat said, we do recognise that the aggregation model and the shallow/deep trust models have some specific deployment considerations. The latest version of the draft is trying to do a better job of addressing that. See in particular the latest security considerations [subsection on aggregation](https://www.ietf.org/archive/id/draft-ietf-rats-coserv-05.html#name-aggregators), which hopefully addresses the \"secure statements\" concern.\n\n",
           "createdAt": "2026-03-30T10:09:22Z",
           "updatedAt": "2026-03-30T10:09:22Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Pending review of latest \u00a78.3",
+          "createdAt": "2026-04-13T14:53:20Z",
+          "updatedAt": "2026-04-13T14:53:20Z"
         }
       ]
     },
@@ -5059,7 +5116,7 @@
       "labels": [],
       "body": "Provides rationale for modelling environments somewhat differently from CoRIM.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
       "createdAt": "2026-03-31T13:49:48Z",
-      "updatedAt": "2026-04-10T16:09:52Z",
+      "updatedAt": "2026-04-13T09:15:52Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "3668e966cedf292482254e86041a5a9b2480c3bc",
@@ -5091,6 +5148,13 @@
           "body": "> > This seems overly restrictive as written. Consider a query with group and class, where class only includes the vendor. Then there could be a subset of attesters in the group that correspond to the designated vendor. Why should such a query be prohibited?\r\n> \r\n> Hi @gmandyam - are you tracking any use cases where this would occur in practice, or is it more of a theoretical concern? I'm worried about complicating the query structure. It works well for use cases that we know about, and it makes queries simple to construct. It would be quite disruptive to both the draft and to implementations to make invasive changes to the query model, so we would want to make sure that we have clear motivation for that. The case that you mention here, if it actually occurred, could probably be handled with some light post-processing of the result set. See also my comments on the [original issue](https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/108) that gave rise to this PR.\r\n\r\nConsider a CCA implementation using a GUK [1].  The GUK will correspond to a set of instances.  The CPAK ID could correspond directly to a Group-ID, but the class-ID is defined by a vendor/model.  There could be multiple GUKs associated with the same vendor/model.\r\n\r\n[1] https://developer.arm.com/documentation/DEN0096/latest/.",
           "createdAt": "2026-04-10T16:09:52Z",
           "updatedAt": "2026-04-10T16:09:52Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> [...]\r\n> Consider a CCA implementation using a GUK [1]. The GUK will correspond to a set of instances. The CPAK ID could correspond directly to a Group-ID, but the class-ID is defined by a vendor/model. There could be multiple GUKs associated with the same vendor/model.\r\n> \r\n> [1] https://developer.arm.com/documentation/DEN0096/latest/.\r\n\r\nI want to make sure I'm understanding these scenarios correctly. They seem mostly to be focused on the cardinality of relationships between instances, groups and classes. But the purpose of a CoSERV query is not to locate a set of instances. The purpose of the query is to locate endorsements/RVs that are relevant to the attester's environment. I'm not sure why it would matter that there could be multiple groups to a class.\r\n\r\nIn practice, the expectation is that a group ID or an instance ID would always have UUID/UEID semantics and hence uniqueness. Whether searching by instance or searching by group, the result would be unambiguous regardless of vendor/class. Situations where this is not the case seem to be hypothetical/theoretical.\r\n\r\nAnother thing to remember is that we can make more than one CoSERV query. In fact, I would expect this to be common. Endorsements (such as trust anchors for the AK) would normally be located by instance/group, whereas RVs would more typically be located by class. We see exactly this pattern in the Arm CCA prototype [here](https://github.com/veraison/cca-coserv-demo), which makes a query based on the instance ID to get the AK endorsement, and a second query based on the implementation ID to get the platform RVs. Group IDs are not used in this demo, but I wouldn't expect them to present any kind of problem if they were.\r\n\r\nIt's also okay for a query to return multiple results. The environment matching semantics of the CoRIM verification algorithm would still apply to ensure that verification and appraisal are conducted only against the relevant artifacts. So IMO it's okay for the CoSERV query language to be a slighter blunter tool, so I'd argue against complicating it unless we have a demonstrable scenario where it fails in practice.\r\n\r\n",
+          "createdAt": "2026-04-13T09:15:52Z",
+          "updatedAt": "2026-04-13T09:15:52Z"
         }
       ],
       "reviews": [
