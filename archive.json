@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-14T01:19:51.020175+00:00",
+  "timestamp": "2026-04-16T01:22:26.606788+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1509,7 +1509,7 @@
       "labels": [],
       "body": "### Summary\nWe will be offering up this draft for HTTP directorate review due to the inclusion of HTTP-based protocol. This request is to prep the text for such a review.\n\n### Details\nWe should comb the text for deviations from the style guide, and apply any obvious fixes before submitting for more in-depth review. Style guide is [here](https://httpwg.org/admin/editors/style-guide).\n",
       "createdAt": "2026-03-13T09:13:15Z",
-      "updatedAt": "2026-03-18T16:35:30Z",
+      "updatedAt": "2026-04-14T12:09:57Z",
       "closedAt": null,
       "comments": [
         {
@@ -1532,6 +1532,20 @@
           "body": "We need to ensure that our requirements regarding error responses are clear.\n\nFor example, the use of concise problem details is suggested in the examples, but not mandated, even though it should be.\n\nWe should also discuss the use of HTTP-layer authentication mechanisms.",
           "createdAt": "2026-03-18T16:35:30Z",
           "updatedAt": "2026-03-18T16:35:30Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "An item that could be tackled here is the one raised in https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/81#issuecomment-4237273794, i.e., documenting the use of `Cache-Control: no-cache` in a request to revalidate the request with the origin CoSERV service.",
+          "createdAt": "2026-04-14T09:15:03Z",
+          "updatedAt": "2026-04-14T12:09:57Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "A few other security-related topics that are in scope with the HTTP API binding:\n\n1. API authentication. Server-side authentication is likely mandatory. Client-side authentication may be useful in some cases, for example, for authorisation or to prevent DoS attacks.\n2. Deployments that offer a public-facing endpoint should seek DDoS protection.\n3. Rate-limiting is common in this kind of energy-hungry service. If so, we might want to document status code 429 (Too Many Requests) alongside the other error responses.",
+          "createdAt": "2026-04-14T09:22:27Z",
+          "updatedAt": "2026-04-14T09:22:27Z"
         }
       ]
     },
@@ -1581,6 +1595,22 @@
           "updatedAt": "2026-03-31T08:16:25Z"
         }
       ]
+    },
+    {
+      "number": 110,
+      "id": "I_kwDOOAZd1M7-FX6y",
+      "title": "Support queries for specific artifacts by ID and media type",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/110",
+      "state": "OPEN",
+      "author": "paulhowardarm",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Summary\nExtend the query/response data model so that a client can query for specific artifacts (e.g. CoRIM documents) by directly specifying their ID and media type, and make it straightforward to unpick those items from the response.\n\n### Details\nThere is a use case for CoSERV where the client simply wants to pull a specific set of documents from the provider, and explicitly knows the identities of those documents in advance. These identities could be CoRIM/CoMID/CoSWID identifiers, for example. It should be possible to make a CoSERV query based on one or more of those identities. It should also be easy for the client to locate those documents in the result set once the query has been fulfilled.\n\nThe data model (CDDL) would need two changes:\n\n- An extension to the `environment-selector-map` type. This type currently has three mutually-exclusive variants, supporting queries by instance, group or class. This change will introduce a fourth variant, to select based on an artifact ID and a media type.\n- A change to the `results` type such that the `source-artifacts` field is structured as a collection rather than an array. The collection would be keyed on the artifact ID (e.g. CoRIM/CoMID/CoSWID ID), which would allow the client to locate the individual results more easily.\n\n",
+      "createdAt": "2026-04-14T14:40:42Z",
+      "updatedAt": "2026-04-14T14:40:42Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -5116,7 +5146,7 @@
       "labels": [],
       "body": "Provides rationale for modelling environments somewhat differently from CoRIM.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
       "createdAt": "2026-03-31T13:49:48Z",
-      "updatedAt": "2026-04-13T09:15:52Z",
+      "updatedAt": "2026-04-15T11:17:16Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "3668e966cedf292482254e86041a5a9b2480c3bc",
@@ -5155,6 +5185,13 @@
           "body": "> [...]\r\n> Consider a CCA implementation using a GUK [1]. The GUK will correspond to a set of instances. The CPAK ID could correspond directly to a Group-ID, but the class-ID is defined by a vendor/model. There could be multiple GUKs associated with the same vendor/model.\r\n> \r\n> [1] https://developer.arm.com/documentation/DEN0096/latest/.\r\n\r\nI want to make sure I'm understanding these scenarios correctly. They seem mostly to be focused on the cardinality of relationships between instances, groups and classes. But the purpose of a CoSERV query is not to locate a set of instances. The purpose of the query is to locate endorsements/RVs that are relevant to the attester's environment. I'm not sure why it would matter that there could be multiple groups to a class.\r\n\r\nIn practice, the expectation is that a group ID or an instance ID would always have UUID/UEID semantics and hence uniqueness. Whether searching by instance or searching by group, the result would be unambiguous regardless of vendor/class. Situations where this is not the case seem to be hypothetical/theoretical.\r\n\r\nAnother thing to remember is that we can make more than one CoSERV query. In fact, I would expect this to be common. Endorsements (such as trust anchors for the AK) would normally be located by instance/group, whereas RVs would more typically be located by class. We see exactly this pattern in the Arm CCA prototype [here](https://github.com/veraison/cca-coserv-demo), which makes a query based on the instance ID to get the AK endorsement, and a second query based on the implementation ID to get the platform RVs. Group IDs are not used in this demo, but I wouldn't expect them to present any kind of problem if they were.\r\n\r\nIt's also okay for a query to return multiple results. The environment matching semantics of the CoRIM verification algorithm would still apply to ensure that verification and appraisal are conducted only against the relevant artifacts. So IMO it's okay for the CoSERV query language to be a slighter blunter tool, so I'd argue against complicating it unless we have a demonstrable scenario where it fails in practice.\r\n\r\n",
           "createdAt": "2026-04-13T09:15:52Z",
           "updatedAt": "2026-04-13T09:15:52Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Tagging @gmandyam - just want to make sure you saw the comment above. Does it make sense? Would be good to close on this PR if possible to unblock follow-up work. Note that we've also raised https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/110 to enable a new query style for specific artifacts.",
+          "createdAt": "2026-04-15T11:17:16Z",
+          "updatedAt": "2026-04-15T11:17:16Z"
         }
       ],
       "reviews": [
