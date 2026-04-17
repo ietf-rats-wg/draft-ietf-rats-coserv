@@ -5,6 +5,7 @@ COSERV_FRAGS += environment-selector.cddl
 
 COSERV_IMPORT := cmw=cmw-autogen
 COSERV_IMPORT += comid=comid-autogen
+COSERV_IMPORT += corim=corim-autogen
 
 COSERV_EXAMPLES := $(wildcard examples/rv-*.diag)
 
