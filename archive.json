@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-16T01:22:26.606788+00:00",
+  "timestamp": "2026-04-19T01:22:13.117035+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -5146,7 +5146,7 @@
       "labels": [],
       "body": "Provides rationale for modelling environments somewhat differently from CoRIM.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
       "createdAt": "2026-03-31T13:49:48Z",
-      "updatedAt": "2026-04-15T11:17:16Z",
+      "updatedAt": "2026-04-16T21:34:31Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "3668e966cedf292482254e86041a5a9b2480c3bc",
@@ -5192,6 +5192,13 @@
           "body": "Tagging @gmandyam - just want to make sure you saw the comment above. Does it make sense? Would be good to close on this PR if possible to unblock follow-up work. Note that we've also raised https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/110 to enable a new query style for specific artifacts.",
           "createdAt": "2026-04-15T11:17:16Z",
           "updatedAt": "2026-04-15T11:17:16Z"
+        },
+        {
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> In practice, the expectation is that a group ID or an instance ID would always have UUID/UEID semantics and hence uniqueness. Whether searching by instance or searching by group, the result would be unambiguous regardless of vendor/class. Situations where this is not the case seem to be hypothetical/theoretical.\r\n\r\nThat makes sense, but it is not clear from the current text, and the collected CDDL does not appear to support the above statement either.  C The text below from the proposed PR doesn't quite cover the above concept either:\r\n\r\n\"Where globally unambiguous identifiers are not guaranteed, a CoSERV provider SHOULD be scoped such that any identifier used in a query remains unambiguous within that provider.\"\r\n\r\nI think changing 'unambiguous' to 'unique' would work.",
+          "createdAt": "2026-04-16T21:34:31Z",
+          "updatedAt": "2026-04-16T21:34:31Z"
         }
       ],
       "reviews": [
