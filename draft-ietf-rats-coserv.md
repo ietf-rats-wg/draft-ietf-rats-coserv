@@ -668,7 +668,7 @@ Corresponding HTTP response:
 HTTP/1.1 200 OK
 Content-Type: application/coserv-discovery+json
 
-Body (JSON)
+Content (JSON)
 
 {::include-fold cddl/examples/discovery-single-capability.json}
 ~~~
@@ -687,7 +687,7 @@ Corresponding HTTP response:
 HTTP/1.1 200 OK
 Content-Type: application/coserv-discovery+cbor
 
-Body (in CBOR Extended Diagnostic Notation (EDN))
+Content (in CBOR Extended Diagnostic Notation (EDN))
 
 {::include-fold cddl/examples/discovery-single-capability.diag}
 ~~~
@@ -732,7 +732,7 @@ HTTP/1.1 200 OK
 Content-Type: application/coserv+cose; \
               profile="tag:vendor.com,2025:cc_platform#1.0.0"
 
-Body (in CBOR Extended Diagnostic Notation (EDN))
+Content (in CBOR Extended Diagnostic Notation (EDN))
 
 {::include-fold cddl/examples/signed-rv-class-simple-results.diag}
 ~~~
@@ -760,7 +760,7 @@ Example HTTP response:
 HTTP/1.1 400 Bad Request
 Content-Type: application/concise-problem-details+cbor
 
-Body (in CBOR Extended Diagnostic Notation (EDN))
+Content (in CBOR Extended Diagnostic Notation (EDN))
 
 {
   / title /  -1: "Query validation failed",
@@ -791,7 +791,7 @@ Example HTTP response:
 HTTP/1.1 406 Not Acceptable
 Content-Type: application/concise-problem-details+cbor
 
-Body (in CBOR Extended Diagnostic Notation (EDN))
+Content (in CBOR Extended Diagnostic Notation (EDN))
 
 {
   / title /  -1: "Unsupported profile",
@@ -827,7 +827,7 @@ HTTP/1.1 429 Too Many Requests
 Content-Type: application/concise-problem-details+cbor
 Retry-After: 120
 
-Body (in CBOR Extended Diagnostic Notation (EDN))
+Content (in CBOR Extended Diagnostic Notation (EDN))
 
 {
   / title /  -1: "Too many requests",
