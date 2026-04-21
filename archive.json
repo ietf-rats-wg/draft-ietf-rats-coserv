@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-19T01:22:13.117035+00:00",
+  "timestamp": "2026-04-21T01:19:18.744328+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -5146,13 +5146,13 @@
       "labels": [],
       "body": "Provides rationale for modelling environments somewhat differently from CoRIM.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
       "createdAt": "2026-03-31T13:49:48Z",
-      "updatedAt": "2026-04-16T21:34:31Z",
+      "updatedAt": "2026-04-20T07:25:34Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "3668e966cedf292482254e86041a5a9b2480c3bc",
       "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
       "headRefName": "phEnvironmentUniqueness",
-      "headRefOid": "57c4f8acbafcb2186a6feed80965fcd4b69e278c",
+      "headRefOid": "e072a7bbbcbd96911bc015da556635e4712a02da",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -5199,6 +5199,13 @@
           "body": "> In practice, the expectation is that a group ID or an instance ID would always have UUID/UEID semantics and hence uniqueness. Whether searching by instance or searching by group, the result would be unambiguous regardless of vendor/class. Situations where this is not the case seem to be hypothetical/theoretical.\r\n\r\nThat makes sense, but it is not clear from the current text, and the collected CDDL does not appear to support the above statement either.  C The text below from the proposed PR doesn't quite cover the above concept either:\r\n\r\n\"Where globally unambiguous identifiers are not guaranteed, a CoSERV provider SHOULD be scoped such that any identifier used in a query remains unambiguous within that provider.\"\r\n\r\nI think changing 'unambiguous' to 'unique' would work.",
           "createdAt": "2026-04-16T21:34:31Z",
           "updatedAt": "2026-04-16T21:34:31Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks, @gmandyam - I've made the minor correction as per your suggestion in the hope that we can merge the PR. I don't fully understand your point about the CDDL model. Would you be able to capture this and articulate it in a separate issue in the repo? Data model changes are somewhat more impactful so I'd sooner not expand the scope of this PR to include those.",
+          "createdAt": "2026-04-20T07:25:34Z",
+          "updatedAt": "2026-04-20T07:25:34Z"
         }
       ],
       "reviews": [
@@ -5282,6 +5289,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 111,
+      "id": "PR_kwDOOAZd1M7T7mN6",
+      "title": "feat(cddl): add query by RIM identifier",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/111",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Extend the query and result objects to allow querying by CoRIM/CoMID/CoSWID/CoTS identifiers.\r\n\r\nThe changes introduced here are backwards-compatible.",
+      "createdAt": "2026-04-20T11:44:44Z",
+      "updatedAt": "2026-04-20T14:56:12Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "3668e966cedf292482254e86041a5a9b2480c3bc",
+      "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "headRefName": "selecting-by-ids",
+      "headRefOid": "1da40b831a8f65a9d5a08efdb5b5b3b2362d1448",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
