@@ -800,6 +800,41 @@ Body (in CBOR Extended Diagnostic Notation (EDN))
 }
 ~~~
 
+#### Too Many Requests (429)
+
+A server could apply rate limiting to requests received from clients.
+This is a common practice for services that require significant processing power to generate a response, such as a CoSERV endpoint.
+If this is the case, and a client exceeds their request quota, the server can return a 429 (Too Many Requests) response.
+The response headers MAY include a `Retry-After` header field indicating how long the client should wait before making a new request.
+
+Example HTTP request:
+
+~~~ http-message
+# NOTE: '\' line wrapping per RFC 8792
+
+GET /coserv/ogB4I3R... HTTP/1.1
+Host: endorsements-distributor.example
+Accept: application/coserv+cose; \
+        profile="tag:vendor.com,2025:cc_platform#1.0.0"
+~~~
+
+Example HTTP response:
+
+~~~ http-message
+# NOTE: '\' line wrapping per RFC 8792
+
+HTTP/1.1 429 Too Many Requests
+Content-Type: application/concise-problem-details+cbor
+Retry-After: 120
+
+Body (in CBOR Extended Diagnostic Notation (EDN))
+
+{
+  / title /  -1: "Too many requests",
+  / detail / -2: "You're doing that too often! Try again in 2 minutes",
+}
+~~~
+
 ### Caching {#secrrapicaching}
 
 In practical usage, the artifacts transacted via CoSERV queries (such as trust anchors and reference values) may change significantly less often than they are used.
