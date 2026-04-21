@@ -56,6 +56,7 @@ normative:
   RFC8610: cddl
   RFC8259: json
   RFC8615: well-known
+  RFC9290: concise-pd
   STD98:
     -: http-caching
     =: RFC9111
@@ -560,6 +561,19 @@ Further details are provided in the subsections below.
 
 Authentication is out of scope for this document.
 Implementations MAY authenticate clients, for example for authorization or for preventing denial of service attacks.
+
+### Errors {#secrrapierrors}
+
+For error responses (4xx or 5xx status codes), the `Content-Type` header field MUST be `application/concise-problem-details+cbor`, and the content MUST be a Concise Problem Details object {{-concise-pd}} containing the following:
+
+{:vspace="0"}
+title:
+: A human-readable string that identifies the error that prevented the CoSERV Service from processing the request.
+This string should be short and suitable for inclusion in log messages.
+
+detail:
+: A human-readable string that describes the error in more depth.
+This should ideally provide sufficient detail to enable the error to be rectified.
 
 ### Discovery {#secrrapidisco}
 
