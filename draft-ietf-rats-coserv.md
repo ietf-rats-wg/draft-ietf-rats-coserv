@@ -56,12 +56,22 @@ normative:
   RFC8610: cddl
   RFC8259: json
   RFC8615: well-known
+  STD98:
+    -: http-caching
+    =: RFC9111
+    display: HTTP
+  STD97:
+    -: http-sema
+    =: RFC9110
+    display: HTTP-CACHING
   STD96:
     -: cose
     =: RFC9052
+    display: COSE
   STD94:
     -: cbor
     =: RFC8949
+    display: CBOR
   RFC9334: rats-arch
   I-D.ietf-rats-corim: rats-corim
   I-D.ietf-rats-msg-wrap: rats-cmw
@@ -71,11 +81,10 @@ normative:
     target: https://semver.org/spec/v2.0.0.html
 
 informative:
-  STD98: HTTP Caching
-  RFC6024: TA requirements
+  RFC6024: ta-reqs
   RFC7942: Improving Awareness of Running Code
-  RFC7252: The Constrained Application Protocol (CoAP)
-  RFC9711: The Entity Attestation Token (EAT)
+  RFC7252: coap
+  RFC9711: rats-eat
   I-D.ietf-rats-endorsements: rats-endorsements
   I-D.ietf-iotops-mud-rats: iotops-mud-rats
 
@@ -176,7 +185,7 @@ A CoSERV data object always contains a query.
 When CoSERV is used to express a result set, the query is retained alongside the result set that was yielded by that query.
 This allows consumers to verify a match between the query that was sent to the producer, and the query that was subsequently returned with the result set.
 Such verification is useful because it mitigates security threats arising from any untrusted infrastructure or intermediaries that might reside between the producer and the consumer.
-An example of this is caching in HTTP {{STD98}} and CoAP {{RFC7252}}.
+An example of this is caching in HTTP {{-http-caching}} and CoAP {{-coap}}.
 It might be expensive to compute the result set for a query, which would make caching desirable.
 However, if caching is managed by an untrusted intermediary, then there is a risk that such an untrusted intermediary might return incorrect results, either accidentally or maliciously.
 Pairing the original query with each result set provides an end-to-end contract between the consumer and producer, mitigating such risks.
@@ -190,7 +199,7 @@ Artifacts are what the consumer (Verifier) needs in order to verify and appraise
 The common CoSERV query language recognises three artifact types.
 These correspond to the three categories of endorsement artifact that can be identified natively in the RATS architecture:
 
-- **Trust Anchor**: A trust anchor is as defined in {{RFC6024}}.
+- **Trust Anchor**: A trust anchor is as defined in {{-ta-reqs}}.
 An example of a trust anchor would be the public part of the asymmetric signing key that is used by the Attester to sign Evidence, such that the Verifier can verify the cryptographic signature.
 This is just one example.
 Other forms of trust anchor are possible.
@@ -347,7 +356,7 @@ In common with EAT and CoRIM, CoSERV supports the notion of profiles.
 As with EAT and CoRIM, profiles are a way to extend or specialize the structure of a generic CoSERV query in order to cater for a specific use case or environment.
 
 In a CoSERV query, the profile can be identified by either a Uniform Resource Identifier (URI) or an Object Identifier (OID).
-This convention is identical to how EAT profiles are identified using the `eat_profile` claim as described in {{Section 4.3.2 of RFC9711}}.
+This convention is identical to how EAT profiles are identified using the `eat_profile` claim as described in {{Section 4.3.2 of -rats-eat}}.
 
 ## Query Structure
 
@@ -534,7 +543,7 @@ The only API binding that is specified in this document is a request-response pr
 This is a simple pattern, and likely to be a commonly occurring one for a variety of use cases.
 Future specifications may define other API bindings.
 Such future bindings may introduce further HTTP-based protocols.
-Alternatively, they may define protocols for use with other transports, such as CoAP {{RFC7252}}.
+Alternatively, they may define protocols for use with other transports, such as CoAP {{-coap}}.
 
 ## Request Response over HTTP {#secrrapi}
 
@@ -546,7 +555,7 @@ It is a RESTful API because the CoSERV query serves as a unique and stable ident
 The encoding rules for CoSERV are deterministic as set out in {{secencoding}}.
 This means that any given CoSERV query will always encode to the same sequence of bytes.
 The Base64Url encoding ({{Section 2 of !RFC7515}}) of the byte sequence becomes the rightmost path segment of the URI used to identify the target resource.
-The HTTP `GET` verb is then used with this URI to execute the query.
+The `GET` method is then used with this URI to execute the query.
 Further details are provided in the subsections below.
 
 Authentication is out of scope for this document.
@@ -558,13 +567,13 @@ Clients discover CoSERV HTTP API endpoints by means of a well-known URI that is 
 This URI supplies a single discovery document that clients can use to locate the URIs of other API endpoints, in addition to finding out other relevant information about the configuration and capabilities of the service.
 
 Implementations that provide CoSERV HTTP API endpoints MUST also provide the discovery endpoint at the path `/.well-known/coserv-configuration`.
-This endpoint MUST be available via an HTTP GET method with no additional query parameters.
+This endpoint MUST be accessible via GET with no additional query parameters.
 
-The response body can be formatted using either JSON or CBOR, governed by standard HTTP content-type negotiation.
+The response content can be formatted using either JSON or CBOR, governed by standard HTTP content negotiation ({{Section 12 of -http-sema}}).
 The media types defined for this purpose are `application/coserv-discovery+json` (for JSON-formatted documents) or `application/coserv-discovery+cbor` (for CBOR-formatted documents).
 If the client presents any media type other than these two options in its HTTP `Accept` header, the implementation SHOULD respond with an HTTP 406 (Not Acceptable) status code.
-If the client presents one of the two valid media types, then the implementation MUST respond with an HTTP 200 (OK) status code, unless it is prevented from doing so by an error condition beyond the scope of this specification.
-When the 200 (OK) status code is returned, the response body MUST contain exactly one discovery document in the requested format (JSON or CBOR).
+If the client presents one of the two valid media types, then the implementation MUST respond with the HTTP 200 (OK) status code, unless it is prevented from doing so by an error condition beyond the scope of this specification.
+When the 200 (OK) status code is returned, the response MUST contain exactly one discovery document in the requested format (JSON or CBOR).
 The contents of the discovery document MUST conform to the CDDL data model given below, which is common to both the JSON and CBOR encodings.
 
 ~~~ cddl
@@ -629,7 +638,7 @@ Therefore, these encoding rules do not apply.
 
 #### Discovery Document Examples
 
-In the following examples, the contents of bodies are informative examples only.
+The contents of the responses in the following examples are for illustrative purposes only.
 
 Example HTTP request for retrieving the discovery document in JSON format:
 
@@ -679,9 +688,9 @@ The URL path is formed of the discovered `coserv` endpoint (as set out in {{secr
 
 There are no additional URL query parameters.
 
-Clients MUST set the HTTP `Accept` header to a suitably-profiled `application/coserv+cose` or `application/coserv+cbor` media type.
+Clients MUST set the `Accept` header field to a suitably-profiled `application/coserv+cose` or `application/coserv+cbor` media type.
 
-Endpoint implementations MUST respond with an HTTP status code and response body according to one of the subheadings below.
+Endpoint implementations MUST respond with an HTTP status code and content according to one of the subheadings below.
 
 #### Responses
 
@@ -787,8 +796,8 @@ One example of such an impactful change might be the roll-out of a firmware upda
 Such changes would tend to be relatively infrequent.
 The caching of CoSERV artifacts is therefore beneficial for overall system performance.
 
-CoSERV is designed to facilitate both client-side and server-side caching by use of the standard HTTP caching mechanisms specified in {{STD98}}.
-This includes use of the HTTP `Cache-Control` header and its associated directives.
+CoSERV is designed to facilitate both client-side and server-side caching by use of the standard HTTP caching mechanisms specified in {{-http-caching}}.
+This includes use of the `Cache-Control` header field and its associated directives.
 It also includes the use of entity-tags (ETags).
 The following features of CoSERV and its HTTP binding are specifically designed to favor caching implementations:
 
@@ -808,7 +817,7 @@ CoSERV's data model includes a mandatory expiration timestamp on every result se
 This is an authoritative marker of the point in time at which the entire result set becomes invalid, and the query must be re-executed to obtain fresh results.
 This timestamp is established by the origin server.
 
-In the presence of HTTP caching infrastructure, the origin server MUST NOT set HTTP cache directives (e.g. `Cache-Control: max-age`, `Expires`) such that the freshness lifetime of the HTTP response exceeds the result set expiry timestamp contained within the CoSERV result set payload.
+In the presence of HTTP caching infrastructure, the origin server MUST NOT set HTTP cache directives (e.g. `Cache-Control: max-age`, `Expires`) such that the freshness lifetime of the HTTP response exceeds the result set expiry timestamp contained within the CoSERV results.
 
 #### Example HTTP Messages with Caching
 
