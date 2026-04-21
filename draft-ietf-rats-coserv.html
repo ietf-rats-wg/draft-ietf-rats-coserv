@@ -16,25 +16,25 @@
 This document specifies the Concise Selector for Endorsements and Reference Values (CoSERV), a structured query/result format designed to facilitate the discovery and retrieval of these artifacts from various providers.
 CoSERV defines a query language and corresponding result structure using CDDL, which can be serialized in CBOR format, enabling efficient interoperability across diverse systems. 
     " name="description">
-<meta content="xml2rfc 3.31.0" name="generator">
+<meta content="xml2rfc 3.33.0" name="generator">
 <meta content="RATS" name="keyword">
 <meta content="attestation" name="keyword">
 <meta content="endorsement" name="keyword">
 <meta content="reference value" name="keyword">
 <meta content="draft-ietf-rats-coserv-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.31.0
-    Python 3.12.12
+  xml2rfc 3.33.0
+    Python 3.12.13
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.0.2
-    platformdirs 4.5.1
+    platformdirs 4.9.6
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.32.5
-    wcwidth 0.3.0
+    wcwidth 0.6.0
 -->
 <link href="draft-ietf-rats-coserv.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1055,11 +1055,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CoSERV</td>
-<td class="right">March 2026</td>
+<td class="right">April 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Howard, et al.</td>
-<td class="center">Expires 3 September 2026</td>
+<td class="center">Expires 23 October 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1072,12 +1072,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-rats-coserv-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-03-02" class="published">2 March 2026</time>
+<time datetime="2026-04-21" class="published">21 April 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-09-03">3 September 2026</time></dd>
+<dd class="expires"><time datetime="2026-10-23">23 October 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1149,7 +1149,7 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 23 October 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1203,6 +1203,9 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3.2.1">
                     <p id="section-toc.1-1.3.2.3.2.1.1"><a href="#section-3.3.1" class="auto internal xref">3.3.1</a>.  <a href="#name-stateful-environments" class="internal xref">Stateful Environments</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3.2.2">
+                    <p id="section-toc.1-1.3.2.3.2.2.1"><a href="#section-3.3.2" class="auto internal xref">3.3.2</a>.  <a href="#name-environment-uniqueness" class="internal xref">Environment Uniqueness</a></p>
 </li>
                 </ul>
 </li>
@@ -1408,7 +1411,7 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 <p id="section-1.1-2">This document uses terms and concepts defined by the RATS architecture.
 For a complete glossary, see <span><a href="https://rfc-editor.org/rfc/rfc9334#section-4" class="relref">Section 4</a> of [<a href="#RFC9334" class="cite xref">RFC9334</a>]</span>.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.1-3">This document uses terms and concepts defined by the CoRIM specification.
-For a complete glossary, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+For a complete glossary, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
 <p id="section-1.1-4">This document uses the terms <em>"actual state"</em> and <em>"reference state"</em> as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-09#section-2" class="relref">Section 2</a> of [<a href="#I-D.ietf-rats-endorsements" class="cite xref">I-D.ietf-rats-endorsements</a>]</span>.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
 <p id="section-1.1-5">The terminology from CBOR <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>, CDDL <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> and COSE <span>[<a href="#STD96" class="cite xref">STD96</a>]</span> applies;
 in particular, CBOR diagnostic notation is defined in <span><a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">Section 8</a> of [<a href="#STD94" class="cite xref">STD94</a>]</span>
@@ -1502,11 +1505,11 @@ CoSERV does not place any additional requirements or constraints on the conveyan
 <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-09#section-4" class="relref">Section 4</a> of [<a href="#I-D.ietf-rats-endorsements" class="cite xref">I-D.ietf-rats-endorsements</a>]</span> sets out the applicable patterns for the endorsement of verification keys, all of which apply equally here.<a href="#section-3.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.2-2.2">
-            <p id="section-3.2-2.2.1"><strong>Endorsed Value</strong>: An endorsed value is as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
+            <p id="section-3.2-2.2.1"><strong>Endorsed Value</strong>: An endorsed value is as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
 This represents a characteristic of the Attester that is not directly presented in the Evidence, such as certification data related to a hardware or firmware module.<a href="#section-3.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.2-2.3">
-            <p id="section-3.2-2.3.1"><strong>Reference Value</strong>: A reference value is as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
+            <p id="section-3.2-2.3.1"><strong>Reference Value</strong>: A reference value is as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
 A reference value specifies an individual aspect of the Attester's desired state.
 Reference values are sometimes informally called "golden values".
 An example of a reference value would be the expected hash or checksum of a binary firmware or software image running in the Attester's environment.
@@ -1566,6 +1569,28 @@ Specifying such an Attester solely by its instance identifier is therefore insuf
 The environment specification would need to include these critical stateful aspects as well.
 In CoRIM <span>[<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>, stateful environments are modeled as an environment identifier plus a collection of measurements, and CoSERV takes the same approach.
 Therefore, any environment selector in a CoSERV query can optionally be enhanced with a collection of one or more measurements, which specify aspects of the target environment state that might materially impact the selection of artifacts.<a href="#section-3.3.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="environment-uniqueness">
+<section id="section-3.3.2">
+          <h4 id="name-environment-uniqueness">
+<a href="#section-3.3.2" class="section-number selfRef">3.3.2. </a><a href="#name-environment-uniqueness" class="section-name selfRef">Environment Uniqueness</a>
+          </h4>
+<p id="section-3.3.2-1">Because CoSERV is a query language, the CoSERV environment structure has been designed such that it is well suited to forming queries.
+It has been optimized such that the most common query styles are also the simplest to construct.
+This design makes it very straightforward to query for artifacts by (multiples of) instance, group or class.
+It is not possible to query by combinations of these properties at the same time.
+For example, it is not possible to form a query that selects by instance or group, while simultaneously being constrained by the scope of a specific class.
+As a more precise example, it would not be possible to form a single query that selects artifacts for instance "0x010203040506", but only for devices of class "ACME SiliconPro 2000".
+This is a departure from CoRIM environments, which can optionally be modeled as combinations of instance, group or class.
+This design choice is a pragmatic one that is taken by CoSERV, but it does raise some deployment considerations in terms of environment uniqueness.<a href="#section-3.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.2-2">In many deployments, it is expected that the identifiers used for instances and groups would be highly entropic and either universally unique, or at least unique within the scope of any given CoSERV provider/consumer pair, such that material ambiguities would not arise.
+Identifiers of type <code>uuid</code> or <code>ueid</code>, for example, are typical.
+However, some profiles might define their identifier types such that uniqueness is not guaranteed.
+Care is therefore needed when using CoSERV with such profiles.
+Where globally unique identifiers are not guaranteed, a CoSERV provider <span class="bcp14">SHOULD</span> be scoped such that any identifier used in a query remains unambiguous within that provider.
+For example, a provider might be scoped to a single product family (effectively constraining the class).
+This preserves the simplicity of the CoSERV environment model while avoiding ambiguity in practice.<a href="#section-3.3.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1639,7 +1664,7 @@ Source materials would typically be requested in cases where the consumer is not
 </li>
         </ul>
 <p id="section-3.5-3">Each individual result entry combines a CoMID triple with an authority delegation chain.
-CoMID triples are exactly as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09#section-5.1.4" class="relref">Section 5.1.4</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
+CoMID triples are exactly as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10#section-5.1.4" class="relref">Section 5.1.4</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
 Each CoMID triple will demonstrate the association between an environment matching that of the CoSERV query, and a single artifact such as a reference value, trust anchor or endorsed value.
 The authority delegation chain is composed of one or more authority delegates.
 Each authority delegate is represented by a public key or key identifier, which the consumer can check against its own set of trusted authorities.
@@ -2929,7 +2954,7 @@ Examples of such desirable characteristics might be:<a href="#section-8-2" class
 <p id="section-8.1-1">CoSERV's data model inherits heavily from that of <span>[<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
 CoSERV responses can contain one or more complete CoRIM artifacts.
 They can also contain aggregated views that are composed of multiple CoRIM fragments.
-The security and privacy considerations set out in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09#section-11" class="relref">Section 11</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span> therefore apply equally to CoSERV.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+The security and privacy considerations set out in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10#section-11" class="relref">Section 11</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span> therefore apply equally to CoSERV.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="forming-native-database-queries-from-coserv">
@@ -3505,7 +3530,7 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <dl class="references">
 <dt id="I-D.ietf-rats-corim">[I-D.ietf-rats-corim]</dt>
         <dd>
-<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Deshpande, Y.</span>, <span class="refAuthor">Smith, N.</span>, and <span class="refAuthor">W. Pan</span>, <span class="refTitle">"Concise Reference Integrity Manifest"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-corim-09</span>, <time datetime="2025-10-20" class="refDate">20 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09">https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-09</a>&gt;</span>. </dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Deshpande, Y.</span>, <span class="refAuthor">Smith, N.</span>, and <span class="refAuthor">W. Pan</span>, <span class="refTitle">"Concise Reference Integrity Manifest"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-corim-10</span>, <time datetime="2026-03-02" class="refDate">2 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10">https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-rats-msg-wrap">[I-D.ietf-rats-msg-wrap]</dt>
         <dd>
