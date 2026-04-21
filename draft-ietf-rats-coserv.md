@@ -825,6 +825,8 @@ This means that the client can always verify the integrity of the result on an e
 CoSERV queries are executed as read-only operations using HTTP `GET`.
 The execution of a query does not modify any state on the server, which creates more opportunities for the re-use of cached results.
 
+Although reusing cached responses is generally desirable, clients that need to bypass the caching infrastructure can do so by specifying `Cache-Control: no-cache` in their requests.
+
 #### HTTP Caching and Result Set Expiry
 
 CoSERV's data model includes a mandatory expiration timestamp on every result set.
