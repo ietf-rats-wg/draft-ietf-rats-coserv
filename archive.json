@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-21T01:19:18.744328+00:00",
+  "timestamp": "2026-04-23T01:23:10.800668+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1554,7 +1554,7 @@
       "id": "I_kwDOOAZd1M71-dKc",
       "title": "Why doesn't CoSERV query use CoMID environment map as the environment selector?",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/108",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DhanusML",
       "authorAssociation": "NONE",
       "assignees": [
@@ -1563,8 +1563,8 @@
       "labels": [],
       "body": "CoSERV query uses either `class-map` or `instance-id` or `group-id` to identify the attester's environment. It cannot use a combination of these. However, the CoRIM specification does not enforce the global uniqueness of any of these identifiers individually, but the combination of these (the environment map) must be globally unique. So, a CoSERV query can only encode partial details of the environment, even when complete details of the environment might be available.\n\nFor example, it is possible for a CoRIM profile to have the instance-ids namespaced by class-ids. In that case, the desired result cannot be obtained directly from a CoSERV query, without further processing of the result set.\n\n```\neg: Four valid attester environments, where the combination of class-map and instance-id uniquely identifies the environment\n\nE1 = {\n\tclass: {id: X},\n\tinstance: A\n}\n\nE2 = {\n\tclass: {id: X},\n\tinstance: B\n}\n\nE3 = {\n\tclass: {id: Y},\n\tinstance: A\n}\n\nE4 = {\n\tclass: {id: Y},\n\tinstance: B\n}\n```\n\nIn this case, it might be possible to identify the attester's environment from the evidence. But the CoSERV query can only contain partial information. So, one has to make a choice of whether to use a class based selector or instance based selector and then filter out the result to obtain the desired values. Another approach would be to make both class based and instance based queries and then take an intersection of the results. If the environment selector had been a 'stateful environment selector', then the query could have included all the information available about the environment.",
       "createdAt": "2026-03-24T10:24:43Z",
-      "updatedAt": "2026-03-31T08:16:33Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-21T06:45:08Z",
+      "closedAt": "2026-04-21T06:45:07Z",
       "comments": [
         {
           "author": "paulhowardarm",
@@ -1593,6 +1593,13 @@
           "body": "Thanks, both, that all makes sense. I will see about putting a PR into the draft.",
           "createdAt": "2026-03-31T08:16:25Z",
           "updatedAt": "2026-03-31T08:16:25Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Addressed by https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/109 ",
+          "createdAt": "2026-04-21T06:45:07Z",
+          "updatedAt": "2026-04-21T06:45:07Z"
         }
       ]
     },
@@ -1608,9 +1615,17 @@
       "labels": [],
       "body": "### Summary\nExtend the query/response data model so that a client can query for specific artifacts (e.g. CoRIM documents) by directly specifying their ID and media type, and make it straightforward to unpick those items from the response.\n\n### Details\nThere is a use case for CoSERV where the client simply wants to pull a specific set of documents from the provider, and explicitly knows the identities of those documents in advance. These identities could be CoRIM/CoMID/CoSWID identifiers, for example. It should be possible to make a CoSERV query based on one or more of those identities. It should also be easy for the client to locate those documents in the result set once the query has been fulfilled.\n\nThe data model (CDDL) would need two changes:\n\n- An extension to the `environment-selector-map` type. This type currently has three mutually-exclusive variants, supporting queries by instance, group or class. This change will introduce a fourth variant, to select based on an artifact ID and a media type.\n- A change to the `results` type such that the `source-artifacts` field is structured as a collection rather than an array. The collection would be keyed on the artifact ID (e.g. CoRIM/CoMID/CoSWID ID), which would allow the client to locate the individual results more easily.\n\n",
       "createdAt": "2026-04-14T14:40:42Z",
-      "updatedAt": "2026-04-14T14:40:42Z",
+      "updatedAt": "2026-04-21T06:47:18Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Update on design proposal: rather than extend the `environment-selector-map` as proposed above, we've introduced a top-level type variant for the entire query and result set. A set of IDs does not qualify as an \"environment\", so it makes more sense to have the whole query separated out into either being a query-by-environment or a query-by-id. Likewise, the result set will be split into two variants.",
+          "createdAt": "2026-04-21T06:47:18Z",
+          "updatedAt": "2026-04-21T06:47:18Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -5139,24 +5154,26 @@
       "id": "PR_kwDOOAZd1M7O9cGy",
       "title": "docs: Add subsection on environment uniqueness in the query structure",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/109",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "paulhowardarm",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Provides rationale for modelling environments somewhat differently from CoRIM.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
       "createdAt": "2026-03-31T13:49:48Z",
-      "updatedAt": "2026-04-20T07:25:34Z",
+      "updatedAt": "2026-04-21T06:41:39Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "3668e966cedf292482254e86041a5a9b2480c3bc",
       "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
       "headRefName": "phEnvironmentUniqueness",
       "headRefOid": "e072a7bbbcbd96911bc015da556635e4712a02da",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-04-21T06:41:39Z",
+      "mergedAt": "2026-04-21T06:41:39Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "8acedf6a45811554e2a0602d1bd5c535478c90af"
+      },
       "comments": [
         {
           "author": "gmandyam",
@@ -5287,6 +5304,19 @@
           "createdAt": "2026-04-01T20:19:13Z",
           "updatedAt": "2026-04-01T20:19:13Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M73Ebue",
+          "commit": {
+            "abbreviatedOid": "e072a7b"
+          },
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-04-21T04:59:17Z",
+          "updatedAt": "2026-04-21T04:59:17Z",
+          "comments": []
         }
       ]
     },
@@ -5302,19 +5332,59 @@
       "labels": [],
       "body": "Extend the query and result objects to allow querying by CoRIM/CoMID/CoSWID/CoTS identifiers.\r\n\r\nThe changes introduced here are backwards-compatible.",
       "createdAt": "2026-04-20T11:44:44Z",
-      "updatedAt": "2026-04-20T14:56:12Z",
+      "updatedAt": "2026-04-21T08:58:48Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
-      "baseRefOid": "3668e966cedf292482254e86041a5a9b2480c3bc",
+      "baseRefOid": "8acedf6a45811554e2a0602d1bd5c535478c90af",
       "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "headRefName": "selecting-by-ids",
-      "headRefOid": "1da40b831a8f65a9d5a08efdb5b5b3b2362d1448",
+      "headRefOid": "fa528da918ceddae43e75a924555cb26ab4ccdce",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 112,
+      "id": "PR_kwDOOAZd1M7USrRm",
+      "title": "Preparing for the upcoming HTTP Directorate review",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/112",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #107 ",
+      "createdAt": "2026-04-21T12:12:20Z",
+      "updatedAt": "2026-04-21T13:37:39Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "8acedf6a45811554e2a0602d1bd5c535478c90af",
+      "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "headRefName": "httpdir-prep",
+      "headRefOid": "fa9549929971c9e9fe3dfda7371310d53629cccf",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M73Ppqn",
+          "commit": {
+            "abbreviatedOid": "fa95499"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks good to me. Thanks (and thanks for including the adjacent point about `no-cache`).",
+          "createdAt": "2026-04-21T13:37:39Z",
+          "updatedAt": "2026-04-21T13:37:39Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
