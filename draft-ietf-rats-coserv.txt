@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Informational                                T. Fossati
-Expires: 23 October 2026                                          Linaro
+Expires: 26 October 2026                                          Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 23 October 2026                                          Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                           21 April 2026
+                                                           24 April 2026
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 October 2026.
+   This Internet-Draft will expire on 26 October 2026.
 
 Copyright Notice
 
@@ -108,9 +108,10 @@ Table of Contents
      5.2.  Result Data Examples
    6.  API Bindings
      6.1.  Request Response over HTTP
-       6.1.1.  Discovery
-       6.1.2.  Execute Query
-       6.1.3.  Caching
+       6.1.1.  Errors
+       6.1.2.  Discovery
+       6.1.3.  Execute Query
+       6.1.4.  Caching
    7.  Implementation Status
      7.1.  Veraison
    8.  Security Considerations
@@ -172,7 +173,7 @@ Table of Contents
    [I-D.ietf-rats-corim].  CoSERV therefore borrows heavily from CoRIM,
    and shares some data types for its fields.  And, like CoRIM, the
    CoSERV schema is defined using CDDL [RFC8610].  A CoSERV query can be
-   serialized in CBOR [STD94] format.
+   serialized in CBOR [CBOR] format.
 
    In addition to the CBOR-based data formats for CoSERV queries and
    responses, this specification also defines API bindings and
@@ -204,9 +205,9 @@ Table of Contents
    This document uses the terms _"actual state"_ and _"reference state"_
    as defined in Section 2 of [I-D.ietf-rats-endorsements].
 
-   The terminology from CBOR [STD94], CDDL [RFC8610] and COSE [STD96]
+   The terminology from CBOR [CBOR], CDDL [RFC8610] and COSE [COSE]
    applies; in particular, CBOR diagnostic notation is defined in
-   Section 8 of [STD94] and Appendix G of [RFC8610].  Terms and concepts
+   Section 8 of [CBOR] and Appendix G of [RFC8610].  Terms and concepts
    are always referenced as proper nouns, i.e., with Capital Letters.
 
 2.  Aggregation and Trust Models
@@ -292,7 +293,7 @@ Table of Contents
    verification is useful because it mitigates security threats arising
    from any untrusted infrastructure or intermediaries that might reside
    between the producer and the consumer.  An example of this is caching
-   in HTTP [STD98] and CoAP [RFC7252].  It might be expensive to compute
+   in HTTP [HTTP] and CoAP [RFC7252].  It might be expensive to compute
    the result set for a query, which would make caching desirable.
    However, if caching is managed by an untrusted intermediary, then
    there is a risk that such an untrusted intermediary might return
@@ -499,7 +500,7 @@ Table of Contents
    Section 4.5, it means that a query can be used as a stable and
    canonical identifier of artifacts.  This property of queries is an
    important enabler of efficient CoSERV transactions.  See, for
-   example, the HTTP caching design described in Section 6.1.3.
+   example, the HTTP caching design described in Section 6.1.4.
 
    A CoSERV implementation MAY log the time at which a query was
    received and fulfilled.  This might sometimes be desirable for
@@ -804,7 +805,7 @@ Table of Contents
    query.  For these use cases to be effective, it is essential that any
    given CoSERV query is always serialized to the same fixed sequence of
    CBOR bytes.  Therefore, CoSERV queries MUST always use CBOR
-   deterministic encoding as specified in Section 4.2 of [STD94].
+   deterministic encoding as specified in Section 4.2 of [CBOR].
    Further, CoSERV queries MUST use CBOR definite-length encoding.
 
 4.6.  Cryptographic Binding Between Query and Result Set
@@ -821,7 +822,7 @@ Table of Contents
    This is achieved by transacting the result set within a cryptographic
    envelope, with a signature added by the producer, which is verified
    by the consumer.  A CoSERV data object can be signed using COSE
-   [STD96].  A signed-coserv is a COSE_Sign1 with the following layout:
+   [COSE].  A signed-coserv is a COSE_Sign1 with the following layout:
 
    signed-coserv = #6.18([
      protected: bytes .cbor signed-coserv-protected-hdr
@@ -1066,14 +1067,31 @@ Table of Contents
    always encode to the same sequence of bytes.  The Base64Url encoding
    (Section 2 of [RFC7515]) of the byte sequence becomes the rightmost
    path segment of the URI used to identify the target resource.  The
-   HTTP GET verb is then used with this URI to execute the query.
-   Further details are provided in the subsections below.
+   GET method is then used with this URI to execute the query.  Further
+   details are provided in the subsections below.
 
    Authentication is out of scope for this document.  Implementations
    MAY authenticate clients, for example for authorization or for
    preventing denial of service attacks.
 
-6.1.1.  Discovery
+6.1.1.  Errors
+
+   For error responses (4xx or 5xx status codes), the Content-Type
+   header field MUST be application/concise-problem-details+cbor, and
+   the content MUST be a Concise Problem Details object [RFC9290]
+   containing the following:
+
+   title:
+      A human-readable string that identifies the error that prevented
+      the CoSERV Service from processing the request.  This string
+      should be short and suitable for inclusion in log messages.
+
+   detail:
+      A human-readable string that describes the error in more depth.
+      This should ideally provide sufficient detail to enable the error
+      to be rectified.
+
+6.1.2.  Discovery
 
    Clients discover CoSERV HTTP API endpoints by means of a well-known
    URI that is formed using the /.well-known/ path prefix as defined in
@@ -1084,25 +1102,25 @@ Table of Contents
 
    Implementations that provide CoSERV HTTP API endpoints MUST also
    provide the discovery endpoint at the path /.well-known/coserv-
-   configuration.  This endpoint MUST be available via an HTTP GET
-   method with no additional query parameters.
+   configuration.  This endpoint MUST be accessible via GET with no
+   additional query parameters.
 
-   The response body can be formatted using either JSON or CBOR,
-   governed by standard HTTP content-type negotiation.  The media types
-   defined for this purpose are application/coserv-discovery+json (for
-   JSON-formatted documents) or application/coserv-discovery+cbor (for
-   CBOR-formatted documents).  If the client presents any media type
-   other than these two options in its HTTP Accept header, the
-   implementation SHOULD respond with an HTTP 406 (Not Acceptable)
-   status code.  If the client presents one of the two valid media
-   types, then the implementation MUST respond with an HTTP 200 (OK)
-   status code, unless it is prevented from doing so by an error
-   condition beyond the scope of this specification.  When the 200 (OK)
-   status code is returned, the response body MUST contain exactly one
-   discovery document in the requested format (JSON or CBOR).  The
-   contents of the discovery document MUST conform to the CDDL data
-   model given below, which is common to both the JSON and CBOR
-   encodings.
+   The response content can be formatted using either JSON or CBOR,
+   governed by standard HTTP content negotiation (Section 12 of
+   [HTTP-CACHING]).  The media types defined for this purpose are
+   application/coserv-discovery+json (for JSON-formatted documents) or
+   application/coserv-discovery+cbor (for CBOR-formatted documents).  If
+   the client presents any media type other than these two options in
+   its HTTP Accept header, the implementation SHOULD respond with an
+   HTTP 406 (Not Acceptable) status code.  If the client presents one of
+   the two valid media types, then the implementation MUST respond with
+   the HTTP 200 (OK) status code, unless it is prevented from doing so
+   by an error condition beyond the scope of this specification.  When
+   the 200 (OK) status code is returned, the response MUST contain
+   exactly one discovery document in the requested format (JSON or
+   CBOR).  The contents of the discovery document MUST conform to the
+   CDDL data model given below, which is common to both the JSON and
+   CBOR encodings.
 
    ;# import rfc9711 as eat
    ;# import cmw-autogen as cmw
@@ -1134,14 +1152,14 @@ Table of Contents
    non-empty-array<M> = (M) .and ([ + any ])
    artifact-support = non-empty-array<[ ? "source", ? "collected" ]>
 
-6.1.1.1.  Discovery Document Contents
+6.1.2.1.  Discovery Document Contents
 
    This section defines how to populate and interpret the data fields in
    the discovery document.
 
    The collated CDDL is in Appendix A.2.
 
-6.1.1.1.1.  Version
+6.1.2.1.1.  Version
 
    The version field is denoted by the label "version" in JSON documents
    and by the codepoint 1 in CBOR documents.  It is a Semantic
@@ -1151,7 +1169,7 @@ Table of Contents
    [SEMVER].  Version numbers and patch levels are otherwise
    implementation-defined.
 
-6.1.1.1.2.  Capabilities
+6.1.2.1.2.  Capabilities
 
    The capabilities field is denoted by the label "capabilities" in JSON
    documents and by the codepoint 2 in CBOR documents.  This field
@@ -1169,7 +1187,7 @@ Table of Contents
    implementation might support different combinations of artifact
    category for different profiles.
 
-6.1.1.1.3.  API Endpoints
+6.1.2.1.3.  API Endpoints
 
    The API endpoints field is denoted by the label "api-endpoints" in
    JSON documents and by the codepoint 3 in CBOR documents.  This field
@@ -1178,7 +1196,7 @@ Table of Contents
    whose values are the URL path for the API endpoint.
 
    The symbolic name CoSERVRequestResponse is defined for services that
-   offer the transactional API described in Section 6.1.2.  Service
+   offer the transactional API described in Section 6.1.3.  Service
    implementations that offer this API MUST include a key with this name
    in the endpoints map field, and the corresponding endpoint URL path
    MUST end with /{query}. This allows the consumer to form a valid
@@ -1186,7 +1204,7 @@ Table of Contents
    the {query} variable with the Base64Url-encoded CoSERV query object.
    There MUST NOT be any other variables that require substitution.
 
-6.1.1.1.4.  Result Verification Key
+6.1.2.1.4.  Result Verification Key
 
    The result verification key is denoted by the label "result-
    verification-key" in JSON documents and by the codepoint 4 in CBOR
@@ -1195,7 +1213,7 @@ Table of Contents
    are returned by the service implementation.  In JSON-formatted
    discovery documents, each key is a JSON Web Key (JWK) as defined in
    [RFC7517].  In CBOR-formatted discovery documents, each key is a COSE
-   Key as defined in [STD96].
+   Key as defined in [COSE].
 
    This field is optional.  As described in Section 4.6, there are
    situations where it is permissible for CoSERV result sets to be
@@ -1215,7 +1233,7 @@ Table of Contents
    indicating signed results, then the verification key set MUST be
    included.
 
-6.1.1.2.  Discovery Document CBOR Encoding
+6.1.2.2.  Discovery Document CBOR Encoding
 
    When the discovery document is encoded as CBOR, it is exempt from the
    encoding rules specified in Section 4.5.  These encoding rules are
@@ -1224,10 +1242,10 @@ Table of Contents
    structure, and not part of the CoSERV data model itself.  Therefore,
    these encoding rules do not apply.
 
-6.1.1.3.  Discovery Document Examples
+6.1.2.3.  Discovery Document Examples
 
-   In the following examples, the contents of bodies are informative
-   examples only.
+   The contents of the responses in the following examples are for
+   illustrative purposes only.
 
    Example HTTP request for retrieving the discovery document in JSON
    format:
@@ -1241,7 +1259,7 @@ Table of Contents
    HTTP/1.1 200 OK
    Content-Type: application/coserv-discovery+json
 
-   Body (JSON)
+   Content (JSON)
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1285,7 +1303,7 @@ Table of Contents
    HTTP/1.1 200 OK
    Content-Type: application/coserv-discovery+cbor
 
-   Body (in CBOR Extended Diagnostic Notation (EDN))
+   Content (in CBOR Extended Diagnostic Notation (EDN))
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1317,7 +1335,7 @@ Table of Contents
      ]
    }
 
-6.1.2.  Execute Query
+6.1.3.  Execute Query
 
    This endpoint executes a single CoSERV query and returns a CoSERV
    result set.
@@ -1325,21 +1343,21 @@ Table of Contents
    The HTTP method is GET.
 
    The URL path is formed of the discovered coserv endpoint (as set out
-   in Section 6.1.1), where the {query} template variable is substituted
+   in Section 6.1.2), where the {query} template variable is substituted
    with the CoSERV query to be executed, which is represented as a
    Base64Url encoding of the query's serialized CBOR byte sequence.
 
    There are no additional URL query parameters.
 
-   Clients MUST set the HTTP Accept header to a suitably-profiled
+   Clients MUST set the Accept header field to a suitably-profiled
    application/coserv+cose or application/coserv+cbor media type.
 
    Endpoint implementations MUST respond with an HTTP status code and
-   response body according to one of the subheadings below.
+   content according to one of the subheadings below.
 
-6.1.2.1.  Responses
+6.1.3.1.  Responses
 
-6.1.2.1.1.  Successful Transaction (200)
+6.1.3.1.1.  Successful Transaction (200)
 
    This response indicates that the CoSERV query was executed
    successfully.
@@ -1361,7 +1379,7 @@ Table of Contents
    Content-Type: application/coserv+cose; \
                  profile="tag:vendor.com,2025:cc_platform#1.0.0"
 
-   Body (in CBOR Extended Diagnostic Notation (EDN))
+   Content (in CBOR Extended Diagnostic Notation (EDN))
 
    / signed-coserv / 18([
      / protected / << {
@@ -1427,7 +1445,7 @@ Table of Contents
      / signature / h'face5190'
    ])
 
-6.1.2.1.2.  Failure to Validate Query (400)
+6.1.3.1.2.  Failure to Validate Query (400)
 
    This response indicates that the supplied query is badly formed.
 
@@ -1447,14 +1465,14 @@ Table of Contents
    HTTP/1.1 400 Bad Request
    Content-Type: application/concise-problem-details+cbor
 
-   Body (in CBOR Extended Diagnostic Notation (EDN))
+   Content (in CBOR Extended Diagnostic Notation (EDN))
 
    {
      / title /  -1: "Query validation failed",
      / detail / -2: "The query payload is not in CBOR format"
    }
 
-6.1.2.1.3.  Failure to Negotiate Profile (406)
+6.1.3.1.3.  Failure to Negotiate Profile (406)
 
    This response indicates that the client has specified a CoSERV
    profile that is not understood or serviceable by the receiving
@@ -1476,7 +1494,7 @@ Table of Contents
    HTTP/1.1 406 Not Acceptable
    Content-Type: application/concise-problem-details+cbor
 
-   Body (in CBOR Extended Diagnostic Notation (EDN))
+   Content (in CBOR Extended Diagnostic Notation (EDN))
 
    {
      / title /  -1: "Unsupported profile",
@@ -1484,7 +1502,41 @@ Table of Contents
                      not supported",
    }
 
-6.1.3.  Caching
+6.1.3.2.  Too Many Requests (429)
+
+   A server could apply rate limiting to requests received from clients.
+   This is a common practice for services that require significant
+   processing power to generate a response, such as a CoSERV endpoint.
+   If this is the case, and a client exceeds their request quota, the
+   server can return a 429 (Too Many Requests) response.  The response
+   headers MAY include a Retry-After header field indicating how long
+   the client should wait before making a new request.
+
+   Example HTTP request:
+
+   # NOTE: '\' line wrapping per RFC 8792
+
+   GET /coserv/ogB4I3R... HTTP/1.1
+   Host: endorsements-distributor.example
+   Accept: application/coserv+cose; \
+           profile="tag:vendor.com,2025:cc_platform#1.0.0"
+
+   Example HTTP response:
+
+   # NOTE: '\' line wrapping per RFC 8792
+
+   HTTP/1.1 429 Too Many Requests
+   Content-Type: application/concise-problem-details+cbor
+   Retry-After: 120
+
+   Content (in CBOR Extended Diagnostic Notation (EDN))
+
+   {
+     / title /  -1: "Too many requests",
+     / detail / -2: "You're doing that too often! Try again in 2 minutes",
+   }
+
+6.1.4.  Caching
 
    In practical usage, the artifacts transacted via CoSERV queries (such
    as trust anchors and reference values) may change significantly less
@@ -1502,7 +1554,7 @@ Table of Contents
 
    CoSERV is designed to facilitate both client-side and server-side
    caching by use of the standard HTTP caching mechanisms specified in
-   [STD98].  This includes use of the HTTP Cache-Control header and its
+   [HTTP].  This includes use of the Cache-Control header field and its
    associated directives.  It also includes the use of entity-tags
    (ETags).  The following features of CoSERV and its HTTP binding are
    specifically designed to favor caching implementations:
@@ -1526,7 +1578,11 @@ Table of Contents
       does not modify any state on the server, which creates more
       opportunities for the re-use of cached results.
 
-6.1.3.1.  HTTP Caching and Result Set Expiry
+   Although reusing cached responses is generally desirable, clients
+   that need to bypass the caching infrastructure can do so by
+   specifying Cache-Control: no-cache in their requests.
+
+6.1.4.1.  HTTP Caching and Result Set Expiry
 
    CoSERV's data model includes a mandatory expiration timestamp on
    every result set.  This is an authoritative marker of the point in
@@ -1538,9 +1594,9 @@ Table of Contents
    MUST NOT set HTTP cache directives (e.g. Cache-Control: max-age,
    Expires) such that the freshness lifetime of the HTTP response
    exceeds the result set expiry timestamp contained within the CoSERV
-   result set payload.
+   results.
 
-6.1.3.2.  Example HTTP Messages with Caching
+6.1.4.2.  Example HTTP Messages with Caching
 
    This section illustrates a caching scenario.
 
@@ -1899,10 +1955,10 @@ Table of Contents
     | coserv+cose           | application/coserv+cose | Section 4.6   |
     |                       |                         | of RFCthis    |
     +-----------------------+-------------------------+---------------+
-    | coserv-discovery+cbor | application/coserv-     | Section 6.1.1 |
+    | coserv-discovery+cbor | application/coserv-     | Section 6.1.2 |
     |                       | discovery+cbor          | of RFCthis    |
     +-----------------------+-------------------------+---------------+
-    | coserv-discovery+json | application/coserv-     | Section 6.1.1 |
+    | coserv-discovery+json | application/coserv-     | Section 6.1.2 |
     |                       | discovery+json          | of RFCthis    |
     +-----------------------+-------------------------+---------------+
 
@@ -2040,6 +2096,27 @@ Table of Contents
 
 11.1.  Normative References
 
+   [CBOR]     Bormann, C. and P. Hoffman, "Concise Binary Object
+              Representation (CBOR)", STD 94, RFC 8949,
+              DOI 10.17487/RFC8949, December 2020,
+              <https://www.rfc-editor.org/rfc/rfc8949>.
+
+   [COSE]     Schaad, J., "CBOR Object Signing and Encryption (COSE):
+              Structures and Process", STD 96, RFC 9052,
+              DOI 10.17487/RFC9052, August 2022,
+              <https://www.rfc-editor.org/rfc/rfc9052>.
+
+   [HTTP]     Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
+              Ed., "HTTP Caching", STD 98, RFC 9111,
+              DOI 10.17487/RFC9111, June 2022,
+              <https://www.rfc-editor.org/rfc/rfc9111>.
+
+   [HTTP-CACHING]
+              Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
+              Ed., "HTTP Semantics", STD 97, RFC 9110,
+              DOI 10.17487/RFC9110, June 2022,
+              <https://www.rfc-editor.org/rfc/rfc9110>.
+
    [I-D.ietf-rats-corim]
               Birkholz, H., Fossati, T., Deshpande, Y., Smith, N., and
               W. Pan, "Concise Reference Integrity Manifest", Work in
@@ -2108,6 +2185,11 @@ Table of Contents
               (URIs)", RFC 8615, DOI 10.17487/RFC8615, May 2019,
               <https://www.rfc-editor.org/rfc/rfc8615>.
 
+   [RFC9290]  Fossati, T. and C. Bormann, "Concise Problem Details for
+              Constrained Application Protocol (CoAP) APIs", RFC 9290,
+              DOI 10.17487/RFC9290, October 2022,
+              <https://www.rfc-editor.org/rfc/rfc9290>.
+
    [RFC9334]  Birkholz, H., Thaler, D., Richardson, M., Smith, N., and
               W. Pan, "Remote ATtestation procedureS (RATS)
               Architecture", RFC 9334, DOI 10.17487/RFC9334, January
@@ -2115,16 +2197,6 @@ Table of Contents
 
    [SEMVER]   "Semantic Versioning 2.0.0", 2013,
               <https://semver.org/spec/v2.0.0.html>.
-
-   [STD94]    Bormann, C. and P. Hoffman, "Concise Binary Object
-              Representation (CBOR)", STD 94, RFC 8949,
-              DOI 10.17487/RFC8949, December 2020,
-              <https://www.rfc-editor.org/rfc/rfc8949>.
-
-   [STD96]    Schaad, J., "CBOR Object Signing and Encryption (COSE):
-              Structures and Process", STD 96, RFC 9052,
-              DOI 10.17487/RFC9052, August 2022,
-              <https://www.rfc-editor.org/rfc/rfc9052>.
 
 11.2.  Informative References
 
@@ -2165,15 +2237,6 @@ Table of Contents
               Wallace, "The Entity Attestation Token (EAT)", RFC 9711,
               DOI 10.17487/RFC9711, April 2025,
               <https://www.rfc-editor.org/rfc/rfc9711>.
-
-   [STD98]    Internet Standard 98,
-              <https://www.rfc-editor.org/info/std98>.
-              At the time of writing, this STD comprises the following:
-
-              Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
-              Ed., "HTTP Caching", STD 98, RFC 9111,
-              DOI 10.17487/RFC9111, June 2022,
-              <https://www.rfc-editor.org/info/rfc9111>.
 
 Appendix A.  Collated CDDL
 
@@ -3035,7 +3098,7 @@ Appendix C.  Locating CoSERV Services
    sensible.  Note that the goal here is solely one of bootstrapping.
    Once the base URL of a suitable service is known, CoSERV provides in-
    protocol discovery mechanisms, such as the one described in
-   Section 6.1.1, which cater for the discovery of more specific API
+   Section 6.1.2, which cater for the discovery of more specific API
    endpoints and capabilities.
 
    *  Some CoSERV-enabled services might exist in locations that are

@@ -1059,7 +1059,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Howard, et al.</td>
-<td class="center">Expires 23 October 2026</td>
+<td class="center">Expires 26 October 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1072,12 +1072,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-rats-coserv-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-04-21" class="published">21 April 2026</time>
+<time datetime="2026-04-24" class="published">24 April 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-10-23">23 October 2026</time></dd>
+<dd class="expires"><time datetime="2026-10-26">26 October 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1149,7 +1149,7 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 23 October 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 26 October 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1269,13 +1269,16 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
                 <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-request-response-over-http" class="internal xref">Request Response over HTTP</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.1">
-                    <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="auto internal xref">6.1.1</a>.  <a href="#name-discovery" class="internal xref">Discovery</a></p>
+                    <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="auto internal xref">6.1.1</a>.  <a href="#name-errors" class="internal xref">Errors</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.2">
-                    <p id="section-toc.1-1.6.2.1.2.2.1"><a href="#section-6.1.2" class="auto internal xref">6.1.2</a>.  <a href="#name-execute-query" class="internal xref">Execute Query</a></p>
+                    <p id="section-toc.1-1.6.2.1.2.2.1"><a href="#section-6.1.2" class="auto internal xref">6.1.2</a>.  <a href="#name-discovery" class="internal xref">Discovery</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.3">
-                    <p id="section-toc.1-1.6.2.1.2.3.1"><a href="#section-6.1.3" class="auto internal xref">6.1.3</a>.  <a href="#name-caching" class="internal xref">Caching</a></p>
+                    <p id="section-toc.1-1.6.2.1.2.3.1"><a href="#section-6.1.3" class="auto internal xref">6.1.3</a>.  <a href="#name-execute-query" class="internal xref">Execute Query</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.4">
+                    <p id="section-toc.1-1.6.2.1.2.4.1"><a href="#section-6.1.4" class="auto internal xref">6.1.4</a>.  <a href="#name-caching" class="internal xref">Caching</a></p>
 </li>
                 </ul>
 </li>
@@ -1393,7 +1396,7 @@ This facilitates the efficient discovery and retrieval of relevant Endorsements 
 The CoSERV result set is intended to form the corresponding output data type from those tools and services.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">The environment characteristics of Endorsements and Reference Values are derived from the equivalent concepts in CoRIM <span>[<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
 CoSERV therefore borrows heavily from CoRIM, and shares some data types for its fields.
-And, like CoRIM, the CoSERV schema is defined using CDDL <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>. A CoSERV query can be serialized in CBOR <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> format.<a href="#section-1-4" class="pilcrow">¶</a></p>
+And, like CoRIM, the CoSERV schema is defined using CDDL <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>. A CoSERV query can be serialized in CBOR <span>[<a href="#STD94" class="cite xref">CBOR</a>]</span> format.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">In addition to the CBOR-based data formats for CoSERV queries and responses, this specification also defines API bindings and behaviours for the exchange of CoSERV queries and responses.
 This is to facilitate standard interactions between CoSERV producers and consumers.
 Standard API endpoints and behaviours will encourage the growth of interoperable software tools and modules, not only for parsing and emitting CoSERV-compliant data, but also for implementing the clients and services that need to exchange such data when acting in the capacity of the relevant RATS roles.
@@ -1413,8 +1416,8 @@ For a complete glossary, see <span><a href="https://rfc-editor.org/rfc/rfc9334#s
 <p id="section-1.1-3">This document uses terms and concepts defined by the CoRIM specification.
 For a complete glossary, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
 <p id="section-1.1-4">This document uses the terms <em>"actual state"</em> and <em>"reference state"</em> as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-09#section-2" class="relref">Section 2</a> of [<a href="#I-D.ietf-rats-endorsements" class="cite xref">I-D.ietf-rats-endorsements</a>]</span>.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
-<p id="section-1.1-5">The terminology from CBOR <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>, CDDL <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> and COSE <span>[<a href="#STD96" class="cite xref">STD96</a>]</span> applies;
-in particular, CBOR diagnostic notation is defined in <span><a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">Section 8</a> of [<a href="#STD94" class="cite xref">STD94</a>]</span>
+<p id="section-1.1-5">The terminology from CBOR <span>[<a href="#STD94" class="cite xref">CBOR</a>]</span>, CDDL <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> and COSE <span>[<a href="#STD96" class="cite xref">COSE</a>]</span> applies;
+in particular, CBOR diagnostic notation is defined in <span><a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">Section 8</a> of [<a href="#STD94" class="cite xref">CBOR</a>]</span>
 and <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>. Terms and concepts are always referenced as proper nouns, i.e., with Capital Letters.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1478,7 +1481,7 @@ A CoSERV data object always contains a query.
 When CoSERV is used to express a result set, the query is retained alongside the result set that was yielded by that query.
 This allows consumers to verify a match between the query that was sent to the producer, and the query that was subsequently returned with the result set.
 Such verification is useful because it mitigates security threats arising from any untrusted infrastructure or intermediaries that might reside between the producer and the consumer.
-An example of this is caching in HTTP <span>[<a href="#STD98" class="cite xref">STD98</a>]</span> and CoAP <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.
+An example of this is caching in HTTP <span>[<a href="#STD98" class="cite xref">HTTP</a>]</span> and CoAP <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.
 It might be expensive to compute the result set for a query, which would make caching desirable.
 However, if caching is managed by an untrusted intermediary, then there is a risk that such an untrusted intermediary might return incorrect results, either accidentally or maliciously.
 Pairing the original query with each result set provides an end-to-end contract between the consumer and producer, mitigating such risks.
@@ -1631,7 +1634,7 @@ See <a href="#secaggregation" class="auto internal xref">Section 2</a> for detai
 This is to ensure that any set of materially-identical queries will always yield the same encoded sequence of CBOR bytes, regardless of the time when they were issued, or of other volatile factors.
 Along with the other encoding rules set out in <a href="#secencoding" class="auto internal xref">Section 4.5</a>, it means that a query can be used as a stable and canonical identifier of artifacts.
 This property of queries is an important enabler of efficient CoSERV transactions.
-See, for example, the HTTP caching design described in <a href="#secrrapicaching" class="auto internal xref">Section 6.1.3</a>.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
+See, for example, the HTTP caching design described in <a href="#secrrapicaching" class="auto internal xref">Section 6.1.4</a>.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
 <p id="section-3.4-4">A CoSERV implementation <span class="bcp14">MAY</span> log the time at which a query was received and fulfilled.
 This might sometimes be desirable for transparency or audit purposes.
 Implementations are free to define their own transparency events, which can then include timestamps or other suitable information.<a href="#section-3.4-4" class="pilcrow">¶</a></p>
@@ -1921,7 +1924,7 @@ cots = "TODO COTS"
 <p id="section-4.5-1">Implementations may wish to use serialized CoSERV queries as canonical identifiers for artifact collections.
 For example, a Reference Value Provider service may wish the cache the results of a CoSERV query to gain efficiency when responding to a future identical query.
 For these use cases to be effective, it is essential that any given CoSERV query is always serialized to the same fixed sequence of CBOR bytes.
-Therefore, CoSERV queries <span class="bcp14">MUST</span> always use CBOR deterministic encoding as specified in <span><a href="https://rfc-editor.org/rfc/rfc8949#section-4.2" class="relref">Section 4.2</a> of [<a href="#STD94" class="cite xref">STD94</a>]</span>.
+Therefore, CoSERV queries <span class="bcp14">MUST</span> always use CBOR deterministic encoding as specified in <span><a href="https://rfc-editor.org/rfc/rfc8949#section-4.2" class="relref">Section 4.2</a> of [<a href="#STD94" class="cite xref">CBOR</a>]</span>.
 Further, CoSERV queries <span class="bcp14">MUST</span> use CBOR definite-length encoding.<a href="#section-4.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1935,7 +1938,7 @@ This is the reason why the original query is always included along with the resu
 However, this measure is only sufficient in cases where the conveyance protocol guarantees that CoSERV result sets are always transacted over a secure channel without any untrusted intermediaries.
 Wherever this is not the case, producers <span class="bcp14">MUST</span> create an additional cryptographic binding between the query and the result.
 This is achieved by transacting the result set within a cryptographic envelope, with a signature added by the producer, which is verified by the consumer.
-A CoSERV data object can be signed using COSE <span>[<a href="#STD96" class="cite xref">STD96</a>]</span>.
+A CoSERV data object can be signed using COSE <span>[<a href="#STD96" class="cite xref">COSE</a>]</span>.
 A <code>signed-coserv</code> is a <code>COSE_Sign1</code> with the following layout:<a href="#section-4.6-1" class="pilcrow">¶</a></p>
 <div class="lang-cddl sourcecode" id="section-4.6-2">
 <pre>
@@ -2176,26 +2179,48 @@ It is a RESTful API because the CoSERV query serves as a unique and stable ident
 The encoding rules for CoSERV are deterministic as set out in <a href="#secencoding" class="auto internal xref">Section 4.5</a>.
 This means that any given CoSERV query will always encode to the same sequence of bytes.
 The Base64Url encoding (<span><a href="https://rfc-editor.org/rfc/rfc7515#section-2" class="relref">Section 2</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) of the byte sequence becomes the rightmost path segment of the URI used to identify the target resource.
-The HTTP <code>GET</code> verb is then used with this URI to execute the query.
+The <code>GET</code> method is then used with this URI to execute the query.
 Further details are provided in the subsections below.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <p id="section-6.1-2">Authentication is out of scope for this document.
 Implementations <span class="bcp14">MAY</span> authenticate clients, for example for authorization or for preventing denial of service attacks.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
-<div id="secrrapidisco">
+<div id="secrrapierrors">
 <section id="section-6.1.1">
-          <h4 id="name-discovery">
-<a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-discovery" class="section-name selfRef">Discovery</a>
+          <h4 id="name-errors">
+<a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-errors" class="section-name selfRef">Errors</a>
           </h4>
-<p id="section-6.1.1-1">Clients discover CoSERV HTTP API endpoints by means of a well-known URI that is formed using the <code>/.well-known/</code> path prefix as defined in <span>[<a href="#RFC8615" class="cite xref">RFC8615</a>]</span>.
-This URI supplies a single discovery document that clients can use to locate the URIs of other API endpoints, in addition to finding out other relevant information about the configuration and capabilities of the service.<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.1-2">Implementations that provide CoSERV HTTP API endpoints <span class="bcp14">MUST</span> also provide the discovery endpoint at the path <code>/.well-known/coserv-configuration</code>.
-This endpoint <span class="bcp14">MUST</span> be available via an HTTP GET method with no additional query parameters.<a href="#section-6.1.1-2" class="pilcrow">¶</a></p>
-<p id="section-6.1.1-3">The response body can be formatted using either JSON or CBOR, governed by standard HTTP content-type negotiation.
+<p id="section-6.1.1-1">For error responses (4xx or 5xx status codes), the <code>Content-Type</code> header field <span class="bcp14">MUST</span> be <code>application/concise-problem-details+cbor</code>, and the content <span class="bcp14">MUST</span> be a Concise Problem Details object <span>[<a href="#RFC9290" class="cite xref">RFC9290</a>]</span> containing the following:<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlNewline" id="section-6.1.1-2">
+            <dt id="section-6.1.1-2.1">title:</dt>
+            <dd style="margin-left: 1.5em" id="section-6.1.1-2.2">
+              <p id="section-6.1.1-2.2.1">A human-readable string that identifies the error that prevented the CoSERV Service from processing the request.
+This string should be short and suitable for inclusion in log messages.<a href="#section-6.1.1-2.2.1" class="pilcrow">¶</a></p>
+</dd>
+            <dd class="break"></dd>
+<dt id="section-6.1.1-2.3">detail:</dt>
+            <dd style="margin-left: 1.5em" id="section-6.1.1-2.4">
+              <p id="section-6.1.1-2.4.1">A human-readable string that describes the error in more depth.
+This should ideally provide sufficient detail to enable the error to be rectified.<a href="#section-6.1.1-2.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="secrrapidisco">
+<section id="section-6.1.2">
+          <h4 id="name-discovery">
+<a href="#section-6.1.2" class="section-number selfRef">6.1.2. </a><a href="#name-discovery" class="section-name selfRef">Discovery</a>
+          </h4>
+<p id="section-6.1.2-1">Clients discover CoSERV HTTP API endpoints by means of a well-known URI that is formed using the <code>/.well-known/</code> path prefix as defined in <span>[<a href="#RFC8615" class="cite xref">RFC8615</a>]</span>.
+This URI supplies a single discovery document that clients can use to locate the URIs of other API endpoints, in addition to finding out other relevant information about the configuration and capabilities of the service.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.2-2">Implementations that provide CoSERV HTTP API endpoints <span class="bcp14">MUST</span> also provide the discovery endpoint at the path <code>/.well-known/coserv-configuration</code>.
+This endpoint <span class="bcp14">MUST</span> be accessible via GET with no additional query parameters.<a href="#section-6.1.2-2" class="pilcrow">¶</a></p>
+<p id="section-6.1.2-3">The response content can be formatted using either JSON or CBOR, governed by standard HTTP content negotiation (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-12" class="relref">Section 12</a> of [<a href="#STD97" class="cite xref">HTTP-CACHING</a>]</span>).
 The media types defined for this purpose are <code>application/coserv-discovery+json</code> (for JSON-formatted documents) or <code>application/coserv-discovery+cbor</code> (for CBOR-formatted documents).
 If the client presents any media type other than these two options in its HTTP <code>Accept</code> header, the implementation <span class="bcp14">SHOULD</span> respond with an HTTP 406 (Not Acceptable) status code.
-If the client presents one of the two valid media types, then the implementation <span class="bcp14">MUST</span> respond with an HTTP 200 (OK) status code, unless it is prevented from doing so by an error condition beyond the scope of this specification.
-When the 200 (OK) status code is returned, the response body <span class="bcp14">MUST</span> contain exactly one discovery document in the requested format (JSON or CBOR).
-The contents of the discovery document <span class="bcp14">MUST</span> conform to the CDDL data model given below, which is common to both the JSON and CBOR encodings.<a href="#section-6.1.1-3" class="pilcrow">¶</a></p>
-<div class="lang-cddl sourcecode" id="section-6.1.1-4">
+If the client presents one of the two valid media types, then the implementation <span class="bcp14">MUST</span> respond with the HTTP 200 (OK) status code, unless it is prevented from doing so by an error condition beyond the scope of this specification.
+When the 200 (OK) status code is returned, the response <span class="bcp14">MUST</span> contain exactly one discovery document in the requested format (JSON or CBOR).
+The contents of the discovery document <span class="bcp14">MUST</span> conform to the CDDL data model given below, which is common to both the JSON and CBOR encodings.<a href="#section-6.1.2-3" class="pilcrow">¶</a></p>
+<div class="lang-cddl sourcecode" id="section-6.1.2-4">
 <pre>
 ;# import rfc9711 as eat
 ;# import cmw-autogen as cmw
@@ -2226,106 +2251,106 @@ artifact-support-label = eat.JC&lt;"artifact-support", 2&gt;
 
 non-empty-array&lt;M&gt; = (M) .and ([ + any ])
 artifact-support = non-empty-array&lt;[ ? "source", ? "collected" ]&gt;
-</pre><a href="#section-6.1.1-4" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.2-4" class="pilcrow">¶</a>
 </div>
 <div id="discovery-document-contents">
-<section id="section-6.1.1.1">
+<section id="section-6.1.2.1">
             <h5 id="name-discovery-document-contents">
-<a href="#section-6.1.1.1" class="section-number selfRef">6.1.1.1. </a><a href="#name-discovery-document-contents" class="section-name selfRef">Discovery Document Contents</a>
+<a href="#section-6.1.2.1" class="section-number selfRef">6.1.2.1. </a><a href="#name-discovery-document-contents" class="section-name selfRef">Discovery Document Contents</a>
             </h5>
-<p id="section-6.1.1.1-1">This section defines how to populate and interpret the data fields in the discovery document.<a href="#section-6.1.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.1.1-2">The collated CDDL is in <a href="#collated-cddl-discovery" class="auto internal xref">Appendix A.2</a>.<a href="#section-6.1.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-6.1.2.1-1">This section defines how to populate and interpret the data fields in the discovery document.<a href="#section-6.1.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.2.1-2">The collated CDDL is in <a href="#collated-cddl-discovery" class="auto internal xref">Appendix A.2</a>.<a href="#section-6.1.2.1-2" class="pilcrow">¶</a></p>
 <div id="version">
-<section id="section-6.1.1.1.1">
+<section id="section-6.1.2.1.1">
               <h6 id="name-version">
-<a href="#section-6.1.1.1.1" class="section-number selfRef">6.1.1.1.1. </a><a href="#name-version" class="section-name selfRef">Version</a>
+<a href="#section-6.1.2.1.1" class="section-number selfRef">6.1.2.1.1. </a><a href="#name-version" class="section-name selfRef">Version</a>
               </h6>
-<p id="section-6.1.1.1.1-1">The version field is denoted by the label <code>"version"</code> in JSON documents and by the codepoint <code>1</code> in CBOR documents.
+<p id="section-6.1.2.1.1-1">The version field is denoted by the label <code>"version"</code> in JSON documents and by the codepoint <code>1</code> in CBOR documents.
 It is a Semantic Versioning (semver) string, which denotes the version and patch level of the service that is providing the API endpoints described by the document.
 The semver string <span class="bcp14">MUST</span> conform to the ABNF defined in <span>[<a href="#SEMVER" class="cite xref">SEMVER</a>]</span>.
-Version numbers and patch levels are otherwise implementation-defined.<a href="#section-6.1.1.1.1-1" class="pilcrow">¶</a></p>
+Version numbers and patch levels are otherwise implementation-defined.<a href="#section-6.1.2.1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="capabilities">
-<section id="section-6.1.1.1.2">
+<section id="section-6.1.2.1.2">
               <h6 id="name-capabilities">
-<a href="#section-6.1.1.1.2" class="section-number selfRef">6.1.1.1.2. </a><a href="#name-capabilities" class="section-name selfRef">Capabilities</a>
+<a href="#section-6.1.2.1.2" class="section-number selfRef">6.1.2.1.2. </a><a href="#name-capabilities" class="section-name selfRef">Capabilities</a>
               </h6>
-<p id="section-6.1.1.1.2-1">The capabilities field is denoted by the label <code>"capabilities"</code> in JSON documents and by the codepoint <code>2</code> in CBOR documents.
+<p id="section-6.1.2.1.2-1">The capabilities field is denoted by the label <code>"capabilities"</code> in JSON documents and by the codepoint <code>2</code> in CBOR documents.
 This field allows clients to discover the profiled variants of CoSERV for which the service implementation can satisfy queries and provide artifacts.
 This field is structured as an array, which allows for service implementations that support more than one profile.
 Each supported profile is indicated according to its parameterized media type, along with the categories of artifact that can be provided for the profile.
 The artifact categories are <code>source</code> and <code>collected</code>, as described in <a href="#secartifacts" class="auto internal xref">Section 3.2</a>.
 Each profile is paired with a non-empty set of artifact categories, allowing the service implementation to indicate whether it supports the retrieval of source artifacts, collected artifacts, or both.
-This pairing caters for situations where the service implementation might support different combinations of artifact category for different profiles.<a href="#section-6.1.1.1.2-1" class="pilcrow">¶</a></p>
+This pairing caters for situations where the service implementation might support different combinations of artifact category for different profiles.<a href="#section-6.1.2.1.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="api-endpoints">
-<section id="section-6.1.1.1.3">
+<section id="section-6.1.2.1.3">
               <h6 id="name-api-endpoints">
-<a href="#section-6.1.1.1.3" class="section-number selfRef">6.1.1.1.3. </a><a href="#name-api-endpoints" class="section-name selfRef">API Endpoints</a>
+<a href="#section-6.1.2.1.3" class="section-number selfRef">6.1.2.1.3. </a><a href="#name-api-endpoints" class="section-name selfRef">API Endpoints</a>
               </h6>
-<p id="section-6.1.1.1.3-1">The API endpoints field is denoted by the label <code>"api-endpoints"</code> in JSON documents and by the codepoint <code>3</code> in CBOR documents.
+<p id="section-6.1.2.1.3-1">The API endpoints field is denoted by the label <code>"api-endpoints"</code> in JSON documents and by the codepoint <code>3</code> in CBOR documents.
 This field allows clients to derive the correct URL for making HTTP API calls.
-The field is a map whose keys are the symbolic names of the APIs, and whose values are the URL path for the API endpoint.<a href="#section-6.1.1.1.3-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.1.1.3-2">The symbolic name <code>CoSERVRequestResponse</code> is defined for services that offer the transactional API described in <a href="#secrrapiquery" class="auto internal xref">Section 6.1.2</a>.
+The field is a map whose keys are the symbolic names of the APIs, and whose values are the URL path for the API endpoint.<a href="#section-6.1.2.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.2.1.3-2">The symbolic name <code>CoSERVRequestResponse</code> is defined for services that offer the transactional API described in <a href="#secrrapiquery" class="auto internal xref">Section 6.1.3</a>.
 Service implementations that offer this API <span class="bcp14">MUST</span> include a key with this name in the endpoints map field, and the corresponding endpoint URL path <span class="bcp14">MUST</span> end with <code>/{query}</code>.
 This allows the consumer to form a valid CoSERV query URI using variable expansion as per <span>[<a href="#RFC6570" class="cite xref">RFC6570</a>]</span>, replacing the <code>{query}</code> variable with the Base64Url-encoded CoSERV query object.
-There <span class="bcp14">MUST NOT</span> be any other variables that require substitution.<a href="#section-6.1.1.1.3-2" class="pilcrow">¶</a></p>
+There <span class="bcp14">MUST NOT</span> be any other variables that require substitution.<a href="#section-6.1.2.1.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="result-verification-key">
-<section id="section-6.1.1.1.4">
+<section id="section-6.1.2.1.4">
               <h6 id="name-result-verification-key">
-<a href="#section-6.1.1.1.4" class="section-number selfRef">6.1.1.1.4. </a><a href="#name-result-verification-key" class="section-name selfRef">Result Verification Key</a>
+<a href="#section-6.1.2.1.4" class="section-number selfRef">6.1.2.1.4. </a><a href="#name-result-verification-key" class="section-name selfRef">Result Verification Key</a>
               </h6>
-<p id="section-6.1.1.1.4-1">The result verification key is denoted by the label <code>"result-verification-key"</code> in JSON documents and by the codepoint <code>4</code> in CBOR documents.
+<p id="section-6.1.2.1.4-1">The result verification key is denoted by the label <code>"result-verification-key"</code> in JSON documents and by the codepoint <code>4</code> in CBOR documents.
 This field provides one or more public keys that can be used for the cryptographic verification of CoSERV query results that are returned by the service implementation.
 In JSON-formatted discovery documents, each key is a JSON Web Key (JWK) as defined in <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span>.
-In CBOR-formatted discovery documents, each key is a COSE Key as defined in <span>[<a href="#STD96" class="cite xref">STD96</a>]</span>.<a href="#section-6.1.1.1.4-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.1.1.4-2">This field is optional.
+In CBOR-formatted discovery documents, each key is a COSE Key as defined in <span>[<a href="#STD96" class="cite xref">COSE</a>]</span>.<a href="#section-6.1.2.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.2.1.4-2">This field is optional.
 As described in <a href="#signed-coserv" class="auto internal xref">Section 4.6</a>, there are situations where it is permissible for CoSERV result sets to be unsigned, namely when they are transacted over an end-to-end secure channel without any untrusted intermediaries.
 CoSERV service implementations <span class="bcp14">MAY</span> publish discovery documents without result-verification keys in cases where they exclusively produce unsigned CoSERV result sets.
 Unsigned CoSERV result sets are characterized by use of the <code>application/coserv+cbor</code> media type (as opposed to the <code>application/coserv+cose</code> media type).
 The supported media types, along with their profile parameters, are published in the <code>capabilities</code> field of the discovery document.
 If all supported media types are variants of <code>application/coserv+cbor</code>, indicating unsigned results only, then there is no need for the verification key set to be included in the discovery document.
-If one or more of the supported media types are variants of <code>application/coserv+cose</code>, indicating signed results, then the verification key set <span class="bcp14">MUST</span> be included.<a href="#section-6.1.1.1.4-2" class="pilcrow">¶</a></p>
+If one or more of the supported media types are variants of <code>application/coserv+cose</code>, indicating signed results, then the verification key set <span class="bcp14">MUST</span> be included.<a href="#section-6.1.2.1.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="discovery-document-cbor-encoding">
-<section id="section-6.1.1.2">
+<section id="section-6.1.2.2">
             <h5 id="name-discovery-document-cbor-enc">
-<a href="#section-6.1.1.2" class="section-number selfRef">6.1.1.2. </a><a href="#name-discovery-document-cbor-enc" class="section-name selfRef">Discovery Document CBOR Encoding</a>
+<a href="#section-6.1.2.2" class="section-number selfRef">6.1.2.2. </a><a href="#name-discovery-document-cbor-enc" class="section-name selfRef">Discovery Document CBOR Encoding</a>
             </h5>
-<p id="section-6.1.1.2-1">When the discovery document is encoded as CBOR, it is exempt from the encoding rules specified in <a href="#secencoding" class="auto internal xref">Section 4.5</a>.
+<p id="section-6.1.2.2-1">When the discovery document is encoded as CBOR, it is exempt from the encoding rules specified in <a href="#secencoding" class="auto internal xref">Section 4.5</a>.
 These encoding rules are designed to ensure that CoSERV queries can be used as canonical and stable identifiers.
 The discovery document is an independent structure, and not part of the CoSERV data model itself.
-Therefore, these encoding rules do not apply.<a href="#section-6.1.1.2-1" class="pilcrow">¶</a></p>
+Therefore, these encoding rules do not apply.<a href="#section-6.1.2.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="discovery-document-examples">
-<section id="section-6.1.1.3">
+<section id="section-6.1.2.3">
             <h5 id="name-discovery-document-examples">
-<a href="#section-6.1.1.3" class="section-number selfRef">6.1.1.3. </a><a href="#name-discovery-document-examples" class="section-name selfRef">Discovery Document Examples</a>
+<a href="#section-6.1.2.3" class="section-number selfRef">6.1.2.3. </a><a href="#name-discovery-document-examples" class="section-name selfRef">Discovery Document Examples</a>
             </h5>
-<p id="section-6.1.1.3-1">In the following examples, the contents of bodies are informative examples only.<a href="#section-6.1.1.3-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.1.3-2">Example HTTP request for retrieving the discovery document in JSON format:<a href="#section-6.1.1.3-2" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.1.3-3">
+<p id="section-6.1.2.3-1">The contents of the responses in the following examples are for illustrative purposes only.<a href="#section-6.1.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.2.3-2">Example HTTP request for retrieving the discovery document in JSON format:<a href="#section-6.1.2.3-2" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.2.3-3">
 <pre>
 GET /.well-known/coserv-configuration HTTP/1.1
 Host: endorsements-distributor.example
 Accept: application/coserv-discovery+json
-</pre><a href="#section-6.1.1.3-3" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.2.3-3" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1.1.3-4">Corresponding HTTP response:<a href="#section-6.1.1.3-4" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.1.3-5">
+<p id="section-6.1.2.3-4">Corresponding HTTP response:<a href="#section-6.1.2.3-4" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.2.3-5">
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/coserv-discovery+json
 
-Body (JSON)
+Content (JSON)
 
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -2356,23 +2381,23 @@ Body (JSON)
     }
   ]
 }
-</pre><a href="#section-6.1.1.3-5" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.2.3-5" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1.1.3-6">Example HTTP request for retrieving the discovery document in CBOR format:<a href="#section-6.1.1.3-6" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.1.3-7">
+<p id="section-6.1.2.3-6">Example HTTP request for retrieving the discovery document in CBOR format:<a href="#section-6.1.2.3-6" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.2.3-7">
 <pre>
 GET /.well-known/coserv-configuration HTTP/1.1
 Host: endorsements-distributor.example
 Accept: application/coserv-discovery+cbor
-</pre><a href="#section-6.1.1.3-7" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.2.3-7" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1.1.3-8">Corresponding HTTP response:<a href="#section-6.1.1.3-8" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.1.3-9">
+<p id="section-6.1.2.3-8">Corresponding HTTP response:<a href="#section-6.1.2.3-8" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.2.3-9">
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/coserv-discovery+cbor
 
-Body (in CBOR Extended Diagnostic Notation (EDN))
+Content (in CBOR Extended Diagnostic Notation (EDN))
 
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -2403,36 +2428,36 @@ Body (in CBOR Extended Diagnostic Notation (EDN))
     }
   ]
 }
-</pre><a href="#section-6.1.1.3-9" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.2.3-9" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 </section>
 </div>
 <div id="secrrapiquery">
-<section id="section-6.1.2">
+<section id="section-6.1.3">
           <h4 id="name-execute-query">
-<a href="#section-6.1.2" class="section-number selfRef">6.1.2. </a><a href="#name-execute-query" class="section-name selfRef">Execute Query</a>
+<a href="#section-6.1.3" class="section-number selfRef">6.1.3. </a><a href="#name-execute-query" class="section-name selfRef">Execute Query</a>
           </h4>
-<p id="section-6.1.2-1">This endpoint executes a single CoSERV query and returns a CoSERV result set.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.2-2">The HTTP method is <code>GET</code>.<a href="#section-6.1.2-2" class="pilcrow">¶</a></p>
-<p id="section-6.1.2-3">The URL path is formed of the discovered <code>coserv</code> endpoint (as set out in <a href="#secrrapidisco" class="auto internal xref">Section 6.1.1</a>), where the <code>{query}</code> template variable is substituted with the CoSERV query to be executed, which is represented as a Base64Url encoding of the query's serialized CBOR byte sequence.<a href="#section-6.1.2-3" class="pilcrow">¶</a></p>
-<p id="section-6.1.2-4">There are no additional URL query parameters.<a href="#section-6.1.2-4" class="pilcrow">¶</a></p>
-<p id="section-6.1.2-5">Clients <span class="bcp14">MUST</span> set the HTTP <code>Accept</code> header to a suitably-profiled <code>application/coserv+cose</code> or <code>application/coserv+cbor</code> media type.<a href="#section-6.1.2-5" class="pilcrow">¶</a></p>
-<p id="section-6.1.2-6">Endpoint implementations <span class="bcp14">MUST</span> respond with an HTTP status code and response body according to one of the subheadings below.<a href="#section-6.1.2-6" class="pilcrow">¶</a></p>
+<p id="section-6.1.3-1">This endpoint executes a single CoSERV query and returns a CoSERV result set.<a href="#section-6.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.3-2">The HTTP method is <code>GET</code>.<a href="#section-6.1.3-2" class="pilcrow">¶</a></p>
+<p id="section-6.1.3-3">The URL path is formed of the discovered <code>coserv</code> endpoint (as set out in <a href="#secrrapidisco" class="auto internal xref">Section 6.1.2</a>), where the <code>{query}</code> template variable is substituted with the CoSERV query to be executed, which is represented as a Base64Url encoding of the query's serialized CBOR byte sequence.<a href="#section-6.1.3-3" class="pilcrow">¶</a></p>
+<p id="section-6.1.3-4">There are no additional URL query parameters.<a href="#section-6.1.3-4" class="pilcrow">¶</a></p>
+<p id="section-6.1.3-5">Clients <span class="bcp14">MUST</span> set the <code>Accept</code> header field to a suitably-profiled <code>application/coserv+cose</code> or <code>application/coserv+cbor</code> media type.<a href="#section-6.1.3-5" class="pilcrow">¶</a></p>
+<p id="section-6.1.3-6">Endpoint implementations <span class="bcp14">MUST</span> respond with an HTTP status code and content according to one of the subheadings below.<a href="#section-6.1.3-6" class="pilcrow">¶</a></p>
 <div id="responses">
-<section id="section-6.1.2.1">
+<section id="section-6.1.3.1">
             <h5 id="name-responses">
-<a href="#section-6.1.2.1" class="section-number selfRef">6.1.2.1. </a><a href="#name-responses" class="section-name selfRef">Responses</a>
+<a href="#section-6.1.3.1" class="section-number selfRef">6.1.3.1. </a><a href="#name-responses" class="section-name selfRef">Responses</a>
             </h5>
 <div id="successful-transaction-200">
-<section id="section-6.1.2.1.1">
+<section id="section-6.1.3.1.1">
               <h6 id="name-successful-transaction-200">
-<a href="#section-6.1.2.1.1" class="section-number selfRef">6.1.2.1.1. </a><a href="#name-successful-transaction-200" class="section-name selfRef">Successful Transaction (200)</a>
+<a href="#section-6.1.3.1.1" class="section-number selfRef">6.1.3.1.1. </a><a href="#name-successful-transaction-200" class="section-name selfRef">Successful Transaction (200)</a>
               </h6>
-<p id="section-6.1.2.1.1-1">This response indicates that the CoSERV query was executed successfully.<a href="#section-6.1.2.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.2.1.1-2">Example HTTP request:<a href="#section-6.1.2.1.1-2" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.2.1.1-3">
+<p id="section-6.1.3.1.1-1">This response indicates that the CoSERV query was executed successfully.<a href="#section-6.1.3.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.3.1.1-2">Example HTTP request:<a href="#section-6.1.3.1.1-2" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.3.1.1-3">
 <pre>
 # NOTE: '\' line wrapping per RFC 8792
 
@@ -2440,10 +2465,10 @@ GET /coserv/ogB4I3R... HTTP/1.1
 Host: endorsements-distributor.example
 Accept: application/coserv+cose; \
         profile="tag:vendor.com,2025:cc_platform#1.0.0"
-</pre><a href="#section-6.1.2.1.1-3" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.3.1.1-3" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1.2.1.1-4">Example HTTP response:<a href="#section-6.1.2.1.1-4" class="pilcrow">¶</a></p>
-<div class="breakable lang-http-message sourcecode" id="section-6.1.2.1.1-5">
+<p id="section-6.1.3.1.1-4">Example HTTP response:<a href="#section-6.1.3.1.1-4" class="pilcrow">¶</a></p>
+<div class="breakable lang-http-message sourcecode" id="section-6.1.3.1.1-5">
 <pre>
 # NOTE: '\' line wrapping per RFC 8792
 
@@ -2451,7 +2476,7 @@ HTTP/1.1 200 OK
 Content-Type: application/coserv+cose; \
               profile="tag:vendor.com,2025:cc_platform#1.0.0"
 
-Body (in CBOR Extended Diagnostic Notation (EDN))
+Content (in CBOR Extended Diagnostic Notation (EDN))
 
 / signed-coserv / 18([
   / protected / &lt;&lt; {
@@ -2516,18 +2541,18 @@ Body (in CBOR Extended Diagnostic Notation (EDN))
   &gt;&gt;,
   / signature / h'face5190'
 ])
-</pre><a href="#section-6.1.2.1.1-5" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.3.1.1-5" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="failure-to-validate-query-400">
-<section id="section-6.1.2.1.2">
+<section id="section-6.1.3.1.2">
               <h6 id="name-failure-to-validate-query-4">
-<a href="#section-6.1.2.1.2" class="section-number selfRef">6.1.2.1.2. </a><a href="#name-failure-to-validate-query-4" class="section-name selfRef">Failure to Validate Query (400)</a>
+<a href="#section-6.1.3.1.2" class="section-number selfRef">6.1.3.1.2. </a><a href="#name-failure-to-validate-query-4" class="section-name selfRef">Failure to Validate Query (400)</a>
               </h6>
-<p id="section-6.1.2.1.2-1">This response indicates that the supplied query is badly formed.<a href="#section-6.1.2.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.2.1.2-2">Example HTTP request:<a href="#section-6.1.2.1.2-2" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.2.1.2-3">
+<p id="section-6.1.3.1.2-1">This response indicates that the supplied query is badly formed.<a href="#section-6.1.3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.3.1.2-2">Example HTTP request:<a href="#section-6.1.3.1.2-2" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.3.1.2-3">
 <pre>
 # NOTE: '\' line wrapping per RFC 8792
 
@@ -2535,34 +2560,34 @@ GET /coserv/badquery... HTTP/1.1
 Host: endorsements-distributor.example
 Accept: application/coserv+cose; \
         profile="tag:vendor.com,2025:cc_platform#1.0.0"
-</pre><a href="#section-6.1.2.1.2-3" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.3.1.2-3" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1.2.1.2-4">Example HTTP response:<a href="#section-6.1.2.1.2-4" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.2.1.2-5">
+<p id="section-6.1.3.1.2-4">Example HTTP response:<a href="#section-6.1.3.1.2-4" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.3.1.2-5">
 <pre>
 # NOTE: '\' line wrapping per RFC 8792
 
 HTTP/1.1 400 Bad Request
 Content-Type: application/concise-problem-details+cbor
 
-Body (in CBOR Extended Diagnostic Notation (EDN))
+Content (in CBOR Extended Diagnostic Notation (EDN))
 
 {
   / title /  -1: "Query validation failed",
   / detail / -2: "The query payload is not in CBOR format"
 }
-</pre><a href="#section-6.1.2.1.2-5" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.3.1.2-5" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="failure-to-negotiate-profile-406">
-<section id="section-6.1.2.1.3">
+<section id="section-6.1.3.1.3">
               <h6 id="name-failure-to-negotiate-profil">
-<a href="#section-6.1.2.1.3" class="section-number selfRef">6.1.2.1.3. </a><a href="#name-failure-to-negotiate-profil" class="section-name selfRef">Failure to Negotiate Profile (406)</a>
+<a href="#section-6.1.3.1.3" class="section-number selfRef">6.1.3.1.3. </a><a href="#name-failure-to-negotiate-profil" class="section-name selfRef">Failure to Negotiate Profile (406)</a>
               </h6>
-<p id="section-6.1.2.1.3-1">This response indicates that the client has specified a CoSERV profile that is not understood or serviceable by the receiving endpoint implementation.<a href="#section-6.1.2.1.3-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.2.1.3-2">Example HTTP request:<a href="#section-6.1.2.1.3-2" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.2.1.3-3">
+<p id="section-6.1.3.1.3-1">This response indicates that the client has specified a CoSERV profile that is not understood or serviceable by the receiving endpoint implementation.<a href="#section-6.1.3.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.3.1.3-2">Example HTTP request:<a href="#section-6.1.3.1.3-2" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.3.1.3-3">
 <pre>
 # NOTE: '\' line wrapping per RFC 8792
 
@@ -2570,95 +2595,135 @@ GET /coserv/ogB4I3R... HTTP/1.1
 Host: endorsements-distributor.example
 Accept: application/coserv+cose; \
         profile="tag:vendor.com,2025:cc_platform#2.0.0"
-</pre><a href="#section-6.1.2.1.3-3" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.3.1.3-3" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1.2.1.3-4">Example HTTP response:<a href="#section-6.1.2.1.3-4" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.2.1.3-5">
+<p id="section-6.1.3.1.3-4">Example HTTP response:<a href="#section-6.1.3.1.3-4" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.3.1.3-5">
 <pre>
 # NOTE: '\' line wrapping per RFC 8792
 
 HTTP/1.1 406 Not Acceptable
 Content-Type: application/concise-problem-details+cbor
 
-Body (in CBOR Extended Diagnostic Notation (EDN))
+Content (in CBOR Extended Diagnostic Notation (EDN))
 
 {
   / title /  -1: "Unsupported profile",
   / detail / -2: "Profile tag:vendor.com,2025:cc_platform#2.0.0 \
                   not supported",
 }
-</pre><a href="#section-6.1.2.1.3-5" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.3.1.3-5" class="pilcrow">¶</a>
 </div>
 </section>
+</div>
+</section>
+</div>
+<div id="too-many-requests-429">
+<section id="section-6.1.3.2">
+            <h5 id="name-too-many-requests-429">
+<a href="#section-6.1.3.2" class="section-number selfRef">6.1.3.2. </a><a href="#name-too-many-requests-429" class="section-name selfRef">Too Many Requests (429)</a>
+            </h5>
+<p id="section-6.1.3.2-1">A server could apply rate limiting to requests received from clients.
+This is a common practice for services that require significant processing power to generate a response, such as a CoSERV endpoint.
+If this is the case, and a client exceeds their request quota, the server can return a 429 (Too Many Requests) response.
+The response headers <span class="bcp14">MAY</span> include a <code>Retry-After</code> header field indicating how long the client should wait before making a new request.<a href="#section-6.1.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.3.2-2">Example HTTP request:<a href="#section-6.1.3.2-2" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.3.2-3">
+<pre>
+# NOTE: '\' line wrapping per RFC 8792
+
+GET /coserv/ogB4I3R... HTTP/1.1
+Host: endorsements-distributor.example
+Accept: application/coserv+cose; \
+        profile="tag:vendor.com,2025:cc_platform#1.0.0"
+</pre><a href="#section-6.1.3.2-3" class="pilcrow">¶</a>
+</div>
+<p id="section-6.1.3.2-4">Example HTTP response:<a href="#section-6.1.3.2-4" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.3.2-5">
+<pre>
+# NOTE: '\' line wrapping per RFC 8792
+
+HTTP/1.1 429 Too Many Requests
+Content-Type: application/concise-problem-details+cbor
+Retry-After: 120
+
+Content (in CBOR Extended Diagnostic Notation (EDN))
+
+{
+  / title /  -1: "Too many requests",
+  / detail / -2: "You're doing that too often! Try again in 2 minutes",
+}
+</pre><a href="#section-6.1.3.2-5" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 </section>
 </div>
 <div id="secrrapicaching">
-<section id="section-6.1.3">
+<section id="section-6.1.4">
           <h4 id="name-caching">
-<a href="#section-6.1.3" class="section-number selfRef">6.1.3. </a><a href="#name-caching" class="section-name selfRef">Caching</a>
+<a href="#section-6.1.4" class="section-number selfRef">6.1.4. </a><a href="#name-caching" class="section-name selfRef">Caching</a>
           </h4>
-<p id="section-6.1.3-1">In practical usage, the artifacts transacted via CoSERV queries (such as trust anchors and reference values) may change significantly less often than they are used.
+<p id="section-6.1.4-1">In practical usage, the artifacts transacted via CoSERV queries (such as trust anchors and reference values) may change significantly less often than they are used.
 For example, a Verifier needs to use the artifacts whenever it needs to verify or appraise Evidence from an Attester.
 This might be a very frequent operation, for which a low latency is desirable.
 By contrast, the artifacts themselves would vary only as a consequence of impactful changes to the Attester's desired state or environment.
 One example of such an impactful change might be the roll-out of a firmware update, which would result in a new reference value for the impacted firmware component(s).
 Such changes would tend to be relatively infrequent.
-The caching of CoSERV artifacts is therefore beneficial for overall system performance.<a href="#section-6.1.3-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.3-2">CoSERV is designed to facilitate both client-side and server-side caching by use of the standard HTTP caching mechanisms specified in <span>[<a href="#STD98" class="cite xref">STD98</a>]</span>.
-This includes use of the HTTP <code>Cache-Control</code> header and its associated directives.
+The caching of CoSERV artifacts is therefore beneficial for overall system performance.<a href="#section-6.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.4-2">CoSERV is designed to facilitate both client-side and server-side caching by use of the standard HTTP caching mechanisms specified in <span>[<a href="#STD98" class="cite xref">HTTP</a>]</span>.
+This includes use of the <code>Cache-Control</code> header field and its associated directives.
 It also includes the use of entity-tags (ETags).
-The following features of CoSERV and its HTTP binding are specifically designed to favor caching implementations:<a href="#section-6.1.3-2" class="pilcrow">¶</a></p>
+The following features of CoSERV and its HTTP binding are specifically designed to favor caching implementations:<a href="#section-6.1.4-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.1.3-3.1">
-              <p id="section-6.1.3-3.1.1">CoSERV queries form stable URL paths.
+<li class="normal" id="section-6.1.4-3.1">
+              <p id="section-6.1.4-3.1.1">CoSERV queries form stable URL paths.
 As specified in <a href="#secencoding" class="auto internal xref">Section 4.5</a>, any given CoSERV query will always serialize to the same fixed sequence of bytes.
-This allows queries to be used as canonical and stable resource identifiers, which in turn allows them to function effectively as cache keys.<a href="#section-6.1.3-3.1.1" class="pilcrow">¶</a></p>
+This allows queries to be used as canonical and stable resource identifiers, which in turn allows them to function effectively as cache keys.<a href="#section-6.1.4-3.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-6.1.3-3.2">
-              <p id="section-6.1.3-3.2.1">The result set is cryptographically bound to the query.
+            <li class="normal" id="section-6.1.4-3.2">
+              <p id="section-6.1.4-3.2.1">The result set is cryptographically bound to the query.
 As specified in <a href="#signed-coserv" class="auto internal xref">Section 4.6</a>, the origin server is required to return a signed response that combines the result set with the client's original query, in any deployment where untrusted intermediaries might exist.
-This means that the client can always verify the integrity of the result on an end-to-end basis, even in the presence of caching infrastructure.<a href="#section-6.1.3-3.2.1" class="pilcrow">¶</a></p>
+This means that the client can always verify the integrity of the result on an end-to-end basis, even in the presence of caching infrastructure.<a href="#section-6.1.4-3.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-6.1.3-3.3">
-              <p id="section-6.1.3-3.3.1">The use of safe HTTP methods.
+            <li class="normal" id="section-6.1.4-3.3">
+              <p id="section-6.1.4-3.3.1">The use of safe HTTP methods.
 CoSERV queries are executed as read-only operations using HTTP <code>GET</code>.
-The execution of a query does not modify any state on the server, which creates more opportunities for the re-use of cached results.<a href="#section-6.1.3-3.3.1" class="pilcrow">¶</a></p>
+The execution of a query does not modify any state on the server, which creates more opportunities for the re-use of cached results.<a href="#section-6.1.4-3.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
+<p id="section-6.1.4-4">Although reusing cached responses is generally desirable, clients that need to bypass the caching infrastructure can do so by specifying <code>Cache-Control: no-cache</code> in their requests.<a href="#section-6.1.4-4" class="pilcrow">¶</a></p>
 <div id="http-caching-and-result-set-expiry">
-<section id="section-6.1.3.1">
+<section id="section-6.1.4.1">
             <h5 id="name-http-caching-and-result-set">
-<a href="#section-6.1.3.1" class="section-number selfRef">6.1.3.1. </a><a href="#name-http-caching-and-result-set" class="section-name selfRef">HTTP Caching and Result Set Expiry</a>
+<a href="#section-6.1.4.1" class="section-number selfRef">6.1.4.1. </a><a href="#name-http-caching-and-result-set" class="section-name selfRef">HTTP Caching and Result Set Expiry</a>
             </h5>
-<p id="section-6.1.3.1-1">CoSERV's data model includes a mandatory expiration timestamp on every result set.
+<p id="section-6.1.4.1-1">CoSERV's data model includes a mandatory expiration timestamp on every result set.
 This is an authoritative marker of the point in time at which the entire result set becomes invalid, and the query must be re-executed to obtain fresh results.
-This timestamp is established by the origin server.<a href="#section-6.1.3.1-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.3.1-2">In the presence of HTTP caching infrastructure, the origin server <span class="bcp14">MUST NOT</span> set HTTP cache directives (e.g. <code>Cache-Control: max-age</code>, <code>Expires</code>) such that the freshness lifetime of the HTTP response exceeds the result set expiry timestamp contained within the CoSERV result set payload.<a href="#section-6.1.3.1-2" class="pilcrow">¶</a></p>
+This timestamp is established by the origin server.<a href="#section-6.1.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.4.1-2">In the presence of HTTP caching infrastructure, the origin server <span class="bcp14">MUST NOT</span> set HTTP cache directives (e.g. <code>Cache-Control: max-age</code>, <code>Expires</code>) such that the freshness lifetime of the HTTP response exceeds the result set expiry timestamp contained within the CoSERV results.<a href="#section-6.1.4.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="example-http-messages-with-caching">
-<section id="section-6.1.3.2">
+<section id="section-6.1.4.2">
             <h5 id="name-example-http-messages-with-">
-<a href="#section-6.1.3.2" class="section-number selfRef">6.1.3.2. </a><a href="#name-example-http-messages-with-" class="section-name selfRef">Example HTTP Messages with Caching</a>
+<a href="#section-6.1.4.2" class="section-number selfRef">6.1.4.2. </a><a href="#name-example-http-messages-with-" class="section-name selfRef">Example HTTP Messages with Caching</a>
             </h5>
-<p id="section-6.1.3.2-1">This section illustrates a caching scenario.<a href="#section-6.1.3.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.3.2-2">In this example, the CoSERV HTTP API server endpoint is hosted by an HTTP origin (coserv.example), while a reverse proxy (cache.example) operates a public cache in front of the origin.<a href="#section-6.1.3.2-2" class="pilcrow">¶</a></p>
-<p id="section-6.1.3.2-3">Client A sends a request using a specific CoSERV query.
+<p id="section-6.1.4.2-1">This section illustrates a caching scenario.<a href="#section-6.1.4.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.4.2-2">In this example, the CoSERV HTTP API server endpoint is hosted by an HTTP origin (coserv.example), while a reverse proxy (cache.example) operates a public cache in front of the origin.<a href="#section-6.1.4.2-2" class="pilcrow">¶</a></p>
+<p id="section-6.1.4.2-3">Client A sends a request using a specific CoSERV query.
 As the reverse proxy has a "cache miss" for the resource, it forwards the request to the origin.
 The origin then constructs the response and returns it to the proxy.
 The response includes cache-control headers that are compatible with the time-to-live associated with the computed result set.
 For the purposes of this example, the HTTP response <code>max-age</code> has been set to 10 minutes and the <code>s-maxage</code> to 1 hour.
 This means that the origin allows intermediaries (e.g., its CDN) to cache this resource for longer than the client.
 The result is different caching behaviours between clients and intermediaries, which reduces the load on the origin by enabling CDNs to cache content for longer, while ensuring that clients receive fresher content.
-Before forwarding it to the client, the proxy stores the response in its cache using the request URI as the cache key alongside the entry's time-to-live value.<a href="#section-6.1.3.2-3" class="pilcrow">¶</a></p>
-<aside id="section-6.1.3.2-4">
-              <p id="section-6.1.3.2-4.1">This "differential caching" strategy could be useful if the origin and its CDN have control plane APIs that the origin owner can use to instruct the CDN operator to purge certain cached entries <span>[<a href="#RFC8007" class="cite xref">RFC8007</a>]</span>. For instance, in CoSERV, this feature could be used in case of an unexpected revocation.<a href="#section-6.1.3.2-4.1" class="pilcrow">¶</a></p>
+Before forwarding it to the client, the proxy stores the response in its cache using the request URI as the cache key alongside the entry's time-to-live value.<a href="#section-6.1.4.2-3" class="pilcrow">¶</a></p>
+<aside id="section-6.1.4.2-4">
+              <p id="section-6.1.4.2-4.1">This "differential caching" strategy could be useful if the origin and its CDN have control plane APIs that the origin owner can use to instruct the CDN operator to purge certain cached entries <span>[<a href="#RFC8007" class="cite xref">RFC8007</a>]</span>. For instance, in CoSERV, this feature could be used in case of an unexpected revocation.<a href="#section-6.1.4.2-4.1" class="pilcrow">¶</a></p>
 </aside>
-<div id="section-6.1.3.2-5">
-              <div class="alignLeft art-svg artwork" id="section-6.1.3.2-5.1">
+<div id="section-6.1.4.2-5">
+              <div class="alignLeft art-svg artwork" id="section-6.1.4.2-5.1">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="576" width="576" viewBox="0 0 576 576" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 40,64 L 40,560" fill="none" stroke="black"></path>
                   <path d="M 200,64 L 200,96" fill="none" stroke="black"></path>
@@ -2737,16 +2802,16 @@ Before forwarding it to the client, the proxy stores the response in its cache u
                     <text x="152" y="516">s-maxage=3600</text>
                     <text x="108" y="532">#6.18([...])</text>
                   </g>
-                </svg><a href="#section-6.1.3.2-5.1" class="pilcrow">¶</a>
+                </svg><a href="#section-6.1.4.2-5.1" class="pilcrow">¶</a>
 </div>
 </div>
-<p id="section-6.1.3.2-6">At a later point, after 2 minutes, a different client B makes the same request.
+<p id="section-6.1.4.2-6">At a later point, after 2 minutes, a different client B makes the same request.
 This time, the request generates a "cache hit" event on the proxy.
 The response is therefore served from the public cache, bypassing the origin.
 This reduces the load on the origin, where computing the result set is generally costly, as well as reducing the overall latency of the transaction.
-Client B operates a local cache, where it stores a copy of the response.<a href="#section-6.1.3.2-6" class="pilcrow">¶</a></p>
-<div id="section-6.1.3.2-7">
-              <div class="alignLeft art-svg artwork" id="section-6.1.3.2-7.1">
+Client B operates a local cache, where it stores a copy of the response.<a href="#section-6.1.4.2-6" class="pilcrow">¶</a></p>
+<div id="section-6.1.4.2-7">
+              <div class="alignLeft art-svg artwork" id="section-6.1.4.2-7.1">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="416" width="472" viewBox="0 0 472 416" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 24,80 L 24,96" fill="none" stroke="black"></path>
                   <path d="M 40,112 L 40,400" fill="none" stroke="black"></path>
@@ -2809,17 +2874,17 @@ Client B operates a local cache, where it stores a copy of the response.<a href=
                     <text x="156" y="356">V=#6.18([...],</text>
                     <text x="132" y="372">TTL=480)</text>
                   </g>
-                </svg><a href="#section-6.1.3.2-7.1" class="pilcrow">¶</a>
+                </svg><a href="#section-6.1.4.2-7.1" class="pilcrow">¶</a>
 </div>
 </div>
-<p id="section-6.1.3.2-8">After 9 more minutes, B is instructed to make the same request again.
+<p id="section-6.1.4.2-8">After 9 more minutes, B is instructed to make the same request again.
 The request generates a "cache hit" event on the local cache.
 However, the cached resource is become stale and needs to be revalidated.
 Therefore, B sends a conditional request to the proxy.
 The request generates a "cache hit" event on the proxy where the resource is still fresh due to the differential caching behaviour dictated by the original response from the origin.
-The proxy returns a 304 (Not modified) status code, which instructs the client to reuse its local copy of the response.<a href="#section-6.1.3.2-8" class="pilcrow">¶</a></p>
-<div id="section-6.1.3.2-9">
-              <div class="alignLeft art-svg artwork" id="section-6.1.3.2-9.1">
+The proxy returns a 304 (Not modified) status code, which instructs the client to reuse its local copy of the response.<a href="#section-6.1.4.2-8" class="pilcrow">¶</a></p>
+<div id="section-6.1.4.2-9">
+              <div class="alignLeft art-svg artwork" id="section-6.1.4.2-9.1">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="416" width="480" viewBox="0 0 480 416" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 24,80 L 24,96" fill="none" stroke="black"></path>
                   <path d="M 40,112 L 40,400" fill="none" stroke="black"></path>
@@ -2880,7 +2945,7 @@ The proxy returns a 304 (Not modified) status code, which instructs the client t
                     <text x="140" y="356">max-age=0,</text>
                     <text x="152" y="372">s-maxage=3060</text>
                   </g>
-                </svg><a href="#section-6.1.3.2-9.1" class="pilcrow">¶</a>
+                </svg><a href="#section-6.1.4.2-9.1" class="pilcrow">¶</a>
 </div>
 </div>
 </section>
@@ -3109,7 +3174,7 @@ There is consequently a risk that such inferred details could be misused to crea
                 <code>application/coserv-discovery+cbor</code>
 </td>
               <td class="text-left" rowspan="1" colspan="1">
-                <a href="#secrrapidisco" class="auto internal xref">Section 6.1.1</a> of RFCthis</td>
+                <a href="#secrrapidisco" class="auto internal xref">Section 6.1.2</a> of RFCthis</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">
@@ -3119,7 +3184,7 @@ There is consequently a risk that such inferred details could be misused to crea
                 <code>application/coserv-discovery+json</code>
 </td>
               <td class="text-left" rowspan="1" colspan="1">
-                <a href="#secrrapidisco" class="auto internal xref">Section 6.1.1</a> of RFCthis</td>
+                <a href="#secrrapidisco" class="auto internal xref">Section 6.1.2</a> of RFCthis</td>
             </tr>
           </tbody>
         </table>
@@ -3528,6 +3593,22 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="STD94">[CBOR]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8949">https://www.rfc-editor.org/rfc/rfc8949</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="STD96">[COSE]</dt>
+        <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Structures and Process"</span>, <span class="seriesInfo">STD 96</span>, <span class="seriesInfo">RFC 9052</span>, <span class="seriesInfo">DOI 10.17487/RFC9052</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9052">https://www.rfc-editor.org/rfc/rfc9052</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="STD98">[HTTP]</dt>
+        <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Caching"</span>, <span class="seriesInfo">STD 98</span>, <span class="seriesInfo">RFC 9111</span>, <span class="seriesInfo">DOI 10.17487/RFC9111</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9111">https://www.rfc-editor.org/rfc/rfc9111</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="STD97">[HTTP-CACHING]</dt>
+        <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.ietf-rats-corim">[I-D.ietf-rats-corim]</dt>
         <dd>
 <span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Deshpande, Y.</span>, <span class="refAuthor">Smith, N.</span>, and <span class="refAuthor">W. Pan</span>, <span class="refTitle">"Concise Reference Integrity Manifest"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-corim-10</span>, <time datetime="2026-03-02" class="refDate">2 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10">https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10</a>&gt;</span>. </dd>
@@ -3584,21 +3665,17 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
         <dd>
 <span class="refAuthor">Nottingham, M.</span>, <span class="refTitle">"Well-Known Uniform Resource Identifiers (URIs)"</span>, <span class="seriesInfo">RFC 8615</span>, <span class="seriesInfo">DOI 10.17487/RFC8615</span>, <time datetime="2019-05" class="refDate">May 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8615">https://www.rfc-editor.org/rfc/rfc8615</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC9290">[RFC9290]</dt>
+        <dd>
+<span class="refAuthor">Fossati, T.</span> and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Problem Details for Constrained Application Protocol (CoAP) APIs"</span>, <span class="seriesInfo">RFC 9290</span>, <span class="seriesInfo">DOI 10.17487/RFC9290</span>, <time datetime="2022-10" class="refDate">October 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9290">https://www.rfc-editor.org/rfc/rfc9290</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC9334">[RFC9334]</dt>
         <dd>
 <span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Thaler, D.</span>, <span class="refAuthor">Richardson, M.</span>, <span class="refAuthor">Smith, N.</span>, and <span class="refAuthor">W. Pan</span>, <span class="refTitle">"Remote ATtestation procedureS (RATS) Architecture"</span>, <span class="seriesInfo">RFC 9334</span>, <span class="seriesInfo">DOI 10.17487/RFC9334</span>, <time datetime="2023-01" class="refDate">January 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9334">https://www.rfc-editor.org/rfc/rfc9334</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SEMVER">[SEMVER]</dt>
-        <dd>
-<span class="refTitle">"Semantic Versioning 2.0.0"</span>, <time datetime="2013" class="refDate">2013</time>, <span>&lt;<a href="https://semver.org/spec/v2.0.0.html">https://semver.org/spec/v2.0.0.html</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="STD94">[STD94]</dt>
-        <dd>
-<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8949">https://www.rfc-editor.org/rfc/rfc8949</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="STD96">[STD96]</dt>
       <dd>
-<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Structures and Process"</span>, <span class="seriesInfo">STD 96</span>, <span class="seriesInfo">RFC 9052</span>, <span class="seriesInfo">DOI 10.17487/RFC9052</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9052">https://www.rfc-editor.org/rfc/rfc9052</a>&gt;</span>. </dd>
+<span class="refTitle">"Semantic Versioning 2.0.0"</span>, <time datetime="2013" class="refDate">2013</time>, <span>&lt;<a href="https://semver.org/spec/v2.0.0.html">https://semver.org/spec/v2.0.0.html</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -3634,16 +3711,8 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <span class="refAuthor">Murray, R.</span> and <span class="refAuthor">B. Niven-Jenkins</span>, <span class="refTitle">"Content Delivery Network Interconnection (CDNI) Control Interface / Triggers"</span>, <span class="seriesInfo">RFC 8007</span>, <span class="seriesInfo">DOI 10.17487/RFC8007</span>, <time datetime="2016-12" class="refDate">December 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8007">https://www.rfc-editor.org/rfc/rfc8007</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9711">[RFC9711]</dt>
-        <dd>
-<span class="refAuthor">Lundblade, L.</span>, <span class="refAuthor">Mandyam, G.</span>, <span class="refAuthor">O'Donoghue, J.</span>, and <span class="refAuthor">C. Wallace</span>, <span class="refTitle">"The Entity Attestation Token (EAT)"</span>, <span class="seriesInfo">RFC 9711</span>, <span class="seriesInfo">DOI 10.17487/RFC9711</span>, <time datetime="2025-04" class="refDate">April 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9711">https://www.rfc-editor.org/rfc/rfc9711</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="STD98">[STD98]</dt>
       <dd>
-<div class="refInstance">Internet Standard 98, <span>&lt;<a href="https://www.rfc-editor.org/info/std98">https://www.rfc-editor.org/info/std98</a>&gt;</span>.<br><span>At the time of writing, this STD comprises the following:</span>
-</div>
-<div class="refInstance" id="RFC9111">
-            <span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Caching"</span>, <span class="seriesInfo">STD 98</span>, <span class="seriesInfo">RFC 9111</span>, <span class="seriesInfo">DOI 10.17487/RFC9111</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc9111">https://www.rfc-editor.org/info/rfc9111</a>&gt;</span>. </div>
-</dd>
+<span class="refAuthor">Lundblade, L.</span>, <span class="refAuthor">Mandyam, G.</span>, <span class="refAuthor">O'Donoghue, J.</span>, and <span class="refAuthor">C. Wallace</span>, <span class="refTitle">"The Entity Attestation Token (EAT)"</span>, <span class="seriesInfo">RFC 9711</span>, <span class="seriesInfo">DOI 10.17487/RFC9711</span>, <time datetime="2025-04" class="refDate">April 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9711">https://www.rfc-editor.org/rfc/rfc9711</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -4536,7 +4605,7 @@ This non-normative appendix sets out some illustrative examples of how services 
 This list is neither exhaustive nor prescriptive.
 Deployments are free to use whatever logistics are sensible.
 Note that the goal here is solely one of bootstrapping.
-Once the base URL of a suitable service is known, CoSERV provides in-protocol discovery mechanisms, such as the one described in <a href="#secrrapidisco" class="auto internal xref">Section 6.1.1</a>, which cater for the discovery of more specific API endpoints and capabilities.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+Once the base URL of a suitable service is known, CoSERV provides in-protocol discovery mechanisms, such as the one described in <a href="#secrrapidisco" class="auto internal xref">Section 6.1.2</a>, which cater for the discovery of more specific API endpoints and capabilities.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-C-2.1">
           <p id="appendix-C-2.1.1">Some CoSERV-enabled services might exist in locations that are documented publicly by supply chain actors.
