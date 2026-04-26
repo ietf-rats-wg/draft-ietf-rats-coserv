@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-23T01:23:10.800668+00:00",
+  "timestamp": "2026-04-26T01:25:04.594140+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -825,7 +825,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:28:36Z",
-      "updatedAt": "2026-04-13T14:24:46Z",
+      "updatedAt": "2026-04-24T12:32:04Z",
       "closedAt": null,
       "comments": [
         {
@@ -855,6 +855,20 @@
           "body": "SUGGESTION: Small addition to \u00a72 just to reinforce what \"shallow\" and \"deep\" mean (i.e. it's not about the depth of trust placed in the aggregator, because that would result in the reverse interpretation - \"depth\" is actually about the depth to which the supply chain is interrogated)",
           "createdAt": "2026-04-13T14:24:46Z",
           "updatedAt": "2026-04-13T14:24:46Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Being addressed in https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/113 ",
+          "createdAt": "2026-04-24T09:48:10Z",
+          "updatedAt": "2026-04-24T09:48:10Z"
+        },
+        {
+          "author": "carl-wallace",
+          "authorAssociation": "NONE",
+          "body": "The changes in #113 look good. Thanks.",
+          "createdAt": "2026-04-24T12:32:04Z",
+          "updatedAt": "2026-04-24T12:32:04Z"
         }
       ]
     },
@@ -1005,15 +1019,15 @@
       "id": "I_kwDOOAZd1M7Ow8kL",
       "title": "In 3.1, given the concerns about caching, why is a nonce not used?",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/81",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:03Z",
-      "updatedAt": "2026-04-13T14:45:05Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-24T05:26:54Z",
+      "closedAt": "2026-04-24T05:26:54Z",
       "comments": [
         {
           "author": "thomas-fossati",
@@ -1028,6 +1042,13 @@
           "body": "ACTION: Decided that we don't need a nonce, but we should describe how the client can explicitly request fresh data and bypass caching via standard HTTP request headers.",
           "createdAt": "2026-04-13T14:45:05Z",
           "updatedAt": "2026-04-13T14:45:05Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The last outstanding part of this issue was addressed in https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/112",
+          "createdAt": "2026-04-24T05:26:54Z",
+          "updatedAt": "2026-04-24T05:26:54Z"
         }
       ]
     },
@@ -1282,7 +1303,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-30T11:29:40Z",
-      "updatedAt": "2026-04-13T14:53:20Z",
+      "updatedAt": "2026-04-23T21:07:41Z",
       "closedAt": null,
       "comments": [
         {
@@ -1312,6 +1333,13 @@
           "body": "Pending review of latest \u00a78.3",
           "createdAt": "2026-04-13T14:53:20Z",
           "updatedAt": "2026-04-13T14:53:20Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "From Carl's review of \u00a78.3 in version 05 of the draft:\n\nRe: the \"endorser as signer of an endorsement\" vs. \"endorser as middleman providing a signed endorsement\" discussion\", does the term \"presenter\" need to be defined in a draft that updated RFC9334? It's referenced in draft-richardson-rats-composite-attesters. Without a term like that, words like this from 8.3 try to compensate: \"But the authority of that Endorsement.\" I think the lack of a term like that to allow for simple conveyance of \"secure statements\" is problematic.",
+          "createdAt": "2026-04-23T21:07:41Z",
+          "updatedAt": "2026-04-23T21:07:41Z"
         }
       ]
     },
@@ -1502,15 +1530,15 @@
       "id": "I_kwDOOAZd1M7ylanm",
       "title": "Prepare text for HTTP directorate review",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/107",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "paulhowardarm",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "### Summary\nWe will be offering up this draft for HTTP directorate review due to the inclusion of HTTP-based protocol. This request is to prep the text for such a review.\n\n### Details\nWe should comb the text for deviations from the style guide, and apply any obvious fixes before submitting for more in-depth review. Style guide is [here](https://httpwg.org/admin/editors/style-guide).\n",
       "createdAt": "2026-03-13T09:13:15Z",
-      "updatedAt": "2026-04-14T12:09:57Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-24T05:25:16Z",
+      "closedAt": "2026-04-24T05:25:16Z",
       "comments": [
         {
           "author": "paulhowardarm",
@@ -5351,24 +5379,26 @@
       "id": "PR_kwDOOAZd1M7USrRm",
       "title": "Preparing for the upcoming HTTP Directorate review",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/112",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Fix #107 ",
       "createdAt": "2026-04-21T12:12:20Z",
-      "updatedAt": "2026-04-21T13:37:39Z",
+      "updatedAt": "2026-04-24T05:25:15Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "8acedf6a45811554e2a0602d1bd5c535478c90af",
       "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "headRefName": "httpdir-prep",
       "headRefOid": "fa9549929971c9e9fe3dfda7371310d53629cccf",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-04-24T05:25:15Z",
+      "mergedAt": "2026-04-24T05:25:15Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "b13838e8659dbe0a5af4d78b962eb87c0e0d119b"
+      },
       "comments": [],
       "reviews": [
         {
@@ -5382,6 +5412,59 @@
           "body": "Looks good to me. Thanks (and thanks for including the adjacent point about `no-cache`).",
           "createdAt": "2026-04-21T13:37:39Z",
           "updatedAt": "2026-04-21T13:37:39Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 113,
+      "id": "PR_kwDOOAZd1M7VR7sG",
+      "title": "docs: Text clarifications around \"shallow\" and \"deep\" trust",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/113",
+      "state": "OPEN",
+      "author": "paulhowardarm",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "In the section on aggregation and trust models, the terms \"shallow\" and \"deep\" can be misinterpreted to mean the level of trust being placed in the aggregator. The actual intention here was to use \"depth\" in the sense of the number of supply-chain links that the consumer needs to traverse. The text change makes this more explicit.\r\n\r\nA couple of other very minor wording improvements are bundled in.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
+      "createdAt": "2026-04-24T09:19:49Z",
+      "updatedAt": "2026-04-24T12:31:05Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "b13838e8659dbe0a5af4d78b962eb87c0e0d119b",
+      "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
+      "headRefName": "phTrustClarifications",
+      "headRefOid": "306b2b2b290a17e813b9ab2c6ae545a8ee6b5e01",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M74hcIP",
+          "commit": {
+            "abbreviatedOid": "306b2b2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM, thanks!",
+          "createdAt": "2026-04-24T09:46:37Z",
+          "updatedAt": "2026-04-24T09:46:37Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M74k64D",
+          "commit": {
+            "abbreviatedOid": "306b2b2"
+          },
+          "author": "carl-wallace",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-04-24T12:31:05Z",
+          "updatedAt": "2026-04-24T12:31:05Z",
           "comments": []
         }
       ]
