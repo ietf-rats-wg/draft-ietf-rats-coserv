@@ -163,8 +163,12 @@ To support deployments with aggregators, CoSERV allows for flexible trust models
 
 - **Shallow Trust**: in this model, the consumer trusts the aggregator, solely and completely, to provide authentic descriptions of the endorsed system.
 The consumer does not need to audit the results of the aggregation process.
+The term "shallow" is used here to indicate the number of supply chain links that are traversed by the consumer.
+When trust in the aggregator is absolute, only one link needs to be traversed, from the consumer to the aggregator, because the aggregator is the sole authority.
 - **Deep Trust**: in this model, the consumer has a trust relationship with the aggregator, but does not deem this to be sufficient.
 The consumer can still use the collected results from the aggregation process, where it is convenient to do so, but also needs to audit those results.
+The term "deep" is used to indicate that the consumer needs to traverse more supply chain links in order to gain an adequate level of trust, because trust in the aggregator is only partial.
+It means that the consumer has to reach more "deeply" into the supply chain sources, compared with the shallow model.
 
 Any given CoSERV transaction can operate according to either model.
 The consumer decides which model to use when it forms a query.
@@ -856,7 +860,7 @@ This allows queries to be used as canonical and stable resource identifiers, whi
 - The result set is cryptographically bound to the query.
 As specified in {{signed-coserv}}, the origin server is required to return a signed response that combines the result set with the client's original query, in any deployment where untrusted intermediaries might exist.
 This means that the client can always verify the integrity of the result on an end-to-end basis, even in the presence of caching infrastructure.
-- The use of safe HTTP methods.
+- Only safe HTTP methods are used.
 CoSERV queries are executed as read-only operations using HTTP `GET`.
 The execution of a query does not modify any state on the server, which creates more opportunities for the re-use of cached results.
 
@@ -1073,7 +1077,7 @@ This does not mean that they necessarily become a sole or replacement trust auth
 CoSERV's aggregation model allows for deference to other authorities that exist in the supply chain.
 This is true even when an aggregator is acting in the Endorser role.
 A hardware Endorsement, for example, might be delivered to the Verifier via an aggregator (along with multiple other artifacts, such as Reference Values).
-But the authority of that Endorsement can still be chained back to the hardware provider, and this authority can be checked by the Verifier using an independent trust anchor.
+But the authority of that Endorsement can still be chained back to the hardware provider, and this authority can be checked by the Verifier using a trust anchor associated with that hardware provider.
 - **Inspect the authority delegation chains.**
 The "quads" feature of the CoSERV data model provides explicit tracking of supply chain sources.
 Each inner CoMID triple of an aggregated CoSERV response is annotated with an authority delegation chain.
