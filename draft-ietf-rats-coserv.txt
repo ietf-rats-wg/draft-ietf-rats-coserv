@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Informational                                T. Fossati
-Expires: 26 October 2026                                          Linaro
+Expires: 29 October 2026                                          Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 26 October 2026                                          Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                           24 April 2026
+                                                           27 April 2026
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 October 2026.
+   This Internet-Draft will expire on 29 October 2026.
 
 Copyright Notice
 
@@ -254,13 +254,23 @@ Table of Contents
    *  *Shallow Trust*: in this model, the consumer trusts the
       aggregator, solely and completely, to provide authentic
       descriptions of the endorsed system.  The consumer does not need
-      to audit the results of the aggregation process.
+      to audit the results of the aggregation process.  The term
+      "shallow" is used here to indicate the number of supply chain
+      links that are traversed by the consumer.  When trust in the
+      aggregator is absolute, only one link needs to be traversed, from
+      the consumer to the aggregator, because the aggregator is the sole
+      authority.
 
    *  *Deep Trust*: in this model, the consumer has a trust relationship
       with the aggregator, but does not deem this to be sufficient.  The
       consumer can still use the collected results from the aggregation
       process, where it is convenient to do so, but also needs to audit
-      those results.
+      those results.  The term "deep" is used to indicate that the
+      consumer needs to traverse more supply chain links in order to
+      gain an adequate level of trust, because trust in the aggregator
+      is only partial.  It means that the consumer has to reach more
+      "deeply" into the supply chain sources, compared with the shallow
+      model.
 
    Any given CoSERV transaction can operate according to either model.
    The consumer decides which model to use when it forms a query.  The
@@ -1573,7 +1583,7 @@ Table of Contents
       integrity of the result on an end-to-end basis, even in the
       presence of caching infrastructure.
 
-   *  The use of safe HTTP methods.  CoSERV queries are executed as
+   *  Only safe HTTP methods are used.  CoSERV queries are executed as
       read-only operations using HTTP GET.  The execution of a query
       does not modify any state on the server, which creates more
       opportunities for the re-use of cached results.
@@ -1863,7 +1873,8 @@ Table of Contents
       an aggregator (along with multiple other artifacts, such as
       Reference Values).  But the authority of that Endorsement can
       still be chained back to the hardware provider, and this authority
-      can be checked by the Verifier using an independent trust anchor.
+      can be checked by the Verifier using a trust anchor associated
+      with that hardware provider.
 
    *  *Inspect the authority delegation chains.* The "quads" feature of
       the CoSERV data model provides explicit tracking of supply chain
