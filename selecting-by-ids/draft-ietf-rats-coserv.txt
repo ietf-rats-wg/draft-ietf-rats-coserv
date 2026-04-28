@@ -163,13 +163,13 @@ Table of Contents
    artifacts, such that they can be obtained from Endorsers and
    Reference Value Providers.  Queries can be based on characteristics
    of the Attester's environment.  Alternatively, queries can be based
-   on the precise identifiers of one or more individual artifacts.  In
-   turn, the result format allows those Endorsers and Reference Value
-   Providers to package the selected artifacts within a standard
-   structure.  This facilitates the efficient discovery and retrieval of
-   relevant Endorsements and Reference Values from providers, maximising
-   the re-use of common software tools and libraries within the
-   transactions.
+   on the precise identifiers of one or more Reference Integrity
+   Manifest (RIM) documents.  In turn, the result format allows those
+   Endorsers and Reference Value Providers to package the selected
+   artifacts within a standard structure.  This facilitates the
+   efficient discovery and retrieval of relevant Endorsements and
+   Reference Values from providers, maximising the re-use of common
+   software tools and libraries within the transactions.
 
    The CoSERV query language is intended to form the input data type for
    tools and services that provide access to Endorsements and Reference
@@ -373,7 +373,7 @@ Table of Contents
       artifacts form a single holistic package, and provide the most
       ergonomic consumption experience for the Verifier.
 
-   *  *Source Arfifacts*: these refer to artifacts that were obtained
+   *  *Source Artifacts*: these refer to artifacts that were obtained
       directly from the original supply chain sources, and used as
       inputs into the aggregation process, allowing the aggregator to
       derive the collected artifacts.
@@ -497,7 +497,7 @@ Table of Contents
 3.4.1.  Queries by Environment
 
    When a CoSERV query is specified using an environment, the following
-   information is coveyed in the query:
+   information is conveyed in the query:
 
    *  A specification of the required artifact type: Reference Value,
       Endorsed Value or Trust Anchor.  See Section 3.2 for definitions
@@ -536,30 +536,28 @@ Table of Contents
    defines the CoRIM format for the encoding of RIMs (see
    [I-D.ietf-rats-corim]).  CoSERV supports a query style that allows
    individual RIMs to be obtained based on their identifiers.  This is a
-   more primitive style of query, compared with the query by
-   environment.  It is applicable in cases where the consumer is already
-   aware of the precise set of RIMs that it needs.  There is no
-   environment matching performed in this case, nor is there any
-   aggregation.  The shallow and deep trust models are therefore not
-   applicable for this style of query, and there is no distinction
-   between source and collected artifacts.  The producer is expected to
-   do nothing more than look up the identified documents and return them
-   directly in the result set.
+   more direct style of query, compared with the query by environment.
+   It is applicable in cases where the consumer is already aware of the
+   precise set of RIMs that it needs.  There is no environment matching
+   performed in this case, nor is there any aggregation.  The shallow
+   and deep trust models are therefore not applicable for this style of
+   query, and there is no distinction between source and collected
+   artifacts.  The producer is expected to do nothing more than look up
+   the identified documents and return them directly in the result set.
 
-   The query contains one or more RIM identifiers.  RIM identifiers of
-   the following types are permitted:
+   The query contains one or more identifiers for RIM documents, or for
+   tags contained in RIM documents.  RIM identifiers of the following
+   types are permitted:
 
    *  CoRIM identifiers (Section 4.1.1 of [I-D.ietf-rats-corim])
 
-   *  CoMID tag idenfifiers (Section 5.1.1.1 of [I-D.ietf-rats-corim])
+   *  CoMID tag identifiers (Section 5.1.1.1 of [I-D.ietf-rats-corim])
 
    *  CoSWID tag identifiers (Section 2.3 of [RFC9393])
 
    All three of these identifier types are required to be globally
-   unique as per their corresponding specifications.  It is not possible
-   to mix different RIM identifier types in any single query: the query
-   can contain multiple identifiers, but only of the same type.  This
-   constraint is enforced by the data model.
+   unique as per their corresponding specifications.  A single query MAY
+   contain identifiers of different types.
 
 3.4.3.  Avoidance of Volatile Data in Queries
 
@@ -655,38 +653,41 @@ Table of Contents
    When the key is a CoRIM identifier, the RIM content MUST be the CoRIM
    data object whose identity matches the key.
 
-   When the key is a CoMID identifier, the RIM content MUST be a CoRIM
-   data object, which contains the CoMID tag whose identity matches the
-   key.  The CoRIM data object MAY also contain other CoMID (or CoSWID)
-   tags with different identifiers, even if those identifiers were not
-   selected for in the query.
+   When the key is a CoMID tag identifier, the RIM content MUST be a
+   CoRIM data object, which contains the CoMID tag whose identity
+   matches the key.  The CoRIM data object MAY also contain other CoMID
+   (or CoSWID) tags with different identifiers, even if those
+   identifiers were not included in the query.
 
-   When the key is a CoSWID identifier, the RIM content MUST be one of
-   the following:
+   When the key is a CoSWID tag identifier, the RIM content MUST be one
+   of the following:
 
    *  The CoSWID data object whose identity matches the key.
 
    *  A CoRIM data object, which contains the CoSWID tag whose identity
       matches the key.  The CoRIM data object MAY also contain other
       CoSWID (or CoMID) tags with different identifiers, even if those
-      identifiers were not selected for in the query.
+      identifiers were not included in the query.
 
    The recipient of the query MAY provide only a subset of the RIMs that
    were requested in the query, including an empty set, if it could not
    fulfil the entire query.
 
-   For all types of RIM identifier, the producer MAY be in possession of
-   multiple versions of RIMs with that identity.  In such cases, the
-   producer MUST populate the result set with the newest available
-   version only.
+   For CoMID and CoSWID tag identifiers, the producer MAY be in
+   possession of multiple revisions of the RIM tag with that identity.
+   In such cases, the producer MUST populate the result set with the
+   newest available revision only.  The "newest" revision is defined as
+   the one with the highest integer version counter in the relevant
+   tag's identity map.  See (Section 5.1.1.2 of [I-D.ietf-rats-corim])
+   and (Section 2.3 of [RFC9393]) for additional details of tag
+   versioning.
 
    It is possible for multiple keys in the result set to map to the same
    data object.  For example, if a query selects for two CoMID
    identifiers, CoMID-A and CoMID-B, and the producer has a single CoRIM
-   containing both of those CoMID tags, then the producer would need to
-   populate the result set with entries for both CoMID-A and CoMID-B,
-   where both entries map to identical copies of the single containing
-   CoRIM.
+   containing both of those CoMID tags, then the producer MAY populate
+   the result set with entries for both CoMID-A and CoMID-B, where both
+   entries map to identical copies of the single containing CoRIM.
 
    The producer SHOULD ensure that all RIMs in the result set are
    signed.  In cases where the producer is returning copies of RIMs from
@@ -904,8 +905,8 @@ Table of Contents
 
    The rim-selector (codepoint 3) is the only data field in this style
    of query.  It contains a set of one or more RIM identifiers.  RIMs
-   can be selected by CoRIM, CoMID or CoSWID identifiers, as explained
-   in Section 3.4.2.
+   can be selected by an arbitrary mixture of CoRIM, CoMID or CoSWID
+   identifiers, as explained in Section 3.4.2.
 
 4.4.  Result Set Structure
 

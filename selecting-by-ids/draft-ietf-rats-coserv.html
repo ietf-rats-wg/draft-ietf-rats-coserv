@@ -1410,7 +1410,7 @@ The lack of standardized methods for querying and retrieving these artifacts pos
 <p id="section-1-2">The Concise Selector for Endorsements and Reference Values (CoSERV) addresses this challenge by defining a query language and a corresponding result structure for the transaction of artifacts between a provider and a consumer.
 The query language format provides Verifiers with a standard way to specify a set of relevant artifacts, such that they can be obtained from Endorsers and Reference Value Providers.
 Queries can be based on characteristics of the Attester's environment.
-Alternatively, queries can be based on the precise identifiers of one or more individual artifacts.
+Alternatively, queries can be based on the precise identifiers of one or more Reference Integrity Manifest (RIM) documents.
 In turn, the result format allows those Endorsers and Reference Value Providers to package the selected artifacts within a standard structure.
 This facilitates the efficient discovery and retrieval of relevant Endorsements and Reference Values from providers, maximising the re-use of common software tools and libraries within the transactions.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">The CoSERV query language is intended to form the input data type for tools and services that provide access to Endorsements and Reference Values.
@@ -1551,7 +1551,7 @@ Evidence from the Attester would then include claims about the Attester's actual
 Collected artifacts form a single holistic package, and provide the most ergonomic consumption experience for the Verifier.<a href="#section-3.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.2-4.2">
-            <p id="section-3.2-4.2.1"><strong>Source Arfifacts</strong>: these refer to artifacts that were obtained directly from the original supply chain sources, and used as inputs into the aggregation process, allowing the aggregator to derive the collected artifacts.<a href="#section-3.2-4.2.1" class="pilcrow">¶</a></p>
+            <p id="section-3.2-4.2.1"><strong>Source Artifacts</strong>: these refer to artifacts that were obtained directly from the original supply chain sources, and used as inputs into the aggregation process, allowing the aggregator to derive the collected artifacts.<a href="#section-3.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-3.2-5">In the shallow trust model of aggregation, only the collected artifacts are used by the consumer.
@@ -1647,7 +1647,7 @@ See <a href="#secenvironments" class="auto internal xref">Section 3.3</a>.<a hre
           <h4 id="name-queries-by-environment">
 <a href="#section-3.4.1" class="section-number selfRef">3.4.1. </a><a href="#name-queries-by-environment" class="section-name selfRef">Queries by Environment</a>
           </h4>
-<p id="section-3.4.1-1">When a CoSERV query is specified using an environment, the following information is coveyed in the query:<a href="#section-3.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.4.1-1">When a CoSERV query is specified using an environment, the following information is conveyed in the query:<a href="#section-3.4.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.4.1-2.1">
               <p id="section-3.4.1-2.1.1">A specification of the required artifact type: Reference Value, Endorsed Value or Trust Anchor.
@@ -1683,27 +1683,26 @@ See <a href="#secaggregation" class="auto internal xref">Section 2</a> for detai
 <p id="section-3.4.2-1">Reference Integrity Manifests (RIMs) are a common type of artifact format for representing Endorsements and Reference Values.
 RATS defines the CoRIM format for the encoding of RIMs (see <span>[<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>).
 CoSERV supports a query style that allows individual RIMs to be obtained based on their identifiers.
-This is a more primitive style of query, compared with the query by environment.
+This is a more direct style of query, compared with the query by environment.
 It is applicable in cases where the consumer is already aware of the precise set of RIMs that it needs.
 There is no environment matching performed in this case, nor is there any aggregation.
 The shallow and deep trust models are therefore not applicable for this style of query, and there is no distinction between source and collected artifacts.
 The producer is expected to do nothing more than look up the identified documents and return them directly in the result set.<a href="#section-3.4.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.4.2-2">The query contains one or more RIM identifiers.
+<p id="section-3.4.2-2">The query contains one or more identifiers for RIM documents, or for tags contained in RIM documents.
 RIM identifiers of the following types are permitted:<a href="#section-3.4.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.4.2-3.1">
               <p id="section-3.4.2-3.1.1">CoRIM identifiers (<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10#section-4.1.1" class="relref">Section 4.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>)<a href="#section-3.4.2-3.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.4.2-3.2">
-              <p id="section-3.4.2-3.2.1">CoMID tag idenfifiers (<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10#section-5.1.1.1" class="relref">Section 5.1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>)<a href="#section-3.4.2-3.2.1" class="pilcrow">¶</a></p>
+              <p id="section-3.4.2-3.2.1">CoMID tag identifiers (<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10#section-5.1.1.1" class="relref">Section 5.1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>)<a href="#section-3.4.2-3.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.4.2-3.3">
               <p id="section-3.4.2-3.3.1">CoSWID tag identifiers (<span><a href="https://rfc-editor.org/rfc/rfc9393#section-2.3" class="relref">Section 2.3</a> of [<a href="#RFC9393" class="cite xref">RFC9393</a>]</span>)<a href="#section-3.4.2-3.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-3.4.2-4">All three of these identifier types are required to be globally unique as per their corresponding specifications.
-It is not possible to mix different RIM identifier types in any single query: the query can contain multiple identifiers, but only of the same type.
-This constraint is enforced by the data model.<a href="#section-3.4.2-4" class="pilcrow">¶</a></p>
+A single query <span class="bcp14">MAY</span> contain identifiers of different types.<a href="#section-3.4.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="avoidance-of-volatile-data-in-queries">
@@ -1784,23 +1783,25 @@ Each key in the map <span class="bcp14">MUST</span> correspond to one of the RIM
 Each mapped value is the corresponding RIM data object, contained within a Conceptual Message Wrapper (CMW) as per <span>[<a href="#I-D.ietf-rats-msg-wrap" class="cite xref">I-D.ietf-rats-msg-wrap</a>]</span>.<a href="#section-3.5.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.5.2-3">The permitted RIM content for each map entry depends upon the type of key used in the query.<a href="#section-3.5.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.5.2-4">When the key is a CoRIM identifier, the RIM content <span class="bcp14">MUST</span> be the CoRIM data object whose identity matches the key.<a href="#section-3.5.2-4" class="pilcrow">¶</a></p>
-<p id="section-3.5.2-5">When the key is a CoMID identifier, the RIM content <span class="bcp14">MUST</span> be a CoRIM data object, which contains the CoMID tag whose identity matches the key.
-The CoRIM data object <span class="bcp14">MAY</span> also contain other CoMID (or CoSWID) tags with different identifiers, even if those identifiers were not selected for in the query.<a href="#section-3.5.2-5" class="pilcrow">¶</a></p>
-<p id="section-3.5.2-6">When the key is a CoSWID identifier, the RIM content <span class="bcp14">MUST</span> be one of the following:<a href="#section-3.5.2-6" class="pilcrow">¶</a></p>
+<p id="section-3.5.2-5">When the key is a CoMID tag identifier, the RIM content <span class="bcp14">MUST</span> be a CoRIM data object, which contains the CoMID tag whose identity matches the key.
+The CoRIM data object <span class="bcp14">MAY</span> also contain other CoMID (or CoSWID) tags with different identifiers, even if those identifiers were not included in the query.<a href="#section-3.5.2-5" class="pilcrow">¶</a></p>
+<p id="section-3.5.2-6">When the key is a CoSWID tag identifier, the RIM content <span class="bcp14">MUST</span> be one of the following:<a href="#section-3.5.2-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.5.2-7.1">
               <p id="section-3.5.2-7.1.1">The CoSWID data object whose identity matches the key.<a href="#section-3.5.2-7.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.5.2-7.2">
               <p id="section-3.5.2-7.2.1">A CoRIM data object, which contains the CoSWID tag whose identity matches the key.
-The CoRIM data object <span class="bcp14">MAY</span> also contain other CoSWID (or CoMID) tags with different identifiers, even if those identifiers were not selected for in the query.<a href="#section-3.5.2-7.2.1" class="pilcrow">¶</a></p>
+The CoRIM data object <span class="bcp14">MAY</span> also contain other CoSWID (or CoMID) tags with different identifiers, even if those identifiers were not included in the query.<a href="#section-3.5.2-7.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-3.5.2-8">The recipient of the query <span class="bcp14">MAY</span> provide only a subset of the RIMs that were requested in the query, including an empty set, if it could not fulfil the entire query.<a href="#section-3.5.2-8" class="pilcrow">¶</a></p>
-<p id="section-3.5.2-9">For all types of RIM identifier, the producer <span class="bcp14">MAY</span> be in possession of multiple versions of RIMs with that identity.
-In such cases, the producer <span class="bcp14">MUST</span> populate the result set with the newest available version only.<a href="#section-3.5.2-9" class="pilcrow">¶</a></p>
+<p id="section-3.5.2-9">For CoMID and CoSWID tag identifiers, the producer <span class="bcp14">MAY</span> be in possession of multiple revisions of the RIM tag with that identity.
+In such cases, the producer <span class="bcp14">MUST</span> populate the result set with the newest available revision only.
+The "newest" revision is defined as the one with the highest integer version counter in the relevant tag's identity map.
+See (<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10#section-5.1.1.2" class="relref">Section 5.1.1.2</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>) and (<span><a href="https://rfc-editor.org/rfc/rfc9393#section-2.3" class="relref">Section 2.3</a> of [<a href="#RFC9393" class="cite xref">RFC9393</a>]</span>) for additional details of tag versioning.<a href="#section-3.5.2-9" class="pilcrow">¶</a></p>
 <p id="section-3.5.2-10">It is possible for multiple keys in the result set to map to the same data object.
-For example, if a query selects for two CoMID identifiers, <code>CoMID-A</code> and <code>CoMID-B</code>, and the producer has a single CoRIM containing both of those CoMID tags, then the producer would need to populate the result set with entries for both <code>CoMID-A</code> and <code>CoMID-B</code>, where both entries map to identical copies of the single containing CoRIM.<a href="#section-3.5.2-10" class="pilcrow">¶</a></p>
+For example, if a query selects for two CoMID identifiers, <code>CoMID-A</code> and <code>CoMID-B</code>, and the producer has a single CoRIM containing both of those CoMID tags, then the producer <span class="bcp14">MAY</span> populate the result set with entries for both <code>CoMID-A</code> and <code>CoMID-B</code>, where both entries map to identical copies of the single containing CoRIM.<a href="#section-3.5.2-10" class="pilcrow">¶</a></p>
 <p id="section-3.5.2-11">The producer <span class="bcp14">SHOULD</span> ensure that all RIMs in the result set are signed.
 In cases where the producer is returning copies of RIMs from upstream supply chain actors on a pass-through basis, the producer <span class="bcp14">SHOULD</span> preserve the original signatures from those supply chain actors, as opposed to re-constructing and re-signing the RIMs.<a href="#section-3.5.2-11" class="pilcrow">¶</a></p>
 </section>
@@ -2015,7 +2016,7 @@ See <a href="#secaggregation" class="auto internal xref">Section 2</a> for defin
             </h5>
 <p id="section-4.3.2.1-1">The <code>rim-selector</code> (codepoint <code>3</code>) is the only data field in this style of query.
 It contains a set of one or more RIM identifiers.
-RIMs can be selected by CoRIM, CoMID or CoSWID identifiers, as explained in <a href="#secinfoqueryrim" class="auto internal xref">Section 3.4.2</a>.<a href="#section-4.3.2.1-1" class="pilcrow">¶</a></p>
+RIMs can be selected by an arbitrary mixture of CoRIM, CoMID or CoSWID identifiers, as explained in <a href="#secinfoqueryrim" class="auto internal xref">Section 3.4.2</a>.<a href="#section-4.3.2.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
