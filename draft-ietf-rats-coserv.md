@@ -110,7 +110,7 @@ The lack of standardized methods for querying and retrieving these artifacts pos
 The Concise Selector for Endorsements and Reference Values (CoSERV) addresses this challenge by defining a query language and a corresponding result structure for the transaction of artifacts between a provider and a consumer.
 The query language format provides Verifiers with a standard way to specify a set of relevant artifacts, such that they can be obtained from Endorsers and Reference Value Providers.
 Queries can be based on characteristics of the Attester's environment.
-Alternatively, queries can be based on the precise identifiers of one or more individual artifacts.
+Alternatively, queries can be based on the precise identifiers of one or more Reference Integrity Manifest (RIM) documents.
 In turn, the result format allows those Endorsers and Reference Value Providers to package the selected artifacts within a standard structure.
 This facilitates the efficient discovery and retrieval of relevant Endorsements and Reference Values from providers, maximising the re-use of common software tools and libraries within the transactions.
 
@@ -225,7 +225,7 @@ When artifacts are produced by an aggregator (see {{secaggregation}}), the follo
 
 - **Collected Artifacts**: these refer to artifacts that were derived by the aggregator by collecting and presenting data from original supply chain sources, or from other aggregators.
 Collected artifacts form a single holistic package, and provide the most ergonomic consumption experience for the Verifier.
-- **Source Arfifacts**: these refer to artifacts that were obtained directly from the original supply chain sources, and used as inputs into the aggregation process, allowing the aggregator to derive the collected artifacts.
+- **Source Artifacts**: these refer to artifacts that were obtained directly from the original supply chain sources, and used as inputs into the aggregation process, allowing the aggregator to derive the collected artifacts.
 
 In the shallow trust model of aggregation, only the collected artifacts are used by the consumer.
 In the deep trust model, both the collected artifacts and the source artifacts are used.
@@ -294,7 +294,7 @@ Further details are given in the sections below.
 
 ### Queries by Environment {#secinfoqueryenv}
 
-When a CoSERV query is specified using an environment, the following information is coveyed in the query:
+When a CoSERV query is specified using an environment, the following information is conveyed in the query:
 
 - A specification of the required artifact type: Reference Value, Endorsed Value or Trust Anchor.
 See {{secartifacts}} for definitions of artifact types.
@@ -319,22 +319,21 @@ See {{secaggregation}} for details on aggregation, auditing and trust models.
 Reference Integrity Manifests (RIMs) are a common type of artifact format for representing Endorsements and Reference Values.
 RATS defines the CoRIM format for the encoding of RIMs (see {{-rats-corim}}).
 CoSERV supports a query style that allows individual RIMs to be obtained based on their identifiers.
-This is a more primitive style of query, compared with the query by environment.
+This is a more direct style of query, compared with the query by environment.
 It is applicable in cases where the consumer is already aware of the precise set of RIMs that it needs.
 There is no environment matching performed in this case, nor is there any aggregation.
 The shallow and deep trust models are therefore not applicable for this style of query, and there is no distinction between source and collected artifacts.
 The producer is expected to do nothing more than look up the identified documents and return them directly in the result set.
 
-The query contains one or more RIM identifiers.
+The query contains one or more identifiers for RIM documents, or for tags contained in RIM documents.
 RIM identifiers of the following types are permitted:
 
 - CoRIM identifiers ({{Section 4.1.1 of -rats-corim}})
-- CoMID tag idenfifiers ({{Section 5.1.1.1 of -rats-corim}})
+- CoMID tag identifiers ({{Section 5.1.1.1 of -rats-corim}})
 - CoSWID tag identifiers ({{Section 2.3 of -coswid}})
 
 All three of these identifier types are required to be globally unique as per their corresponding specifications.
-It is not possible to mix different RIM identifier types in any single query: the query can contain multiple identifiers, but only of the same type.
-This constraint is enforced by the data model.
+A single query MAY contain identifiers of different types.
 
 ### Avoidance of Volatile Data in Queries
 
@@ -397,22 +396,24 @@ The permitted RIM content for each map entry depends upon the type of key used i
 
 When the key is a CoRIM identifier, the RIM content MUST be the CoRIM data object whose identity matches the key.
 
-When the key is a CoMID identifier, the RIM content MUST be a CoRIM data object, which contains the CoMID tag whose identity matches the key.
-The CoRIM data object MAY also contain other CoMID (or CoSWID) tags with different identifiers, even if those identifiers were not selected for in the query.
+When the key is a CoMID tag identifier, the RIM content MUST be a CoRIM data object, which contains the CoMID tag whose identity matches the key.
+The CoRIM data object MAY also contain other CoMID (or CoSWID) tags with different identifiers, even if those identifiers were not included in the query.
 
-When the key is a CoSWID identifier, the RIM content MUST be one of the following:
+When the key is a CoSWID tag identifier, the RIM content MUST be one of the following:
 
 - The CoSWID data object whose identity matches the key.
 - A CoRIM data object, which contains the CoSWID tag whose identity matches the key.
-The CoRIM data object MAY also contain other CoSWID (or CoMID) tags with different identifiers, even if those identifiers were not selected for in the query.
+The CoRIM data object MAY also contain other CoSWID (or CoMID) tags with different identifiers, even if those identifiers were not included in the query.
 
 The recipient of the query MAY provide only a subset of the RIMs that were requested in the query, including an empty set, if it could not fulfil the entire query.
 
-For all types of RIM identifier, the producer MAY be in possession of multiple versions of RIMs with that identity.
-In such cases, the producer MUST populate the result set with the newest available version only.
+For CoMID and CoSWID tag identifiers, the producer MAY be in possession of multiple revisions of the RIM tag with that identity.
+In such cases, the producer MUST populate the result set with the newest available revision only.
+The "newest" revision is defined as the one with the highest integer version counter in the relevant tag's identity map.
+See ({{Section 5.1.1.2 of -rats-corim}}) and ({{Section 2.3 of -coswid}}) for additional details of tag versioning.
 
 It is possible for multiple keys in the result set to map to the same data object.
-For example, if a query selects for two CoMID identifiers, `CoMID-A` and `CoMID-B`, and the producer has a single CoRIM containing both of those CoMID tags, then the producer would need to populate the result set with entries for both `CoMID-A` and `CoMID-B`, where both entries map to identical copies of the single containing CoRIM.
+For example, if a query selects for two CoMID identifiers, `CoMID-A` and `CoMID-B`, and the producer has a single CoRIM containing both of those CoMID tags, then the producer MAY populate the result set with entries for both `CoMID-A` and `CoMID-B`, where both entries map to identical copies of the single containing CoRIM.
 
 The producer SHOULD ensure that all RIMs in the result set are signed.
 In cases where the producer is returning copies of RIMs from upstream supply chain actors on a pass-through basis, the producer SHOULD preserve the original signatures from those supply chain actors, as opposed to re-constructing and re-signing the RIMs.
@@ -530,7 +531,7 @@ See {{secaggregation}} for definitions of source and collected artifacts.
 
 The `rim-selector` (codepoint `3`) is the only data field in this style of query.
 It contains a set of one or more RIM identifiers.
-RIMs can be selected by CoRIM, CoMID or CoSWID identifiers, as explained in {{secinfoqueryrim}}.
+RIMs can be selected by an arbitrary mixture of CoRIM, CoMID or CoSWID identifiers, as explained in {{secinfoqueryrim}}.
 
 ## Result Set Structure
 
