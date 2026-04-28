@@ -92,14 +92,19 @@ Table of Contents
        3.3.1.  Stateful Environments
        3.3.2.  Environment Uniqueness
      3.4.  Queries
+       3.4.1.  Queries by Environment
+       3.4.2.  Queries by RIM Identifier
+       3.4.3.  Avoidance of Volatile Data in Queries
+       3.4.4.  Query Logging
      3.5.  Result Sets
+       3.5.1.  Results for Queries by Environment
+       3.5.2.  Results for Queries by RIM Identifier
    4.  CoSERV Data Model
      4.1.  Common Data Types
      4.2.  Profile
      4.3.  Query Structure
-       4.3.1.  Artifact Type
-       4.3.2.  Environment Selector
-       4.3.3.  Result Type
+       4.3.1.  Queries by Environment
+       4.3.2.  Queries by RIM Identifier
      4.4.  Result Set Structure
      4.5.  Encoding Requirements
      4.6.  Cryptographic Binding Between Query and Result Set
@@ -154,14 +159,17 @@ Table of Contents
    addresses this challenge by defining a query language and a
    corresponding result structure for the transaction of artifacts
    between a provider and a consumer.  The query language format
-   provides Verifiers with a standard way to specify the environment
-   characteristics of Attesters, such that the relevant artifacts can be
-   obtained from Endorsers and Reference Value Providers.  In turn, the
-   result format allows those Endorsers and Reference Value Providers to
-   package the artifacts within a standard structure.  This facilitates
-   the efficient discovery and retrieval of relevant Endorsements and
-   Reference Values from providers, maximising the re-use of common
-   software tools and libraries within the transactions.
+   provides Verifiers with a standard way to specify a set of relevant
+   artifacts, such that they can be obtained from Endorsers and
+   Reference Value Providers.  Queries can be based on characteristics
+   of the Attester's environment.  Alternatively, queries can be based
+   on the precise identifiers of one or more individual artifacts.  In
+   turn, the result format allows those Endorsers and Reference Value
+   Providers to package the selected artifacts within a standard
+   structure.  This facilitates the efficient discovery and retrieval of
+   relevant Endorsements and Reference Values from providers, maximising
+   the re-use of common software tools and libraries within the
+   transactions.
 
    The CoSERV query language is intended to form the input data type for
    tools and services that provide access to Endorsements and Reference
@@ -378,18 +386,20 @@ Table of Contents
 
 3.3.  Environments
 
-   The environment defines the scope (or scopes) in which the
+   Some CoSERV queries use environments as the basis for artifact
+   selection.  An environment defines the scope (or scopes) in which the
    endorsement artifacts are applicable.  Given that the consumer of
    these artifacts is likely to be a Verifier in the RATS model, the
    typical interpretation of the environment would be that of an
    Attester that either has produced evidence, or is expected to produce
    evidence, that the Verifier needs to appraise.  The Verifier
    consequently needs to query the Endorser or Reference Value Provider
-   for artifacts that are applicable in that environment.  There are
-   three mutually-exclusive methods for defining the environment within
-   a CoSERV query.  Exactly one of these three methods MUST be used for
-   the query to be valid.  All three methods correspond to environments
-   that are also defined within CoRIM [I-D.ietf-rats-corim].
+   for artifacts that are applicable in that environment.  For CoSERV
+   queries that are based on environments, there are three mutually-
+   exclusive methods for defining those environments.  Exactly one of
+   these three methods MUST be used for the query to be valid.  All
+   three methods correspond to environments that are also defined within
+   CoRIM [I-D.ietf-rats-corim].
 
    *  *Class*: A class is an environment that is expected to be common
       to a group of similarly-constructed Attesters, who might therefore
@@ -438,14 +448,15 @@ Table of Contents
    Because CoSERV is a query language, the CoSERV environment structure
    has been designed such that it is well suited to forming queries.  It
    has been optimized such that the most common query styles are also
-   the simplest to construct.  This design makes it very straightforward
-   to query for artifacts by (multiples of) instance, group or class.
-   It is not possible to query by combinations of these properties at
-   the same time.  For example, it is not possible to form a query that
-   selects by instance or group, while simultaneously being constrained
-   by the scope of a specific class.  As a more precise example, it
-   would not be possible to form a single query that selects artifacts
-   for instance "0x010203040506", but only for devices of class "ACME
+   the simplest to construct.  For the case of environment-based
+   queries, this design makes it very straightforward to query for
+   artifacts by (multiples of) instance, group or class.  It is not
+   possible to query by combinations of these properties at the same
+   time.  For example, it is not possible to form a query that selects
+   by instance or group, while simultaneously being constrained by the
+   scope of a specific class.  As a more precise example, it would not
+   be possible to form a single query that selects artifacts for
+   instance "0x010203040506", but only for devices of class "ACME
    SiliconPro 2000".  This is a departure from CoRIM environments, which
    can optionally be modeled as combinations of instance, group or
    class.  This design choice is a pragmatic one that is taken by
@@ -469,8 +480,24 @@ Table of Contents
 3.4.  Queries
 
    The purpose of a query is to allow the consumer (Verifier) to specify
-   the artifacts that it needs.  The information that is conveyed in a
-   CoSERV query includes the following:
+   the artifacts that it needs.  CoSERV offers a small but versatile
+   query language.  The following styles of query are available:
+
+   *  *Queries by Environment*: This query style is used to select the
+      artifacts that are applicable to the Attester's environment.  See
+      Section 3.3.
+
+   *  *Queries by RIM Identifier*: This query style is used to select
+      artifacts that are Reference Integrity Manifest (RIM) artifacts,
+      and where the consumer already knows the precise identifiers of
+      the specific RIMs that it needs.
+
+   Further details are given in the sections below.
+
+3.4.1.  Queries by Environment
+
+   When a CoSERV query is specified using an environment, the following
+   information is coveyed in the query:
 
    *  A specification of the required artifact type: Reference Value,
       Endorsed Value or Trust Anchor.  See Section 3.2 for definitions
@@ -502,6 +529,40 @@ Table of Contents
       gathering artifacts for delivery to another aggregator.  See
       Section 2 for details on aggregation, auditing and trust models.
 
+3.4.2.  Queries by RIM Identifier
+
+   Reference Integrity Manifests (RIMs) are a common type of artifact
+   format for representing Endorsements and Reference Values.  RATS
+   defines the CoRIM format for the encoding of RIMs (see
+   [I-D.ietf-rats-corim]).  CoSERV supports a query style that allows
+   individual RIMs to be obtained based on their identifiers.  This is a
+   more primitive style of query, compared with the query by
+   environment.  It is applicable in cases where the consumer is already
+   aware of the precise set of RIMs that it needs.  There is no
+   environment matching performed in this case, nor is there any
+   aggregation.  The shallow and deep trust models are therefore not
+   applicable for this style of query, and there is no distinction
+   between source and collected artifacts.  The producer is expected to
+   do nothing more than look up the identified documents and return them
+   directly in the result set.
+
+   The query contains one or more RIM identifiers.  RIM identifiers of
+   the following types are permitted:
+
+   *  CoRIM identifiers (Section 4.1.1 of [I-D.ietf-rats-corim])
+
+   *  CoMID tag idenfifiers (Section 5.1.1.1 of [I-D.ietf-rats-corim])
+
+   *  CoSWID tag identifiers (Section 2.3 of [RFC9393])
+
+   All three of these identifier types are required to be globally
+   unique as per their corresponding specifications.  It is not possible
+   to mix different RIM identifier types in any single query: the query
+   can contain multiple identifiers, but only of the same type.  This
+   constraint is enforced by the data model.
+
+3.4.3.  Avoidance of Volatile Data in Queries
+
    CoSERV queries do not contain timestamps or any similarly volatile or
    unpredictable fields.  This is to ensure that any set of materially-
    identical queries will always yield the same encoded sequence of CBOR
@@ -512,6 +573,8 @@ Table of Contents
    important enabler of efficient CoSERV transactions.  See, for
    example, the HTTP caching design described in Section 6.1.4.
 
+3.4.4.  Query Logging
+
    A CoSERV implementation MAY log the time at which a query was
    received and fulfilled.  This might sometimes be desirable for
    transparency or audit purposes.  Implementations are free to define
@@ -521,7 +584,18 @@ Table of Contents
 3.5.  Result Sets
 
    The result set contains the artifacts that the producer collected in
-   response to the query.  The top-level structure of the result set
+   response to the query.  Result sets always include a timestamp
+   indicating the expiry time of the entire result set.  Consumers MUST
+   NOT consider any part of the result set to be valid after this expiry
+   time.
+
+   The remaining information contained in the result set depends on the
+   style of query that was used: either a query by environment, or a
+   query by RIM identifier.
+
+3.5.1.  Results for Queries by Environment
+
+   For queries by environment, the top-level structure of the result set
    consists of the following three items:
 
    *  A collection of one or more result entries.  This will be a
@@ -530,10 +604,6 @@ Table of Contents
       Artifact types are never mixed in any single CoSERV result set.
       The artifacts in the result collection therefore MUST match the
       single artifact type specified in the original CoSERV query.
-
-   *  A timestamp indicating the expiry time of the entire result set.
-      Consumers MUST NOT consider any part of the result set to be valid
-      after this expiry time.
 
    *  A collection of the original source materials from which the
       producer derived the correct artifacts to include in the result
@@ -563,6 +633,66 @@ Table of Contents
    Because each result entry combines a CoMID triple with an authority
    delegation chain, the entries are consequently known as quadruples
    (or "quads" for short).
+
+3.5.2.  Results for Queries by RIM Identifier
+
+   Queries by RIM identifier are significantly simpler than queries by
+   environment, and the result set structure is likewise simpler.  There
+   are no authority delegation chains or "quads" in the result.  The
+   result does not contain any extracted or aggregated information.
+   Instead, it is composed of entire RIM documents, obtained and passed
+   through verbatim from their original supply chain sources.
+
+   The result is a flat map structure, keyed by the RIM identifier.
+   Each key in the map MUST correspond to one of the RIM identifiers in
+   the original query.  Each mapped value is the corresponding RIM data
+   object, contained within a Conceptual Message Wrapper (CMW) as per
+   [I-D.ietf-rats-msg-wrap].
+
+   The permitted RIM content for each map entry depends upon the type of
+   key used in the query.
+
+   When the key is a CoRIM identifier, the RIM content MUST be the CoRIM
+   data object whose identity matches the key.
+
+   When the key is a CoMID identifier, the RIM content MUST be a CoRIM
+   data object, which contains the CoMID tag whose identity matches the
+   key.  The CoRIM data object MAY also contain other CoMID (or CoSWID)
+   tags with different identifiers, even if those identifiers were not
+   selected for in the query.
+
+   When the key is a CoSWID identifier, the RIM content MUST be one of
+   the following:
+
+   *  The CoSWID data object whose identity matches the key.
+
+   *  A CoRIM data object, which contains the CoSWID tag whose identity
+      matches the key.  The CoRIM data object MAY also contain other
+      CoSWID (or CoMID) tags with different identifiers, even if those
+      identifiers were not selected for in the query.
+
+   The recipient of the query MAY provide only a subset of the RIMs that
+   were requested in the query, including an empty set, if it could not
+   fulfil the entire query.
+
+   For all types of RIM identifier, the producer MAY be in possession of
+   multiple versions of RIMs with that identity.  In such cases, the
+   producer MUST populate the result set with the newest available
+   version only.
+
+   It is possible for multiple keys in the result set to map to the same
+   data object.  For example, if a query selects for two CoMID
+   identifiers, CoMID-A and CoMID-B, and the producer has a single CoRIM
+   containing both of those CoMID tags, then the producer would need to
+   populate the result set with entries for both CoMID-A and CoMID-B,
+   where both entries map to identical copies of the single containing
+   CoRIM.
+
+   The producer SHOULD ensure that all RIMs in the result set are
+   signed.  In cases where the producer is returning copies of RIMs from
+   upstream supply chain actors on a pass-through basis, the producer
+   SHOULD preserve the original signatures from those supply chain
+   actors, as opposed to re-constructing and re-signing the RIMs.
 
 4.  CoSERV Data Model
 
@@ -644,15 +774,22 @@ Table of Contents
                  / &(source-artifacts: 1)
                  / &(both: 2)
 
-   The meanings of these fields are detailed in the following
-   subsections.
+   At top level, the query is partitioned into mutually-exclusive
+   variants for the different query styles: queries by environment, or
+   queries by RIM identifier.  See Section 3.4 for details about the
+   query styles and how they are used.
 
-4.3.1.  Artifact Type
+   The meanings of the query fields are detailed in the following
+   subsections for each supported style.
 
-   The artifact-type field is the foremost discriminator of the query.
-   It is a top-level category selector.  Its three permissible values
-   are trust-anchors (codepoint 1), endorsed-values (codepoint 0) and
-   reference-values (codepoint 2).
+4.3.1.  Queries by Environment
+
+4.3.1.1.  Artifact Type
+
+   For queries by environment, the artifact-type field is the foremost
+   discriminator of the query.  It is an artifact category selector.
+   Its three permissible values are trust-anchors (codepoint 1),
+   endorsed-values (codepoint 0) and reference-values (codepoint 2).
 
    See Section 3.2 for full definitions of artifact types.
 
@@ -664,10 +801,10 @@ Table of Contents
    for the consumer, resulting in an efficiency gain by avoiding the
    transfer of unwanted data items.
 
-4.3.2.  Environment Selector
+4.3.1.2.  Environment Selector
 
-   The environment selector forms the main body of the query, and its
-   CDDL is given below:
+   For queries by environment, the environment selector forms the main
+   body of the query, and its CDDL is given below:
 
    ;# import comid-autogen
 
@@ -721,7 +858,7 @@ Table of Contents
    aspects of the environment state.  See Section 3.3.1 for a
    description of stateful environments.
 
-4.3.2.1.  Selector Semantics
+4.3.1.2.1.  Selector Semantics
 
    When multiple environment selectors are present in a single query,
    such as multiple instances or multiple groups, the recipient of the
@@ -754,12 +891,21 @@ Table of Contents
     WHERE ( class-id = "iZl4ZVY=" AND class-vendor = "ACME Inc." ) OR
           ( class-id = "31fb5abf-023e-4992-aa4e-95f9c1503bfa" )
 
-4.3.3.  Result Type
+4.3.1.3.  Result Type
 
-   The result-type field selects for the desired type(s) of results:
-   collected-artifacts (codepoint 0), source-artifacts (codepoint 1) or
-   both (codepoint 2).  See Section 2 for definitions of source and
-   collected artifacts.
+   For queries by environment, the result-type field selects for the
+   desired type(s) of results: collected-artifacts (codepoint 0),
+   source-artifacts (codepoint 1) or both (codepoint 2).  See Section 2
+   for definitions of source and collected artifacts.
+
+4.3.2.  Queries by RIM Identifier
+
+4.3.2.1.  RIM Selector
+
+   The rim-selector (codepoint 3) is the only data field in this style
+   of query.  It contains a set of one or more RIM identifiers.  RIMs
+   can be selected by CoRIM, CoMID or CoSWID identifiers, as explained
+   in Section 3.4.2.
 
 4.4.  Result Set Structure
 
@@ -839,6 +985,13 @@ Table of Contents
    ;
    cots = "TODO COTS"
 
+   Result sets are described in Section 3.5.  As with the query data
+   model, the result set is partitioned into mutually-exclusive variants
+   for the different query styles: queries by environment, or queries by
+   RIM identifier.  The environment-result and rim-result types provide
+   the separate data models for each style respectively.  Only the
+   expiry field (codepoint 10) is common to both styles.
+
 4.5.  Encoding Requirements
 
    Implementations may wish to use serialized CoSERV queries as
@@ -902,13 +1055,13 @@ Table of Contents
    This section provides some illustrative examples of valid CoSERV
    query objects.
 
-   The following example shows a query for Reference Values scoped by a
-   single class.  The artifact-type is set to 2 (reference-values),
-   indicating a query for Reference Values.  The profile is given the
-   example value of tag:example.com,2025:cc-platform#1.0.0.  Finally,
-   the environment-selector uses the key 0 to select for class, and the
-   value contains a single entry with illustrative settings for the
-   identifier, vendor and model.
+   The following example shows an environment-based query for Reference
+   Values scoped by a single class.  The artifact-type is set to 2
+   (reference-values), indicating a query for Reference Values.  The
+   profile is given the example value of tag:example.com,2025:cc-
+   platform#1.0.0.  Finally, the environment-selector uses the key 0 to
+   select for class, and the value contains a single entry with
+   illustrative settings for the identifier, vendor and model.
 
    {
      / profile / 0: "tag:example.com,2025:cc-platform#1.0.0",
@@ -969,6 +1122,21 @@ Table of Contents
          ]
        },
        / result-type / 2: 0 / collected artifacts /
+     }
+   }
+
+   This next example shows how a query can be based on one or more RIM
+   identifiers, instead of environments.  In this case, the query is
+   requesting three specific CoRIMs.
+
+   {
+     / profile / 0: "tag:example.com,2025:cc-platform#1.0.0",
+     / query / 1: {
+       3: [
+         [ / corim / 2, "corim-acme-gizmo-1.0.0" ],
+         [ / corim / 2, "corim-acme-gizmo-1.2.0" ],
+         [ / corim / 2, "corim-acme-gizmo-2.0.0" ]
+       ]
      }
    }
 
@@ -1065,6 +1233,44 @@ Table of Contents
          [ "application/vnd.example.refvals", h'afaeadac' ],
          [ "application/vnd.example.refvals", h'adacabaa' ]
        ]
+     }
+   }
+
+   This next example shows how a query can be based on one or more RIM
+   identifiers, instead of environments.  In this case, the query is
+   requesting three specific CoRIMs.  The corresponding result set
+   consequently has three entries.  Each key in the result map
+   corresponds to one of the RIM identifiers that was specified in the
+   query.  For brevity, the actual RIM content is represented here
+   simply as an array of a single byte.  In real-world situations, these
+   arrays would contain complete CMW encodings as described in
+   Section 3.5.2.
+
+   {
+     / profile / 0: "tag:example.com,2025:cc-platform#1.0.0",
+     / query / 1: {
+       3: [
+         [ / corim / 2, "corim-acme-gizmo-1.0.0" ],
+         [ / corim / 2, "corim-acme-gizmo-1.2.0" ],
+         [ / corim / 2, "corim-acme-gizmo-2.0.0" ]
+       ]
+     },
+     / results / 2: {
+       5: {
+         "corim-acme-gizmo-1.0.0": [
+           "application/rim+cose",
+           h'aa'
+         ],
+         "corim-acme-gizmo-1.2.0": [
+           "application/rim+cose",
+           h'bb'
+         ],
+         "corim-acme-gizmo-2.0.0": [
+           "application/rim+cose",
+           h'cc'
+         ]
+       }
+       10: 0("2030-12-13T18:30:02Z")
      }
    }
 
@@ -2237,6 +2443,11 @@ Table of Contents
               W. Pan, "Remote ATtestation procedureS (RATS)
               Architecture", RFC 9334, DOI 10.17487/RFC9334, January
               2023, <https://www.rfc-editor.org/rfc/rfc9334>.
+
+   [RFC9393]  Birkholz, H., Fitzgerald-McKay, J., Schmidt, C., and D.
+              Waltermire, "Concise Software Identification Tags",
+              RFC 9393, DOI 10.17487/RFC9393, June 2023,
+              <https://www.rfc-editor.org/rfc/rfc9393>.
 
    [SEMVER]   "Semantic Versioning 2.0.0", 2013,
               <https://semver.org/spec/v2.0.0.html>.

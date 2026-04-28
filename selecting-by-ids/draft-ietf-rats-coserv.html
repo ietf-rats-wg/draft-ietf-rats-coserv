@@ -1211,9 +1211,31 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
                 <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-queries" class="internal xref">Queries</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4.2.1">
+                    <p id="section-toc.1-1.3.2.4.2.1.1"><a href="#section-3.4.1" class="auto internal xref">3.4.1</a>.  <a href="#name-queries-by-environment" class="internal xref">Queries by Environment</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4.2.2">
+                    <p id="section-toc.1-1.3.2.4.2.2.1"><a href="#section-3.4.2" class="auto internal xref">3.4.2</a>.  <a href="#name-queries-by-rim-identifier" class="internal xref">Queries by RIM Identifier</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4.2.3">
+                    <p id="section-toc.1-1.3.2.4.2.3.1"><a href="#section-3.4.3" class="auto internal xref">3.4.3</a>.  <a href="#name-avoidance-of-volatile-data-" class="internal xref">Avoidance of Volatile Data in Queries</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4.2.4">
+                    <p id="section-toc.1-1.3.2.4.2.4.1"><a href="#section-3.4.4" class="auto internal xref">3.4.4</a>.  <a href="#name-query-logging" class="internal xref">Query Logging</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
                 <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-result-sets" class="internal xref">Result Sets</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5.2.1">
+                    <p id="section-toc.1-1.3.2.5.2.1.1"><a href="#section-3.5.1" class="auto internal xref">3.5.1</a>.  <a href="#name-results-for-queries-by-envi" class="internal xref">Results for Queries by Environment</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5.2.2">
+                    <p id="section-toc.1-1.3.2.5.2.2.1"><a href="#section-3.5.2" class="auto internal xref">3.5.2</a>.  <a href="#name-results-for-queries-by-rim-" class="internal xref">Results for Queries by RIM Identifier</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
@@ -1230,13 +1252,10 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
                 <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-query-structure" class="internal xref">Query Structure</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3.2.1">
-                    <p id="section-toc.1-1.4.2.3.2.1.1"><a href="#section-4.3.1" class="auto internal xref">4.3.1</a>.  <a href="#name-artifact-type" class="internal xref">Artifact Type</a></p>
+                    <p id="section-toc.1-1.4.2.3.2.1.1"><a href="#section-4.3.1" class="auto internal xref">4.3.1</a>.  <a href="#name-queries-by-environment-2" class="internal xref">Queries by Environment</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3.2.2">
-                    <p id="section-toc.1-1.4.2.3.2.2.1"><a href="#section-4.3.2" class="auto internal xref">4.3.2</a>.  <a href="#name-environment-selector" class="internal xref">Environment Selector</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3.2.3">
-                    <p id="section-toc.1-1.4.2.3.2.3.1"><a href="#section-4.3.3" class="auto internal xref">4.3.3</a>.  <a href="#name-result-type" class="internal xref">Result Type</a></p>
+                    <p id="section-toc.1-1.4.2.3.2.2.1"><a href="#section-4.3.2" class="auto internal xref">4.3.2</a>.  <a href="#name-queries-by-rim-identifier-2" class="internal xref">Queries by RIM Identifier</a></p>
 </li>
                 </ul>
 </li>
@@ -1389,8 +1408,10 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
 This appraisal necessitates access to Endorsements and Reference Values, which are often distributed across multiple providers, including hardware manufacturers, firmware developers, and software vendors.
 The lack of standardized methods for querying and retrieving these artifacts poses challenges in achieving seamless interoperability.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">The Concise Selector for Endorsements and Reference Values (CoSERV) addresses this challenge by defining a query language and a corresponding result structure for the transaction of artifacts between a provider and a consumer.
-The query language format provides Verifiers with a standard way to specify the environment characteristics of Attesters, such that the relevant artifacts can be obtained from Endorsers and Reference Value Providers.
-In turn, the result format allows those Endorsers and Reference Value Providers to package the artifacts within a standard structure.
+The query language format provides Verifiers with a standard way to specify a set of relevant artifacts, such that they can be obtained from Endorsers and Reference Value Providers.
+Queries can be based on characteristics of the Attester's environment.
+Alternatively, queries can be based on the precise identifiers of one or more individual artifacts.
+In turn, the result format allows those Endorsers and Reference Value Providers to package the selected artifacts within a standard structure.
 This facilitates the efficient discovery and retrieval of relevant Endorsements and Reference Values from providers, maximising the re-use of common software tools and libraries within the transactions.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">The CoSERV query language is intended to form the input data type for tools and services that provide access to Endorsements and Reference Values.
 The CoSERV result set is intended to form the corresponding output data type from those tools and services.<a href="#section-1-3" class="pilcrow">¶</a></p>
@@ -1543,10 +1564,11 @@ The source artifacts allow the consumer to audit the collected artifacts and ope
         <h3 id="name-environments">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-environments" class="section-name selfRef">Environments</a>
         </h3>
-<p id="section-3.3-1">The environment defines the scope (or scopes) in which the endorsement artifacts are applicable.
+<p id="section-3.3-1">Some CoSERV queries use environments as the basis for artifact selection.
+An environment defines the scope (or scopes) in which the endorsement artifacts are applicable.
 Given that the consumer of these artifacts is likely to be a Verifier in the RATS model, the typical interpretation of the environment would be that of an Attester that either has produced evidence, or is expected to produce evidence, that the Verifier needs to appraise.
 The Verifier consequently needs to query the Endorser or Reference Value Provider for artifacts that are applicable in that environment.
-There are three mutually-exclusive methods for defining the environment within a CoSERV query.
+For CoSERV queries that are based on environments, there are three mutually-exclusive methods for defining those environments.
 Exactly one of these three methods <span class="bcp14">MUST</span> be used for the query to be valid.
 All three methods correspond to environments that are also defined within CoRIM <span>[<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -1585,7 +1607,7 @@ Therefore, any environment selector in a CoSERV query can optionally be enhanced
           </h4>
 <p id="section-3.3.2-1">Because CoSERV is a query language, the CoSERV environment structure has been designed such that it is well suited to forming queries.
 It has been optimized such that the most common query styles are also the simplest to construct.
-This design makes it very straightforward to query for artifacts by (multiples of) instance, group or class.
+For the case of environment-based queries, this design makes it very straightforward to query for artifacts by (multiples of) instance, group or class.
 It is not possible to query by combinations of these properties at the same time.
 For example, it is not possible to form a query that selects by instance or group, while simultaneously being constrained by the scope of a specific class.
 As a more precise example, it would not be possible to form a single query that selects artifacts for instance "0x010203040506", but only for devices of class "ACME SiliconPro 2000".
@@ -1602,82 +1624,187 @@ This preserves the simplicity of the CoSERV environment model while avoiding amb
 </div>
 </section>
 </div>
-<div id="queries">
+<div id="secinfoqueries">
 <section id="section-3.4">
         <h3 id="name-queries">
 <a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-queries" class="section-name selfRef">Queries</a>
         </h3>
 <p id="section-3.4-1">The purpose of a query is to allow the consumer (Verifier) to specify the artifacts that it needs.
-The information that is conveyed in a CoSERV query includes the following:<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+CoSERV offers a small but versatile query language.
+The following styles of query are available:<a href="#section-3.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.4-2.1">
-            <p id="section-3.4-2.1.1">A specification of the required artifact type: Reference Value, Endorsed Value or Trust Anchor.
-See <a href="#secartifacts" class="auto internal xref">Section 3.2</a> for definitions of artifact types.
-A single CoSERV query can only specify a single artifact type.<a href="#section-3.4-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-3.4-2.1.1"><strong>Queries by Environment</strong>: This query style is used to select the artifacts that are applicable to the Attester's environment.
+See <a href="#secenvironments" class="auto internal xref">Section 3.3</a>.<a href="#section-3.4-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.4-2.2">
-            <p id="section-3.4-2.2.1">A specification of the Attester's environment.
+            <p id="section-3.4-2.2.1"><strong>Queries by RIM Identifier</strong>: This query style is used to select artifacts that are Reference Integrity Manifest (RIM) artifacts, and where the consumer already knows the precise identifiers of the specific RIMs that it needs.<a href="#section-3.4-2.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-3.4-3">Further details are given in the sections below.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
+<div id="secinfoqueryenv">
+<section id="section-3.4.1">
+          <h4 id="name-queries-by-environment">
+<a href="#section-3.4.1" class="section-number selfRef">3.4.1. </a><a href="#name-queries-by-environment" class="section-name selfRef">Queries by Environment</a>
+          </h4>
+<p id="section-3.4.1-1">When a CoSERV query is specified using an environment, the following information is coveyed in the query:<a href="#section-3.4.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.1-2.1">
+              <p id="section-3.4.1-2.1.1">A specification of the required artifact type: Reference Value, Endorsed Value or Trust Anchor.
+See <a href="#secartifacts" class="auto internal xref">Section 3.2</a> for definitions of artifact types.
+A single CoSERV query can only specify a single artifact type.<a href="#section-3.4.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.4.1-2.2">
+              <p id="section-3.4.1-2.2.1">A specification of the Attester's environment.
 Environments can be selected according to Attester instance, group or class.
 Additional properties of the environment state can be specified by adding one or more measurements to the selector.
 See <a href="#secenvironments" class="auto internal xref">Section 3.3</a> for full definitions.
 To facilitate efficient transactions, a single query can specify either multiple instances, multiple groups or multiple classes.
-However, it is not possible to mix instance-based selectors, group-based selectors and class-based selectors in a single query.<a href="#section-3.4-2.2.1" class="pilcrow">¶</a></p>
+However, it is not possible to mix instance-based selectors, group-based selectors and class-based selectors in a single query.<a href="#section-3.4.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.4-2.3">
-            <p id="section-3.4-2.3.1">A switch to select the desired supply chain depth.
+            <li class="normal" id="section-3.4.1-2.3">
+              <p id="section-3.4.1-2.3.1">A switch to select the desired supply chain depth.
 A CoSERV query can request collected artifacts, source artifacts, or both.
 This switch is especially relevant when the CoSERV query is fulfilled by an aggregator.
 The collected artifacts are intended for convenient consumption (according to the shallow trust model), while the source artifacts are principally useful for auditing (according to the deep trust model).
 It is possible for a query to select for source artifacts only, without the collected artifacts.
 This might happen when the consumer needs to inspect or audit artifacts from across the deep supply chain, while not requiring the convenience of the aggregated view.
 It could also happen when the consumer is acting as an intermediate broker, gathering artifacts for delivery to another aggregator.
-See <a href="#secaggregation" class="auto internal xref">Section 2</a> for details on aggregation, auditing and trust models.<a href="#section-3.4-2.3.1" class="pilcrow">¶</a></p>
+See <a href="#secaggregation" class="auto internal xref">Section 2</a> for details on aggregation, auditing and trust models.<a href="#section-3.4.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
-        </ul>
-<p id="section-3.4-3">CoSERV queries do not contain timestamps or any similarly volatile or unpredictable fields.
+          </ul>
+</section>
+</div>
+<div id="secinfoqueryrim">
+<section id="section-3.4.2">
+          <h4 id="name-queries-by-rim-identifier">
+<a href="#section-3.4.2" class="section-number selfRef">3.4.2. </a><a href="#name-queries-by-rim-identifier" class="section-name selfRef">Queries by RIM Identifier</a>
+          </h4>
+<p id="section-3.4.2-1">Reference Integrity Manifests (RIMs) are a common type of artifact format for representing Endorsements and Reference Values.
+RATS defines the CoRIM format for the encoding of RIMs (see <span>[<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>).
+CoSERV supports a query style that allows individual RIMs to be obtained based on their identifiers.
+This is a more primitive style of query, compared with the query by environment.
+It is applicable in cases where the consumer is already aware of the precise set of RIMs that it needs.
+There is no environment matching performed in this case, nor is there any aggregation.
+The shallow and deep trust models are therefore not applicable for this style of query, and there is no distinction between source and collected artifacts.
+The producer is expected to do nothing more than look up the identified documents and return them directly in the result set.<a href="#section-3.4.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.4.2-2">The query contains one or more RIM identifiers.
+RIM identifiers of the following types are permitted:<a href="#section-3.4.2-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.2-3.1">
+              <p id="section-3.4.2-3.1.1">CoRIM identifiers (<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10#section-4.1.1" class="relref">Section 4.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>)<a href="#section-3.4.2-3.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.4.2-3.2">
+              <p id="section-3.4.2-3.2.1">CoMID tag idenfifiers (<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10#section-5.1.1.1" class="relref">Section 5.1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>)<a href="#section-3.4.2-3.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.4.2-3.3">
+              <p id="section-3.4.2-3.3.1">CoSWID tag identifiers (<span><a href="https://rfc-editor.org/rfc/rfc9393#section-2.3" class="relref">Section 2.3</a> of [<a href="#RFC9393" class="cite xref">RFC9393</a>]</span>)<a href="#section-3.4.2-3.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-3.4.2-4">All three of these identifier types are required to be globally unique as per their corresponding specifications.
+It is not possible to mix different RIM identifier types in any single query: the query can contain multiple identifiers, but only of the same type.
+This constraint is enforced by the data model.<a href="#section-3.4.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="avoidance-of-volatile-data-in-queries">
+<section id="section-3.4.3">
+          <h4 id="name-avoidance-of-volatile-data-">
+<a href="#section-3.4.3" class="section-number selfRef">3.4.3. </a><a href="#name-avoidance-of-volatile-data-" class="section-name selfRef">Avoidance of Volatile Data in Queries</a>
+          </h4>
+<p id="section-3.4.3-1">CoSERV queries do not contain timestamps or any similarly volatile or unpredictable fields.
 This is to ensure that any set of materially-identical queries will always yield the same encoded sequence of CBOR bytes, regardless of the time when they were issued, or of other volatile factors.
 Along with the other encoding rules set out in <a href="#secencoding" class="auto internal xref">Section 4.5</a>, it means that a query can be used as a stable and canonical identifier of artifacts.
 This property of queries is an important enabler of efficient CoSERV transactions.
-See, for example, the HTTP caching design described in <a href="#secrrapicaching" class="auto internal xref">Section 6.1.4</a>.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
-<p id="section-3.4-4">A CoSERV implementation <span class="bcp14">MAY</span> log the time at which a query was received and fulfilled.
-This might sometimes be desirable for transparency or audit purposes.
-Implementations are free to define their own transparency events, which can then include timestamps or other suitable information.<a href="#section-3.4-4" class="pilcrow">¶</a></p>
+See, for example, the HTTP caching design described in <a href="#secrrapicaching" class="auto internal xref">Section 6.1.4</a>.<a href="#section-3.4.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="result-sets">
+<div id="query-logging">
+<section id="section-3.4.4">
+          <h4 id="name-query-logging">
+<a href="#section-3.4.4" class="section-number selfRef">3.4.4. </a><a href="#name-query-logging" class="section-name selfRef">Query Logging</a>
+          </h4>
+<p id="section-3.4.4-1">A CoSERV implementation <span class="bcp14">MAY</span> log the time at which a query was received and fulfilled.
+This might sometimes be desirable for transparency or audit purposes.
+Implementations are free to define their own transparency events, which can then include timestamps or other suitable information.<a href="#section-3.4.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="secinforesults">
 <section id="section-3.5">
         <h3 id="name-result-sets">
 <a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-result-sets" class="section-name selfRef">Result Sets</a>
         </h3>
 <p id="section-3.5-1">The result set contains the artifacts that the producer collected in response to the query.
-The top-level structure of the result set consists of the following three items:<a href="#section-3.5-1" class="pilcrow">¶</a></p>
+Result sets always include a timestamp indicating the expiry time of the entire result set.
+Consumers <span class="bcp14">MUST NOT</span> consider any part of the result set to be valid after this expiry time.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
+<p id="section-3.5-2">The remaining information contained in the result set depends on the style of query that was used: either a query by environment, or a query by RIM identifier.<a href="#section-3.5-2" class="pilcrow">¶</a></p>
+<div id="secinforesultsenv">
+<section id="section-3.5.1">
+          <h4 id="name-results-for-queries-by-envi">
+<a href="#section-3.5.1" class="section-number selfRef">3.5.1. </a><a href="#name-results-for-queries-by-envi" class="section-name selfRef">Results for Queries by Environment</a>
+          </h4>
+<p id="section-3.5.1-1">For queries by environment, the top-level structure of the result set consists of the following three items:<a href="#section-3.5.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.5-2.1">
-            <p id="section-3.5-2.1.1">A collection of one or more result entries.
+<li class="normal" id="section-3.5.1-2.1">
+              <p id="section-3.5.1-2.1.1">A collection of one or more result entries.
 This will be a collection of either reference values, endorsed values or trust anchors.
 See <a href="#secartifacts" class="auto internal xref">Section 3.2</a> for definitions of artifact types.
 Artifact types are never mixed in any single CoSERV result set.
-The artifacts in the result collection therefore <span class="bcp14">MUST</span> match the single artifact type specified in the original CoSERV query.<a href="#section-3.5-2.1.1" class="pilcrow">¶</a></p>
+The artifacts in the result collection therefore <span class="bcp14">MUST</span> match the single artifact type specified in the original CoSERV query.<a href="#section-3.5.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.5-2.2">
-            <p id="section-3.5-2.2.1">A timestamp indicating the expiry time of the entire result set.
-Consumers <span class="bcp14">MUST NOT</span> consider any part of the result set to be valid after this expiry time.<a href="#section-3.5-2.2.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-3.5-2.3">
-            <p id="section-3.5-2.3.1">A collection of the original source materials from which the producer derived the correct artifacts to include in the result set.
+            <li class="normal" id="section-3.5.1-2.2">
+              <p id="section-3.5.1-2.2.1">A collection of the original source materials from which the producer derived the correct artifacts to include in the result set.
 These source materials are optional, and their intended purpose is auditing.
 They are included only when requested by the original CoSERV query.
-Source materials would typically be requested in cases where the consumer is not willing to place sole trust in the producer, and therefore needs an audit trail to enable additional verifications.<a href="#section-3.5-2.3.1" class="pilcrow">¶</a></p>
+Source materials would typically be requested in cases where the consumer is not willing to place sole trust in the producer, and therefore needs an audit trail to enable additional verifications.<a href="#section-3.5.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
-        </ul>
-<p id="section-3.5-3">Each individual result entry combines a CoMID triple with an authority delegation chain.
+          </ul>
+<p id="section-3.5.1-3">Each individual result entry combines a CoMID triple with an authority delegation chain.
 CoMID triples are exactly as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-10#section-5.1.4" class="relref">Section 5.1.4</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
 Each CoMID triple will demonstrate the association between an environment matching that of the CoSERV query, and a single artifact such as a reference value, trust anchor or endorsed value.
 The authority delegation chain is composed of one or more authority delegates.
 Each authority delegate is represented by a public key or key identifier, which the consumer can check against its own set of trusted authorities.
 The authority delegation chain serves to establish the provenance of the result entry, and enables the Verifier to evaluate the trustworthiness of the associated artifact.
-The purpose of the authority delegation chain is to allow CoSERV responses to support decentralized trust models, where Verifiers may apply their own policy to determine which authorities are acceptable for different classes of artifact.<a href="#section-3.5-3" class="pilcrow">¶</a></p>
-<p id="section-3.5-4">Because each result entry combines a CoMID triple with an authority delegation chain, the entries are consequently known as quadruples (or "quads" for short).<a href="#section-3.5-4" class="pilcrow">¶</a></p>
+The purpose of the authority delegation chain is to allow CoSERV responses to support decentralized trust models, where Verifiers may apply their own policy to determine which authorities are acceptable for different classes of artifact.<a href="#section-3.5.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.5.1-4">Because each result entry combines a CoMID triple with an authority delegation chain, the entries are consequently known as quadruples (or "quads" for short).<a href="#section-3.5.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="secinforesultsrim">
+<section id="section-3.5.2">
+          <h4 id="name-results-for-queries-by-rim-">
+<a href="#section-3.5.2" class="section-number selfRef">3.5.2. </a><a href="#name-results-for-queries-by-rim-" class="section-name selfRef">Results for Queries by RIM Identifier</a>
+          </h4>
+<p id="section-3.5.2-1">Queries by RIM identifier are significantly simpler than queries by environment, and the result set structure is likewise simpler.
+There are no authority delegation chains or "quads" in the result.
+The result does not contain any extracted or aggregated information.
+Instead, it is composed of entire RIM documents, obtained and passed through verbatim from their original supply chain sources.<a href="#section-3.5.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.5.2-2">The result is a flat map structure, keyed by the RIM identifier.
+Each key in the map <span class="bcp14">MUST</span> correspond to one of the RIM identifiers in the original query.
+Each mapped value is the corresponding RIM data object, contained within a Conceptual Message Wrapper (CMW) as per <span>[<a href="#I-D.ietf-rats-msg-wrap" class="cite xref">I-D.ietf-rats-msg-wrap</a>]</span>.<a href="#section-3.5.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.5.2-3">The permitted RIM content for each map entry depends upon the type of key used in the query.<a href="#section-3.5.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.5.2-4">When the key is a CoRIM identifier, the RIM content <span class="bcp14">MUST</span> be the CoRIM data object whose identity matches the key.<a href="#section-3.5.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.5.2-5">When the key is a CoMID identifier, the RIM content <span class="bcp14">MUST</span> be a CoRIM data object, which contains the CoMID tag whose identity matches the key.
+The CoRIM data object <span class="bcp14">MAY</span> also contain other CoMID (or CoSWID) tags with different identifiers, even if those identifiers were not selected for in the query.<a href="#section-3.5.2-5" class="pilcrow">¶</a></p>
+<p id="section-3.5.2-6">When the key is a CoSWID identifier, the RIM content <span class="bcp14">MUST</span> be one of the following:<a href="#section-3.5.2-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2-7.1">
+              <p id="section-3.5.2-7.1.1">The CoSWID data object whose identity matches the key.<a href="#section-3.5.2-7.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.5.2-7.2">
+              <p id="section-3.5.2-7.2.1">A CoRIM data object, which contains the CoSWID tag whose identity matches the key.
+The CoRIM data object <span class="bcp14">MAY</span> also contain other CoSWID (or CoMID) tags with different identifiers, even if those identifiers were not selected for in the query.<a href="#section-3.5.2-7.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-3.5.2-8">The recipient of the query <span class="bcp14">MAY</span> provide only a subset of the RIMs that were requested in the query, including an empty set, if it could not fulfil the entire query.<a href="#section-3.5.2-8" class="pilcrow">¶</a></p>
+<p id="section-3.5.2-9">For all types of RIM identifier, the producer <span class="bcp14">MAY</span> be in possession of multiple versions of RIMs with that identity.
+In such cases, the producer <span class="bcp14">MUST</span> populate the result set with the newest available version only.<a href="#section-3.5.2-9" class="pilcrow">¶</a></p>
+<p id="section-3.5.2-10">It is possible for multiple keys in the result set to map to the same data object.
+For example, if a query selects for two CoMID identifiers, <code>CoMID-A</code> and <code>CoMID-B</code>, and the producer has a single CoRIM containing both of those CoMID tags, then the producer would need to populate the result set with entries for both <code>CoMID-A</code> and <code>CoMID-B</code>, where both entries map to identical copies of the single containing CoRIM.<a href="#section-3.5.2-10" class="pilcrow">¶</a></p>
+<p id="section-3.5.2-11">The producer <span class="bcp14">SHOULD</span> ensure that all RIMs in the result set are signed.
+In cases where the producer is returning copies of RIMs from upstream supply chain actors on a pass-through basis, the producer <span class="bcp14">SHOULD</span> preserve the original signatures from those supply chain actors, as opposed to re-constructing and re-signing the RIMs.<a href="#section-3.5.2-11" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 </section>
@@ -1764,27 +1891,35 @@ result-type = &amp;(collected-artifacts: 0)
               / &amp;(both: 2)
 </pre><a href="#section-4.3-3" class="pilcrow">¶</a>
 </div>
-<p id="section-4.3-4">The meanings of these fields are detailed in the following subsections.<a href="#section-4.3-4" class="pilcrow">¶</a></p>
-<div id="artifact-type">
+<p id="section-4.3-4">At top level, the query is partitioned into mutually-exclusive variants for the different query styles: queries by environment, or queries by RIM identifier.
+See <a href="#secinfoqueries" class="auto internal xref">Section 3.4</a> for details about the query styles and how they are used.<a href="#section-4.3-4" class="pilcrow">¶</a></p>
+<p id="section-4.3-5">The meanings of the query fields are detailed in the following subsections for each supported style.<a href="#section-4.3-5" class="pilcrow">¶</a></p>
+<div id="queries-by-environment">
 <section id="section-4.3.1">
-          <h4 id="name-artifact-type">
-<a href="#section-4.3.1" class="section-number selfRef">4.3.1. </a><a href="#name-artifact-type" class="section-name selfRef">Artifact Type</a>
+          <h4 id="name-queries-by-environment-2">
+<a href="#section-4.3.1" class="section-number selfRef">4.3.1. </a><a href="#name-queries-by-environment-2" class="section-name selfRef">Queries by Environment</a>
           </h4>
-<p id="section-4.3.1-1">The <code>artifact-type</code> field is the foremost discriminator of the query.
-It is a top-level category selector. Its three permissible values are <code>trust-anchors</code> (codepoint 1), <code>endorsed-values</code> (codepoint 0) and <code>reference-values</code> (codepoint 2).<a href="#section-4.3.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.3.1-2">See <a href="#secartifacts" class="auto internal xref">Section 3.2</a> for full definitions of artifact types.<a href="#section-4.3.1-2" class="pilcrow">¶</a></p>
-<p id="section-4.3.1-3">It is expected that implementations might choose to store these different categories of artifacts in different top-level stores or database tables.
+<div id="artifact-type">
+<section id="section-4.3.1.1">
+            <h5 id="name-artifact-type">
+<a href="#section-4.3.1.1" class="section-number selfRef">4.3.1.1. </a><a href="#name-artifact-type" class="section-name selfRef">Artifact Type</a>
+            </h5>
+<p id="section-4.3.1.1-1">For queries by environment, the <code>artifact-type</code> field is the foremost discriminator of the query.
+It is an artifact category selector.
+Its three permissible values are <code>trust-anchors</code> (codepoint 1), <code>endorsed-values</code> (codepoint 0) and <code>reference-values</code> (codepoint 2).<a href="#section-4.3.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.3.1.1-2">See <a href="#secartifacts" class="auto internal xref">Section 3.2</a> for full definitions of artifact types.<a href="#section-4.3.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.3.1.1-3">It is expected that implementations might choose to store these different categories of artifacts in different top-level stores or database tables.
 Where this is the case, the <code>artifact-type</code> field serves to narrow the query down to the correct store or table.
-Even where this is not the case, the discriminator is useful as a filter for the consumer, resulting in an efficiency gain by avoiding the transfer of unwanted data items.<a href="#section-4.3.1-3" class="pilcrow">¶</a></p>
+Even where this is not the case, the discriminator is useful as a filter for the consumer, resulting in an efficiency gain by avoiding the transfer of unwanted data items.<a href="#section-4.3.1.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="environment-selector">
-<section id="section-4.3.2">
-          <h4 id="name-environment-selector">
-<a href="#section-4.3.2" class="section-number selfRef">4.3.2. </a><a href="#name-environment-selector" class="section-name selfRef">Environment Selector</a>
-          </h4>
-<p id="section-4.3.2-1">The environment selector forms the main body of the query, and its CDDL is given below:<a href="#section-4.3.2-1" class="pilcrow">¶</a></p>
-<div class="lang-cddl sourcecode" id="section-4.3.2-2">
+<section id="section-4.3.1.2">
+            <h5 id="name-environment-selector">
+<a href="#section-4.3.1.2" class="section-number selfRef">4.3.1.2. </a><a href="#name-environment-selector" class="section-name selfRef">Environment Selector</a>
+            </h5>
+<p id="section-4.3.1.2-1">For queries by environment, the environment selector forms the main body of the query, and its CDDL is given below:<a href="#section-4.3.1.2-1" class="pilcrow">¶</a></p>
+<div class="lang-cddl sourcecode" id="section-4.3.1.2-2">
 <pre>
 ;# import comid-autogen
 
@@ -1816,54 +1951,73 @@ stateful-group = [
 selector //= ( &amp;(group: 2) =&gt; [
   + stateful-group
 ] )
-</pre><a href="#section-4.3.2-2" class="pilcrow">¶</a>
+</pre><a href="#section-4.3.1.2-2" class="pilcrow">¶</a>
 </div>
-<p id="section-4.3.2-3">Environments can be specified according to instance, group or class. See <a href="#secenvironments" class="auto internal xref">Section 3.3</a> for details.<a href="#section-4.3.2-3" class="pilcrow">¶</a></p>
-<p id="section-4.3.2-4">Although these three environment definitions are mutually-exclusive in a CoSERV query, all three support multiple entries.
+<p id="section-4.3.1.2-3">Environments can be specified according to instance, group or class. See <a href="#secenvironments" class="auto internal xref">Section 3.3</a> for details.<a href="#section-4.3.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.3.1.2-4">Although these three environment definitions are mutually-exclusive in a CoSERV query, all three support multiple entries.
 This is to gain efficiency by allowing the consumer (Verifier) to query for multiple artifacts in a single transaction.
 For example, where artifacts are being indexed by instance, it would be possible to specify an arbitrary number of instances in a single query, and therefore obtain the artifacts for all of them in a single transaction.
 Likewise for classes and groups.
 However, it would not be possible for a single query to specify more than one kind of environment.
-For example, it would not be possible to query for both class-level and instance-level artifacts in a single CoSERV transaction.<a href="#section-4.3.2-4" class="pilcrow">¶</a></p>
-<p id="section-4.3.2-5">All three environment selector types can optionally be enhanced with one or more <code>measurement-map</code> entries, which are used to express aspects of the environment state.
-See <a href="#secstateful" class="auto internal xref">Section 3.3.1</a> for a description of stateful environments.<a href="#section-4.3.2-5" class="pilcrow">¶</a></p>
+For example, it would not be possible to query for both class-level and instance-level artifacts in a single CoSERV transaction.<a href="#section-4.3.1.2-4" class="pilcrow">¶</a></p>
+<p id="section-4.3.1.2-5">All three environment selector types can optionally be enhanced with one or more <code>measurement-map</code> entries, which are used to express aspects of the environment state.
+See <a href="#secstateful" class="auto internal xref">Section 3.3.1</a> for a description of stateful environments.<a href="#section-4.3.1.2-5" class="pilcrow">¶</a></p>
 <div id="selector-semantics">
-<section id="section-4.3.2.1">
-            <h5 id="name-selector-semantics">
-<a href="#section-4.3.2.1" class="section-number selfRef">4.3.2.1. </a><a href="#name-selector-semantics" class="section-name selfRef">Selector Semantics</a>
-            </h5>
-<p id="section-4.3.2.1-1">When multiple environment selectors are present in a single query, such as multiple instances or multiple groups, the recipient of the query <span class="bcp14">MUST</span> consider these to be alternatives, and hence use a logical <code>OR</code> operation when applying the query to its internal data stores.<a href="#section-4.3.2.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.3.2.1-2">Below is an illustrative example of how a CoSERV query for endorsed values, selecting for multiple Attester instances, might be transformed into a semantically-equivalent SQL database query:<a href="#section-4.3.2.1-2" class="pilcrow">¶</a></p>
-<div class="lang-sql sourcecode" id="section-4.3.2.1-3">
+<section id="section-4.3.1.2.1">
+              <h6 id="name-selector-semantics">
+<a href="#section-4.3.1.2.1" class="section-number selfRef">4.3.1.2.1. </a><a href="#name-selector-semantics" class="section-name selfRef">Selector Semantics</a>
+              </h6>
+<p id="section-4.3.1.2.1-1">When multiple environment selectors are present in a single query, such as multiple instances or multiple groups, the recipient of the query <span class="bcp14">MUST</span> consider these to be alternatives, and hence use a logical <code>OR</code> operation when applying the query to its internal data stores.<a href="#section-4.3.1.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.3.1.2.1-2">Below is an illustrative example of how a CoSERV query for endorsed values, selecting for multiple Attester instances, might be transformed into a semantically-equivalent SQL database query:<a href="#section-4.3.1.2.1-2" class="pilcrow">¶</a></p>
+<div class="lang-sql sourcecode" id="section-4.3.1.2.1-3">
 <pre>
 SELECT *
   FROM endorsed_values
  WHERE ( instance-id = "At6tvu/erQ==" ) OR
        ( instance-id = "iZl4ZVY=" )`
-</pre><a href="#section-4.3.2.1-3" class="pilcrow">¶</a>
+</pre><a href="#section-4.3.1.2.1-3" class="pilcrow">¶</a>
 </div>
-<p id="section-4.3.2.1-4">The same applies for class-based selectors; however, since class selectors are themselves composed of multiple inner fields, the recipient of the query <span class="bcp14">MUST</span> use a logical <code>AND</code> operation in consideration of the inner fields for each class.<a href="#section-4.3.2.1-4" class="pilcrow">¶</a></p>
-<p id="section-4.3.2.1-5">Also, for class-based selectors, any unset fields in the class are assumed to be wildcard (<code>*</code>), and therefore match any value.<a href="#section-4.3.2.1-5" class="pilcrow">¶</a></p>
-<p id="section-4.3.2.1-6">Below is an illustrative example of how a CoSERV query for reference values, selecting for multiple Attester classes, might be transformed into a semantically-equivalent SQL database query:<a href="#section-4.3.2.1-6" class="pilcrow">¶</a></p>
-<div class="lang-sql sourcecode" id="section-4.3.2.1-7">
+<p id="section-4.3.1.2.1-4">The same applies for class-based selectors; however, since class selectors are themselves composed of multiple inner fields, the recipient of the query <span class="bcp14">MUST</span> use a logical <code>AND</code> operation in consideration of the inner fields for each class.<a href="#section-4.3.1.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-4.3.1.2.1-5">Also, for class-based selectors, any unset fields in the class are assumed to be wildcard (<code>*</code>), and therefore match any value.<a href="#section-4.3.1.2.1-5" class="pilcrow">¶</a></p>
+<p id="section-4.3.1.2.1-6">Below is an illustrative example of how a CoSERV query for reference values, selecting for multiple Attester classes, might be transformed into a semantically-equivalent SQL database query:<a href="#section-4.3.1.2.1-6" class="pilcrow">¶</a></p>
+<div class="lang-sql sourcecode" id="section-4.3.1.2.1-7">
 <pre>
 SELECT *
   FROM reference_values
  WHERE ( class-id = "iZl4ZVY=" AND class-vendor = "ACME Inc." ) OR
        ( class-id = "31fb5abf-023e-4992-aa4e-95f9c1503bfa" )
-</pre><a href="#section-4.3.2.1-7" class="pilcrow">¶</a>
+</pre><a href="#section-4.3.1.2.1-7" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 </section>
 </div>
 <div id="result-type">
-<section id="section-4.3.3">
-          <h4 id="name-result-type">
-<a href="#section-4.3.3" class="section-number selfRef">4.3.3. </a><a href="#name-result-type" class="section-name selfRef">Result Type</a>
+<section id="section-4.3.1.3">
+            <h5 id="name-result-type">
+<a href="#section-4.3.1.3" class="section-number selfRef">4.3.1.3. </a><a href="#name-result-type" class="section-name selfRef">Result Type</a>
+            </h5>
+<p id="section-4.3.1.3-1">For queries by environment, the <code>result-type</code> field selects for the desired type(s) of results: <code>collected-artifacts</code> (codepoint 0), <code>source-artifacts</code> (codepoint 1) or <code>both</code> (codepoint 2).
+See <a href="#secaggregation" class="auto internal xref">Section 2</a> for definitions of source and collected artifacts.<a href="#section-4.3.1.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="queries-by-rim-identifier">
+<section id="section-4.3.2">
+          <h4 id="name-queries-by-rim-identifier-2">
+<a href="#section-4.3.2" class="section-number selfRef">4.3.2. </a><a href="#name-queries-by-rim-identifier-2" class="section-name selfRef">Queries by RIM Identifier</a>
           </h4>
-<p id="section-4.3.3-1">The <code>result-type</code> field selects for the desired type(s) of results: <code>collected-artifacts</code> (codepoint 0), <code>source-artifacts</code> (codepoint 1) or <code>both</code> (codepoint 2).
-See <a href="#secaggregation" class="auto internal xref">Section 2</a> for definitions of source and collected artifacts.<a href="#section-4.3.3-1" class="pilcrow">¶</a></p>
+<div id="rim-selector">
+<section id="section-4.3.2.1">
+            <h5 id="name-rim-selector">
+<a href="#section-4.3.2.1" class="section-number selfRef">4.3.2.1. </a><a href="#name-rim-selector" class="section-name selfRef">RIM Selector</a>
+            </h5>
+<p id="section-4.3.2.1-1">The <code>rim-selector</code> (codepoint <code>3</code>) is the only data field in this style of query.
+It contains a set of one or more RIM identifiers.
+RIMs can be selected by CoRIM, CoMID or CoSWID identifiers, as explained in <a href="#secinfoqueryrim" class="auto internal xref">Section 3.4.2</a>.<a href="#section-4.3.2.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 </section>
@@ -1951,6 +2105,10 @@ trust-anchors = (
 cots = "TODO COTS"
 </pre><a href="#section-4.4-2" class="pilcrow">¶</a>
 </div>
+<p id="section-4.4-3">Result sets are described in <a href="#secinforesults" class="auto internal xref">Section 3.5</a>.
+As with the query data model, the result set is partitioned into mutually-exclusive variants for the different query styles: queries by environment, or queries by RIM identifier.
+The <code>environment-result</code> and <code>rim-result</code> types provide the separate data models for each style respectively.
+Only the <code>expiry</code> field (codepoint <code>10</code>) is common to both styles.<a href="#section-4.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="secencoding">
@@ -2022,7 +2180,7 @@ Other header parameters <span class="bcp14">MAY</span> be added to the header bu
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-query-data-examples" class="section-name selfRef">Query Data Examples</a>
         </h3>
 <p id="section-5.1-1">This section provides some illustrative examples of valid CoSERV query objects.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
-<p id="section-5.1-2">The following example shows a query for Reference Values scoped by a single class.
+<p id="section-5.1-2">The following example shows an environment-based query for Reference Values scoped by a single class.
 The <code>artifact-type</code> is set to 2 (<code>reference-values</code>), indicating a query for Reference Values.
 The <code>profile</code> is given the example value of <code>tag:example.com,2025:cc-platform#1.0.0</code>.
 Finally, the <code>environment-selector</code> uses the key 0 to select for class, and the value contains a single entry with illustrative settings for the identifier, vendor and model.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
@@ -2089,6 +2247,22 @@ Again, the <code>artifact-type</code> is set to 2, and <code>profile</code> is g
   }
 }
 </pre><a href="#section-5.1-7" class="pilcrow">¶</a>
+</div>
+<p id="section-5.1-8">This next example shows how a query can be based on one or more RIM identifiers, instead of environments.
+In this case, the query is requesting three specific CoRIMs.<a href="#section-5.1-8" class="pilcrow">¶</a></p>
+<div class="lang-edn sourcecode" id="section-5.1-9">
+<pre>
+{
+  / profile / 0: "tag:example.com,2025:cc-platform#1.0.0",
+  / query / 1: {
+    3: [
+      [ / corim / 2, "corim-acme-gizmo-1.0.0" ],
+      [ / corim / 2, "corim-acme-gizmo-1.2.0" ],
+      [ / corim / 2, "corim-acme-gizmo-2.0.0" ]
+    ]
+  }
+}
+</pre><a href="#section-5.1-9" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -2180,6 +2354,43 @@ This means one or more original signed manifests containing information that sat
   }
 }
 </pre><a href="#section-5.2-8" class="pilcrow">¶</a>
+</div>
+<p id="section-5.2-9">This next example shows how a query can be based on one or more RIM identifiers, instead of environments.
+In this case, the query is requesting three specific CoRIMs.
+The corresponding result set consequently has three entries.
+Each key in the result map corresponds to one of the RIM identifiers that was specified in the query.
+For brevity, the actual RIM content is represented here simply as an array of a single byte.
+In real-world situations, these arrays would contain complete CMW encodings as described in <a href="#secinforesultsrim" class="auto internal xref">Section 3.5.2</a>.<a href="#section-5.2-9" class="pilcrow">¶</a></p>
+<div class="lang-edn sourcecode" id="section-5.2-10">
+<pre>
+{
+  / profile / 0: "tag:example.com,2025:cc-platform#1.0.0",
+  / query / 1: {
+    3: [
+      [ / corim / 2, "corim-acme-gizmo-1.0.0" ],
+      [ / corim / 2, "corim-acme-gizmo-1.2.0" ],
+      [ / corim / 2, "corim-acme-gizmo-2.0.0" ]
+    ]
+  },
+  / results / 2: {
+    5: {
+      "corim-acme-gizmo-1.0.0": [
+        "application/rim+cose",
+        h'aa'
+      ],
+      "corim-acme-gizmo-1.2.0": [
+        "application/rim+cose",
+        h'bb'
+      ],
+      "corim-acme-gizmo-2.0.0": [
+        "application/rim+cose",
+        h'cc'
+      ]
+    }
+    10: 0("2030-12-13T18:30:02Z")
+  }
+}
+</pre><a href="#section-5.2-10" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -3708,6 +3919,10 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <dt id="RFC9334">[RFC9334]</dt>
         <dd>
 <span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Thaler, D.</span>, <span class="refAuthor">Richardson, M.</span>, <span class="refAuthor">Smith, N.</span>, and <span class="refAuthor">W. Pan</span>, <span class="refTitle">"Remote ATtestation procedureS (RATS) Architecture"</span>, <span class="seriesInfo">RFC 9334</span>, <span class="seriesInfo">DOI 10.17487/RFC9334</span>, <time datetime="2023-01" class="refDate">January 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9334">https://www.rfc-editor.org/rfc/rfc9334</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9393">[RFC9393]</dt>
+        <dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Fitzgerald-McKay, J.</span>, <span class="refAuthor">Schmidt, C.</span>, and <span class="refAuthor">D. Waltermire</span>, <span class="refTitle">"Concise Software Identification Tags"</span>, <span class="seriesInfo">RFC 9393</span>, <span class="seriesInfo">DOI 10.17487/RFC9393</span>, <time datetime="2023-06" class="refDate">June 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9393">https://www.rfc-editor.org/rfc/rfc9393</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SEMVER">[SEMVER]</dt>
       <dd>
