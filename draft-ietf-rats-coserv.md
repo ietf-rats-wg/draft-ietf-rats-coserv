@@ -333,7 +333,7 @@ RIM identifiers of the following types are permitted:
 - CoSWID tag identifiers ({{Section 2.3 of -coswid}})
 
 All three of these identifier types are required to be globally unique as per their corresponding specifications.
-A single query MAY contain identifiers of different types.
+A single query may contain identifiers of different types.
 
 ### Avoidance of Volatile Data in Queries
 
@@ -359,7 +359,7 @@ The remaining information contained in the result set depends on the style of qu
 
 ### Results for Queries by Environment {#secinforesultsenv}
 
-For queries by environment, the top-level structure of the result set consists of the following three items:
+For queries by environment, the top-level structure of the result set contains the following two items in addition to the expiry timestamp:
 
 - A collection of one or more result entries.
 This will be a collection of either reference values, endorsed values or trust anchors.
@@ -397,20 +397,21 @@ The permitted RIM content for each map entry depends upon the type of key used i
 When the key is a CoRIM identifier, the RIM content MUST be the CoRIM data object whose identity matches the key.
 
 When the key is a CoMID tag identifier, the RIM content MUST be a CoRIM data object, which contains the CoMID tag whose identity matches the key.
-The CoRIM data object MAY also contain other CoMID (or CoSWID) tags with different identifiers, even if those identifiers were not included in the query.
+The CoRIM data object may also contain other CoMID (or CoSWID) tags with different identifiers, even if those identifiers were not included in the query.
 
 When the key is a CoSWID tag identifier, the RIM content MUST be one of the following:
 
 - The CoSWID data object whose identity matches the key.
 - A CoRIM data object, which contains the CoSWID tag whose identity matches the key.
-The CoRIM data object MAY also contain other CoSWID (or CoMID) tags with different identifiers, even if those identifiers were not included in the query.
+The CoRIM data object may also contain other CoSWID (or CoMID) tags with different identifiers, even if those identifiers were not included in the query.
 
-The recipient of the query MAY provide only a subset of the RIMs that were requested in the query, including an empty set, if it could not fulfil the entire query.
+The recipient of the query MAY return only a subset of the RIMs that were requested, if it is not able to satisfy the entire query.
+An empty set is also a valid result in the worst case.
 
-For CoMID and CoSWID tag identifiers, the producer MAY be in possession of multiple revisions of the RIM tag with that identity.
+For CoMID and CoSWID tag identifiers, the producer may be in possession of multiple revisions of the RIM tag with that identity.
 In such cases, the producer MUST populate the result set with the newest available revision only.
 The "newest" revision is defined as the one with the highest integer version counter in the relevant tag's identity map.
-See ({{Section 5.1.1.2 of -rats-corim}}) and ({{Section 2.3 of -coswid}}) for additional details of tag versioning.
+See {{Section 5.1.1.2 of -rats-corim}} and {{Section 2.3 of -coswid}} for additional details of tag versioning.
 
 It is possible for multiple keys in the result set to map to the same data object.
 For example, if a query selects for two CoMID identifiers, `CoMID-A` and `CoMID-B`, and the producer has a single CoRIM containing both of those CoMID tags, then the producer MAY populate the result set with entries for both `CoMID-A` and `CoMID-B`, where both entries map to identical copies of the single containing CoRIM.
@@ -529,7 +530,7 @@ See {{secaggregation}} for definitions of source and collected artifacts.
 
 #### RIM Selector
 
-The `rim-selector` (codepoint `3`) is the only data field in this style of query.
+The `rim-selector` (codepoint 3) is the only data field in this style of query.
 It contains a set of one or more RIM identifiers.
 RIMs can be selected by an arbitrary mixture of CoRIM, CoMID or CoSWID identifiers, as explained in {{secinfoqueryrim}}.
 
@@ -544,7 +545,7 @@ The result set structure is given by the following CDDL:
 Result sets are described in {{secinforesults}}.
 As with the query data model, the result set is partitioned into mutually-exclusive variants for the different query styles: queries by environment, or queries by RIM identifier.
 The `environment-result` and `rim-result` types provide the separate data models for each style respectively.
-Only the `expiry` field (codepoint `10`) is common to both styles.
+Only the `expiry` field (codepoint 10) is common to both styles.
 
 ## Encoding Requirements {#secencoding}
 
