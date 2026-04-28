@@ -2,10 +2,27 @@
 ;# import comid-autogen
 
 results = {
-  result-set
+  ( environment-result // rim-result )
   &(expiry: 10) => tdate ; RFC3339 date
-  ? &(source-artifacts: 11) => [ + cmw.cbor-record ]
 }
+
+environment-result = (
+  ; result-type: collectect-artifacts
+  result-set //
+
+  ; result-type: source-artifacts
+  &(source-artifacts: 11) => [ + cmw.cbor-record ] //
+
+  ; result-type: both
+  (
+    result-set
+    &(source-artifacts: 11) => [ + cmw.cbor-record ]
+  )
+)
+
+rim-result = (
+  &(rims: 5) => cmw.cbor-collection
+)
 
 result-set //= reference-values
 result-set //= endorsed-values

@@ -1,8 +1,24 @@
+;# import comid-autogen
+;# import corim-autogen
+;# import rfc9393 as coswid
+
 query = {
+ ( environment-query // rim-query )
+}
+
+environment-query = (
   &(artifact-type: 0) => artifact-type
   &(environment-selector: 1) => environment-selector-map
   &(result-type: 2) => result-type
-}
+)
+
+rim-query = (
+  &(rim-selector: 3) => [ + rim-selector-id ]
+)
+
+rim-selector-id = [ &(comid: 0), comid.$tag-id-type-choice ]
+                  / [ &(coswid: 1), coswid.tag-id ]
+                  / [ &(corim: 2), corim.$corim-id-type-choice ]
 
 artifact-type = &(endorsed-values: 0)
                 / &(trust-anchors: 1)
