@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-28T01:45:09.429502+00:00",
+  "timestamp": "2026-04-30T01:47:06.159287+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -5367,28 +5367,114 @@
     {
       "number": 111,
       "id": "PR_kwDOOAZd1M7T7mN6",
-      "title": "feat(cddl): add query by RIM identifier",
+      "title": "feat: add query by RIM identifier",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/111",
       "state": "OPEN",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "thomas-fossati",
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "Extend the query and result objects to allow querying by CoRIM/CoMID/CoSWID/CoTS identifiers.\r\n\r\nThe changes introduced here are backwards-compatible.",
       "createdAt": "2026-04-20T11:44:44Z",
-      "updatedAt": "2026-04-21T08:58:48Z",
+      "updatedAt": "2026-04-28T18:52:08Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
-      "baseRefOid": "8acedf6a45811554e2a0602d1bd5c535478c90af",
+      "baseRefOid": "1161b0e9eaa53390d04e1f7979894a102d26dcda",
       "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "headRefName": "selecting-by-ids",
-      "headRefOid": "fa528da918ceddae43e75a924555cb26ab4ccdce",
+      "headRefOid": "d879c26511cb03606f761d40055e43647eb94d6a",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M75uWpL",
+          "commit": {
+            "abbreviatedOid": "393869b"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-28T14:26:54Z",
+          "updatedAt": "2026-04-28T14:45:11Z",
+          "comments": [
+            {
+              "originalPosition": 100,
+              "body": "It seems to me that this is a normal \u201cmay\", not an RFC2119 MAY.\n\n```suggestion\nA single query may contain identifiers of different types.\n```",
+              "createdAt": "2026-04-28T14:26:54Z",
+              "updatedAt": "2026-04-28T14:45:11Z"
+            },
+            {
+              "originalPosition": 128,
+              "body": "Three is now two.  Maybe:\n\n> _\"For queries by environment, the result set contains the following two items in addition to the timestamp:\u201d_\n\nor similar.",
+              "createdAt": "2026-04-28T14:31:12Z",
+              "updatedAt": "2026-04-28T14:45:11Z"
+            },
+            {
+              "originalPosition": 166,
+              "body": "This MAY doesn\u2019t look RFC2119-worthy either.",
+              "createdAt": "2026-04-28T14:35:41Z",
+              "updatedAt": "2026-04-28T14:45:11Z"
+            },
+            {
+              "originalPosition": 168,
+              "body": "This phrasing may sound confusing to a non-native ear.  Specifically, someone like me could interpret the _\u201c[i]f it could not fulfil the entire query.\u201d_ to mean _\u201cif it could only fulfil part of the query\u201d_, which is certainly not what you wanted to say.",
+              "createdAt": "2026-04-28T14:40:04Z",
+              "updatedAt": "2026-04-28T14:45:11Z"
+            },
+            {
+              "originalPosition": 170,
+              "body": "ditto MAY",
+              "createdAt": "2026-04-28T14:40:21Z",
+              "updatedAt": "2026-04-28T14:45:11Z"
+            },
+            {
+              "originalPosition": 173,
+              "body": "spurious parenthesis\n\n```suggestion\nSee {{Section 5.1.1.2 of -rats-corim}} and {{Section 2.3 of -coswid}} for additional details of tag versioning.\n```",
+              "createdAt": "2026-04-28T14:41:25Z",
+              "updatedAt": "2026-04-28T14:45:11Z"
+            },
+            {
+              "originalPosition": 243,
+              "body": "the use of backticks seems inconsistent with previous instances\n\n```suggestion\nThe `rim-selector` (codepoint 3) is the only data field in this style of query.\n```",
+              "createdAt": "2026-04-28T14:43:51Z",
+              "updatedAt": "2026-04-28T14:45:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M7502r3",
+          "commit": {
+            "abbreviatedOid": "d879c26"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "@paulhowardarm, the prose you added LGTM!\nAlso, thanks for addressing my comments.",
+          "createdAt": "2026-04-28T18:17:18Z",
+          "updatedAt": "2026-04-28T18:17:18Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M751mmN",
+          "commit": {
+            "abbreviatedOid": "d879c26"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "I'm approving the CDDL changes",
+          "createdAt": "2026-04-28T18:52:08Z",
+          "updatedAt": "2026-04-28T18:52:08Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 112,
