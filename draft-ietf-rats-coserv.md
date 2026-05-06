@@ -737,8 +737,16 @@ The capabilities field is denoted by the label `"capabilities"` in JSON document
 This field allows clients to discover the profiled variants of CoSERV for which the service implementation can satisfy queries and provide artifacts.
 This field is structured as an array, which allows for service implementations that support more than one profile.
 Each supported profile is indicated according to its parameterized media type, along with the categories of artifact that can be provided for the profile.
-The artifact categories are `source` and `collected`, as described in {{secartifacts}}.
-Each profile is paired with a non-empty set of artifact categories, allowing the service implementation to indicate whether it supports the retrieval of source artifacts, collected artifacts, or both.
+The permitted artifact categories are `"source"`, `"collected"` and `"rims"`.
+
+The two categories `"source"` and `"collected"` refer specifically to the results of queries that are based on environments.
+The presence of either or both of these two categories in the array indicates that the service implementation supports environment-based queries, as described in {{secinfoqueryenv}}.
+The difference between source and collected artifacts is explained in {{secartifacts}}.
+
+The category `"rims"` refers to the results of queries that are based on RIM identifiers.
+The presence of this category indicates that the service implementation supports identifier-based queries, as described in {{secinfoqueryrim}}.
+
+Each profile is paired with a non-empty set of artifact categories, allowing the service implementation to indicate the ways in which it can satisfy queries.
 This pairing caters for situations where the service implementation might support different combinations of artifact category for different profiles.
 
 ##### API Endpoints

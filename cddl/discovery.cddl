@@ -26,4 +26,4 @@ media-type-label = eat.JC<"media-type", 1>
 artifact-support-label = eat.JC<"artifact-support", 2>
 
 non-empty-array<M> = (M) .and ([ + any ])
-artifact-support = non-empty-array<[ ? "source", ? "collected" ]>
+artifact-support = non-empty-array<[ ? "source", ? "collected", ? "rims" ]>
