@@ -33,8 +33,8 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
     platformdirs 4.9.6
     pycountry 24.6.1
     PyYAML 6.0.3
-    requests 2.32.5
-    wcwidth 0.6.0
+    requests 2.33.1
+    wcwidth 0.7.0
 -->
 <link href="draft-ietf-rats-coserv.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1055,11 +1055,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CoSERV</td>
-<td class="right">April 2026</td>
+<td class="right">May 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Howard, et al.</td>
-<td class="center">Expires 30 October 2026</td>
+<td class="center">Expires 7 November 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1072,12 +1072,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-rats-coserv-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-04-28" class="published">28 April 2026</time>
+<time datetime="2026-05-06" class="published">6 May 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-10-30">30 October 2026</time></dd>
+<dd class="expires"><time datetime="2026-11-07">7 November 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1149,7 +1149,7 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 30 October 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 7 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2499,7 +2499,7 @@ media-type-label = eat.JC&lt;"media-type", 1&gt;
 artifact-support-label = eat.JC&lt;"artifact-support", 2&gt;
 
 non-empty-array&lt;M&gt; = (M) .and ([ + any ])
-artifact-support = non-empty-array&lt;[ ? "source", ? "collected" ]&gt;
+artifact-support = non-empty-array&lt;[ ? "source", ? "collected", ? "rims" ]&gt;
 </pre><a href="#section-6.1.2-4" class="pilcrow">¶</a>
 </div>
 <div id="discovery-document-contents">
@@ -2529,9 +2529,14 @@ Version numbers and patch levels are otherwise implementation-defined.<a href="#
 This field allows clients to discover the profiled variants of CoSERV for which the service implementation can satisfy queries and provide artifacts.
 This field is structured as an array, which allows for service implementations that support more than one profile.
 Each supported profile is indicated according to its parameterized media type, along with the categories of artifact that can be provided for the profile.
-The artifact categories are <code>source</code> and <code>collected</code>, as described in <a href="#secartifacts" class="auto internal xref">Section 3.2</a>.
-Each profile is paired with a non-empty set of artifact categories, allowing the service implementation to indicate whether it supports the retrieval of source artifacts, collected artifacts, or both.
-This pairing caters for situations where the service implementation might support different combinations of artifact category for different profiles.<a href="#section-6.1.2.1.2-1" class="pilcrow">¶</a></p>
+The permitted artifact categories are <code>"source"</code>, <code>"collected"</code> and <code>"rims"</code>.<a href="#section-6.1.2.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.2.1.2-2">The two categories <code>"source"</code> and <code>"collected"</code> refer specifically to the results of queries that are based on environments.
+The presence of either or both of these two categories in the array indicates that the service implementation supports environment-based queries, as described in <a href="#secinfoqueryenv" class="auto internal xref">Section 3.4.1</a>.
+The difference between source and collected artifacts is explained in <a href="#secartifacts" class="auto internal xref">Section 3.2</a>.<a href="#section-6.1.2.1.2-2" class="pilcrow">¶</a></p>
+<p id="section-6.1.2.1.2-3">The category <code>"rims"</code> refers to the results of queries that are based on RIM identifiers.
+The presence of this category indicates that the service implementation supports identifier-based queries, as described in <a href="#secinfoqueryrim" class="auto internal xref">Section 3.4.2</a>.<a href="#section-6.1.2.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-6.1.2.1.2-4">Each profile is paired with a non-empty set of artifact categories, allowing the service implementation to indicate the ways in which it can satisfy queries.
+This pairing caters for situations where the service implementation might support different combinations of artifact category for different profiles.<a href="#section-6.1.2.1.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="api-endpoints">
@@ -5192,6 +5197,7 @@ non-empty-array&lt;M&gt; = M .and ([+ any])
 artifact-support = non-empty-array&lt;[
     ? "source",
     ? "collected",
+    ? "rims",
 ]&gt;
 cmw.start = cmw.cmw
 cmw.cmw = cmw.json-cmw / cmw.cbor-cmw

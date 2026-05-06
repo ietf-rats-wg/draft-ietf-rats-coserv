@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Informational                                T. Fossati
-Expires: 30 October 2026                                          Linaro
+Expires: 7 November 2026                                          Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 30 October 2026                                          Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                           28 April 2026
+                                                              6 May 2026
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 October 2026.
+   This Internet-Draft will expire on 7 November 2026.
 
 Copyright Notice
 
@@ -1398,7 +1398,7 @@ Table of Contents
    artifact-support-label = eat.JC<"artifact-support", 2>
 
    non-empty-array<M> = (M) .and ([ + any ])
-   artifact-support = non-empty-array<[ ? "source", ? "collected" ]>
+   artifact-support = non-empty-array<[ ? "source", ? "collected", ? "rims" ]>
 
 6.1.2.1.  Discovery Document Contents
 
@@ -1427,13 +1427,26 @@ Table of Contents
    implementations that support more than one profile.  Each supported
    profile is indicated according to its parameterized media type, along
    with the categories of artifact that can be provided for the profile.
-   The artifact categories are source and collected, as described in
-   Section 3.2.  Each profile is paired with a non-empty set of artifact
-   categories, allowing the service implementation to indicate whether
-   it supports the retrieval of source artifacts, collected artifacts,
-   or both.  This pairing caters for situations where the service
-   implementation might support different combinations of artifact
-   category for different profiles.
+   The permitted artifact categories are "source", "collected" and
+   "rims".
+
+   The two categories "source" and "collected" refer specifically to the
+   results of queries that are based on environments.  The presence of
+   either or both of these two categories in the array indicates that
+   the service implementation supports environment-based queries, as
+   described in Section 3.4.1.  The difference between source and
+   collected artifacts is explained in Section 3.2.
+
+   The category "rims" refers to the results of queries that are based
+   on RIM identifiers.  The presence of this category indicates that the
+   service implementation supports identifier-based queries, as
+   described in Section 3.4.2.
+
+   Each profile is paired with a non-empty set of artifact categories,
+   allowing the service implementation to indicate the ways in which it
+   can satisfy queries.  This pairing caters for situations where the
+   service implementation might support different combinations of
+   artifact category for different profiles.
 
 6.1.2.1.3.  API Endpoints
 
@@ -3696,6 +3709,7 @@ A.2.  API Discovery Data Model
    artifact-support = non-empty-array<[
        ? "source",
        ? "collected",
+       ? "rims",
    ]>
    cmw.start = cmw.cmw
    cmw.cmw = cmw.json-cmw / cmw.cbor-cmw
