@@ -50,6 +50,14 @@ author:
   org: Alibaba Cloud
   email: xynnn@linux.alibaba.com
 
+contributor:
+  - ins: C. Wallace
+    name: Carl Wallace
+    org: Red Hound Software, Inc.
+    email: carl@redhoundsoftware.com
+    contribution: >
+      Carl contributed in-depth reviews, resulting in many improvements and clarifications across the document.
+
 normative:
   RFC4648: base64
   RFC7517: jwk
