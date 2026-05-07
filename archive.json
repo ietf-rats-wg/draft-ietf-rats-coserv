@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-30T01:47:06.159287+00:00",
+  "timestamp": "2026-05-07T01:46:31.529785+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -5379,13 +5379,13 @@
       "labels": [],
       "body": "Extend the query and result objects to allow querying by CoRIM/CoMID/CoSWID/CoTS identifiers.\r\n\r\nThe changes introduced here are backwards-compatible.",
       "createdAt": "2026-04-20T11:44:44Z",
-      "updatedAt": "2026-04-28T18:52:08Z",
+      "updatedAt": "2026-05-06T10:18:10Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "1161b0e9eaa53390d04e1f7979894a102d26dcda",
       "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "headRefName": "selecting-by-ids",
-      "headRefOid": "d879c26511cb03606f761d40055e43647eb94d6a",
+      "headRefOid": "54e3315e274dcd512f2ecb20f53e137f5dbd7a52",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -5473,6 +5473,112 @@
           "createdAt": "2026-04-28T18:52:08Z",
           "updatedAt": "2026-04-28T18:52:08Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M77_SV8",
+          "commit": {
+            "abbreviatedOid": "d879c26"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "putting the tag-id at the core lgtm \ud83d\udc4d ",
+          "createdAt": "2026-05-05T11:53:37Z",
+          "updatedAt": "2026-05-05T11:53:37Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M78EoKE",
+          "commit": {
+            "abbreviatedOid": "d879c26"
+          },
+          "author": "shefali-kamal",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-05T14:42:12Z",
+          "updatedAt": "2026-05-05T14:42:26Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "If among the RIM-Ids provided in query(3 ids in this example), only a subset is returned (say 2) the result is still valid ?",
+              "createdAt": "2026-05-05T14:42:12Z",
+              "updatedAt": "2026-05-05T14:42:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M78ExLA",
+          "commit": {
+            "abbreviatedOid": "d879c26"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-05T14:46:51Z",
+          "updatedAt": "2026-05-05T14:46:51Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "Hi @shefali-kamal - yes, this is valid. We have a paragraph in the draft text on this:\r\n\r\n> The recipient of the query MAY return only a subset of the RIMs that were requested, if it is not able to satisfy the entire query.\r\n> An empty set is also a valid result in the worst case.",
+              "createdAt": "2026-05-05T14:46:51Z",
+              "updatedAt": "2026-05-05T14:46:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M78E23C",
+          "commit": {
+            "abbreviatedOid": "d879c26"
+          },
+          "author": "shefali-kamal",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-05T14:49:39Z",
+          "updatedAt": "2026-05-05T14:49:39Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "ok thanks for clarifying.",
+              "createdAt": "2026-05-05T14:49:39Z",
+              "updatedAt": "2026-05-05T14:49:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M78E38N",
+          "commit": {
+            "abbreviatedOid": "d879c26"
+          },
+          "author": "shefali-kamal",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-05T14:50:09Z",
+          "updatedAt": "2026-05-05T14:50:09Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M78cCBx",
+          "commit": {
+            "abbreviatedOid": "54e3315"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-06T10:18:10Z",
+          "updatedAt": "2026-05-06T10:18:10Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "LGTM, thanks!",
+              "createdAt": "2026-05-06T10:18:10Z",
+              "updatedAt": "2026-05-06T10:18:10Z"
+            }
+          ]
         }
       ]
     },
