@@ -17,5 +17,6 @@ $(eval $(call cddl_check_template,discovery,$(DISCOVERY_FRAGS),$(DISCOVERY_EXAMP
 include signed-examples.mk
 include subst.mk
 include comid.mk
+include corim.mk
 include cmw.mk
 include jwk.mk

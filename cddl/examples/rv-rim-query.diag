@@ -1,0 +1,10 @@
+{
+  / profile / 0: "tag:example.com,2025:cc-platform#1.0.0",
+  / query / 1: {
+    3: [
+      [ / corim / 2, "corim-acme-gizmo-1.0.0" ],
+      [ / corim / 2, "corim-acme-gizmo-1.2.0" ],
+      [ / corim / 2, "corim-acme-gizmo-2.0.0" ]
+    ]
+  }
+}
