@@ -7,7 +7,8 @@ coserv-well-known-info = {
   version-label => version,
   capabilities-label => [ + capability ],
   api-endpoints-label => { + tstr => tstr },
-  ? result-verification-key-label => eat.JC<jwk.JWK_Set, cose.COSE_KeySet>
+  ? result-verification-key-label =>
+    eat.JC<jwk.JWK_Set, cose.COSE_KeySet>
 }
 
 version-label = eat.JC<"version", 1>
@@ -26,4 +27,8 @@ media-type-label = eat.JC<"media-type", 1>
 artifact-support-label = eat.JC<"artifact-support", 2>
 
 non-empty-array<M> = (M) .and ([ + any ])
-artifact-support = non-empty-array<[ ? "source", ? "collected", ? "rims" ]>
+artifact-support = non-empty-array<[
+  ? "source",
+  ? "collected",
+  ? "rims"
+]>
