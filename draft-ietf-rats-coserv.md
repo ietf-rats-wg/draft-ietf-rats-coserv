@@ -51,12 +51,13 @@ author:
   email: xynnn@linux.alibaba.com
 
 normative:
-  RFC4648: base64
   RFC6570: uri-template
   RFC7515: jws
   RFC7517: jwk
   RFC8610: cddl
-  RFC8259: json
+  STD90:
+    -: json
+    =: RFC8259
   RFC8615: well-known
   RFC9290: concise-pd
   STD98:
@@ -710,7 +711,7 @@ This URI supplies a single discovery document that clients can use to locate the
 Implementations that provide CoSERV HTTP API endpoints MUST also provide the discovery endpoint at the path `/.well-known/coserv-configuration`.
 This endpoint MUST be accessible via GET with no additional query parameters.
 
-The response content can be formatted using either JSON or CBOR, governed by standard HTTP content negotiation ({{Section 12 of -http-sema}}).
+The response content can be formatted using either JSON {{-json}} or CBOR, governed by standard HTTP content negotiation ({{Section 12 of -http-sema}}).
 The media types defined for this purpose are `application/coserv-discovery+json` (for JSON-formatted documents) or `application/coserv-discovery+cbor` (for CBOR-formatted documents).
 If the client presents any media type other than these two options in its HTTP `Accept` header, the implementation SHOULD respond with an HTTP 406 (Not Acceptable) status code.
 If the client presents one of the two valid media types, then the implementation MUST respond with the HTTP 200 (OK) status code, unless it is prevented from doing so by an error condition beyond the scope of this specification.
