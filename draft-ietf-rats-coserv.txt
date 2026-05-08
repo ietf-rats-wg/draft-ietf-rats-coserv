@@ -4,8 +4,8 @@
 
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
-Intended status: Informational                                T. Fossati
-Expires: 8 November 2026                                          Linaro
+Intended status: Standards Track                              T. Fossati
+Expires: 9 November 2026                                          Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 8 November 2026                                          Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                              7 May 2026
+                                                              8 May 2026
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 November 2026.
+   This Internet-Draft will expire on 9 November 2026.
 
 Copyright Notice
 
@@ -142,6 +142,7 @@ Table of Contents
    Appendix B.  OpenAPI Schema
    Appendix C.  Locating CoSERV Services
    Acknowledgments
+   Contributors
    Authors' Addresses
 
 1.  Introduction
@@ -4024,6 +4025,16 @@ Acknowledgments
 
    The authors would like to thank Carl Wallace for their reviews and
    suggestions.
+
+Contributors
+
+   Carl Wallace
+   Red Hound Software, Inc.
+   Email: carl@redhoundsoftware.com
+
+
+   Carl contributed in-depth reviews, resulting in many improvements and
+   clarifications across the document.
 
 Authors' Addresses
 
