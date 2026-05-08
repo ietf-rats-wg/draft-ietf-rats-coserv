@@ -1,7 +1,7 @@
 ---
 title: "Concise Selector for Endorsements and Reference Values"
 abbrev: "CoSERV"
-category: info
+category: std
 
 docname: draft-ietf-rats-coserv-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
@@ -49,6 +49,14 @@ author:
   name: Ding Ma
   org: Alibaba Cloud
   email: xynnn@linux.alibaba.com
+
+contributor:
+  - ins: C. Wallace
+    name: Carl Wallace
+    org: Red Hound Software, Inc.
+    email: carl@redhoundsoftware.com
+    contribution: >
+      Carl contributed in-depth reviews, resulting in many improvements and clarifications across the document.
 
 normative:
   RFC4648: base64
