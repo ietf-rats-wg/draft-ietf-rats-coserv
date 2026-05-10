@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-07T01:46:31.529785+00:00",
+  "timestamp": "2026-05-10T01:46:29.685772+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1670,6 +1670,37 @@
       "updatedAt": "2026-04-27T12:10:56Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 115,
+      "id": "I_kwDOOAZd1M8AAAABBkoV0Q",
+      "title": "Potential mismatch between CoSERV result signing authority and expiry timestamp",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/115",
+      "state": "OPEN",
+      "author": "paulhowardarm",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Capturing the concern from @gmandyam from the earlier [PR review](https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/111#pullrequestreview-4245743340).\n\n> We may need to re-visit the text on the timestamping of results. Since RIM signing is mandatory, there should be a cert chain associated with the signing. If the expiry time for the results is not consistent with expiry of the cert chain (Sec. 9.2.1.2 of the current CoRIM draft) then it is not clear how the consumer of the results arbitrates between result expiry and RIM signing expiry.\n",
+      "createdAt": "2026-05-07T16:51:58Z",
+      "updatedAt": "2026-05-08T14:49:22Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Not sure whether this situation is the same as with CoRIMs. CoRIMs might be quite long-lived, and their signatures might need to be checked by multiple entities who receive and process the CoRIM during its period of validity. In that situation, I can understand the concern about signer validity.\n\nCoSERV is different. The result set is only intended to be received once from the server, and then cached (typically for quite short periods) before being re-fetched from the server. So it's relatively transient.\n\nFurther, any source RIMs that are embedded within the CoSERV result would preserve their original signatures anyway, independently of the CoSERV signature. The rules for those would then naturally inherit from CoRIM/CoSWID or other relevant specs.",
+          "createdAt": "2026-05-08T05:42:21Z",
+          "updatedAt": "2026-05-08T05:42:21Z"
+        },
+        {
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "body": ">The result set is only intended to be received once from the server, and then cached (typically for quite short periods) before being re-fetched from the server. So it's relatively transient.\n\nI believe the existing text is not clear regarding the above.  If in practice the CoSERV validity period will always fall within the RIM signature validity period, then this should be spelled out in the document so that compliant implementations don't do something different.  I will create a PR to propose clarifications.",
+          "createdAt": "2026-05-08T14:49:22Z",
+          "updatedAt": "2026-05-08T14:49:22Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -5369,7 +5400,7 @@
       "id": "PR_kwDOOAZd1M7T7mN6",
       "title": "feat: add query by RIM identifier",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/111",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -5379,17 +5410,19 @@
       "labels": [],
       "body": "Extend the query and result objects to allow querying by CoRIM/CoMID/CoSWID/CoTS identifiers.\r\n\r\nThe changes introduced here are backwards-compatible.",
       "createdAt": "2026-04-20T11:44:44Z",
-      "updatedAt": "2026-05-06T10:18:10Z",
+      "updatedAt": "2026-05-07T16:52:50Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "1161b0e9eaa53390d04e1f7979894a102d26dcda",
       "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "headRefName": "selecting-by-ids",
       "headRefOid": "54e3315e274dcd512f2ecb20f53e137f5dbd7a52",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-05-07T16:52:49Z",
+      "mergedAt": "2026-05-07T16:52:49Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "95e7e5aa4b7d82cdc4401805ae6f9d0f58d19803"
+      },
       "comments": [],
       "reviews": [
         {
@@ -5579,6 +5612,19 @@
               "updatedAt": "2026-05-06T10:18:10Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M79EObs",
+          "commit": {
+            "abbreviatedOid": "54e3315"
+          },
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "I am fine to merge.\n\nWe may need to re-visit the text on  the timestamping of results.  Since RIM signing is mandatory, there should be a cert chain associated with the signing.  If the expiry time for the results is not consistent with expiry of the cert chain (Sec. 9.2.1.2 of the current CoRIM draft) then it is not clear how the consumer of the results arbitrates between result expiry and RIM signing expiry.",
+          "createdAt": "2026-05-07T16:19:20Z",
+          "updatedAt": "2026-05-07T16:19:20Z",
+          "comments": []
         }
       ]
     },
@@ -5675,6 +5721,114 @@
           "body": "",
           "createdAt": "2026-04-24T12:31:05Z",
           "updatedAt": "2026-04-24T12:31:05Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 116,
+      "id": "PR_kwDOOAZd1M7ZUeVT",
+      "title": "Preparations for next release",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/116",
+      "state": "MERGED",
+      "author": "paulhowardarm",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- Correction to the document category - CoSERV is standards track, not informational. The unsuitable category was inherited from the template defaults and never updated.\r\n- Add Carl Wallace as contributor.\r\n\r\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
+      "createdAt": "2026-05-07T21:51:41Z",
+      "updatedAt": "2026-05-08T12:56:24Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "95e7e5aa4b7d82cdc4401805ae6f9d0f58d19803",
+      "headRepository": "paulhowardarm/draft-ietf-rats-coserv",
+      "headRefName": "phPrep06Release",
+      "headRefOid": "b92b4bf90df700edc75a308ffb0d0f892cf9276e",
+      "closedAt": "2026-05-08T12:56:23Z",
+      "mergedAt": "2026-05-08T12:56:23Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "876aee9737d25e8b035340ea5a9f3b20c478ca23"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M79Vm2y",
+          "commit": {
+            "abbreviatedOid": "b92b4bf"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-08T07:13:03Z",
+          "updatedAt": "2026-05-08T07:13:03Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M79dWBX",
+          "commit": {
+            "abbreviatedOid": "b92b4bf"
+          },
+          "author": "carl-wallace",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-08T12:49:52Z",
+          "updatedAt": "2026-05-08T12:49:52Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 117,
+      "id": "PR_kwDOOAZd1M7ZcdIQ",
+      "title": "getting rid of the (id)nits",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/117",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR addresses the warnings from idnits.",
+      "createdAt": "2026-05-08T07:42:43Z",
+      "updatedAt": "2026-05-08T14:50:16Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "95e7e5aa4b7d82cdc4401805ae6f9d0f58d19803",
+      "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "headRefName": "nits",
+      "headRefOid": "8b2c2f00226c593929e7b0bf225f7d8574cd9e4b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M79diYo",
+          "commit": {
+            "abbreviatedOid": "8b2c2f0"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM - thanks for the tidy-ups.",
+          "createdAt": "2026-05-08T12:58:31Z",
+          "updatedAt": "2026-05-08T12:58:31Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M79gUcD",
+          "commit": {
+            "abbreviatedOid": "8b2c2f0"
+          },
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-08T14:50:16Z",
+          "updatedAt": "2026-05-08T14:50:16Z",
           "comments": []
         }
       ]
