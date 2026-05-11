@@ -2,7 +2,8 @@ openapi: '3.0.0'
 
 info:
   title: CoSERV HTTP API Binding
-  description: CoSERV HTTP API Binding, including request-response and discovery
+  description: CoSERV HTTP API Binding, including request-response
+               and discovery
   version: '1.0.0alpha'
 paths:
   /coserv/{query}:
@@ -26,11 +27,13 @@ paths:
                 type: string
                 format: binary
                 description: >
-                  A CoSERV result set enveloped in a COSE Sign1 object.
+                  A CoSERV result set enveloped in a COSE Sign1
+                  object.
         '400':
           description: >
-            The request was malformed; e.g., the query was not valid base64url,
-            or the CoSERV data item could not be successfully parsed.
+            The request was malformed; e.g., the query was not valid
+            base64url, or the CoSERV data item could not be
+            successfully parsed.
           content:
             application/concise-problem-details+cbor:
               schema:
@@ -40,9 +43,10 @@ paths:
                   A CBOR-encoded problem details data item.
         '406':
           description: >
-            The server cannot produce a response matching the list of acceptable
-            values defined in the request's 'Accept' header field.  In particular,
-            the client may have specified a CoSERV profile that is not understood or
+            The server cannot produce a response matching the list
+            of acceptable values defined in the request's 'Accept'
+            header field.  In particular, the client may have
+            specified a CoSERV profile that is not understood or
             serviceable by the server.
           content:
             application/concise-problem-details+cbor:
@@ -57,7 +61,8 @@ paths:
       responses:
         '200':
           description: >
-            The CoSERV configuration document has been successfully retrieved.
+            The CoSERV configuration document has been successfully
+            retrieved.
           content:
             application/coserv-discovery+json:
               schema:

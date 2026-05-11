@@ -59,10 +59,13 @@ contributor:
       Carl contributed in-depth reviews, resulting in many improvements and clarifications across the document.
 
 normative:
-  RFC4648: base64
+  RFC6570: uri-template
+  RFC7515: jws
   RFC7517: jwk
   RFC8610: cddl
-  RFC8259: json
+  STD90:
+    -: json
+    =: RFC8259
   RFC8615: well-known
   RFC9290: concise-pd
   STD98:
@@ -92,8 +95,9 @@ normative:
 
 informative:
   RFC6024: ta-reqs
-  RFC7942: Improving Awareness of Running Code
+  RFC7942: running-code
   RFC7252: coap
+  RFC8007: cdni-ctrl
   RFC9711: rats-eat
   I-D.ietf-rats-endorsements: rats-endorsements
   I-D.ietf-iotops-mud-rats: iotops-mud-rats
@@ -219,7 +223,7 @@ These correspond to the three categories of endorsement artifact that can be ide
 An example of a trust anchor would be the public part of the asymmetric signing key that is used by the Attester to sign Evidence, such that the Verifier can verify the cryptographic signature.
 This is just one example.
 Other forms of trust anchor are possible.
-CoSERV does not place any additional requirements or constraints on the conveyance or use of trust anchors, beyond what is already described in {{RFC9334}} and {{-rats-endorsements}}.
+CoSERV does not place any additional requirements or constraints on the conveyance or use of trust anchors, beyond what is already described in {{-rats-arch}} and {{-rats-endorsements}}.
 {{Section 4 of -rats-endorsements}} sets out the applicable patterns for the endorsement of verification keys, all of which apply equally here.
 - **Endorsed Value**: An endorsed value is as defined in {{Section 1.1.1 of -rats-corim}}.
 This represents a characteristic of the Attester that is not directly presented in the Evidence, such as certification data related to a hardware or firmware module.
@@ -687,7 +691,7 @@ It takes a single CoSERV query as input, and produces a corresponding single CoS
 It is a RESTful API because the CoSERV query serves as a unique and stable identifier of the target resource, where that resource is the set of artifacts being selected for by the query.
 The encoding rules for CoSERV are deterministic as set out in {{secencoding}}.
 This means that any given CoSERV query will always encode to the same sequence of bytes.
-The Base64Url encoding ({{Section 2 of !RFC7515}}) of the byte sequence becomes the rightmost path segment of the URI used to identify the target resource.
+The Base64Url encoding ({{Section 2 of -jws}}) of the byte sequence becomes the rightmost path segment of the URI used to identify the target resource.
 The `GET` method is then used with this URI to execute the query.
 Further details are provided in the subsections below.
 
@@ -709,13 +713,13 @@ This should ideally provide sufficient detail to enable the error to be rectifie
 
 ### Discovery {#secrrapidisco}
 
-Clients discover CoSERV HTTP API endpoints by means of a well-known URI that is formed using the `/.well-known/` path prefix as defined in {{RFC8615}}.
+Clients discover CoSERV HTTP API endpoints by means of a well-known URI that is formed using the `/.well-known/` path prefix as defined in {{-well-known}}.
 This URI supplies a single discovery document that clients can use to locate the URIs of other API endpoints, in addition to finding out other relevant information about the configuration and capabilities of the service.
 
 Implementations that provide CoSERV HTTP API endpoints MUST also provide the discovery endpoint at the path `/.well-known/coserv-configuration`.
 This endpoint MUST be accessible via GET with no additional query parameters.
 
-The response content can be formatted using either JSON or CBOR, governed by standard HTTP content negotiation ({{Section 12 of -http-sema}}).
+The response content can be formatted using either JSON {{-json}} or CBOR, governed by standard HTTP content negotiation ({{Section 12 of -http-sema}}).
 The media types defined for this purpose are `application/coserv-discovery+json` (for JSON-formatted documents) or `application/coserv-discovery+cbor` (for CBOR-formatted documents).
 If the client presents any media type other than these two options in its HTTP `Accept` header, the implementation SHOULD respond with an HTTP 406 (Not Acceptable) status code.
 If the client presents one of the two valid media types, then the implementation MUST respond with the HTTP 200 (OK) status code, unless it is prevented from doing so by an error condition beyond the scope of this specification.
@@ -765,14 +769,14 @@ The field is a map whose keys are the symbolic names of the APIs, and whose valu
 
 The symbolic name `CoSERVRequestResponse` is defined for services that offer the transactional API described in {{secrrapiquery}}.
 Service implementations that offer this API MUST include a key with this name in the endpoints map field, and the corresponding endpoint URL path MUST end with `/{query}`.
-This allows the consumer to form a valid CoSERV query URI using variable expansion as per {{!RFC6570}}, replacing the `{query}` variable with the Base64Url-encoded CoSERV query object.
+This allows the consumer to form a valid CoSERV query URI using variable expansion as per {{-uri-template}}, replacing the `{query}` variable with the Base64Url-encoded CoSERV query object.
 There MUST NOT be any other variables that require substitution.
 
 ##### Result Verification Key
 
 The result verification key is denoted by the label `"result-verification-key"` in JSON documents and by the codepoint `4` in CBOR documents.
 This field provides one or more public keys that can be used for the cryptographic verification of CoSERV query results that are returned by the service implementation.
-In JSON-formatted discovery documents, each key is a JSON Web Key (JWK) as defined in {{RFC7517}}.
+In JSON-formatted discovery documents, each key is a JSON Web Key (JWK) as defined in {{-jwk}}.
 In CBOR-formatted discovery documents, each key is a COSE Key as defined in {{-cose}}.
 
 This field is optional.
@@ -1026,7 +1030,7 @@ The result is different caching behaviours between clients and intermediaries, w
 Before forwarding it to the client, the proxy stores the response in its cache using the request URI as the cache key alongside the entry's time-to-live value.
 
 {:aside}
-> This "differential caching" strategy could be useful if the origin and its CDN have control plane APIs that the origin owner can use to instruct the CDN operator to purge certain cached entries {{?RFC8007}}. For instance, in CoSERV, this feature could be used in case of an unexpected revocation.
+> This "differential caching" strategy could be useful if the origin and its CDN have control plane APIs that the origin owner can use to instruct the CDN operator to purge certain cached entries {{-cdni-ctrl}}. For instance, in CoSERV, this feature could be used in case of an unexpected revocation.
 
 ~~~ aasvg
 client A             cache.example          coserv.example
@@ -1135,14 +1139,14 @@ client B              cache.example          coserv.example
 # Implementation Status
 [^rfced] please remove this section prior to publication.
 
-This section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in {{RFC7942}}.
+This section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in {{-running-code}}.
 The description of implementations in this section is intended to assist the IETF in its decision processes in progressing drafts to RFCs.
 Please note that the listing of any individual implementation here does not imply endorsement by the IETF.
 Furthermore, no effort has been spent to verify the information presented here that was supplied by IETF contributors.
 This is not intended as, and must not be construed to be, a catalog of available implementations or their features.
 Readers are advised to note that other implementations may exist.
 
-According to {{RFC7942}}, "this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.
+According to {{-running-code}}, "this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.
 It is up to the individual working groups to use this information as they see fit".
 
 ## Veraison
@@ -1164,7 +1168,7 @@ Contact: Thomas Fossati, Thomas.Fossati@linaro.org
 
 # Security Considerations {#seccons}
 
-CoSERV implements a conveyance protocol for specific categories of Conceptual Message in {{RFC9334}}, namely Endorsements and Reference Values.
+CoSERV implements a conveyance protocol for specific categories of Conceptual Message in {{-rats-arch}}, namely Endorsements and Reference Values.
 Consequently, it is used only between the Endorser and Verifier roles, or between the Reference Value Provider and Verifier roles of the RATS architecture.
 The relevant security considerations are therefore the ones associated with those roles and their interactions.
 
