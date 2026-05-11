@@ -1059,7 +1059,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Howard, et al.</td>
-<td class="center">Expires 9 November 2026</td>
+<td class="center">Expires 12 November 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1072,12 +1072,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-rats-coserv-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-05-08" class="published">8 May 2026</time>
+<time datetime="2026-05-11" class="published">11 May 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-11-09">9 November 2026</time></dd>
+<dd class="expires"><time datetime="2026-11-12">12 November 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1149,7 +1149,7 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 9 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 12 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2466,7 +2466,7 @@ This should ideally provide sufficient detail to enable the error to be rectifie
 This URI supplies a single discovery document that clients can use to locate the URIs of other API endpoints, in addition to finding out other relevant information about the configuration and capabilities of the service.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
 <p id="section-6.1.2-2">Implementations that provide CoSERV HTTP API endpoints <span class="bcp14">MUST</span> also provide the discovery endpoint at the path <code>/.well-known/coserv-configuration</code>.
 This endpoint <span class="bcp14">MUST</span> be accessible via GET with no additional query parameters.<a href="#section-6.1.2-2" class="pilcrow">¶</a></p>
-<p id="section-6.1.2-3">The response content can be formatted using either JSON or CBOR, governed by standard HTTP content negotiation (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-12" class="relref">Section 12</a> of [<a href="#STD97" class="cite xref">HTTP-CACHING</a>]</span>).
+<p id="section-6.1.2-3">The response content can be formatted using either JSON <span>[<a href="#STD90" class="cite xref">STD90</a>]</span> or CBOR, governed by standard HTTP content negotiation (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-12" class="relref">Section 12</a> of [<a href="#STD97" class="cite xref">HTTP-CACHING</a>]</span>).
 The media types defined for this purpose are <code>application/coserv-discovery+json</code> (for JSON-formatted documents) or <code>application/coserv-discovery+cbor</code> (for CBOR-formatted documents).
 If the client presents any media type other than these two options in its HTTP <code>Accept</code> header, the implementation <span class="bcp14">SHOULD</span> respond with an HTTP 406 (Not Acceptable) status code.
 If the client presents one of the two valid media types, then the implementation <span class="bcp14">MUST</span> respond with the HTTP 200 (OK) status code, unless it is prevented from doing so by an error condition beyond the scope of this specification.
@@ -2483,7 +2483,8 @@ coserv-well-known-info = {
   version-label =&gt; version,
   capabilities-label =&gt; [ + capability ],
   api-endpoints-label =&gt; { + tstr =&gt; tstr },
-  ? result-verification-key-label =&gt; eat.JC&lt;jwk.JWK_Set, cose.COSE_KeySet&gt;
+  ? result-verification-key-label =&gt;
+    eat.JC&lt;jwk.JWK_Set, cose.COSE_KeySet&gt;
 }
 
 version-label = eat.JC&lt;"version", 1&gt;
@@ -2502,7 +2503,11 @@ media-type-label = eat.JC&lt;"media-type", 1&gt;
 artifact-support-label = eat.JC&lt;"artifact-support", 2&gt;
 
 non-empty-array&lt;M&gt; = (M) .and ([ + any ])
-artifact-support = non-empty-array&lt;[ ? "source", ? "collected", ? "rims" ]&gt;
+artifact-support = non-empty-array&lt;[
+  ? "source",
+  ? "collected",
+  ? "rims"
+]&gt;
 </pre><a href="#section-6.1.2-4" class="pilcrow">¶</a>
 </div>
 <div id="discovery-document-contents">
@@ -3890,10 +3895,6 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC4648">[RFC4648]</dt>
-        <dd>
-<span class="refAuthor">Josefsson, S.</span>, <span class="refTitle">"The Base16, Base32, and Base64 Data Encodings"</span>, <span class="seriesInfo">RFC 4648</span>, <span class="seriesInfo">DOI 10.17487/RFC4648</span>, <time datetime="2006-10" class="refDate">October 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4648">https://www.rfc-editor.org/rfc/rfc4648</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC6570">[RFC6570]</dt>
         <dd>
 <span class="refAuthor">Gregorio, J.</span>, <span class="refAuthor">Fielding, R.</span>, <span class="refAuthor">Hadley, M.</span>, <span class="refAuthor">Nottingham, M.</span>, and <span class="refAuthor">D. Orchard</span>, <span class="refTitle">"URI Template"</span>, <span class="seriesInfo">RFC 6570</span>, <span class="seriesInfo">DOI 10.17487/RFC6570</span>, <time datetime="2012-03" class="refDate">March 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6570">https://www.rfc-editor.org/rfc/rfc6570</a>&gt;</span>. </dd>
@@ -3909,10 +3910,6 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8259">[RFC8259]</dt>
-        <dd>
-<span class="refAuthor">Bray, T., Ed.</span>, <span class="refTitle">"The JavaScript Object Notation (JSON) Data Interchange Format"</span>, <span class="seriesInfo">STD 90</span>, <span class="seriesInfo">RFC 8259</span>, <span class="seriesInfo">DOI 10.17487/RFC8259</span>, <time datetime="2017-12" class="refDate">December 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8259">https://www.rfc-editor.org/rfc/rfc8259</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8610">[RFC8610]</dt>
         <dd>
@@ -3935,8 +3932,12 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Fitzgerald-McKay, J.</span>, <span class="refAuthor">Schmidt, C.</span>, and <span class="refAuthor">D. Waltermire</span>, <span class="refTitle">"Concise Software Identification Tags"</span>, <span class="seriesInfo">RFC 9393</span>, <span class="seriesInfo">DOI 10.17487/RFC9393</span>, <time datetime="2023-06" class="refDate">June 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9393">https://www.rfc-editor.org/rfc/rfc9393</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SEMVER">[SEMVER]</dt>
-      <dd>
+        <dd>
 <span class="refTitle">"Semantic Versioning 2.0.0"</span>, <time datetime="2013" class="refDate">2013</time>, <span>&lt;<a href="https://semver.org/spec/v2.0.0.html">https://semver.org/spec/v2.0.0.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="STD90">[STD90]</dt>
+      <dd>
+<span class="refAuthor">Bray, T., Ed.</span>, <span class="refTitle">"The JavaScript Object Notation (JSON) Data Interchange Format"</span>, <span class="seriesInfo">STD 90</span>, <span class="seriesInfo">RFC 8259</span>, <span class="seriesInfo">DOI 10.17487/RFC8259</span>, <time datetime="2017-12" class="refDate">December 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8259">https://www.rfc-editor.org/rfc/rfc8259</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -5339,7 +5340,8 @@ openapi: '3.0.0'
 
 info:
   title: CoSERV HTTP API Binding
-  description: CoSERV HTTP API Binding, including request-response and discovery
+  description: CoSERV HTTP API Binding, including request-response
+               and discovery
   version: '1.0.0alpha'
 paths:
   /coserv/{query}:
@@ -5363,11 +5365,13 @@ paths:
                 type: string
                 format: binary
                 description: &gt;
-                  A CoSERV result set enveloped in a COSE Sign1 object.
+                  A CoSERV result set enveloped in a COSE Sign1
+                  object.
         '400':
           description: &gt;
-            The request was malformed; e.g., the query was not valid base64url,
-            or the CoSERV data item could not be successfully parsed.
+            The request was malformed; e.g., the query was not valid
+            base64url, or the CoSERV data item could not be
+            successfully parsed.
           content:
             application/concise-problem-details+cbor:
               schema:
@@ -5377,9 +5381,10 @@ paths:
                   A CBOR-encoded problem details data item.
         '406':
           description: &gt;
-            The server cannot produce a response matching the list of acceptable
-            values defined in the request's 'Accept' header field.  In particular,
-            the client may have specified a CoSERV profile that is not understood or
+            The server cannot produce a response matching the list
+            of acceptable values defined in the request's 'Accept'
+            header field.  In particular, the client may have
+            specified a CoSERV profile that is not understood or
             serviceable by the server.
           content:
             application/concise-problem-details+cbor:
@@ -5394,7 +5399,8 @@ paths:
       responses:
         '200':
           description: &gt;
-            The CoSERV configuration document has been successfully retrieved.
+            The CoSERV configuration document has been successfully
+            retrieved.
           content:
             application/coserv-discovery+json:
               schema:

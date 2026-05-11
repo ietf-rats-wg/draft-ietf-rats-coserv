@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Standards Track                              T. Fossati
-Expires: 9 November 2026                                          Linaro
+Expires: 12 November 2026                                         Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 9 November 2026                                          Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                              8 May 2026
+                                                             11 May 2026
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 November 2026.
+   This Internet-Draft will expire on 12 November 2026.
 
 Copyright Notice
 
@@ -1354,8 +1354,8 @@ Table of Contents
    configuration.  This endpoint MUST be accessible via GET with no
    additional query parameters.
 
-   The response content can be formatted using either JSON or CBOR,
-   governed by standard HTTP content negotiation (Section 12 of
+   The response content can be formatted using either JSON [STD90] or
+   CBOR, governed by standard HTTP content negotiation (Section 12 of
    [HTTP-CACHING]).  The media types defined for this purpose are
    application/coserv-discovery+json (for JSON-formatted documents) or
    application/coserv-discovery+cbor (for CBOR-formatted documents).  If
@@ -1380,7 +1380,8 @@ Table of Contents
      version-label => version,
      capabilities-label => [ + capability ],
      api-endpoints-label => { + tstr => tstr },
-     ? result-verification-key-label => eat.JC<jwk.JWK_Set, cose.COSE_KeySet>
+     ? result-verification-key-label =>
+       eat.JC<jwk.JWK_Set, cose.COSE_KeySet>
    }
 
    version-label = eat.JC<"version", 1>
@@ -1399,7 +1400,11 @@ Table of Contents
    artifact-support-label = eat.JC<"artifact-support", 2>
 
    non-empty-array<M> = (M) .and ([ + any ])
-   artifact-support = non-empty-array<[ ? "source", ? "collected", ? "rims" ]>
+   artifact-support = non-empty-array<[
+     ? "source",
+     ? "collected",
+     ? "rims"
+   ]>
 
 6.1.2.1.  Discovery Document Contents
 
@@ -2412,10 +2417,6 @@ Table of Contents
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
-   [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
-              Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006,
-              <https://www.rfc-editor.org/rfc/rfc4648>.
-
    [RFC6570]  Gregorio, J., Fielding, R., Hadley, M., Nottingham, M.,
               and D. Orchard, "URI Template", RFC 6570,
               DOI 10.17487/RFC6570, March 2012,
@@ -2432,11 +2433,6 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
-
-   [RFC8259]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
-              Interchange Format", STD 90, RFC 8259,
-              DOI 10.17487/RFC8259, December 2017,
-              <https://www.rfc-editor.org/rfc/rfc8259>.
 
    [RFC8610]  Birkholz, H., Vigano, C., and C. Bormann, "Concise Data
               Definition Language (CDDL): A Notational Convention to
@@ -2465,6 +2461,11 @@ Table of Contents
 
    [SEMVER]   "Semantic Versioning 2.0.0", 2013,
               <https://semver.org/spec/v2.0.0.html>.
+
+   [STD90]    Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
+              Interchange Format", STD 90, RFC 8259,
+              DOI 10.17487/RFC8259, December 2017,
+              <https://www.rfc-editor.org/rfc/rfc8259>.
 
 11.2.  Informative References
 
@@ -3837,79 +3838,84 @@ Appendix B.  OpenAPI Schema
    The OpenAPI schema for the request/response HTTP API described in
    Section 6.1 is provided below.
 
-openapi: '3.0.0'
+   openapi: '3.0.0'
 
-info:
-  title: CoSERV HTTP API Binding
-  description: CoSERV HTTP API Binding, including request-response and discovery
-  version: '1.0.0alpha'
-paths:
-  /coserv/{query}:
-    get:
-      summary: Query the CoSERV endpoint.
-      parameters:
-        - in: path
-          name: query
-          schema:
-            type: string
-            format: base64url
-          required: true
-          description: base64url-encoded CoSERV query
-      responses:
-        '200':
-          description: >
-            A CoSERV result set has been successfully computed.
-          content:
-            application/coserv+cose:
-              schema:
-                type: string
-                format: binary
-                description: >
-                  A CoSERV result set enveloped in a COSE Sign1 object.
-        '400':
-          description: >
-            The request was malformed; e.g., the query was not valid base64url,
-            or the CoSERV data item could not be successfully parsed.
-          content:
-            application/concise-problem-details+cbor:
-              schema:
-                type: string
-                format: binary
-                description: >
-                  A CBOR-encoded problem details data item.
-        '406':
-          description: >
-            The server cannot produce a response matching the list of acceptable
-            values defined in the request's 'Accept' header field.  In particular,
-            the client may have specified a CoSERV profile that is not understood or
-            serviceable by the server.
-          content:
-            application/concise-problem-details+cbor:
-              schema:
-                type: string
-                format: binary
-                description: >
-                  A CBOR-encoded problem details data item.
-  /.well-known/coserv-configuration:
-    get:
-      summary: Retrieve the CoSERV configuration document.
-      responses:
-        '200':
-          description: >
-            The CoSERV configuration document has been successfully retrieved.
-          content:
-            application/coserv-discovery+json:
-              schema:
-                type: string
-                format: binary
-                description: >
-                  A JSON-encoded CoSERV configuration document.
-            application/coserv-discovery+cbor:
-              schema:
-                type: string
-                format: binary
-                description: >
-                  A CBOR-encoded CoSERV configuration document.
+   info:
+     title: CoSERV HTTP API Binding
+     description: CoSERV HTTP API Binding, including request-response
+                  and discovery
+     version: '1.0.0alpha'
+   paths:
+     /coserv/{query}:
+       get:
+         summary: Query the CoSERV endpoint.
+         parameters:
+           - in: path
+             name: query
+             schema:
+               type: string
+               format: base64url
+             required: true
+             description: base64url-encoded CoSERV query
+         responses:
+           '200':
+             description: >
+               A CoSERV result set has been successfully computed.
+             content:
+               application/coserv+cose:
+                 schema:
+                   type: string
+                   format: binary
+                   description: >
+                     A CoSERV result set enveloped in a COSE Sign1
+                     object.
+           '400':
+             description: >
+               The request was malformed; e.g., the query was not valid
+               base64url, or the CoSERV data item could not be
+               successfully parsed.
+             content:
+               application/concise-problem-details+cbor:
+                 schema:
+                   type: string
+                   format: binary
+                   description: >
+                     A CBOR-encoded problem details data item.
+           '406':
+             description: >
+               The server cannot produce a response matching the list
+               of acceptable values defined in the request's 'Accept'
+               header field.  In particular, the client may have
+               specified a CoSERV profile that is not understood or
+               serviceable by the server.
+             content:
+               application/concise-problem-details+cbor:
+                 schema:
+                   type: string
+                   format: binary
+                   description: >
+                     A CBOR-encoded problem details data item.
+     /.well-known/coserv-configuration:
+       get:
+         summary: Retrieve the CoSERV configuration document.
+         responses:
+           '200':
+             description: >
+               The CoSERV configuration document has been successfully
+               retrieved.
+             content:
+               application/coserv-discovery+json:
+                 schema:
+                   type: string
+                   format: binary
+                   description: >
+                     A JSON-encoded CoSERV configuration document.
+               application/coserv-discovery+cbor:
+                 schema:
+                   type: string
+                   format: binary
+                   description: >
+                     A CBOR-encoded CoSERV configuration document.
 
 Appendix C.  Locating CoSERV Services
 
