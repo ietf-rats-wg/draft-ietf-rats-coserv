@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-10T01:46:29.685772+00:00",
+  "timestamp": "2026-05-12T01:49:20.769415+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -5785,24 +5785,26 @@
       "id": "PR_kwDOOAZd1M7ZcdIQ",
       "title": "getting rid of the (id)nits",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/117",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This PR addresses the warnings from idnits.",
       "createdAt": "2026-05-08T07:42:43Z",
-      "updatedAt": "2026-05-08T14:50:16Z",
+      "updatedAt": "2026-05-11T12:58:02Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "95e7e5aa4b7d82cdc4401805ae6f9d0f58d19803",
       "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "headRefName": "nits",
       "headRefOid": "8b2c2f00226c593929e7b0bf225f7d8574cd9e4b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-05-11T12:57:58Z",
+      "mergedAt": "2026-05-11T12:57:58Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "23b63e4619e0d33adcb2464e649d3810b9e86078"
+      },
       "comments": [],
       "reviews": [
         {
@@ -5832,6 +5834,58 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 118,
+      "id": "PR_kwDOOAZd1M7aYouw",
+      "title": "Clarify CoSERV result expiry versus RIM valdity",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/118",
+      "state": "OPEN",
+      "author": "gmandyam",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/115",
+      "createdAt": "2026-05-11T19:01:26Z",
+      "updatedAt": "2026-05-11T19:01:26Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
+      "headRepository": "gmandyam/draft-howard-rats-coserv",
+      "headRefName": "expiry_time_issue_115",
+      "headRefOid": "d0bfa5003c5f2a134d6ed1c3e8891a8360907b0b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 119,
+      "id": "PR_kwDOOAZd1M7acbAz",
+      "title": "Clarifying domain queries based on environment",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/119",
+      "state": "OPEN",
+      "author": "gmandyam",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/63",
+      "createdAt": "2026-05-11T22:13:11Z",
+      "updatedAt": "2026-05-11T22:13:11Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
+      "headRepository": "gmandyam/draft-howard-rats-coserv",
+      "headRefName": "domain_query_issue_63",
+      "headRefOid": "3f068a76aed336590bf0dfd948511c4c7dbdda94",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
