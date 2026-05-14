@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-12T01:49:20.769415+00:00",
+  "timestamp": "2026-05-14T01:56:47.290254+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1636,15 +1636,15 @@
       "id": "I_kwDOOAZd1M7-FX6y",
       "title": "Support queries for specific artifacts by ID and media type",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/110",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "paulhowardarm",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "### Summary\nExtend the query/response data model so that a client can query for specific artifacts (e.g. CoRIM documents) by directly specifying their ID and media type, and make it straightforward to unpick those items from the response.\n\n### Details\nThere is a use case for CoSERV where the client simply wants to pull a specific set of documents from the provider, and explicitly knows the identities of those documents in advance. These identities could be CoRIM/CoMID/CoSWID identifiers, for example. It should be possible to make a CoSERV query based on one or more of those identities. It should also be easy for the client to locate those documents in the result set once the query has been fulfilled.\n\nThe data model (CDDL) would need two changes:\n\n- An extension to the `environment-selector-map` type. This type currently has three mutually-exclusive variants, supporting queries by instance, group or class. This change will introduce a fourth variant, to select based on an artifact ID and a media type.\n- A change to the `results` type such that the `source-artifacts` field is structured as a collection rather than an array. The collection would be keyed on the artifact ID (e.g. CoRIM/CoMID/CoSWID ID), which would allow the client to locate the individual results more easily.\n\n",
       "createdAt": "2026-04-14T14:40:42Z",
-      "updatedAt": "2026-04-21T06:47:18Z",
-      "closedAt": null,
+      "updatedAt": "2026-05-12T16:52:08Z",
+      "closedAt": "2026-05-12T16:52:08Z",
       "comments": [
         {
           "author": "paulhowardarm",
@@ -1652,6 +1652,20 @@
           "body": "Update on design proposal: rather than extend the `environment-selector-map` as proposed above, we've introduced a top-level type variant for the entire query and result set. A set of IDs does not qualify as an \"environment\", so it makes more sense to have the whole query separated out into either being a query-by-environment or a query-by-id. Likewise, the result set will be split into two variants.",
           "createdAt": "2026-04-21T06:47:18Z",
           "updatedAt": "2026-04-21T06:47:18Z"
+        },
+        {
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Can this be closed?  Query by RIM ID is now incorporated in the spec.",
+          "createdAt": "2026-05-12T16:24:52Z",
+          "updatedAt": "2026-05-12T16:24:52Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Completed in https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/111 ",
+          "createdAt": "2026-05-12T16:52:08Z",
+          "updatedAt": "2026-05-12T16:52:08Z"
         }
       ]
     },
@@ -5847,7 +5861,7 @@
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/115",
       "createdAt": "2026-05-11T19:01:26Z",
-      "updatedAt": "2026-05-11T19:01:26Z",
+      "updatedAt": "2026-05-12T21:14:50Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
@@ -5858,8 +5872,49 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Note that the CI failed - this also looks like a formatting issue (trailing whitespace) so hopefully easy to rectify.",
+          "createdAt": "2026-05-12T21:14:50Z",
+          "updatedAt": "2026-05-12T21:14:50Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M7-4CQL",
+          "commit": {
+            "abbreviatedOid": "d0bfa50"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "Thanks for the PR - definitely an important rule that we've missed. See inline comments: I think we should promote this to a higher heading level, but also streamline the wording a bit. Plus a few minor formatting/proofreading nits.",
+          "createdAt": "2026-05-12T20:48:58Z",
+          "updatedAt": "2026-05-12T21:12:55Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "We probably want to decrease the nesting level of this paragraph by 1, so that it becomes a direct sub-heading for result sets, rather than nesting it specifically within the result sets for ID-based queries. My rationale here is that the rule is relevant to queries by environment as well, because the `source-artifacts` can also include entire RIM documents, and the same expiry rules would likely apply there as well. Inevitably this would result in a wording tweak as well, because the paragraph would need to open with a statement saying that the expiry rules are applicable to all cases where RIMs are passed through from other sources.",
+              "createdAt": "2026-05-12T20:48:58Z",
+              "updatedAt": "2026-05-12T21:12:55Z"
+            },
+            {
+              "originalPosition": 6,
+              "body": "Minor formatting nit: we've adopted a one-sentence-one-line formatting convention throughout the draft.",
+              "createdAt": "2026-05-12T20:49:59Z",
+              "updatedAt": "2026-05-12T21:12:55Z"
+            },
+            {
+              "originalPosition": 10,
+              "body": "There are a couple of mis-spellings of \"validity\" in this para. But I'd also question whether we need this para at all. It doesn't say anything normative. It's ambivalent on what the server should do. And as for the client checking the validity, wouldn't that just be bundled with a general signature check anyway? A COSE signature check would presumably ensure that there are no expired certs in the chain, right?",
+              "createdAt": "2026-05-12T21:11:16Z",
+              "updatedAt": "2026-05-12T21:12:55Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 119,
@@ -5873,7 +5928,7 @@
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/63",
       "createdAt": "2026-05-11T22:13:11Z",
-      "updatedAt": "2026-05-11T22:13:11Z",
+      "updatedAt": "2026-05-12T17:16:10Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
@@ -5885,7 +5940,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M7-yZ86",
+          "commit": {
+            "abbreviatedOid": "3f068a7"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "Hi @gmandyam, thanks!  It seems like a good start, but a couple of important things are missing, including some design-related decisions that are worth discussing more thoroughly:\n1. \n2. While the query part is fit for purpose, we need to define what the corresponding results will look like.\n3. (Linked to 1.) Should the \u201cdomain\u201d results be folded into the endorsements bucket, or should a new artefact type and a corresponding result set type be created for them?\n\nI suggest we clearly design those aspects first.",
+          "createdAt": "2026-05-12T17:16:10Z",
+          "updatedAt": "2026-05-12T17:16:10Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
