@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-14T01:56:47.290254+00:00",
+  "timestamp": "2026-05-17T01:51:57.143982+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -5928,7 +5928,7 @@
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/63",
       "createdAt": "2026-05-11T22:13:11Z",
-      "updatedAt": "2026-05-12T17:16:10Z",
+      "updatedAt": "2026-05-16T13:48:52Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
@@ -5949,9 +5949,9 @@
           "author": "thomas-fossati",
           "authorAssociation": "COLLABORATOR",
           "state": "COMMENTED",
-          "body": "Hi @gmandyam, thanks!  It seems like a good start, but a couple of important things are missing, including some design-related decisions that are worth discussing more thoroughly:\n1. \n2. While the query part is fit for purpose, we need to define what the corresponding results will look like.\n3. (Linked to 1.) Should the \u201cdomain\u201d results be folded into the endorsements bucket, or should a new artefact type and a corresponding result set type be created for them?\n\nI suggest we clearly design those aspects first.",
+          "body": "Hi @gmandyam, thanks!  It seems like a good start, but a couple of important things are missing, including some design-related decisions that are worth discussing more thoroughly:\r\n \r\n1. While the query part is fit for purpose, we need to define what the corresponding results will look like.\r\n1. (Linked to 1.) Should the \u201cdomain\u201d results be folded into the endorsements bucket, or should a new artefact type and a corresponding result set type be created for them?\r\n\r\nI suggest we clearly design those aspects first.",
           "createdAt": "2026-05-12T17:16:10Z",
-          "updatedAt": "2026-05-12T17:16:10Z",
+          "updatedAt": "2026-05-16T13:48:52Z",
           "comments": []
         }
       ]
