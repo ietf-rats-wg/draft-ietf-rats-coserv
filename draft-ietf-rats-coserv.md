@@ -431,15 +431,14 @@ For example, if a query selects for two CoMID identifiers, `CoMID-A` and `CoMID-
 The producer SHOULD ensure that all RIMs in the result set are signed.
 In cases where the producer is returning copies of RIMs from upstream supply chain actors on a pass-through basis, the producer SHOULD preserve the original signatures from those supply chain actors, as opposed to re-constructing and re-signing the RIMs.
 
-#### RIM Expiry Processing and Results Expiry
+### RIM Expiry Processing and Results Expiry
 
-Signed RIMs may include their own expiry.  For instance, signed CoRIMs include a protected header map, see {{Section 4.2.1 of -rats-corim}}.  This header can in turn include optional
-CWT claims exp (expiration time) and nbf (not before time).  If exp is present in a RIM result, then the CoSERV query result MUST NOT expire after exp, but MAY expire before exp.  Moreover,
-if nbf is present then the CoSERV query result MUST NOT expire prior to nbf.  
-
-In addition, a signed RIM may be accompanied by one or more certificates (see {{Section 9.2.1.2 of -rats-corim}}), each with their own validity period.  The CoSERV query result expiry should not
-occur after the valdity period.  However, CoSERV implementors may choose not to process certificate chains associated with RIMs.  As a result, the consumer of CoSERV query results (i.e. verifiers) should 
-confirm the valdiity periods of certificates that accompany the signed RIM.
+Signed RIMs may include their own expiry.  
+For instance, signed CoRIMs include a protected header map, see {{Section 4.2.1 of -rats-corim}}.  
+This header can in turn include optional
+CWT claims exp (expiration time) and nbf (not before time).  
+If exp is present in a RIM result, then the CoSERV query result MUST NOT expire after exp, but MAY expire before exp.  
+Moreover, if nbf is present then the CoSERV query result MUST NOT expire prior to nbf.  
 
 # CoSERV Data Model {#secdatamodel}
 
