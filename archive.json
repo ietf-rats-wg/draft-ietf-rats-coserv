@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-17T01:51:57.143982+00:00",
+  "timestamp": "2026-05-24T01:58:49.519309+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -5861,13 +5861,13 @@
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/115",
       "createdAt": "2026-05-11T19:01:26Z",
-      "updatedAt": "2026-05-12T21:14:50Z",
+      "updatedAt": "2026-05-21T23:15:54Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
       "headRepository": "gmandyam/draft-howard-rats-coserv",
       "headRefName": "expiry_time_issue_115",
-      "headRefOid": "d0bfa5003c5f2a134d6ed1c3e8891a8360907b0b",
+      "headRefOid": "d566a62aba6cb72f1feea960544a64860e8db8be",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -5911,6 +5911,66 @@
               "body": "There are a couple of mis-spellings of \"validity\" in this para. But I'd also question whether we need this para at all. It doesn't say anything normative. It's ambivalent on what the server should do. And as for the client checking the validity, wouldn't that just be bundled with a general signature check anyway? A COSE signature check would presumably ensure that there are no expired certs in the chain, right?",
               "createdAt": "2026-05-12T21:11:16Z",
               "updatedAt": "2026-05-12T21:12:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABAsPaBw",
+          "commit": {
+            "abbreviatedOid": "d0bfa50"
+          },
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-21T23:13:04Z",
+          "updatedAt": "2026-05-21T23:13:04Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "I made the change but the current env query text doesn't appear to be clear that CoRIMs can be returned.  Rather it states that CoMIDs are returned (\"Each individual result entry combines a CoMID triple with an authority delegation chain\") . Should that text be modified too?",
+              "createdAt": "2026-05-21T23:13:04Z",
+              "updatedAt": "2026-05-21T23:13:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABAsPdqg",
+          "commit": {
+            "abbreviatedOid": "d0bfa50"
+          },
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-21T23:13:24Z",
+          "updatedAt": "2026-05-21T23:13:24Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "Made changes.  Please check.",
+              "createdAt": "2026-05-21T23:13:24Z",
+              "updatedAt": "2026-05-21T23:13:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABAsP91Q",
+          "commit": {
+            "abbreviatedOid": "d0bfa50"
+          },
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-21T23:15:54Z",
+          "updatedAt": "2026-05-21T23:15:54Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "Removed paragraph.  The original intent of the paragraph was to let the reader know that a CoSERV implementation won't necessarily set the results expiry according to the cert expiry for signed RIMs.  ",
+              "createdAt": "2026-05-21T23:15:54Z",
+              "updatedAt": "2026-05-21T23:15:54Z"
             }
           ]
         }
