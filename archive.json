@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-24T01:58:49.519309+00:00",
+  "timestamp": "2026-05-28T01:49:27.119292+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -5861,13 +5861,13 @@
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/115",
       "createdAt": "2026-05-11T19:01:26Z",
-      "updatedAt": "2026-05-21T23:15:54Z",
+      "updatedAt": "2026-05-26T22:56:56Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
       "headRepository": "gmandyam/draft-howard-rats-coserv",
       "headRefName": "expiry_time_issue_115",
-      "headRefOid": "d566a62aba6cb72f1feea960544a64860e8db8be",
+      "headRefOid": "98f8e383eb782715bb5506cd8fd4e13a2aee91a8",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -5879,6 +5879,13 @@
           "body": "Note that the CI failed - this also looks like a formatting issue (trailing whitespace) so hopefully easy to rectify.",
           "createdAt": "2026-05-12T21:14:50Z",
           "updatedAt": "2026-05-12T21:14:50Z"
+        },
+        {
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Note that the CI failed - this also looks like a formatting issue (trailing whitespace) so hopefully easy to rectify.\r\n\r\nI have tried multiple times to remove the trailing white space (extra line), but it seems that it keeps getting added back in.  I am using the web editor.  That being said, the last section in the markdown file is the Acknowledgments section, which looks problematic anyways (not human readable).  Can we just list the participants in the FOSDEM discussion and not try to include whatever that is supposed to be?",
+          "createdAt": "2026-05-26T22:56:56Z",
+          "updatedAt": "2026-05-26T22:56:56Z"
         }
       ],
       "reviews": [
@@ -5971,6 +5978,46 @@
               "body": "Removed paragraph.  The original intent of the paragraph was to let the reader know that a CoSERV implementation won't necessarily set the results expiry according to the cert expiry for signed RIMs.  ",
               "createdAt": "2026-05-21T23:15:54Z",
               "updatedAt": "2026-05-21T23:15:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABBDuCew",
+          "commit": {
+            "abbreviatedOid": "d0bfa50"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-26T17:21:47Z",
+          "updatedAt": "2026-05-26T17:21:47Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "I think the existing text can still stand. I was speaking specifically about `source-artifacts`. In the aggregator model, the CoMID \"quads\" (triples plus authority chains)  can be backed up by verbatim source artifacts, which can include entire CoRIMs, and therefore give rise to the same issue with expiry.",
+              "createdAt": "2026-05-26T17:21:47Z",
+              "updatedAt": "2026-05-26T17:21:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABBDu1hQ",
+          "commit": {
+            "abbreviatedOid": "d0bfa50"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-26T17:23:41Z",
+          "updatedAt": "2026-05-26T17:23:42Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "Thanks, looks better, but the CI is still failing. Might just be due to some trailing whitespace on some lines? Could you please examine the output from the CI job that is building the draft, and make the required corrections?",
+              "createdAt": "2026-05-26T17:23:42Z",
+              "updatedAt": "2026-05-26T17:23:42Z"
             }
           ]
         }
