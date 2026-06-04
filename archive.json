@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-28T01:49:27.119292+00:00",
+  "timestamp": "2026-06-04T02:30:52.777421+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -722,7 +722,7 @@
       "labels": [],
       "body": "**Description**: \nCoSERV enables querying Reference Values for individual Target Environments but provides no mechanism for a Verifier to determine the complete set of Target Environments that an Attester should report in Evidence. This creates a security vulnerability where compromised Attesters can omit measurements from Target Environments in poor state.\n**Problem Statement:**\n\n- Per RFC 9334, an Attester contains multiple Target Environments\n- A compromised Attester could selectively omit Target Environment claims\n- Verifiers need authoritative information about expected Target Environment inventory\n- CoSERV queries are environment-specific but don't address environment set completeness\n\n**Proposed Solution:**\nAdd a new CoSERV query type for \"Expected Target Environment Inventory\" that returns the complete set of Target Environments that should be measured by a given Attester class/instance.\n**Implementation Considerations:**\n\n- Requires Attester identification scheme (proposed: vendor/model tuple)\n- The minimum set of Target Environments that must be verified should be derived from the collection of all Target Environments present across all available CoRIMs for that Attester\n\n**Open Design Question:** Should this be a **new CoSERV query type** or an **extension to existing environment queries**?",
       "createdAt": "2025-08-14T18:35:34Z",
-      "updatedAt": "2025-08-15T13:40:37Z",
+      "updatedAt": "2026-06-02T15:43:22Z",
       "closedAt": null,
       "comments": [
         {
@@ -731,6 +731,13 @@
           "body": "Hi @fdamato, thanks for bringing this up!\n\nAs briefly discussed in the related email thread, CoRIM shares the same problem, which we are trying to address using [Domain Membership Triples](https://www.ietf.org/archive/id/draft-ietf-rats-corim-08.html#name-domain-membership-triple) (DMT).\n\nCurrently, CoSERV does not support DMTs, but this could easily be added if needed.  Note that the DMT subject (`domain-type`) is an `environment-map` and is therefore perfectly aligned with CoSERV\u2019s query machinery.\n",
           "createdAt": "2025-08-15T13:38:24Z",
           "updatedAt": "2025-08-15T13:40:37Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Bringing Giri\u2019s first stab (#119) back to the drawing board for a second.\n\nAs observed in https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/63#issuecomment-3191523395, since domains are identified using environments, the query part should already be fit for purpose - except for adding the explicit prohibition of the (optional) measurements from the stateful environment.\n\nWhat\u2019s missing is the definition of a suitable shape for the corresponding result.\n\nIn that respect, I believe we need a new specialised `result-set`, say we call it `domains`, supporting both membership and dependency triples:\n\n```\ndomains = {\n  &(membership: 5) => [ * membership-quad ]\n  &(dependency: 6) => [ * dependency-quad ]\n}\n```\n\nWhere `membership-quad` is defined as:\n\n```\nmembership-quad = {\n  &(authorities: 1) => [ + comid.$crypto-key-type-choice ]\n  &(membership-triple: 2) => comid.domain-membership-triple-record\n}\n```\n\nand `dependency-quad` is defined as:\n\n```\ndependency-quad = {\n  &(authorities: 1) => [ + comid.$crypto-key-type-choice ]\n  &(dependency-triple: 2) => comid.domain-dependency-triple-record\n}\n```",
+          "createdAt": "2026-06-02T15:43:22Z",
+          "updatedAt": "2026-06-02T15:43:22Z"
         }
       ]
     },
@@ -5861,13 +5868,13 @@
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/115",
       "createdAt": "2026-05-11T19:01:26Z",
-      "updatedAt": "2026-05-26T22:56:56Z",
+      "updatedAt": "2026-06-03T12:44:14Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
       "headRepository": "gmandyam/draft-howard-rats-coserv",
       "headRefName": "expiry_time_issue_115",
-      "headRefOid": "98f8e383eb782715bb5506cd8fd4e13a2aee91a8",
+      "headRefOid": "7b9c7f0d58b5b9f4161e42210275da1e1217db52",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -6018,6 +6025,39 @@
               "body": "Thanks, looks better, but the CI is still failing. Might just be due to some trailing whitespace on some lines? Could you please examine the output from the CI job that is building the draft, and make the required corrections?",
               "createdAt": "2026-05-26T17:23:42Z",
               "updatedAt": "2026-05-26T17:23:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABB0sBPw",
+          "commit": {
+            "abbreviatedOid": "7b9c7f0"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks good, thanks. Recommend we merge this as it is, and I can raise a separate PR to address whatever is going wrong with the CI.",
+          "createdAt": "2026-06-03T09:46:43Z",
+          "updatedAt": "2026-06-03T09:46:43Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABB11Zzw",
+          "commit": {
+            "abbreviatedOid": "7b9c7f0"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-03T12:35:40Z",
+          "updatedAt": "2026-06-03T12:44:14Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "I suggest a slight reflow:\n\n```suggestion\n### RIM Validity and Results Expiry\n\nSigned RIMs usually have an explicit validity period.\nFor example, signed CoRIMs include validity information in the protected header map (see {{Section 4.2.1 of -rats-corim}}).\nRIM validity information can take the form of CWT claims (`nbf`, not before time, and `exp`, expiration time) or use the CoRIM validity map.\nWhatever method is used to define the validity period:\n\n1. The CoSERV query result MUST NOT expire after the end of the validity period but may expire before the end of the validity period.\n2. The RIM MUST NOT be included in the CoSERV result if it is outside of its validity period.\n3. ```",
+              "createdAt": "2026-06-03T12:35:40Z",
+              "updatedAt": "2026-06-03T12:44:14Z"
             }
           ]
         }
