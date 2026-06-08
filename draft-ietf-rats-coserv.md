@@ -292,6 +292,14 @@ Where globally unique identifiers are not guaranteed, a CoSERV provider SHOULD b
 For example, a provider might be scoped to a single product family (effectively constraining the class).
 This preserves the simplicity of the CoSERV environment model while avoiding ambiguity in practice.
 
+
+### Environments as Domains
+
+Domains are composite attesters that can be described as as a hierarchy of multiple environments ({{Section 5.1.11 of -rats-corim}}).  Although domains can be composed of one or more environments,
+they can be references using a signle environment map called the domain identifier (domain-id).  Therefore the Coser query structure that is used for environments can also be used for domains.
+Artifacts for domains can therefore be queries using instance, group, or class of the target domain-id.  In addition, the same restrictions for querying based on environments apply to domains:  queries
+can be based  on instance, group or class but not a combination of these attributes.  
+
 ## Queries {#secinfoqueries}
 
 The purpose of a query is to allow the consumer (Verifier) to specify the artifacts that it needs.
@@ -311,9 +319,9 @@ When a CoSERV query is specified using an environment, the following information
 - A specification of the required artifact type: Reference Value, Endorsed Value or Trust Anchor.
 See {{secartifacts}} for definitions of artifact types.
 A single CoSERV query can only specify a single artifact type.
-- A specification of the Attester's environment.
-Environments can be selected according to Attester instance, group or class.
-Additional properties of the environment state can be specified by adding one or more measurements to the selector.
+- A specification of the Attester's or Domain's environment.
+Environments can be selected according to Attester/Domain instance, group or class.
+Additional properties of the environment or domain state can be specified by adding one or more measurements to the selector.
 See {{secenvironments}} for full definitions.
 To facilitate efficient transactions, a single query can specify either multiple instances, multiple groups or multiple classes.
 However, it is not possible to mix instance-based selectors, group-based selectors and class-based selectors in a single query.
@@ -391,7 +399,16 @@ Each authority delegate is represented by a public key or key identifier, which 
 The authority delegation chain serves to establish the provenance of the result entry, and enables the Verifier to evaluate the trustworthiness of the associated artifact.
 The purpose of the authority delegation chain is to allow CoSERV responses to support decentralized trust models, where Verifiers may apply their own policy to determine which authorities are acceptable for different classes of artifact.
 
-Because each result entry combines a CoMID triple with an authority delegation chain, the entries are consequently known as quadruples (or "quads" for short).
+Because each result entry combines a CoMID triple with an authority delegation chain, the entries are consequently known as quadruples (or "quads" for short).  If the query was with respect to a domain, then all artefacts associated with the attesting environments comprising the domain are returned.
+
+### Results for Queries by Domain as Environment
+
+When the query is an environment identifier corresponding to a domain, then the top-level structure of the result set contains the following two items (in addition to expiry):
+
+- A collection of the results for one or more member attesting environments for each domain in the query.
+This will be a collection of results for each member environment of a domain in the query, where each member environment result would be equivalent to what would be returned for a query based on a single attesting environment as described in Section {{secinforesultsenv}}.
+- A collection of dependencies, with one dependency returned per domain.
+If a domain has no associated dependencies (i.e. single-layer set of attesters) then an empty dependency triple will be returned.
 
 ### Results for Queries by RIM Identifier {#secinforesultsrim}
 
