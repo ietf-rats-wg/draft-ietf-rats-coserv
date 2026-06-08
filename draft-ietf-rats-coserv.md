@@ -401,6 +401,15 @@ The purpose of the authority delegation chain is to allow CoSERV responses to su
 
 Because each result entry combines a CoMID triple with an authority delegation chain, the entries are consequently known as quadruples (or "quads" for short).  If the query was with respect to a domain, then all artefacts associated with the attesting environments comprising the domain are returned.
 
+### Results for Queries by Domain as Environment
+
+When the query is an environment identifier corresponding to a domain, then the top-level structure of the result set contains the following two items (in addition to expiry):
+
+- A collection of the results for one or more member attesting environments for each domain in the query.
+This will be a collection of results for each member environment of a domain in the query, where each member environment result would be equivalent to what would be returned for a query based on a single attesting environment as described in Section {{secinforesultsenv}}.
+- A collection of dependencies, with one dependency returned per domain.
+If a domain has no associated dependencies (i.e. single-layer set of attesters) then an empty dependency triple will be returned.
+
 ### Results for Queries by RIM Identifier {#secinforesultsrim}
 
 Queries by RIM identifier are significantly simpler than queries by environment, and the result set structure is likewise simpler.
