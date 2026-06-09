@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Standards Track                              T. Fossati
-Expires: 12 November 2026                                         Linaro
+Expires: 11 December 2026                                         Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 12 November 2026                                         Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                             11 May 2026
+                                                             9 June 2026
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 November 2026.
+   This Internet-Draft will expire on 11 December 2026.
 
 Copyright Notice
 
@@ -99,6 +99,7 @@ Table of Contents
      3.5.  Result Sets
        3.5.1.  Results for Queries by Environment
        3.5.2.  Results for Queries by RIM Identifier
+       3.5.3.  RIM Validity and Results Expiry
    4.  CoSERV Data Model
      4.1.  Common Data Types
      4.2.  Profile
@@ -694,6 +695,22 @@ Table of Contents
    upstream supply chain actors on a pass-through basis, the producer
    SHOULD preserve the original signatures from those supply chain
    actors, as opposed to re-constructing and re-signing the RIMs.
+
+3.5.3.  RIM Validity and Results Expiry
+
+   Signed RIMs usually have an explicit validity period.  For example,
+   signed CoRIMs include validity information in the protected header
+   map (see Section 4.2.1 of [I-D.ietf-rats-corim]).  RIM validity
+   information can take the form of CWT claims (nbf, not before time,
+   and exp, expiration time) or use the CoRIM validity map.  Whatever
+   method is used to define the validity period:
+
+   1.  The CoSERV query result MUST NOT expire after the end of the
+       validity period but may expire before the end of the validity
+       period.
+
+   2.  The RIM MUST NOT be included in the CoSERV result if it is
+       outside of its validity period.
 
 4.  CoSERV Data Model
 
@@ -1998,8 +2015,7 @@ Table of Contents
 
 7.  Implementation Status
 
-
-   // RFC Editor: please remove this section prior to publication.
+   [^rfced] please remove this section prior to publication.
 
    This section records the status of known implementations of the
    protocol defined by this specification at the time of posting of this
@@ -2205,8 +2221,7 @@ Table of Contents
 
 10.  IANA Considerations
 
-
-   // RFC Editor: replace "RFCthis" with the RFC number assigned to this
+   [^rfced] replace "RFCthis" with the RFC number assigned to this
    document.
 
 10.1.  Media Types Registrations
@@ -4030,7 +4045,7 @@ Acknowledgments
    Henk Birkholz and Jag Raman are puppeteering in the shadows.
 
    The authors would like to thank Carl Wallace for their reviews and
-   suggestions.
+   suggestions. [^rfced]: RFC Editor:
 
 Contributors
 
