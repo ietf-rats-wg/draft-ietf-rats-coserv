@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-04T02:30:52.777421+00:00",
+  "timestamp": "2026-06-09T01:53:33.550013+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -722,7 +722,7 @@
       "labels": [],
       "body": "**Description**: \nCoSERV enables querying Reference Values for individual Target Environments but provides no mechanism for a Verifier to determine the complete set of Target Environments that an Attester should report in Evidence. This creates a security vulnerability where compromised Attesters can omit measurements from Target Environments in poor state.\n**Problem Statement:**\n\n- Per RFC 9334, an Attester contains multiple Target Environments\n- A compromised Attester could selectively omit Target Environment claims\n- Verifiers need authoritative information about expected Target Environment inventory\n- CoSERV queries are environment-specific but don't address environment set completeness\n\n**Proposed Solution:**\nAdd a new CoSERV query type for \"Expected Target Environment Inventory\" that returns the complete set of Target Environments that should be measured by a given Attester class/instance.\n**Implementation Considerations:**\n\n- Requires Attester identification scheme (proposed: vendor/model tuple)\n- The minimum set of Target Environments that must be verified should be derived from the collection of all Target Environments present across all available CoRIMs for that Attester\n\n**Open Design Question:** Should this be a **new CoSERV query type** or an **extension to existing environment queries**?",
       "createdAt": "2025-08-14T18:35:34Z",
-      "updatedAt": "2026-06-02T15:43:22Z",
+      "updatedAt": "2026-06-08T21:53:39Z",
       "closedAt": null,
       "comments": [
         {
@@ -738,6 +738,13 @@
           "body": "Bringing Giri\u2019s first stab (#119) back to the drawing board for a second.\n\nAs observed in https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/63#issuecomment-3191523395, since domains are identified using environments, the query part should already be fit for purpose - except for adding the explicit prohibition of the (optional) measurements from the stateful environment.\n\nWhat\u2019s missing is the definition of a suitable shape for the corresponding result.\n\nIn that respect, I believe we need a new specialised `result-set`, say we call it `domains`, supporting both membership and dependency triples:\n\n```\ndomains = {\n  &(membership: 5) => [ * membership-quad ]\n  &(dependency: 6) => [ * dependency-quad ]\n}\n```\n\nWhere `membership-quad` is defined as:\n\n```\nmembership-quad = {\n  &(authorities: 1) => [ + comid.$crypto-key-type-choice ]\n  &(membership-triple: 2) => comid.domain-membership-triple-record\n}\n```\n\nand `dependency-quad` is defined as:\n\n```\ndependency-quad = {\n  &(authorities: 1) => [ + comid.$crypto-key-type-choice ]\n  &(dependency-triple: 2) => comid.domain-dependency-triple-record\n}\n```",
           "createdAt": "2026-06-02T15:43:22Z",
           "updatedAt": "2026-06-02T15:43:22Z"
+        },
+        {
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@thomas-fossati \n\nAdded additional text to describe what you have proposed above.  If that works for you then I can update the CDDL.",
+          "createdAt": "2026-06-08T21:53:39Z",
+          "updatedAt": "2026-06-08T21:53:39Z"
         }
       ]
     },
@@ -5868,13 +5875,13 @@
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/115",
       "createdAt": "2026-05-11T19:01:26Z",
-      "updatedAt": "2026-06-03T12:44:14Z",
+      "updatedAt": "2026-06-08T21:56:46Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
       "headRepository": "gmandyam/draft-howard-rats-coserv",
       "headRefName": "expiry_time_issue_115",
-      "headRefOid": "7b9c7f0d58b5b9f4161e42210275da1e1217db52",
+      "headRefOid": "31bd989f75461dfaf958cb9daa17d6073f67d093",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -6075,13 +6082,13 @@
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/63",
       "createdAt": "2026-05-11T22:13:11Z",
-      "updatedAt": "2026-05-16T13:48:52Z",
+      "updatedAt": "2026-06-08T21:52:23Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
       "headRepository": "gmandyam/draft-howard-rats-coserv",
       "headRefName": "domain_query_issue_63",
-      "headRefOid": "3f068a76aed336590bf0dfd948511c4c7dbdda94",
+      "headRefOid": "db8d8d6225c7aa8b231449c08539e1071da811ab",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
