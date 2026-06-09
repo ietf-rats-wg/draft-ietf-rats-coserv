@@ -440,7 +440,6 @@ Whatever method is used to define the validity period:
 
 1. The CoSERV query result MUST NOT expire after the end of the validity period but may expire before the end of the validity period.
 2. The RIM MUST NOT be included in the CoSERV result if it is outside of its validity period.
-3. ```
 
 # CoSERV Data Model {#secdatamodel}
 
