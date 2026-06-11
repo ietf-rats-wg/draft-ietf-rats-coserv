@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-09T01:53:33.550013+00:00",
+  "timestamp": "2026-06-11T02:28:51.794923+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1704,15 +1704,17 @@
       "id": "I_kwDOOAZd1M8AAAABBkoV0Q",
       "title": "Potential mismatch between CoSERV result signing authority and expiry timestamp",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/115",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "paulhowardarm",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "gmandyam"
+      ],
       "labels": [],
       "body": "Capturing the concern from @gmandyam from the earlier [PR review](https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/111#pullrequestreview-4245743340).\n\n> We may need to re-visit the text on the timestamping of results. Since RIM signing is mandatory, there should be a cert chain associated with the signing. If the expiry time for the results is not consistent with expiry of the cert chain (Sec. 9.2.1.2 of the current CoRIM draft) then it is not clear how the consumer of the results arbitrates between result expiry and RIM signing expiry.\n",
       "createdAt": "2026-05-07T16:51:58Z",
-      "updatedAt": "2026-05-08T14:49:22Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-09T07:49:27Z",
+      "closedAt": "2026-06-09T07:49:10Z",
       "comments": [
         {
           "author": "paulhowardarm",
@@ -1727,6 +1729,13 @@
           "body": ">The result set is only intended to be received once from the server, and then cached (typically for quite short periods) before being re-fetched from the server. So it's relatively transient.\n\nI believe the existing text is not clear regarding the above.  If in practice the CoSERV validity period will always fall within the RIM signature validity period, then this should be spelled out in the document so that compliant implementations don't do something different.  I will create a PR to propose clarifications.",
           "createdAt": "2026-05-08T14:49:22Z",
           "updatedAt": "2026-05-08T14:49:22Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Addressed by #118 ",
+          "createdAt": "2026-06-09T07:49:10Z",
+          "updatedAt": "2026-06-09T07:49:10Z"
         }
       ]
     }
@@ -5868,24 +5877,26 @@
       "id": "PR_kwDOOAZd1M7aYouw",
       "title": "Clarify CoSERV result expiry versus RIM valdity",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/118",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "gmandyam",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/115",
       "createdAt": "2026-05-11T19:01:26Z",
-      "updatedAt": "2026-06-08T21:56:46Z",
+      "updatedAt": "2026-06-09T07:39:34Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
       "headRepository": "gmandyam/draft-howard-rats-coserv",
       "headRefName": "expiry_time_issue_115",
-      "headRefOid": "31bd989f75461dfaf958cb9daa17d6073f67d093",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "7befd8547089d575102e6572aee763b48bb9e838",
+      "closedAt": "2026-06-09T07:39:34Z",
+      "mergedAt": "2026-06-09T07:39:34Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "472a81aae10b8af21dc512c9e1eb2edb185f1380"
+      },
       "comments": [
         {
           "author": "paulhowardarm",
@@ -6067,6 +6078,39 @@
               "updatedAt": "2026-06-03T12:44:14Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABCZ3gnQ",
+          "commit": {
+            "abbreviatedOid": "31bd989"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-09T07:36:41Z",
+          "updatedAt": "2026-06-09T07:36:41Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "drop spurious line\n\n```suggestion\n```",
+              "createdAt": "2026-06-09T07:36:41Z",
+              "updatedAt": "2026-06-09T07:36:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABCZ3xQg",
+          "commit": {
+            "abbreviatedOid": "7befd85"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "\ud83d\udea2 it!",
+          "createdAt": "2026-06-09T07:37:18Z",
+          "updatedAt": "2026-06-09T07:37:18Z",
+          "comments": []
         }
       ]
     },
