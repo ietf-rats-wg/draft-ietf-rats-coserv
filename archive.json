@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-11T02:28:51.794923+00:00",
+  "timestamp": "2026-06-18T02:29:08.079997+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -6153,6 +6153,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 120,
+      "id": "PR_kwDOOAZd1M7m7tJb",
+      "title": "feat(cddl): add domain queries and results",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/120",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Add domain-related queries and results (CDDL only)\r\n\r\nPartially addressing #63 ",
+      "createdAt": "2026-06-16T09:22:57Z",
+      "updatedAt": "2026-06-16T09:23:21Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "472a81aae10b8af21dc512c9e1eb2edb185f1380",
+      "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "headRefName": "domain",
+      "headRefOid": "4117f1cc3379aa623cc2befbdfc8278ee1913e09",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
