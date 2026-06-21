@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-18T02:29:08.079997+00:00",
+  "timestamp": "2026-06-21T02:28:59.175202+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -6126,7 +6126,7 @@
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/63",
       "createdAt": "2026-05-11T22:13:11Z",
-      "updatedAt": "2026-06-08T21:52:23Z",
+      "updatedAt": "2026-06-18T09:49:50Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
@@ -6137,7 +6137,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi @gmandyam - note that @thomas-fossati has now created a [fresh PR](https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/120) with a CDDL data model change that he and I are aligned on. Would you consider moving your draft changes over to this PR, using the new CDDL as the basis for the text? We'll then have everything in a single PR, so that we can merge something that is fully internally consistent.",
+          "createdAt": "2026-06-18T09:49:50Z",
+          "updatedAt": "2026-06-18T09:49:50Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOOAZd1M7-yZ86",
