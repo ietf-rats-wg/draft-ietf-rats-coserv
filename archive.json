@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-02T02:01:20.917027+00:00",
+  "timestamp": "2026-07-16T01:20:55.793543+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -6126,7 +6126,7 @@
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/63",
       "createdAt": "2026-05-11T22:13:11Z",
-      "updatedAt": "2026-07-01T15:19:25Z",
+      "updatedAt": "2026-07-15T18:23:48Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
@@ -6151,6 +6151,55 @@
           "body": "> Hi @gmandyam - note that @thomas-fossati has now created a [fresh PR](https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/120) with a CDDL data model change that he and I are aligned on. Would you consider moving your draft changes over to this PR, using the new CDDL as the basis for the text? We'll then have everything in a single PR, so that we can merge something that is fully internally consistent.\r\n\r\nNot sure about the best way to do this.  Can Thomas just copy/paste the suggested text in his PR and then this PR can be closed?",
           "createdAt": "2026-07-01T15:19:25Z",
           "updatedAt": "2026-07-01T15:19:25Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi @thomas-fossati and @gmandyam  - sorry for silence on this. Unfortunately I haven't had the chance to give this attention that I wanted to.\r\n\r\nI had a couple of false-start attempts at integrating the CDDL and prose changes into a single PR. The biggest stumbling block for me concerns the traversal of domains. Perhaps one or both of you could help me to resolve this.\r\n\r\nReading Giri's text, the expectation appears to be the following:\r\n\r\n- The query identifies a domain using the environment map (since we've correctly identified that domains can be selected in this way)\r\n- The server recursively \"walks\" the whole domain membership graph, and gathers all relevant artifacts (endorsements, TAs, RVs) from the leaf Attesters, and populates the result set with this entire collection\r\n\r\nThe CDDL change agrees with the first of these, but not the second.\r\n\r\nThe CDDL, as written, invites a different style of interaction:\r\n\r\n- The query identifies a domain using the environment map (as above - this bit is in agreement)\r\n- The query explicitly indicates that domain composition information (membership and dependencies) is required, _instead_ of appraisal artifacts.\r\n- The server does not \"walk\" over the domain, but simply returns the relevant membership and dependency triples in the result.\r\n- The client makes follow-up queries for sub-domains or leaf Attesters as needed\r\n\r\nIn summary, the difference is whether the domain traversal is expected to take place on the server or the client.\r\n\r\nDoes the CDDL, in fact, implicitly support both possibilities? What happens if the client supplies an environment that happens to be a domain identifier, but sets the result type to `reference-values` or `trust-anchors` rather than `domains`? Is this an error, or is it an implicit signal to the server that it should recursively walk the domain membership and get the artifacts for all of the leaf Attester environments?",
+          "createdAt": "2026-07-15T09:43:23Z",
+          "updatedAt": "2026-07-15T09:43:23Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi Paul, thanks for the write up.\r\n\r\nFocusing only on the fork:\r\n\r\n> * The server recursively \"walks\" the whole domain membership graph, and gathers all relevant artifacts (endorsements, TAs, RVs) from the leaf Attesters, and populates the result set with this entire collection\r\n\r\nThis seems potentially like a ton of processing.\r\nI get it would be pretty handy from the client perspective to receive the whole lot at once, but it seems out of scope of the domain query, which IMO should focus on the structure and trust dependencies among components in a composite attester.\r\n\r\nAlso, as you note:\r\n\r\n> The CDDL change agrees with the first of these, but not the second.\r\n\r\nWhich is not by chance as that's not the semantics I understood we wanted to add.\r\n\r\n> The CDDL, as written, invites a different style of interaction:\r\n> \r\n> * The query identifies a domain using the environment map (as above - this bit is in agreement)\r\n> * The query explicitly indicates that domain composition information (membership and dependencies) is required, _instead_ of appraisal artifacts.\r\n> * The server does not \"walk\" over the domain, but simply returns the relevant membership and dependency triples in the result.\r\n> * The client makes follow-up queries for sub-domains or leaf Attesters as needed\r\n\r\nThat's what I intended.  But we could also extend it to collect the whole (sub)tree if we think it's good value for the money.\r\n\r\n> In summary, the difference is whether the domain traversal is expected to take place on the server or the client.\r\n\r\nAnd, IIUC, if all the endorsement paraphernalia associated with the device topology need to also be collected to satisfy the query, right?\r\n\r\n> Does the CDDL, in fact, implicitly support both possibilities? What happens if the client supplies an environment that happens to be a domain identifier, but sets the result type to `reference-values` or `trust-anchors` rather than `domains`? Is this an error, or is it an implicit signal to the server that it should recursively walk the domain membership and get the artifacts for all of the leaf Attester environments?\r\n\r\nThis is not an error, and it's quite expected.  Domain identifiers should correspond to attesting environments / target environments, which also tend to have other kinds of non-structural endorsements associated with them.",
+          "createdAt": "2026-07-15T16:26:18Z",
+          "updatedAt": "2026-07-15T16:26:18Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> > Does the CDDL, in fact, implicitly support both possibilities? What happens if the client supplies an environment that happens to be a domain identifier, but sets the result type to reference-values or trust-anchors rather than domains? Is this an error, or is it an implicit signal to the server that it should recursively walk the domain membership and get the artifacts for all of the leaf Attester environments?\r\n\r\n> This is not an error, and it's quite expected. Domain identifiers should correspond to attesting environments / target environments, which also tend to have other kinds of non-structural endorsements associated with them.\r\n\r\nAh, thanks, that's a key point that I'd misunderstood.\r\n\r\nIn summary, then, we are saying:\r\n\r\n- The server performs no traversal, and provides only those results that are directly associated with the specified domain\r\n- If the client wants domain composition/dependency information about the domain, then it sets the `artifact-type` to `domain`\r\n- But it's also valid for the query to request any of the other artifacts that environment-based queries can specify, in which case the server will respond with whatever (non-structural) artifacts of that type are available for the domain\r\n\r\n@gmandyam Are you in agreement with these semantics? If so, then I think I can have another stab at reconciling the prose with the CDDL.",
+          "createdAt": "2026-07-15T16:44:38Z",
+          "updatedAt": "2026-07-15T16:44:38Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I have mixed feelings about the following :-)\r\n\r\n> * The server performs no traversal, and provides only those results that are directly associated with the specified domain\r\n\r\nFrom a client's perspective, it is probably preferable to gather the entire tree at once, rather than firing off one query, processing the adjacency list and then repeating the process until the whole tree is in their hands.\r\n\r\nI would not be against (domain) traversal.\r\n",
+          "createdAt": "2026-07-15T16:59:24Z",
+          "updatedAt": "2026-07-15T16:59:24Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Ah, sorry, then I'm confused again. I thought getting the whole tree at once was the \"ton of processing\" in your earlier comment.",
+          "createdAt": "2026-07-15T17:02:18Z",
+          "updatedAt": "2026-07-15T17:02:18Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Ah, sorry, then I'm confused again. I thought getting the whole tree at once was the \"ton of processing\" in your earlier comment.\r\n\r\nThe ton of processing I meant was the collection of _\"[...] all relevant artifacts (endorsements, TAs, RVs) from the leaf Attesters\"_.\r\n\r\nI interpreted it to mean that querying the domain would return every type of endorsement associated with a composite attester in one go.",
+          "createdAt": "2026-07-15T17:30:29Z",
+          "updatedAt": "2026-07-15T17:30:29Z"
+        },
+        {
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "body": ">From a client's perspective, it is probably preferable to gather the entire tree at once, rather than firing off one query, processing the adjacency list and then repeating the process until the whole tree is in their hands.\r\n\r\n>I would not be against (domain) traversal.\r\n\r\nFrom the client perspective, receiving all the artefacts at once with a single domain query could be desirable as well.  But that will complicate server processing.\r\n\r\nSo is the following what would occur in sequence:\r\n\r\na) Client submits domain query (using env ID).\r\nb) Server returns a list of env IDs associated with the domain along with a domain dependency map.\r\nc) Client then queries for the artefacts corresponding to each of the env IDs returned in step b) individually until it has retrieved all artefacts associated with tree traversal.",
+          "createdAt": "2026-07-15T18:23:48Z",
+          "updatedAt": "2026-07-15T18:23:48Z"
         }
       ],
       "reviews": [
