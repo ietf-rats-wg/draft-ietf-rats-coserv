@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-16T01:20:55.793543+00:00",
+  "timestamp": "2026-07-19T01:22:03.035863+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -6126,7 +6126,7 @@
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/63",
       "createdAt": "2026-05-11T22:13:11Z",
-      "updatedAt": "2026-07-15T18:23:48Z",
+      "updatedAt": "2026-07-16T15:43:57Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
@@ -6200,6 +6200,20 @@
           "body": ">From a client's perspective, it is probably preferable to gather the entire tree at once, rather than firing off one query, processing the adjacency list and then repeating the process until the whole tree is in their hands.\r\n\r\n>I would not be against (domain) traversal.\r\n\r\nFrom the client perspective, receiving all the artefacts at once with a single domain query could be desirable as well.  But that will complicate server processing.\r\n\r\nSo is the following what would occur in sequence:\r\n\r\na) Client submits domain query (using env ID).\r\nb) Server returns a list of env IDs associated with the domain along with a domain dependency map.\r\nc) Client then queries for the artefacts corresponding to each of the env IDs returned in step b) individually until it has retrieved all artefacts associated with tree traversal.",
           "createdAt": "2026-07-15T18:23:48Z",
           "updatedAt": "2026-07-15T18:23:48Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> So is the following what would occur in sequence:\r\n> \r\n> a) Client submits domain query (using env ID). b) Server returns a list of env IDs associated with the domain along with a domain dependency map. c) Client then queries for the artefacts corresponding to each of the env IDs returned in step b) individually until it has retrieved all artefacts associated with tree traversal.\r\n\r\nI _think_ we are converging but I'm not completely sure because I don't fully understand what you mean by _\"list of env IDs associated with the domain\"_ and _\"domain dependency map\"_ \ud83d\ude05 So I'll ask one clarifying question:\r\n\r\nDoes the result returned by the server contain the entire (trust dependency & domain membership) subtrees rooted in the queried environment ID, or just the immediate children? \r\n\r\nI think it's the former, but I'd like to confirm -- or disprove \ud83d\ude04 -- this.",
+          "createdAt": "2026-07-16T13:16:44Z",
+          "updatedAt": "2026-07-16T13:16:44Z"
+        },
+        {
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "body": ">Does the result returned by the server contain the entire (trust dependency & domain membership) subtrees rooted in the queried environment ID, or just the immediate children?\r\n>I think it's the former, but I'd like to confirm -- or disprove \ud83d\ude04 -- this.\r\n\r\nI think it is the former as well - the server returns the entire subtrees and their trust relationship.  But note that the current CoRIM definition of trust relationships within a domain seem to go only one level down:  see https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-11#name-triples-for-domain-definiti.\r\n\r\nThe server should be able to process CoRIMs as they are being ingested and represent the domain composition and trust relationship all the way down to the constituent attester environments.    If a constituent environment is missing from the artefacts that the server is ingesting, then the server should make that known to the reference value provider (e.g. reject the CORIM ingestion with an appropriate error message).",
+          "createdAt": "2026-07-16T15:43:57Z",
+          "updatedAt": "2026-07-16T15:43:57Z"
         }
       ],
       "reviews": [
