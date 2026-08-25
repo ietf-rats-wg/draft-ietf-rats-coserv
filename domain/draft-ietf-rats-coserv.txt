@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Standards Track                              T. Fossati
-Expires: 18 December 2026                                         Linaro
+Expires: 26 February 2027                                         Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 18 December 2026                                         Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                            16 June 2026
+                                                          25 August 2026
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 December 2026.
+   This Internet-Draft will expire on 26 February 2027.
 
 Copyright Notice
 
@@ -91,11 +91,13 @@ Table of Contents
      3.3.  Environments
        3.3.1.  Stateful Environments
        3.3.2.  Environment Uniqueness
+       3.3.3.  Environments as Domains
      3.4.  Queries
        3.4.1.  Queries by Environment
        3.4.2.  Queries by RIM Identifier
        3.4.3.  Avoidance of Volatile Data in Queries
        3.4.4.  Query Logging
+       3.4.5.  Query Combinations
      3.5.  Result Sets
        3.5.1.  Results for Queries by Environment
        3.5.2.  Results for Queries by RIM Identifier
@@ -126,6 +128,7 @@ Table of Contents
      8.3.  Aggregators
    9.  Privacy Considerations
      9.1.  Aggregators
+     9.2.  Domains
    10. IANA Considerations
      10.1.  Media Types Registrations
        10.1.1.  application/coserv+cbor
@@ -164,14 +167,16 @@ Table of Contents
    provides Verifiers with a standard way to specify a set of relevant
    artifacts, such that they can be obtained from Endorsers and
    Reference Value Providers.  Queries can be based on characteristics
-   of the Attester's environment.  Alternatively, queries can be based
-   on the precise identifiers of one or more Reference Integrity
-   Manifest (RIM) documents.  In turn, the result format allows those
-   Endorsers and Reference Value Providers to package the selected
-   artifacts within a standard structure.  This facilitates the
-   efficient discovery and retrieval of relevant Endorsements and
-   Reference Values from providers, maximising the re-use of common
-   software tools and libraries within the transactions.
+   of the Attester's environment.  This includes composite Attesters,
+   where those environments become the basis for obtaining topological
+   information, such as composition or trust dependency details.
+   Alternatively, queries can be based on the precise identifiers of one
+   or more Reference Integrity Manifest (RIM) documents.  In turn, the
+   result format allows those Endorsers and Reference Value Providers to
+   package the selected artifacts within a standard structure.  This
+   facilitates the efficient discovery and retrieval of relevant
+   Endorsements and Reference Values from providers, maximising the re-
+   use of common software tools and libraries within the transactions.
 
    The CoSERV query language is intended to form the input data type for
    tools and services that provide access to Endorsements and Reference
@@ -333,9 +338,7 @@ Table of Contents
    Artifacts are what the consumer (Verifier) needs in order to verify
    and appraise Evidence from the Attester, and therefore they form the
    bulk of the response payload in a CoSERV transaction.  The common
-   CoSERV query language recognises three artifact types.  These
-   correspond to the three categories of endorsement artifact that can
-   be identified natively in the RATS architecture:
+   CoSERV query language recognises the following four artifact types:
 
    *  *Trust Anchor*: A trust anchor is as defined in [RFC6024].  An
       example of a trust anchor would be the public part of the
@@ -365,6 +368,15 @@ Table of Contents
       include claims about the Attester's actual state, which the
       Verifier can then compare with the reference values at Evidence
       appraisal time.
+
+   *  *Domain*: A domain is defined in [I-D.ietf-rats-corim] as a
+      hierarchical description of a Composite Attester in terms of its
+      constituent environments and their compositional relationships.
+      Domain artifacts in CoSERV are represented by CoMID Domain
+      Membership Triples and Domain Dependency Triples (see
+      Section 5.1.11 of [I-D.ietf-rats-corim]).  These triples allow a
+      Verifier to obtain authoritative information about the Attester
+      and the trust dependencies between its constituent domains.
 
    When artifacts are produced by an aggregator (see Section 2), the
    following additional classifications apply:
@@ -479,6 +491,21 @@ Table of Contents
    (effectively constraining the class).  This preserves the simplicity
    of the CoSERV environment model while avoiding ambiguity in practice.
 
+3.3.3.  Environments as Domains
+
+   Domains are composite Attesters that can be described as a hierarchy
+   of multiple environments (Section 5.1.11 of [I-D.ietf-rats-corim]).
+   Although domains can be composed of one or more environments, they
+   can be referenced using a single environment called the domain
+   identifier.  Therefore, a CoSERV query structure that is based on
+   environments can be used to identify domains, just as it can be used
+   to identify leaf-case or simple Attesters.  And, as with simple
+   Attesters, the artifacts for domains can be queried by instance,
+   group, or class of the target domain.  The same restrictions also
+   apply to the structure of such queries: they can be based on
+   instance, group, or class, but not by combinations of these
+   attributes.
+
 3.4.  Queries
 
    The purpose of a query is to allow the consumer (Verifier) to specify
@@ -486,8 +513,9 @@ Table of Contents
    query language.  The following styles of query are available:
 
    *  *Queries by Environment*: This query style is used to select the
-      artifacts that are applicable to the Attester's environment.  See
-      Section 3.3.
+      artifacts that are applicable to the Attester's environment.  For
+      the case of composite Attesters, these artifacts can include
+      domain composition and dependency information.  See Section 3.3.
 
    *  *Queries by RIM Identifier*: This query style is used to select
       artifacts that are Reference Integrity Manifest (RIM) artifacts,
@@ -502,19 +530,22 @@ Table of Contents
    information is conveyed in the query:
 
    *  A specification of the required artifact type: Reference Value,
-      Endorsed Value or Trust Anchor.  See Section 3.2 for definitions
-      of artifact types.  A single CoSERV query can only specify a
-      single artifact type.
+      Endorsed Value, Trust Anchor or Domain.  See Section 3.2 for
+      definitions of artifact types.  A single CoSERV query can only
+      specify a single artifact type.
 
-   *  A specification of the Attester's environment.  Environments can
-      be selected according to Attester instance, group or class.
-      Additional properties of the environment state can be specified by
-      adding one or more measurements to the selector.  See Section 3.3
-      for full definitions.  To facilitate efficient transactions, a
-      single query can specify either multiple instances, multiple
-      groups or multiple classes.  However, it is not possible to mix
-      instance-based selectors, group-based selectors and class-based
-      selectors in a single query.
+   *  A specification of the target environment.  For Reference Value,
+      Endorsed Value and Trust Anchor queries, this is the Attester
+      environment.  For Domain queries, this is the domain whose
+      membership and dependency triples are being requested.
+      Environments can be selected according to Attester instance, group
+      or class.  Additional properties of the environment state can be
+      specified by adding one or more measurements to the selector.  See
+      Section 3.3 for full definitions.  To facilitate efficient
+      transactions, a single query can specify either multiple
+      instances, multiple groups or multiple classes.  However, it is
+      not possible to mix instance-based selectors, group-based
+      selectors and class-based selectors in a single query.
 
    *  A switch to select the desired supply chain depth.  A CoSERV query
       can request collected artifacts, source artifacts, or both.  This
@@ -581,6 +612,28 @@ Table of Contents
    their own transparency events, which can then include timestamps or
    other suitable information.
 
+3.4.5.  Query Combinations
+
+   It is not always possible for a CoSERV consumer (such as a Verifier)
+   to obtain all required artifacts from a single query.  This is partly
+   due to constraints of the query model itself.  For example, in the
+   case of environment-based queries, it is not possible to combine
+   different artifact types in a single query, making it likely that a
+   sequence of queries would be needed for different artifacts in
+   realistic scenarios.  Another related example is when using
+   environments to query domains for their composition and dependency
+   information.  Domains are hierarchical, making traversal of the
+   hierarchy a prerequisite step, before obtaining appraisal artifacts
+   for their member environments.  The expected interaction pattern is
+   that the consumer would first issue a query for the domain artifacts,
+   and then follow this with one or more queries to obtain appraisal
+   artifacts for specific environments within the domain.  For this
+   interaction pattern to be efficient, CoSERV providers SHOULD return
+   the entire trust dependency and domain membership subtree rooted in
+   the queried environment, rather than just the immediate children,
+   when domain artifacts are requested.  This will reduce the burden on
+   the client to traverse the hierarchy in multiple steps.
+
 3.5.  Result Sets
 
    The result set contains the artifacts that the producer collected in
@@ -599,11 +652,12 @@ Table of Contents
    contains the following two items in addition to the expiry timestamp:
 
    *  A collection of one or more result entries.  This will be a
-      collection of either reference values, endorsed values or trust
-      anchors.  See Section 3.2 for definitions of artifact types.
-      Artifact types are never mixed in any single CoSERV result set.
-      The artifacts in the result collection therefore MUST match the
-      single artifact type specified in the original CoSERV query.
+      collection of either reference values, endorsed values, trust
+      anchors or domain definitions.  See Section 3.2 for definitions of
+      artifact types.  Artifact types are never mixed in any single
+      CoSERV result set.  The artifacts in the result collection
+      therefore MUST match the single artifact type specified in the
+      original CoSERV query.
 
    *  A collection of the original source materials from which the
       producer derived the correct artifacts to include in the result
@@ -616,19 +670,24 @@ Table of Contents
 
    Each individual result entry combines a CoMID triple with an
    authority delegation chain.  CoMID triples are exactly as defined in
-   Section 5.1.4 of [I-D.ietf-rats-corim].  Each CoMID triple will
-   demonstrate the association between an environment matching that of
-   the CoSERV query, and a single artifact such as a reference value,
-   trust anchor or endorsed value.  The authority delegation chain is
-   composed of one or more authority delegates.  Each authority delegate
-   is represented by a public key or key identifier, which the consumer
-   can check against its own set of trusted authorities.  The authority
-   delegation chain serves to establish the provenance of the result
-   entry, and enables the Verifier to evaluate the trustworthiness of
-   the associated artifact.  The purpose of the authority delegation
-   chain is to allow CoSERV responses to support decentralized trust
-   models, where Verifiers may apply their own policy to determine which
-   authorities are acceptable for different classes of artifact.
+   Section 5.1.4 of [I-D.ietf-rats-corim].  For Reference Value,
+   Endorsed Value and Trust Anchor results, each CoMID triple
+   demonstrates the association between an environment matching that of
+   the CoSERV query and a single appraisal artifact.  For Domain
+   results, the result entries contain CoMID Domain Membership Triples
+   and Domain Dependency Triples.  The membership triples describe the
+   member domains that compose the queried domain.  The dependency
+   triples describe trust dependencies between domains.  The authority
+   delegation chain is composed of one or more authority delegates.
+   Each authority delegate is represented by a public key or key
+   identifier, which the consumer can check against its own set of
+   trusted authorities.  The authority delegation chain serves to
+   establish the provenance of the result entry, and enables the
+   Verifier to evaluate the trustworthiness of the associated artifact.
+   The purpose of the authority delegation chain is to allow CoSERV
+   responses to support decentralized trust models, where Verifiers may
+   apply their own policy to determine which authorities are acceptable
+   for different classes of artifact.
 
    Because each result entry combines a CoMID triple with an authority
    delegation chain, the entries are consequently known as quadruples
@@ -807,8 +866,9 @@ Table of Contents
 
    For queries by environment, the artifact-type field is the foremost
    discriminator of the query.  It is an artifact category selector.
-   Its three permissible values are trust-anchors (codepoint 1),
-   endorsed-values (codepoint 0) and reference-values (codepoint 2).
+   Its four permissible values are trust-anchors (codepoint 1),
+   endorsed-values (codepoint 0), reference-values (codepoint 2), and
+   domains (codepoint 3).
 
    See Section 3.2 for full definitions of artifact types.
 
@@ -1160,6 +1220,25 @@ Table of Contents
      }
    }
 
+   The next example shows a query for Domain information, scoped by
+   class.  The artifact-type in this case is set to 3, which indicates a
+   query for domain membership and dependency information.  The query
+   structure is otherwise the same as for other environment-based query
+   examples.
+
+   {
+     / profile / 0: "tag:example.com,2025:cc-platform#1.0.0",
+     / query / 1: {
+       0: 3, / domains /
+       1: {
+         0: [ [
+           { 0: 560(h'00') }
+         ] ]
+       },
+       2: 0
+     }
+   }
+
    This next example shows how a query can be based on one or more RIM
    identifiers, instead of environments.  In this case, the query is
    requesting three specific CoRIMs.
@@ -1268,6 +1347,44 @@ Table of Contents
          [ "application/vnd.example.refvals", h'afaeadac' ],
          [ "application/vnd.example.refvals", h'adacabaa' ]
        ]
+     }
+   }
+
+   The following example shows a result set for a Domain query.  The
+   query identifies a domain using an environment selector based on
+   class.  The result contains a membership collection and a dependency
+   collection.  The membership collection contains one Domain Membership
+   Quad, which combines an authority delegation chain with a CoMID
+   Domain Membership Triple.  The dependency collection is present but
+   empty, indicating that no matching Domain Dependency Triples are
+   included in this result set.
+
+   {
+     / profile / 0: "tag:example.com,2025:cc-platform#1.0.0",
+     / query / 1: {
+       0: 3, / domains /
+       1: {
+         0: [ [
+           { 0: 560(h'00') }
+         ] ]
+       },
+       2: 0
+     },
+     / results / 2: {
+       / membership / 5: [
+         {
+           1: [ 560(h'abcdef') ],
+           2: [
+             { 0: { 0: 560(h'00') } },
+             [
+               { 0: { 0: 560(h'0011') } }
+               { 0: { 0: 560(h'0022') } }
+             ]
+           ]
+         }
+       ],
+       / dependency / 6: [ ],
+       10: 0("2030-12-13T18:30:02Z")
      }
    }
 
@@ -1487,6 +1604,15 @@ Table of Contents
    can satisfy queries.  This pairing caters for situations where the
    service implementation might support different combinations of
    artifact category for different profiles.
+
+   The capability advertisement does not enumerate the individual
+   artifact types that are available in response to environment-based
+   queries.  A service that advertises support for collected or source
+   artifact results for a profile is indicating support for the
+   environment-based query style for that profile.  The availability of
+   particular artifact types, such as Reference Values or Domains, can
+   be determined only by executing a query, or by consulting profile-
+   specific documentation.
 
 6.1.2.1.3.  API Endpoints
 
@@ -2236,6 +2362,17 @@ Table of Contents
    Provider roles.  There is consequently a risk that such inferred
    details could be misused to create a covert channel.
 
+9.2.  Domains
+
+   Domain queries and domain result sets can reveal the topology of a
+   Composite Attester, including the relationship between parent and
+   child environments and the trust dependencies between domains.  This
+   information can be sensitive even when the environment identifiers
+   themselves are not individually identifying.  Implementations should
+   apply the same access-control, confidentiality, and minimization
+   considerations to Domain artifacts as to other privacy-sensitive
+   CoSERV query and result data.
+
 10.  IANA Considerations
 
    [^rfced] replace "RFCthis" with the RFC number assigned to this
@@ -2420,9 +2557,9 @@ Table of Contents
    [I-D.ietf-rats-corim]
               Birkholz, H., Fossati, T., Deshpande, Y., Smith, N., and
               W. Pan, "Concise Reference Integrity Manifest", Work in
-              Progress, Internet-Draft, draft-ietf-rats-corim-10, 2
-              March 2026, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-rats-corim-10>.
+              Progress, Internet-Draft, draft-ietf-rats-corim-11, 6 July
+              2026, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              rats-corim-11>.
 
    [I-D.ietf-rats-msg-wrap]
               Birkholz, H., Smith, N., Fossati, T., Tschofenig, H., and
@@ -2504,9 +2641,9 @@ Table of Contents
    [I-D.ietf-iotops-mud-rats]
               Birkholz, H., Richardson, M., and P. C. Liu, "MUD-Based
               RATS Resources Discovery", Work in Progress, Internet-
-              Draft, draft-ietf-iotops-mud-rats-02, 28 November 2025,
+              Draft, draft-ietf-iotops-mud-rats-03, 23 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-iotops-
-              mud-rats-02>.
+              mud-rats-03>.
 
    [I-D.ietf-rats-endorsements]
               Thaler, D., Birkholz, H., and T. Fossati, "RATS
