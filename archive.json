@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-18T00:30:47.079676+00:00",
+  "timestamp": "2026-08-27T05:25:56.163167+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -6142,7 +6142,7 @@
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/63",
       "createdAt": "2026-05-11T22:13:11Z",
-      "updatedAt": "2026-07-16T15:43:57Z",
+      "updatedAt": "2026-08-25T22:29:18Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
@@ -6230,6 +6230,13 @@
           "body": ">Does the result returned by the server contain the entire (trust dependency & domain membership) subtrees rooted in the queried environment ID, or just the immediate children?\r\n>I think it's the former, but I'd like to confirm -- or disprove \ud83d\ude04 -- this.\r\n\r\nI think it is the former as well - the server returns the entire subtrees and their trust relationship.  But note that the current CoRIM definition of trust relationships within a domain seem to go only one level down:  see https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-11#name-triples-for-domain-definiti.\r\n\r\nThe server should be able to process CoRIMs as they are being ingested and represent the domain composition and trust relationship all the way down to the constituent attester environments.    If a constituent environment is missing from the artefacts that the server is ingesting, then the server should make that known to the reference value provider (e.g. reject the CORIM ingestion with an appropriate error message).",
           "createdAt": "2026-07-16T15:43:57Z",
           "updatedAt": "2026-07-16T15:43:57Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@thomas-fossati @gmandyam Sorry that this was stuck for a while. Entirely my fault. But I have now incorporated the text changes into https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/120, hopefully aligning both to the CDDL and to the conclusions drawn from the conversation in this PR. I think we should now work towards merging the new PR, so I'd appreciate your reviews on the draft text there.",
+          "createdAt": "2026-08-25T22:29:18Z",
+          "updatedAt": "2026-08-25T22:29:18Z"
         }
       ],
       "reviews": [
@@ -6260,18 +6267,26 @@
       "labels": [],
       "body": "Add domain-related queries and results (CDDL only)\r\n\r\nPartially addressing #63 ",
       "createdAt": "2026-06-16T09:22:57Z",
-      "updatedAt": "2026-06-16T09:23:21Z",
+      "updatedAt": "2026-08-25T22:31:12Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "472a81aae10b8af21dc512c9e1eb2edb185f1380",
       "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "headRefName": "domain",
-      "headRefOid": "4117f1cc3379aa623cc2befbdfc8278ee1913e09",
+      "headRefOid": "c33550600354a2dc970a66fbec1cdc8ae1662b9b",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@thomas-fossati Could you please review the draft text changes? I can't add you as a PR reviewer, because you kicked off the PR yourself with the CDDL.",
+          "createdAt": "2026-08-25T22:31:12Z",
+          "updatedAt": "2026-08-25T22:31:12Z"
+        }
+      ],
       "reviews": []
     }
   ]
