@@ -527,7 +527,7 @@ Below is an illustrative example of how a CoSERV query for endorsed values, sele
 SELECT *
   FROM endorsed_values
  WHERE ( instance-id = "At6tvu/erQ==" ) OR
-       ( instance-id = "iZl4ZVY=" )`
+       ( instance-id = "iZl4ZVY=" )
 ~~~
 
 The same applies for class-based selectors; however, since class selectors are themselves composed of multiple inner fields, the recipient of the query MUST use a logical `AND` operation in consideration of the inner fields for each class.
@@ -1114,7 +1114,7 @@ client B             cache.example          coserv.example
 
 After 9 more minutes, B is instructed to make the same request again.
 The request generates a "cache hit" event on the local cache.
-However, the cached resource is become stale and needs to be revalidated.
+However, the cached resource has become stale and needs to be revalidated.
 Therefore, B sends a conditional request to the proxy.
 The request generates a "cache hit" event on the proxy where the resource is still fresh due to the differential caching behaviour dictated by the original response from the origin.
 The proxy returns a 304 (Not modified) status code, which instructs the client to reuse its local copy of the response.
@@ -1219,7 +1219,7 @@ For example, a malicious aggregator might attempt to impersonate or otherwise su
 
 The intent of CoSERV is for aggregators to provide an optional convenience layer for the Verifier, rather than to be a subversive authority.
 The design features of CoSERV can be used alongside judicious deployment practices to mitigate the risks.
-An informative and non-exhaustive list of mitigations follows:-
+An informative and non-exhaustive list of mitigations follows:
 
 - **Use independent chains of trust.**
 It is established above that aggregators are trusted components.

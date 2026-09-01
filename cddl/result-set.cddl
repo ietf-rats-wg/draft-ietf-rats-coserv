@@ -7,7 +7,7 @@ results = {
 }
 
 environment-result = (
-  ; result-type: collectect-artifacts
+  ; result-type: collected-artifacts
   result-set //
 
   ; result-type: source-artifacts
