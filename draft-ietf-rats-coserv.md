@@ -87,7 +87,7 @@ normative:
   RFC9334: rats-arch
   RFC9393: coswid
   I-D.ietf-rats-corim: rats-corim
-  I-D.ietf-rats-msg-wrap: rats-cmw
+  RFC9999: rats-cmw
   SEMVER:
     title: "Semantic Versioning 2.0.0"
     date: 2013
