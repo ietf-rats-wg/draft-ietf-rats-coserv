@@ -1,6 +1,6 @@
 signed-coserv-protected-hdr = {
   1 => int                            ; alg
-  2 => "application/coserv+cbor" / TBD1 ; cty
+  3 => "application/coserv+cbor" / TBD1 ; cty
   * cose.label => cose.values
 }
 
