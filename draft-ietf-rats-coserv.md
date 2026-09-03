@@ -234,8 +234,8 @@ Reference values are sometimes informally called "golden values".
 An example of a reference value would be the expected hash or checksum of a binary firmware or software image running in the Attester's environment.
 Evidence from the Attester would then include claims about the Attester's actual state, which the Verifier can then compare with the reference values at Evidence appraisal time.
 - **Domain**: A domain is defined in {{-rats-corim}} as a hierarchical description of a Composite Attester in terms of its constituent environments and their compositional relationships.
-Domain artifacts in CoSERV are represented by CoMID Domain Membership Triples and Domain Dependency Triples (see {{Section 5.1.11 of -rats-corim}}).
-These triples allow a Verifier to obtain authoritative information about the Attester and the trust dependencies between its constituent domains.
+Domain artifacts in CoSERV are represented by CoMID Domain Membership Triples and Trust Dependency Triples (see {{Section 5.1.11 of -rats-corim}}).
+These triples allow a Verifier to obtain authoritative information about the internal arrangement of the composite Attester and the trust dependencies between its constituent domains.
 
 When artifacts are produced by an aggregator (see {{secaggregation}}), the following additional classifications apply:
 
@@ -298,11 +298,9 @@ This preserves the simplicity of the CoSERV environment model while avoiding amb
 
 ### Environments as Domains
 
-Domains are composite Attesters that can be described as a hierarchy of multiple environments ({{Section 5.1.11 of -rats-corim}}).
-Although domains can be composed of one or more environments, they can be referenced using a single environment called the domain identifier.
-Therefore, a CoSERV query structure that is based on environments can be used to identify domains, just as it can be used to identify leaf-case or simple Attesters.
-And, as with simple Attesters, the artifacts for domains can be queried by instance, group, or class of the target domain.
-The same restrictions also apply to the structure of such queries: they can be based on instance, group, or class, but not by combinations of these attributes.
+{{Section 5.1.11 of -rats-corim}} defines a domain identifier as being syntactically equivalent to an environment, even though a domain's semantics are richer than that of a simple Attester environment.
+
+Since the identifiers are syntactically the same, a CoSERV query structure that is based on environments can be used, nearly as-is, to identify a domain: by instance, group, or class of the domain identifier, subject to the same restrictions as any other environment-based query ({{secenvironments}}).
 
 ## Queries {#secinfoqueries}
 
@@ -412,7 +410,7 @@ Source materials would typically be requested in cases where the consumer is not
 Each individual result entry combines a CoMID triple with an authority delegation chain.
 CoMID triples are exactly as defined in {{Section 5.1.4 of -rats-corim}}.
 For Reference Value, Endorsed Value and Trust Anchor results, each CoMID triple demonstrates the association between an environment matching that of the CoSERV query and a single appraisal artifact.
-For Domain results, the result entries contain CoMID Domain Membership Triples and Domain Dependency Triples.
+For Domain results, the result entries contain CoMID Domain Membership Triples and Trust Dependency Triples.
 The membership triples describe the member domains that compose the queried domain.
 The dependency triples describe trust dependencies between domains.
 The authority delegation chain is composed of one or more authority delegates.
@@ -705,7 +703,7 @@ The following example shows a result set for a Domain query.
 The query identifies a domain using an environment selector based on class.
 The result contains a membership collection and a dependency collection.
 The membership collection contains one Domain Membership Quad, which combines an authority delegation chain with a CoMID Domain Membership Triple.
-The dependency collection is present but empty, indicating that no matching Domain Dependency Triples are included in this result set.
+The dependency collection is present but empty, indicating that no matching Trust Dependency Triples are included in this result set.
 
 ~~~edn
 {::include-fold cddl/examples/rv-domain-results.diag}
