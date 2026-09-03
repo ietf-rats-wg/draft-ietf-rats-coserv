@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-27T05:25:56.163167+00:00",
+  "timestamp": "2026-09-03T01:47:38.299450+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1754,6 +1754,48 @@
       "updatedAt": "2026-08-17T13:22:46Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 122,
+      "id": "I_kwDOOAZd1M8AAAABPLAjUA",
+      "title": "Wrong COSE CDDL",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/122",
+      "state": "OPEN",
+      "author": "steven-bellock",
+      "authorAssociation": "NONE",
+      "assignees": [
+        "steven-bellock"
+      ],
+      "labels": [],
+      "body": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/blob/472a81aae10b8af21dc512c9e1eb2edb185f1380/cddl/signed-coserv-headers.cddl.in#L1-L5\n\nCOSE `content type` uses label `3`, not `2`.",
+      "createdAt": "2026-09-01T14:34:50Z",
+      "updatedAt": "2026-09-01T14:48:25Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 126,
+      "id": "I_kwDOOAZd1M8AAAABPMF9kQ",
+      "title": "RIM identifier confusion",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/126",
+      "state": "OPEN",
+      "author": "steven-bellock",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "https://ietf-rats-wg.github.io/draft-ietf-rats-coserv/draft-ietf-rats-coserv.html#section-3.5.2-2 says\n>The result is a flat map structure, keyed by the RIM identifier. Each key in the map MUST correspond to one of the RIM identifiers in the original query. Each mapped value is the corresponding RIM data object, contained within a Conceptual Message Wrapper (CMW) as per [[I-D.ietf-rats-msg-wrap](https://ietf-rats-wg.github.io/draft-ietf-rats-coserv/draft-ietf-rats-coserv.html#I-D.ietf-rats-msg-wrap)].\n\nHowever that does not seem to match the CDDL.\n```\nrim-result = (&(rims: 5) => cmw.cbor-collection)\n\ncmw.cbor-collection = {\n  ? __cmwc_t: ~uri / cmw.oid,\n  + &(label: int / text) => cmw.cbor-cmw,\n}\n\nrim-selector-id = [ &(comid: 0), comid.$tag-id-type-choice ]\n                  / [ &(coswid: 1), coswid.tag-id ]\n                  / [ &(corim: 2), corim.$corim-id-type-choice ]\n```\nIn particular, query identifiers are arrays, which cannot be used as a `cbor-collection` key.",
+      "createdAt": "2026-09-01T16:26:33Z",
+      "updatedAt": "2026-09-02T07:45:33Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks for raising this.  I think the confusion you highlight is worth clarifying both in the prose and the CDDL.\n\nWhat we mean is that the RIM identifier used in the CMW (flat) collection is the _textual representation_ of the CoRIM/CoMID/CoSWID tag ID.  IOW, it's either the tag ID as-is - when already in `tstr` format - or the [\"hex-and-dash\"](https://datatracker.ietf.org/doc/html/rfc9562#section-4) string format of the UUID - when in binary UUID format.\n\nWe could also tighten up the CDDL in two places:\n1. s/`cmw.cbor-cmw`/`cmw.cbor-record`/ to make the flatness of the collection clearer, and\n2. remove the `int` key to emphasise that we only allow `text` labels\n\n----\n\nAs a side note, CBOR allows arrays to be map keys, so the following is perfectly valid CBOR:\n\n```\n{\n  [ 0, \"6e2f858f-af38-4678-9259-ebff78fe8929\" ] : [ 123, H'FFFF' ],\n  [ 1, \"7cf7e02c-b0ff-447c-a248-4ed4421966d1\" ] : [ 456, H'AAAA' ]\n}\n```\n\nHowever, I am not sure how well that feature is supported in existing libraries :-)",
+          "createdAt": "2026-09-02T07:45:33Z",
+          "updatedAt": "2026-09-02T07:45:33Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -6142,7 +6184,7 @@
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/63",
       "createdAt": "2026-05-11T22:13:11Z",
-      "updatedAt": "2026-08-25T22:29:18Z",
+      "updatedAt": "2026-09-01T13:17:45Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
@@ -6237,6 +6279,13 @@
           "body": "@thomas-fossati @gmandyam Sorry that this was stuck for a while. Entirely my fault. But I have now incorporated the text changes into https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/120, hopefully aligning both to the CDDL and to the conclusions drawn from the conversation in this PR. I think we should now work towards merging the new PR, so I'd appreciate your reviews on the draft text there.",
           "createdAt": "2026-08-25T22:29:18Z",
           "updatedAt": "2026-08-25T22:29:18Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> @thomas-fossati @gmandyam Sorry that this was stuck for a while. Entirely my fault. But I have now incorporated the text changes into #120, hopefully aligning both to the CDDL and to the conclusions drawn from the conversation in this PR. I think we should now work towards merging the new PR, so I'd appreciate your reviews on the draft text there.\r\n\r\nNow that #120 is actively reviewed, there is no reason to keep this open, I think.",
+          "createdAt": "2026-09-01T13:17:44Z",
+          "updatedAt": "2026-09-01T13:17:44Z"
         }
       ],
       "reviews": [
@@ -6267,7 +6316,7 @@
       "labels": [],
       "body": "Add domain-related queries and results (CDDL only)\r\n\r\nPartially addressing #63 ",
       "createdAt": "2026-06-16T09:22:57Z",
-      "updatedAt": "2026-08-25T22:31:12Z",
+      "updatedAt": "2026-09-01T09:22:20Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "472a81aae10b8af21dc512c9e1eb2edb185f1380",
@@ -6287,7 +6336,185 @@
           "updatedAt": "2026-08-25T22:31:12Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABLoy6HA",
+          "commit": {
+            "abbreviatedOid": "c335506"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "Thanks Paul!  Looks good to me.\n\nI have left a few comments inline.\nThey are all purely editorial, except for one.",
+          "createdAt": "2026-09-01T08:45:20Z",
+          "updatedAt": "2026-09-01T09:22:20Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "Some recent renaming in CoRIM:\n\ns/Domain Dependency Triples/Trust Dependency Triples/g",
+              "createdAt": "2026-09-01T08:45:20Z",
+              "updatedAt": "2026-09-01T09:22:20Z"
+            },
+            {
+              "originalPosition": 34,
+              "body": "Maybe \"about the _internal arrangement of the composite_ Attester and the trust dependencies [...]\"",
+              "createdAt": "2026-09-01T08:47:42Z",
+              "updatedAt": "2026-09-01T09:22:20Z"
+            },
+            {
+              "originalPosition": 43,
+              "body": "I would leave the semantic layer to CoRIM and just say that since domains and environments are syntactically equivalent, CoSERV query-by-environment can be used (nearly) as-is.",
+              "createdAt": "2026-09-01T09:07:08Z",
+              "updatedAt": "2026-09-01T09:22:20Z"
+            },
+            {
+              "originalPosition": 48,
+              "body": "A suggestion to clearly split the responsibilties:\n\n> {{Section 5.1.11 of -rats-corim}} defines a domain identifier as syntactically equivalent to an environment, even though a domain's semantics is richer than that of a simple Attester environment.\n> \n> Since the identifiers are syntactically the same, a CoSERV query structure that is based on environments can be used, nearly as-is, to identify a domain: by instance, group, or class of the domain identifier, subject to the same restrictions as any other environment-based query ({{secenvironments}}).",
+              "createdAt": "2026-09-01T09:10:56Z",
+              "updatedAt": "2026-09-01T09:22:20Z"
+            },
+            {
+              "originalPosition": 88,
+              "body": "The SHOULD is a bit problematic because it doesn't give the client a good reason to believe that the server has provided the whole subtree.\n\nI see a few options:\n1. we add an explicit flag to the result\n2. we accept (and document) the fact that the query model for domains is inherently iterative\n3. we s/SHOULD/MUST/\n",
+              "createdAt": "2026-09-01T09:16:56Z",
+              "updatedAt": "2026-09-01T09:22:20Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 123,
+      "id": "PR_kwDOOAZd1M8AAAABBw7N4w",
+      "title": "Fix COSE content type label",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/123",
+      "state": "OPEN",
+      "author": "steven-bellock",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #122.",
+      "createdAt": "2026-09-01T14:53:03Z",
+      "updatedAt": "2026-09-01T17:05:37Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "472a81aae10b8af21dc512c9e1eb2edb185f1380",
+      "headRepository": "steven-bellock/draft-ietf-rats-coserv",
+      "headRefName": "fix-122",
+      "headRefOid": "e25aed1060cd80db4bc1a388355e381aba8ba312",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABLs6GAg",
+          "commit": {
+            "abbreviatedOid": "8fdfbba"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "Thansk @steven-bellock !\n\nThe CI is failing because the example template in cddl/coserv+cose-template.diag.in is now out of sync.",
+          "createdAt": "2026-09-01T15:59:46Z",
+          "updatedAt": "2026-09-01T15:59:46Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABLtglig",
+          "commit": {
+            "abbreviatedOid": "e25aed1"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "thanks!",
+          "createdAt": "2026-09-01T17:05:37Z",
+          "updatedAt": "2026-09-01T17:05:37Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 124,
+      "id": "PR_kwDOOAZd1M8AAAABBw95Mw",
+      "title": "List CMW as an RFC",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/124",
+      "state": "OPEN",
+      "author": "steven-bellock",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-09-01T14:57:59Z",
+      "updatedAt": "2026-09-01T17:12:42Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "472a81aae10b8af21dc512c9e1eb2edb185f1380",
+      "headRepository": "steven-bellock/draft-ietf-rats-coserv",
+      "headRefName": "cmw",
+      "headRefOid": "5bf013e7a8ecdd55d4d63170476f83f19d0c57e9",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABLtkNYQ",
+          "commit": {
+            "abbreviatedOid": "5bf013e"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "\ud83d\udea2 it\n\nthanks!",
+          "createdAt": "2026-09-01T17:12:42Z",
+          "updatedAt": "2026-09-01T17:12:42Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 125,
+      "id": "PR_kwDOOAZd1M8AAAABBxW_bw",
+      "title": "Fix editorial issues",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/125",
+      "state": "OPEN",
+      "author": "steven-bellock",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-09-01T15:45:21Z",
+      "updatedAt": "2026-09-01T17:06:38Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "472a81aae10b8af21dc512c9e1eb2edb185f1380",
+      "headRepository": "steven-bellock/draft-ietf-rats-coserv",
+      "headRefName": "editorial",
+      "headRefOid": "74ad2186837be571a68ac33651a9924bd51e71d1",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABLthG9A",
+          "commit": {
+            "abbreviatedOid": "74ad218"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "\ud83d\udea2 it!",
+          "createdAt": "2026-09-01T17:06:38Z",
+          "updatedAt": "2026-09-01T17:06:38Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
