@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Standards Track                              T. Fossati
-Expires: 26 February 2027                                         Linaro
+Expires: 7 March 2027                                             Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 26 February 2027                                         Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                          25 August 2026
+                                                        3 September 2026
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 February 2027.
+   This Internet-Draft will expire on 7 March 2027.
 
 Copyright Notice
 
@@ -373,10 +373,11 @@ Table of Contents
       hierarchical description of a Composite Attester in terms of its
       constituent environments and their compositional relationships.
       Domain artifacts in CoSERV are represented by CoMID Domain
-      Membership Triples and Domain Dependency Triples (see
+      Membership Triples and Trust Dependency Triples (see
       Section 5.1.11 of [I-D.ietf-rats-corim]).  These triples allow a
-      Verifier to obtain authoritative information about the Attester
-      and the trust dependencies between its constituent domains.
+      Verifier to obtain authoritative information about the internal
+      arrangement of the composite Attester and the trust dependencies
+      between its constituent domains.
 
    When artifacts are produced by an aggregator (see Section 2), the
    following additional classifications apply:
@@ -493,18 +494,16 @@ Table of Contents
 
 3.3.3.  Environments as Domains
 
-   Domains are composite Attesters that can be described as a hierarchy
-   of multiple environments (Section 5.1.11 of [I-D.ietf-rats-corim]).
-   Although domains can be composed of one or more environments, they
-   can be referenced using a single environment called the domain
-   identifier.  Therefore, a CoSERV query structure that is based on
-   environments can be used to identify domains, just as it can be used
-   to identify leaf-case or simple Attesters.  And, as with simple
-   Attesters, the artifacts for domains can be queried by instance,
-   group, or class of the target domain.  The same restrictions also
-   apply to the structure of such queries: they can be based on
-   instance, group, or class, but not by combinations of these
-   attributes.
+   Section 5.1.11 of [I-D.ietf-rats-corim] defines a domain identifier
+   as being syntactically equivalent to an environment, even though a
+   domain's semantics are richer than that of a simple Attester
+   environment.
+
+   Since the identifiers are syntactically the same, a CoSERV query
+   structure that is based on environments can be used, nearly as-is, to
+   identify a domain: by instance, group, or class of the domain
+   identifier, subject to the same restrictions as any other
+   environment-based query (Section 3.3).
 
 3.4.  Queries
 
@@ -675,7 +674,7 @@ Table of Contents
    demonstrates the association between an environment matching that of
    the CoSERV query and a single appraisal artifact.  For Domain
    results, the result entries contain CoMID Domain Membership Triples
-   and Domain Dependency Triples.  The membership triples describe the
+   and Trust Dependency Triples.  The membership triples describe the
    member domains that compose the queried domain.  The dependency
    triples describe trust dependencies between domains.  The authority
    delegation chain is composed of one or more authority delegates.
@@ -1356,7 +1355,7 @@ Table of Contents
    collection.  The membership collection contains one Domain Membership
    Quad, which combines an authority delegation chain with a CoMID
    Domain Membership Triple.  The dependency collection is present but
-   empty, indicating that no matching Domain Dependency Triples are
+   empty, indicating that no matching Trust Dependency Triples are
    included in this result set.
 
    {
