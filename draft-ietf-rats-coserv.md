@@ -381,9 +381,10 @@ This is partly due to constraints of the query model itself.
 For example, in the case of environment-based queries, it is not possible to combine different artifact types in a single query, making it likely that a sequence of queries would be needed for different artifacts in realistic scenarios.
 Another related example is when using environments to query domains for their composition and dependency information.
 Domains are hierarchical, making traversal of the hierarchy a prerequisite step, before obtaining appraisal artifacts for their member environments.
-The expected interaction pattern is that the consumer would first issue a query for the domain artifacts, and then follow this with one or more queries to obtain appraisal artifacts for specific environments within the domain.
-For this interaction pattern to be efficient, CoSERV providers SHOULD return the entire trust dependency and domain membership subtree rooted in the queried environment, rather than just the immediate children, when domain artifacts are requested.
+The expected interaction pattern is that the consumer would first issue a query for the domain artifacts (memberships and dependencies), and then follow this with one or more queries to obtain appraisal artifacts for specific environments within the domain hierarchy.
+For this interaction pattern to be efficient, CoSERV providers MUST return the entire trust dependency and domain membership subtree rooted in the queried environment, rather than just the immediate children, when domain artifacts are requested.
 This will reduce the burden on the client to traverse the hierarchy in multiple steps.
+Such server-side traversal of the hierarchy is necessarily limited to those compositional relationships of which the server is aware, based on what has been ingested into its available data stores at the time of the query.
 
 ## Result Sets {#secinforesults}
 
