@@ -27,6 +27,7 @@ rim-result = (
 result-set //= reference-values
 result-set //= endorsed-values
 result-set //= trust-anchors
+result-set //= domains
 
 refval-quad = {
   &(authorities: 1) => [ + comid.$crypto-key-type-choice ]
@@ -65,6 +66,21 @@ cots-stmt = {
 trust-anchors = (
   &(akq: 3) => [ * ak-quad ]
   &(tas: 4) => [ * cots-stmt ]
+)
+
+membership-quad = {
+  &(authorities: 1) => [ + comid.$crypto-key-type-choice ]
+  &(membership-triple: 2) => comid.domain-membership-triple-record
+}
+
+dependency-quad = {
+  &(authorities: 1) => [ + comid.$crypto-key-type-choice ]
+  &(dependency-triple: 2) => comid.domain-dependency-triple-record
+}
+
+domains = (
+  &(membership: 5) => [ * membership-quad ]
+  &(dependency: 6) => [ * dependency-quad ]
 )
 
 ;
