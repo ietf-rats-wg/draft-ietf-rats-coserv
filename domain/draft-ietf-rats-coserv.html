@@ -1055,7 +1055,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Howard, et al.</td>
-<td class="center">Expires 7 March 2027</td>
+<td class="center">Expires 8 March 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1068,12 @@ svg {
 <dd class="internet-draft">draft-ietf-rats-coserv-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-09-03" class="published">3 September 2026</time>
+<time datetime="2026-09-04" class="published">4 September 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-03-07">7 March 2027</time></dd>
+<dd class="expires"><time datetime="2027-03-08">8 March 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1145,7 +1145,7 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 7 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1766,9 +1766,10 @@ This is partly due to constraints of the query model itself.
 For example, in the case of environment-based queries, it is not possible to combine different artifact types in a single query, making it likely that a sequence of queries would be needed for different artifacts in realistic scenarios.
 Another related example is when using environments to query domains for their composition and dependency information.
 Domains are hierarchical, making traversal of the hierarchy a prerequisite step, before obtaining appraisal artifacts for their member environments.
-The expected interaction pattern is that the consumer would first issue a query for the domain artifacts, and then follow this with one or more queries to obtain appraisal artifacts for specific environments within the domain.
-For this interaction pattern to be efficient, CoSERV providers <span class="bcp14">SHOULD</span> return the entire trust dependency and domain membership subtree rooted in the queried environment, rather than just the immediate children, when domain artifacts are requested.
-This will reduce the burden on the client to traverse the hierarchy in multiple steps.<a href="#section-3.4.5-1" class="pilcrow">¶</a></p>
+The expected interaction pattern is that the consumer would first issue a query for the domain artifacts (memberships and dependencies), and then follow this with one or more queries to obtain appraisal artifacts for specific environments within the domain hierarchy.
+For this interaction pattern to be efficient, CoSERV providers <span class="bcp14">MUST</span> return the entire trust dependency and domain membership subtree rooted in the queried environment, rather than just the immediate children, when domain artifacts are requested.
+This will reduce the burden on the client to traverse the hierarchy in multiple steps.
+Such server-side traversal of the hierarchy is necessarily limited to those compositional relationships of which the server is aware, based on what has been ingested into its available data stores at the time of the query.<a href="#section-3.4.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
