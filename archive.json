@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-03T01:47:38.299450+00:00",
+  "timestamp": "2026-09-06T01:36:29.560344+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1781,11 +1781,13 @@
       "state": "OPEN",
       "author": "steven-bellock",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "thomas-fossati"
+      ],
       "labels": [],
       "body": "https://ietf-rats-wg.github.io/draft-ietf-rats-coserv/draft-ietf-rats-coserv.html#section-3.5.2-2 says\n>The result is a flat map structure, keyed by the RIM identifier. Each key in the map MUST correspond to one of the RIM identifiers in the original query. Each mapped value is the corresponding RIM data object, contained within a Conceptual Message Wrapper (CMW) as per [[I-D.ietf-rats-msg-wrap](https://ietf-rats-wg.github.io/draft-ietf-rats-coserv/draft-ietf-rats-coserv.html#I-D.ietf-rats-msg-wrap)].\n\nHowever that does not seem to match the CDDL.\n```\nrim-result = (&(rims: 5) => cmw.cbor-collection)\n\ncmw.cbor-collection = {\n  ? __cmwc_t: ~uri / cmw.oid,\n  + &(label: int / text) => cmw.cbor-cmw,\n}\n\nrim-selector-id = [ &(comid: 0), comid.$tag-id-type-choice ]\n                  / [ &(coswid: 1), coswid.tag-id ]\n                  / [ &(corim: 2), corim.$corim-id-type-choice ]\n```\nIn particular, query identifiers are arrays, which cannot be used as a `cbor-collection` key.",
       "createdAt": "2026-09-01T16:26:33Z",
-      "updatedAt": "2026-09-02T07:45:33Z",
+      "updatedAt": "2026-09-03T17:09:44Z",
       "closedAt": null,
       "comments": [
         {
@@ -6307,7 +6309,7 @@
     {
       "number": 120,
       "id": "PR_kwDOOAZd1M7m7tJb",
-      "title": "feat(cddl): add domain queries and results",
+      "title": "feat: add domain queries and results to CDDL and draft text",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/120",
       "state": "OPEN",
       "author": "thomas-fossati",
@@ -6316,13 +6318,13 @@
       "labels": [],
       "body": "Add domain-related queries and results (CDDL only)\r\n\r\nPartially addressing #63 ",
       "createdAt": "2026-06-16T09:22:57Z",
-      "updatedAt": "2026-09-01T09:22:20Z",
+      "updatedAt": "2026-09-04T12:49:12Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "472a81aae10b8af21dc512c9e1eb2edb185f1380",
       "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "headRefName": "domain",
-      "headRefOid": "c33550600354a2dc970a66fbec1cdc8ae1662b9b",
+      "headRefOid": "237c94d4af4157b744366b6fce0ae24538eafdf9",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
