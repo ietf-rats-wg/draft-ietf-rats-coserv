@@ -709,7 +709,7 @@ Table of Contents
    Each key in the map MUST correspond to one of the RIM identifiers in
    the original query.  Each mapped value is the corresponding RIM data
    object, contained within a Conceptual Message Wrapper (CMW) as per
-   [I-D.ietf-rats-msg-wrap].
+   [RFC9999].
 
    The permitted RIM content for each map entry depends upon the type of
    key used in the query.
@@ -1325,9 +1325,9 @@ Table of Contents
    query criteria.
 
    Compared with the previous example, the rvq entry is empty, while the
-   source-artifacts (codepoint 11) contain two CMW records
-   [I-D.ietf-rats-msg-wrap], each of which contains a (made up) manifest
-   with the type "application/vnd.example.refvals".
+   source-artifacts (codepoint 11) contain two CMW records [RFC9999],
+   each of which contains a (made up) manifest with the type
+   "application/vnd.example.refvals".
 
    {
      / profile / 0: "tag:example.com,2025:cc-platform#1.0.0",
@@ -2564,13 +2564,6 @@ Table of Contents
               2026, <https://datatracker.ietf.org/doc/html/draft-ietf-
               rats-corim-11>.
 
-   [I-D.ietf-rats-msg-wrap]
-              Birkholz, H., Smith, N., Fossati, T., Tschofenig, H., and
-              D. Glaze, "RATS Conceptual Messages Wrapper (CMW)", Work
-              in Progress, Internet-Draft, draft-ietf-rats-msg-wrap-23,
-              11 December 2025, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-rats-msg-wrap-23>.
-
    [IANA.core-parameters]
               IANA, "Constrained RESTful Environments (CoRE)
               Parameters",
@@ -2630,6 +2623,11 @@ Table of Contents
               Waltermire, "Concise Software Identification Tags",
               RFC 9393, DOI 10.17487/RFC9393, June 2023,
               <https://www.rfc-editor.org/rfc/rfc9393>.
+
+   [RFC9999]  Birkholz, H., Smith, N., Fossati, T., and H. Tschofenig,
+              "Remote ATtestation procedureS (RATS) Conceptual Message
+              Wrapper (CMW)", RFC 9999, DOI 10.17487/RFC9999, July 2026,
+              <https://www.rfc-editor.org/rfc/rfc9999>.
 
    [SEMVER]   "Semantic Versioning 2.0.0", 2013,
               <https://semver.org/spec/v2.0.0.html>.

@@ -1828,7 +1828,7 @@ The result does not contain any extracted or aggregated information.
 Instead, it is composed of entire RIM documents, obtained and passed through verbatim from their original supply chain sources.<a href="#section-3.5.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.5.2-2">The result is a flat map structure, keyed by the RIM identifier.
 Each key in the map <span class="bcp14">MUST</span> correspond to one of the RIM identifiers in the original query.
-Each mapped value is the corresponding RIM data object, contained within a Conceptual Message Wrapper (CMW) as per <span>[<a href="#I-D.ietf-rats-msg-wrap" class="cite xref">I-D.ietf-rats-msg-wrap</a>]</span>.<a href="#section-3.5.2-2" class="pilcrow">¶</a></p>
+Each mapped value is the corresponding RIM data object, contained within a Conceptual Message Wrapper (CMW) as per <span>[<a href="#RFC9999" class="cite xref">RFC9999</a>]</span>.<a href="#section-3.5.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.5.2-3">The permitted RIM content for each map entry depends upon the type of key used in the query.<a href="#section-3.5.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.5.2-4">When the key is a CoRIM identifier, the RIM content <span class="bcp14">MUST</span> be the CoRIM data object whose identity matches the key.<a href="#section-3.5.2-4" class="pilcrow">¶</a></p>
 <p id="section-3.5.2-5">When the key is a CoMID tag identifier, the RIM content <span class="bcp14">MUST</span> be a CoRIM data object, which contains the CoMID tag whose identity matches the key.
@@ -2432,7 +2432,7 @@ The rest of the structure is the <code>measurement-map</code> as defined in CoRI
 </div>
 <p id="section-5.2-6">The following example is for a query that requested the results be provided in the "source artifacts" format.
 This means one or more original signed manifests containing information that satisfies the query criteria.<a href="#section-5.2-6" class="pilcrow">¶</a></p>
-<p id="section-5.2-7">Compared with the previous example, the <code>rvq</code> entry is empty, while the <code>source-artifacts</code> (codepoint 11) contain two CMW records <span>[<a href="#I-D.ietf-rats-msg-wrap" class="cite xref">I-D.ietf-rats-msg-wrap</a>]</span>, each of which contains a (made up) manifest with the type "application/vnd.example.refvals".<a href="#section-5.2-7" class="pilcrow">¶</a></p>
+<p id="section-5.2-7">Compared with the previous example, the <code>rvq</code> entry is empty, while the <code>source-artifacts</code> (codepoint 11) contain two CMW records <span>[<a href="#RFC9999" class="cite xref">RFC9999</a>]</span>, each of which contains a (made up) manifest with the type "application/vnd.example.refvals".<a href="#section-5.2-7" class="pilcrow">¶</a></p>
 <div class="lang-edn sourcecode" id="section-5.2-8">
 <pre>
 {
@@ -4025,10 +4025,6 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
         <dd>
 <span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Deshpande, Y.</span>, <span class="refAuthor">Smith, N.</span>, and <span class="refAuthor">W. Pan</span>, <span class="refTitle">"Concise Reference Integrity Manifest"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-corim-11</span>, <time datetime="2026-07-06" class="refDate">6 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-11">https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-11</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="I-D.ietf-rats-msg-wrap">[I-D.ietf-rats-msg-wrap]</dt>
-        <dd>
-<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Smith, N.</span>, <span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Tschofenig, H.</span>, and <span class="refAuthor">D. Glaze</span>, <span class="refTitle">"RATS Conceptual Messages Wrapper (CMW)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-msg-wrap-23</span>, <time datetime="2025-12-11" class="refDate">11 December 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-msg-wrap-23">https://datatracker.ietf.org/doc/html/draft-ietf-rats-msg-wrap-23</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="IANA.core-parameters">[IANA.core-parameters]</dt>
         <dd>
 <span class="refAuthor">IANA</span>, <span class="refTitle">"Constrained RESTful Environments (CoRE) Parameters"</span>, <span>&lt;<a href="https://www.iana.org/assignments/core-parameters">https://www.iana.org/assignments/core-parameters</a>&gt;</span>. </dd>
@@ -4080,6 +4076,10 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <dt id="RFC9393">[RFC9393]</dt>
         <dd>
 <span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Fitzgerald-McKay, J.</span>, <span class="refAuthor">Schmidt, C.</span>, and <span class="refAuthor">D. Waltermire</span>, <span class="refTitle">"Concise Software Identification Tags"</span>, <span class="seriesInfo">RFC 9393</span>, <span class="seriesInfo">DOI 10.17487/RFC9393</span>, <time datetime="2023-06" class="refDate">June 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9393">https://www.rfc-editor.org/rfc/rfc9393</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9999">[RFC9999]</dt>
+        <dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Smith, N.</span>, <span class="refAuthor">Fossati, T.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Remote ATtestation procedureS (RATS) Conceptual Message Wrapper (CMW)"</span>, <span class="seriesInfo">RFC 9999</span>, <span class="seriesInfo">DOI 10.17487/RFC9999</span>, <time datetime="2026-07" class="refDate">July 2026</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9999">https://www.rfc-editor.org/rfc/rfc9999</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SEMVER">[SEMVER]</dt>
         <dd>
