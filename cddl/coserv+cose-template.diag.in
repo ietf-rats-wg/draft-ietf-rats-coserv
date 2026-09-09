@@ -1,7 +1,7 @@
 / signed-coserv / 18([
   / protected / << {
     / alg / 1: -7 / ECDSA 256 /,
-    / cty / 2 : "application/coserv+cbor"
+    / cty / 3 : "application/coserv+cbor"
   } >>,
   / unprotected / {},
   / payload / <<
