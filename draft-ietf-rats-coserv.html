@@ -2044,7 +2044,7 @@ See <a href="#secstateful" class="auto internal xref">Section 3.3.1</a> for a de
 SELECT *
   FROM endorsed_values
  WHERE ( instance-id = "At6tvu/erQ==" ) OR
-       ( instance-id = "iZl4ZVY=" )`
+       ( instance-id = "iZl4ZVY=" )
 </pre><a href="#section-4.3.1.2.1-3" class="pilcrow">¶</a>
 </div>
 <p id="section-4.3.1.2.1-4">The same applies for class-based selectors; however, since class selectors are themselves composed of multiple inner fields, the recipient of the query <span class="bcp14">MUST</span> use a logical <code>AND</code> operation in consideration of the inner fields for each class.<a href="#section-4.3.1.2.1-4" class="pilcrow">¶</a></p>
@@ -2109,7 +2109,7 @@ results = {
 }
 
 environment-result = (
-  ; result-type: collectect-artifacts
+  ; result-type: collected-artifacts
   result-set //
 
   ; result-type: source-artifacts
@@ -3281,7 +3281,7 @@ Client B operates a local cache, where it stores a copy of the response.<a href=
 </div>
 <p id="section-6.1.4.2-8">After 9 more minutes, B is instructed to make the same request again.
 The request generates a "cache hit" event on the local cache.
-However, the cached resource is become stale and needs to be revalidated.
+However, the cached resource has become stale and needs to be revalidated.
 Therefore, B sends a conditional request to the proxy.
 The request generates a "cache hit" event on the proxy where the resource is still fresh due to the differential caching behaviour dictated by the original response from the origin.
 The proxy returns a 304 (Not modified) status code, which instructs the client to reuse its local copy of the response.<a href="#section-6.1.4.2-8" class="pilcrow">¶</a></p>
@@ -3450,7 +3450,7 @@ An aggregator that is unavailable, malfunctioning, or malicious, has the potenti
 For example, a malicious aggregator might attempt to impersonate or otherwise subvert the authority of other actors in the supply chain, such as hardware or firmware vendors.<a href="#section-8.3-2" class="pilcrow">¶</a></p>
 <p id="section-8.3-3">The intent of CoSERV is for aggregators to provide an optional convenience layer for the Verifier, rather than to be a subversive authority.
 The design features of CoSERV can be used alongside judicious deployment practices to mitigate the risks.
-An informative and non-exhaustive list of mitigations follows:-<a href="#section-8.3-3" class="pilcrow">¶</a></p>
+An informative and non-exhaustive list of mitigations follows:<a href="#section-8.3-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-8.3-4.1">
             <p id="section-8.3-4.1.1"><strong>Use independent chains of trust.</strong>
