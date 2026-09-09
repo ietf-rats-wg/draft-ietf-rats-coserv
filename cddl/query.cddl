@@ -23,6 +23,7 @@ rim-selector-id = [ &(comid: 0), comid.$tag-id-type-choice ]
 artifact-type = &(endorsed-values: 0)
                 / &(trust-anchors: 1)
                 / &(reference-values: 2)
+                / &(domains: 3)
 
 result-type = &(collected-artifacts: 0)
               / &(source-artifacts: 1)

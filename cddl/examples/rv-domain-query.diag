@@ -1,0 +1,12 @@
+{
+  / profile / 0: "tag:example.com,2025:cc-platform#1.0.0",
+  / query / 1: {
+    0: 3, / domains /
+    1: {
+      0: [ [
+        { 0: 560(h'00') }
+      ] ]
+    },
+    2: 0
+  }
+}

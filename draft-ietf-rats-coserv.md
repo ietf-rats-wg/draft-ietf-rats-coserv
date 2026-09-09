@@ -122,6 +122,7 @@ The lack of standardized methods for querying and retrieving these artifacts pos
 The Concise Selector for Endorsements and Reference Values (CoSERV) addresses this challenge by defining a query language and a corresponding result structure for the transaction of artifacts between a provider and a consumer.
 The query language format provides Verifiers with a standard way to specify a set of relevant artifacts, such that they can be obtained from Endorsers and Reference Value Providers.
 Queries can be based on characteristics of the Attester's environment.
+This includes composite Attesters, where those environments become the basis for obtaining topological information, such as composition or trust dependency details.
 Alternatively, queries can be based on the precise identifiers of one or more Reference Integrity Manifest (RIM) documents.
 In turn, the result format allows those Endorsers and Reference Value Providers to package the selected artifacts within a standard structure.
 This facilitates the efficient discovery and retrieval of relevant Endorsements and Reference Values from providers, maximising the re-use of common software tools and libraries within the transactions.
@@ -131,7 +132,8 @@ The CoSERV result set is intended to form the corresponding output data type fro
 
 The environment characteristics of Endorsements and Reference Values are derived from the equivalent concepts in CoRIM {{-rats-corim}}.
 CoSERV therefore borrows heavily from CoRIM, and shares some data types for its fields.
-And, like CoRIM, the CoSERV schema is defined using CDDL {{-cddl}}. A CoSERV query can be serialized in CBOR {{-cbor}} format.
+And, like CoRIM, the CoSERV schema is defined using CDDL {{-cddl}}.
+A CoSERV query can be serialized in CBOR {{-cbor}} format.
 
 In addition to the CBOR-based data formats for CoSERV queries and responses, this specification also defines API bindings and behaviours for the exchange of CoSERV queries and responses.
 This is to facilitate standard interactions between CoSERV producers and consumers.
@@ -216,8 +218,7 @@ Notionally, the producer is "adding" the results to the query before sending it 
 ## Artifacts {#secartifacts}
 
 Artifacts are what the consumer (Verifier) needs in order to verify and appraise Evidence from the Attester, and therefore they form the bulk of the response payload in a CoSERV transaction.
-The common CoSERV query language recognises three artifact types.
-These correspond to the three categories of endorsement artifact that can be identified natively in the RATS architecture:
+The common CoSERV query language recognises the following four artifact types:
 
 - **Trust Anchor**: A trust anchor is as defined in {{-ta-reqs}}.
 An example of a trust anchor would be the public part of the asymmetric signing key that is used by the Attester to sign Evidence, such that the Verifier can verify the cryptographic signature.
@@ -232,6 +233,9 @@ A reference value specifies an individual aspect of the Attester's desired state
 Reference values are sometimes informally called "golden values".
 An example of a reference value would be the expected hash or checksum of a binary firmware or software image running in the Attester's environment.
 Evidence from the Attester would then include claims about the Attester's actual state, which the Verifier can then compare with the reference values at Evidence appraisal time.
+- **Domain**: A domain is defined in {{-rats-corim}} as a hierarchical description of a Composite Attester in terms of its constituent environments and their compositional relationships.
+Domain artifacts in CoSERV are represented by CoMID Domain Membership Triples and Trust Dependency Triples (see {{Section 5.1.11 of -rats-corim}}).
+These triples allow a Verifier to obtain authoritative information about the internal arrangement of the composite Attester and the trust dependencies between its constituent domains.
 
 When artifacts are produced by an aggregator (see {{secaggregation}}), the following additional classifications apply:
 
@@ -292,6 +296,12 @@ Where globally unique identifiers are not guaranteed, a CoSERV provider SHOULD b
 For example, a provider might be scoped to a single product family (effectively constraining the class).
 This preserves the simplicity of the CoSERV environment model while avoiding ambiguity in practice.
 
+### Environments as Domains
+
+{{Section 5.1.11 of -rats-corim}} defines a domain identifier as being syntactically equivalent to an environment, even though a domain's semantics are richer than that of a simple Attester environment.
+
+Since the identifiers are syntactically the same, a CoSERV query structure that is based on environments can be used, nearly as-is, to identify a domain: by instance, group, or class of the domain identifier, subject to the same restrictions as any other environment-based query ({{secenvironments}}).
+
 ## Queries {#secinfoqueries}
 
 The purpose of a query is to allow the consumer (Verifier) to specify the artifacts that it needs.
@@ -299,6 +309,7 @@ CoSERV offers a small but versatile query language.
 The following styles of query are available:
 
 - **Queries by Environment**: This query style is used to select the artifacts that are applicable to the Attester's environment.
+For the case of composite Attesters, these artifacts can include domain composition and dependency information.
 See {{secenvironments}}.
 - **Queries by RIM Identifier**: This query style is used to select artifacts that are Reference Integrity Manifest (RIM) artifacts, and where the consumer already knows the precise identifiers of the specific RIMs that it needs.
 
@@ -308,10 +319,12 @@ Further details are given in the sections below.
 
 When a CoSERV query is specified using an environment, the following information is conveyed in the query:
 
-- A specification of the required artifact type: Reference Value, Endorsed Value or Trust Anchor.
+- A specification of the required artifact type: Reference Value, Endorsed Value, Trust Anchor or Domain.
 See {{secartifacts}} for definitions of artifact types.
 A single CoSERV query can only specify a single artifact type.
-- A specification of the Attester's environment.
+- A specification of the target environment.
+For Reference Value, Endorsed Value and Trust Anchor queries, this is the Attester environment.
+For Domain queries, this is the domain whose membership and dependency triples are being requested.
 Environments can be selected according to Attester instance, group or class.
 Additional properties of the environment state can be specified by adding one or more measurements to the selector.
 See {{secenvironments}} for full definitions.
@@ -361,6 +374,18 @@ A CoSERV implementation MAY log the time at which a query was received and fulfi
 This might sometimes be desirable for transparency or audit purposes.
 Implementations are free to define their own transparency events, which can then include timestamps or other suitable information.
 
+### Query Combinations
+
+It is not always possible for a CoSERV consumer (such as a Verifier) to obtain all required artifacts from a single query.
+This is partly due to constraints of the query model itself.
+For example, in the case of environment-based queries, it is not possible to combine different artifact types in a single query, making it likely that a sequence of queries would be needed for different artifacts in realistic scenarios.
+Another related example is when using environments to query domains for their composition and dependency information.
+Domains are hierarchical, making traversal of the hierarchy a prerequisite step, before obtaining appraisal artifacts for their member environments.
+The expected interaction pattern is that the consumer would first issue a query for the domain artifacts (memberships and dependencies), and then follow this with one or more queries to obtain appraisal artifacts for specific environments within the domain hierarchy.
+For this interaction pattern to be efficient, CoSERV providers MUST return the entire trust dependency and domain membership subtree rooted in the queried environment, rather than just the immediate children, when domain artifacts are requested.
+This will reduce the burden on the client to traverse the hierarchy in multiple steps.
+Such server-side traversal of the hierarchy is necessarily limited to those compositional relationships of which the server is aware, based on what has been ingested into its available data stores at the time of the query.
+
 ## Result Sets {#secinforesults}
 
 The result set contains the artifacts that the producer collected in response to the query.
@@ -374,7 +399,7 @@ The remaining information contained in the result set depends on the style of qu
 For queries by environment, the top-level structure of the result set contains the following two items in addition to the expiry timestamp:
 
 - A collection of one or more result entries.
-This will be a collection of either reference values, endorsed values or trust anchors.
+This will be a collection of either reference values, endorsed values, trust anchors or domain definitions.
 See {{secartifacts}} for definitions of artifact types.
 Artifact types are never mixed in any single CoSERV result set.
 The artifacts in the result collection therefore MUST match the single artifact type specified in the original CoSERV query.
@@ -385,7 +410,10 @@ Source materials would typically be requested in cases where the consumer is not
 
 Each individual result entry combines a CoMID triple with an authority delegation chain.
 CoMID triples are exactly as defined in {{Section 5.1.4 of -rats-corim}}.
-Each CoMID triple will demonstrate the association between an environment matching that of the CoSERV query, and a single artifact such as a reference value, trust anchor or endorsed value.
+For Reference Value, Endorsed Value and Trust Anchor results, each CoMID triple demonstrates the association between an environment matching that of the CoSERV query and a single appraisal artifact.
+For Domain results, the result entries contain CoMID Domain Membership Triples and Trust Dependency Triples.
+The membership triples describe the member domains that compose the queried domain.
+The dependency triples describe trust dependencies between domains.
 The authority delegation chain is composed of one or more authority delegates.
 Each authority delegate is represented by a public key or key identifier, which the consumer can check against its own set of trusted authorities.
 The authority delegation chain serves to establish the provenance of the result entry, and enables the Verifier to evaluate the trustworthiness of the associated artifact.
@@ -489,7 +517,7 @@ The meanings of the query fields are detailed in the following subsections for e
 
 For queries by environment, the `artifact-type` field is the foremost discriminator of the query.
 It is an artifact category selector.
-Its three permissible values are `trust-anchors` (codepoint 1), `endorsed-values` (codepoint 0) and `reference-values` (codepoint 2).
+Its four permissible values are `trust-anchors` (codepoint 1), `endorsed-values` (codepoint 0), `reference-values` (codepoint 2), and `domains` (codepoint 3).
 
 See {{secartifacts}} for full definitions of artifact types.
 
@@ -629,6 +657,14 @@ Again, the `artifact-type` is set to 2, and `profile` is given a demonstration v
 {::include-fold cddl/examples/rv-instance-two-entries.diag}
 ~~~
 
+The next example shows a query for Domain information, scoped by class.
+The `artifact-type` in this case is set to 3, which indicates a query for domain membership and dependency information.
+The query structure is otherwise the same as for other environment-based query examples.
+
+~~~edn
+{::include-fold cddl/examples/rv-domain-query.diag}
+~~~
+
 This next example shows how a query can be based on one or more RIM identifiers, instead of environments.
 In this case, the query is requesting three specific CoRIMs.
 
@@ -662,6 +698,16 @@ Compared with the previous example, the `rvq` entry is empty, while the `source-
 
 ~~~edn
 {::include-fold cddl/examples/rv-class-simple-results-source-artifacts.diag}
+~~~
+
+The following example shows a result set for a Domain query.
+The query identifies a domain using an environment selector based on class.
+The result contains a membership collection and a dependency collection.
+The membership collection contains one Domain Membership Quad, which combines an authority delegation chain with a CoMID Domain Membership Triple.
+The dependency collection is present but empty, indicating that no matching Trust Dependency Triples are included in this result set.
+
+~~~edn
+{::include-fold cddl/examples/rv-domain-results.diag}
 ~~~
 
 This next example shows how a query can be based on one or more RIM identifiers, instead of environments.
@@ -770,6 +816,10 @@ The presence of this category indicates that the service implementation supports
 
 Each profile is paired with a non-empty set of artifact categories, allowing the service implementation to indicate the ways in which it can satisfy queries.
 This pairing caters for situations where the service implementation might support different combinations of artifact category for different profiles.
+
+The capability advertisement does not enumerate the individual artifact types that are available in response to environment-based queries.
+A service that advertises support for collected or source artifact results for a profile is indicating support for the environment-based query style for that profile.
+The availability of particular artifact types, such as Reference Values or Domains, can be determined only by executing a query, or by consulting profile-specific documentation.
 
 ##### API Endpoints
 
@@ -1265,6 +1315,12 @@ This is because they necessarily correlate inputs from multiple supply-chain act
 In doing so, an aggregator might be able to infer details about the composition of an Attester's hardware, firmware or software components.
 Such details would not be accessible to individual supply-chain actors implementing the Endorser or Reference Value Provider roles.
 There is consequently a risk that such inferred details could be misused to create a covert channel.
+
+## Domains
+
+Domain queries and domain result sets can reveal the topology of a Composite Attester, including the relationship between parent and child environments and the trust dependencies between domains.
+This information can be sensitive even when the environment identifiers themselves are not individually identifying.
+Implementations should apply the same access-control, confidentiality, and minimization considerations to Domain artifacts as to other privacy-sensitive CoSERV query and result data.
 
 # IANA Considerations
 
