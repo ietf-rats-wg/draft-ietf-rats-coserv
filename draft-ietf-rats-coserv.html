@@ -2236,7 +2236,7 @@ signed-coserv = #6.18([
 <pre>
 signed-coserv-protected-hdr = {
   1 =&gt; int                            ; alg
-  2 =&gt; "application/coserv+cbor" / 10000 ; cty
+  3 =&gt; "application/coserv+cbor" / 10000 ; cty
   * cose.label =&gt; cose.values
 }
 
@@ -2883,7 +2883,7 @@ Content (in CBOR Extended Diagnostic Notation (EDN))
 / signed-coserv / 18([
   / protected / &lt;&lt; {
     / alg / 1: -7 / ECDSA 256 /,
-    / cty / 2 : "application/coserv+cbor"
+    / cty / 3 : "application/coserv+cbor"
   } &gt;&gt;,
   / unprotected / {},
   / payload / &lt;&lt;
@@ -4153,7 +4153,7 @@ signed-coserv = #6.18([
 ])
 signed-coserv-protected-hdr = {
   1 =&gt; int,
-  2 =&gt; "application/coserv+cbor" / 10000,
+  3 =&gt; "application/coserv+cbor" / 10000,
   * cose.label =&gt; cose.values,
 }
 signed-coserv-unprotected-hdr = {* cose.label =&gt; cose.values}

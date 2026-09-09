@@ -1129,7 +1129,7 @@ Table of Contents
 
    signed-coserv-protected-hdr = {
      1 => int                            ; alg
-     2 => "application/coserv+cbor" / 10000 ; cty
+     3 => "application/coserv+cbor" / 10000 ; cty
      * cose.label => cose.values
    }
 
@@ -1814,7 +1814,7 @@ Table of Contents
    / signed-coserv / 18([
      / protected / << {
        / alg / 1: -7 / ECDSA 256 /,
-       / cty / 2 : "application/coserv+cbor"
+       / cty / 3 : "application/coserv+cbor"
      } >>,
      / unprotected / {},
      / payload / <<
@@ -2693,7 +2693,7 @@ A.1.  CoSERV Data Model
    ])
    signed-coserv-protected-hdr = {
      1 => int,
-     2 => "application/coserv+cbor" / 10000,
+     3 => "application/coserv+cbor" / 10000,
      * cose.label => cose.values,
    }
    signed-coserv-unprotected-hdr = {* cose.label => cose.values}
