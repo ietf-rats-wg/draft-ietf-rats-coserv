@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-06T01:36:29.560344+00:00",
+  "timestamp": "2026-09-10T01:47:55.227274+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1760,17 +1760,17 @@
       "id": "I_kwDOOAZd1M8AAAABPLAjUA",
       "title": "Wrong COSE CDDL",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/122",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "steven-bellock",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [
         "steven-bellock"
       ],
       "labels": [],
       "body": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/blob/472a81aae10b8af21dc512c9e1eb2edb185f1380/cddl/signed-coserv-headers.cddl.in#L1-L5\n\nCOSE `content type` uses label `3`, not `2`.",
       "createdAt": "2026-09-01T14:34:50Z",
-      "updatedAt": "2026-09-01T14:48:25Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-09T06:58:39Z",
+      "closedAt": "2026-09-09T06:58:39Z",
       "comments": []
     },
     {
@@ -6179,21 +6179,21 @@
       "id": "PR_kwDOOAZd1M7acbAz",
       "title": "Clarifying domain queries based on environment",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/119",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "gmandyam",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "See https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/63",
       "createdAt": "2026-05-11T22:13:11Z",
-      "updatedAt": "2026-09-01T13:17:45Z",
+      "updatedAt": "2026-09-08T08:20:40Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "23b63e4619e0d33adcb2464e649d3810b9e86078",
       "headRepository": "gmandyam/draft-howard-rats-coserv",
       "headRefName": "domain_query_issue_63",
       "headRefOid": "db8d8d6225c7aa8b231449c08539e1071da811ab",
-      "closedAt": null,
+      "closedAt": "2026-09-08T08:20:40Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -6311,24 +6311,26 @@
       "id": "PR_kwDOOAZd1M7m7tJb",
       "title": "feat: add domain queries and results to CDDL and draft text",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/120",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Add domain-related queries and results (CDDL only)\r\n\r\nPartially addressing #63 ",
       "createdAt": "2026-06-16T09:22:57Z",
-      "updatedAt": "2026-09-04T12:49:12Z",
+      "updatedAt": "2026-09-09T06:57:29Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "472a81aae10b8af21dc512c9e1eb2edb185f1380",
       "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "headRefName": "domain",
       "headRefOid": "237c94d4af4157b744366b6fce0ae24538eafdf9",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-09T06:57:29Z",
+      "mergedAt": "2026-09-09T06:57:29Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "1940633ad523351c46af55e7287cb8b0ae813cb6"
+      },
       "comments": [
         {
           "author": "paulhowardarm",
@@ -6336,6 +6338,13 @@
           "body": "@thomas-fossati Could you please review the draft text changes? I can't add you as a PR reviewer, because you kicked off the PR yourself with the CDDL.",
           "createdAt": "2026-08-25T22:31:12Z",
           "updatedAt": "2026-08-25T22:31:12Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "body": "\ud83d\udea2 it!",
+          "createdAt": "2026-09-08T08:21:52Z",
+          "updatedAt": "2026-09-08T08:21:52Z"
         }
       ],
       "reviews": [
@@ -6382,6 +6391,44 @@
               "updatedAt": "2026-09-01T09:22:20Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABLsV74w",
+          "commit": {
+            "abbreviatedOid": "237c94d"
+          },
+          "author": "gmandyam",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "A few unresolved comments, but I would like to see this merge go through for now and see whether broader review brings back the same comments.\n\nPlease close out the other pending PR after merging this one.  ",
+          "createdAt": "2026-09-01T15:02:14Z",
+          "updatedAt": "2026-09-08T21:14:38Z",
+          "comments": [
+            {
+              "originalPosition": 57,
+              "body": "When is it appropriate to use \"composite Attester\" in place of domain?\n\nAlso, for a domain query this text is vague on what is returned.  Are the artifacts limited to domain composition and dependencies, or can they include all artifacts associated with each environment in the domain?",
+              "createdAt": "2026-09-01T15:02:14Z",
+              "updatedAt": "2026-09-08T21:14:38Z"
+            },
+            {
+              "originalPosition": 88,
+              "body": "I suggest another option for consideration:\n\n4.  MUST return either of the following (a) the immediate children only with a flag that indicates that subtrees exist for one or more children, (b) return the entire tree where the same flag indicates that the entire tree is being returned.",
+              "createdAt": "2026-09-01T15:13:07Z",
+              "updatedAt": "2026-09-08T21:14:38Z"
+            },
+            {
+              "originalPosition": 88,
+              "body": "Another question:  can we add a URI return option to allow for arrtifacts such as complex attester hierarchies to be retrieved by the client at a designated address?",
+              "createdAt": "2026-09-01T15:14:41Z",
+              "updatedAt": "2026-09-08T21:14:38Z"
+            },
+            {
+              "originalPosition": 171,
+              "body": "I don't think this subsection is necessary and may confuse the reader.  There is already a section on the privacy considerations related to artifacts returned by an env ID query (\"A CoSERV query can potentially contain privacy-sensitive information. Specifically, the environment-selector field of the query may reference identifiable Attester instances in some cases ... .\"  \n\nThe existing guidance should be applicable.  It could be modified with a qualifier such as \"may reference one or more identifiable Attester instances and their interdependencies\" to cover domains specifically.",
+              "createdAt": "2026-09-01T15:26:47Z",
+              "updatedAt": "2026-09-08T21:14:38Z"
+            }
+          ]
         }
       ]
     },
@@ -6390,24 +6437,26 @@
       "id": "PR_kwDOOAZd1M8AAAABBw7N4w",
       "title": "Fix COSE content type label",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/123",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "steven-bellock",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Fix #122.",
       "createdAt": "2026-09-01T14:53:03Z",
-      "updatedAt": "2026-09-01T17:05:37Z",
+      "updatedAt": "2026-09-09T06:58:38Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "472a81aae10b8af21dc512c9e1eb2edb185f1380",
       "headRepository": "steven-bellock/draft-ietf-rats-coserv",
       "headRefName": "fix-122",
       "headRefOid": "e25aed1060cd80db4bc1a388355e381aba8ba312",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-09T06:58:38Z",
+      "mergedAt": "2026-09-09T06:58:38Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "6c85e1c47632c6e73ee6d9d0d75884682ae593d6"
+      },
       "comments": [],
       "reviews": [
         {
@@ -6443,24 +6492,26 @@
       "id": "PR_kwDOOAZd1M8AAAABBw95Mw",
       "title": "List CMW as an RFC",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/124",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "steven-bellock",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-09-01T14:57:59Z",
-      "updatedAt": "2026-09-01T17:12:42Z",
+      "updatedAt": "2026-09-09T06:59:26Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "472a81aae10b8af21dc512c9e1eb2edb185f1380",
       "headRepository": "steven-bellock/draft-ietf-rats-coserv",
       "headRefName": "cmw",
       "headRefOid": "5bf013e7a8ecdd55d4d63170476f83f19d0c57e9",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-09T06:59:26Z",
+      "mergedAt": "2026-09-09T06:59:26Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "52edfeba12d2ab2b83f53baa2af604e1ea18cd4d"
+      },
       "comments": [],
       "reviews": [
         {
@@ -6483,24 +6534,26 @@
       "id": "PR_kwDOOAZd1M8AAAABBxW_bw",
       "title": "Fix editorial issues",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/125",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "steven-bellock",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-09-01T15:45:21Z",
-      "updatedAt": "2026-09-01T17:06:38Z",
+      "updatedAt": "2026-09-09T07:00:37Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "472a81aae10b8af21dc512c9e1eb2edb185f1380",
       "headRepository": "steven-bellock/draft-ietf-rats-coserv",
       "headRefName": "editorial",
       "headRefOid": "74ad2186837be571a68ac33651a9924bd51e71d1",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-09T07:00:36Z",
+      "mergedAt": "2026-09-09T07:00:36Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "9f840fa3f2b799515fc33997824791908b9934f1"
+      },
       "comments": [],
       "reviews": [
         {
