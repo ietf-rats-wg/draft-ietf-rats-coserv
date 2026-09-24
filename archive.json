@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-15T02:09:49.403166+00:00",
+  "timestamp": "2026-09-24T01:55:02.117624+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1800,6 +1800,22 @@
           "updatedAt": "2026-09-02T07:45:33Z"
         }
       ]
+    },
+    {
+      "number": 127,
+      "id": "I_kwDOOAZd1M8AAAABSufRSQ",
+      "title": "Fix and update schema for ` application/coserv-discovery+json`",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/127",
+      "state": "OPEN",
+      "author": "ajay-fuji",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/blob/9f840fa3f2b799515fc33997824791908b9934f1/openapi/rr.yaml#L67-L72\n\nI feel here; instead of binary format, the schema should define JSON fields. ",
+      "createdAt": "2026-09-23T09:51:07Z",
+      "updatedAt": "2026-09-23T09:51:07Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
