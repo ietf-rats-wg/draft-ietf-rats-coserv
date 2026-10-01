@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-24T01:55:02.117624+00:00",
+  "timestamp": "2026-10-01T02:47:45.723347+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1814,6 +1814,22 @@
       "body": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/blob/9f840fa3f2b799515fc33997824791908b9934f1/openapi/rr.yaml#L67-L72\n\nI feel here; instead of binary format, the schema should define JSON fields. ",
       "createdAt": "2026-09-23T09:51:07Z",
       "updatedAt": "2026-09-23T09:51:07Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 128,
+      "id": "I_kwDOOAZd1M8AAAABUKoVwQ",
+      "title": "Improve error reporting in the HTTP API",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/128",
+      "state": "OPEN",
+      "author": "DhanusML",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft states:\n\n>Endpoint implementations MUST respond with an HTTP status code and content\n>according to one of the subheadings...\n\nThis might be too restrictive because the responses that are allowed\nare limited to -- success, bad request, unknown profile, too many requests\n([section 6.1.3.1]). This means the response to a well-formed CoSERV query with\nprofile that is recognized by the server should always result in a successful\ntransaction (ignoring rate limiting). But here are few scenarios where that may\nnot be ideal:\n\n1. Results not found: If no results matching the query environment is found,\n a CoSERV containing empty result set is returned with a 200 status code. The\n more appropriate respose would be a 404 not found.\n\n2. Query mode not supported: It is possible that an endpoint only supports\n environment query but the request was a rim query; or source artifacts were\n queried to an endpoint that does not support it. The suitable response here\n would be 406 Not Acceptable.\n\n3. Internal errors: The endpoint cannot respond with 5xx code in case of an\n internal error because of the restriction.\n\n[section 6.1.3.1]: https://www.ietf.org/archive/id/draft-ietf-rats-coserv-07.html#section-6.1.3.1",
+      "createdAt": "2026-09-30T14:44:35Z",
+      "updatedAt": "2026-09-30T14:44:35Z",
       "closedAt": null,
       "comments": []
     }
