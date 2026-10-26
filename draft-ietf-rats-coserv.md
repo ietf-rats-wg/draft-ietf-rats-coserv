@@ -1090,6 +1090,7 @@ For the purposes of this example, the HTTP response `max-age` has been set to 10
 This means that the origin allows intermediaries (e.g., its CDN) to cache this resource for longer than the client.
 The result is different caching behaviours between clients and intermediaries, which reduces the load on the origin by enabling CDNs to cache content for longer, while ensuring that clients receive fresher content.
 Before forwarding it to the client, the proxy stores the response in its cache using the request URI as the cache key alongside the entry's time-to-live value.
+The proxy also inserts an `Age` header, with a value of zero, to signal that the response has been freshly computed by the origin server.
 
 {:aside}
 > This "differential caching" strategy could be useful if the origin and its CDN have control plane APIs that the origin owner can use to instruct the CDN operator to purge certain cached entries {{-cdni-ctrl}}. For instance, in CoSERV, this feature could be used in case of an unexpected revocation.
@@ -1129,6 +1130,7 @@ client A             cache.example          coserv.example
     |  C-C: max-age=600,   |                      |
     |       s-maxage=3600  |                      |
     |  ETag: "xyz"         |                      |
+    |  Age: 0              |                      |
     |  #6.18([...])        |                      |
     |<---------------------+                      |
     |                      |                      |
@@ -1138,7 +1140,9 @@ At a later point, after 2 minutes, a different client B makes the same request.
 This time, the request generates a "cache hit" event on the proxy.
 The response is therefore served from the public cache, bypassing the origin.
 This reduces the load on the origin, where computing the result set is generally costly, as well as reducing the overall latency of the transaction.
-Client B operates a local cache, where it stores a copy of the response.
+Once again, the cache inserts an `Age` header into the response, now set to 120 to reflect the two minutes of elapsed time since the response was added to the cache.
+Client B additionally operates a local cache, where it stores a copy of the response.
+Client B's local cache entry has a time-to-live (TTL) value of 480, which is computed from the `max-age` of the publicly-cached entry (600), minus the value in the `Age` header (120).
 
 ~~~ aasvg
 client B             cache.example          coserv.example
@@ -1154,9 +1158,10 @@ client B             cache.example          coserv.example
     |                      |<--'                  |
     |                      | HIT                  |
     |  200 OK              |                      |
-    |  C-C: max-age=480,   |                      |
-    |       s-maxage=3480  |                      |
+    |  C-C: max-age=600,   |                      |
+    |       s-maxage=3600  |                      |
     |  Etag: "xyz"         |                      |
+    |  Age: 120            |                      |
     |  #6.18([...])        |                      |
     |<---------------------+                      |
     |                      |                      |
@@ -1173,6 +1178,7 @@ The request generates a "cache hit" event on the local cache.
 However, the cached resource has become stale and needs to be revalidated.
 Therefore, B sends a conditional request to the proxy.
 The request generates a "cache hit" event on the proxy where the resource is still fresh due to the differential caching behaviour dictated by the original response from the origin.
+The cached response includes an `Age` header set to 660, reflecting the total 11 minutes of elapsed time since the proxy cache was populated.
 The proxy returns a 304 (Not modified) status code, which instructs the client to reuse its local copy of the response.
 
 ~~~ aasvg
@@ -1196,8 +1202,9 @@ client B              cache.example          coserv.example
     |                      |<--'                  |
     |                      | HIT                  |
     |  304 Not modified    |                      |
-    |  C-C: max-age=0,     |                      |
-    |       s-maxage=3060  |                      |
+    |  C-C: max-age=600,   |                      |
+    |       s-maxage=3600  |                      |
+    |  Age: 660            |                      |
     |<---------------------+                      |
     |                      |                      |
 ~~~
