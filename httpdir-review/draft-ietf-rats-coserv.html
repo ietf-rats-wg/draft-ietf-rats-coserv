@@ -3128,18 +3128,19 @@ The response includes cache-control headers that are compatible with the time-to
 For the purposes of this example, the HTTP response <code>max-age</code> has been set to 10 minutes and the <code>s-maxage</code> to 1 hour.
 This means that the origin allows intermediaries (e.g., its CDN) to cache this resource for longer than the client.
 The result is different caching behaviours between clients and intermediaries, which reduces the load on the origin by enabling CDNs to cache content for longer, while ensuring that clients receive fresher content.
-Before forwarding it to the client, the proxy stores the response in its cache using the request URI as the cache key alongside the entry's time-to-live value.<a href="#section-6.1.4.3-3" class="pilcrow">¶</a></p>
+Before forwarding it to the client, the proxy stores the response in its cache using the request URI as the cache key alongside the entry's time-to-live value.
+The proxy also inserts an <code>Age</code> header, with a value of zero, to signal that the response has been freshly computed by the origin server.<a href="#section-6.1.4.3-3" class="pilcrow">¶</a></p>
 <aside id="section-6.1.4.3-4">
               <p id="section-6.1.4.3-4.1">This "differential caching" strategy could be useful if the origin and its CDN have control plane APIs that the origin owner can use to instruct the CDN operator to purge certain cached entries <span>[<a href="#RFC8007" class="cite xref">RFC8007</a>]</span>. For instance, in CoSERV, this feature could be used in case of an unexpected revocation.<a href="#section-6.1.4.3-4.1" class="pilcrow">¶</a></p>
 </aside>
 <div id="section-6.1.4.3-5">
               <div class="alignLeft art-svg artwork" id="section-6.1.4.3-5.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="624" width="688" viewBox="0 0 688 624" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
-                  <path d="M 40,64 L 40,608" fill="none" stroke="black"></path>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="640" width="688" viewBox="0 0 688 640" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+                  <path d="M 40,64 L 40,624" fill="none" stroke="black"></path>
                   <path d="M 200,64 L 200,96" fill="none" stroke="black"></path>
-                  <path d="M 224,112 L 224,608" fill="none" stroke="black"></path>
+                  <path d="M 224,112 L 224,624" fill="none" stroke="black"></path>
                   <path d="M 248,64 L 248,96" fill="none" stroke="black"></path>
-                  <path d="M 408,80 L 408,608" fill="none" stroke="black"></path>
+                  <path d="M 408,80 L 408,624" fill="none" stroke="black"></path>
                   <path d="M 216,48 L 232,48" fill="none" stroke="black"></path>
                   <path d="M 216,80 L 232,80" fill="none" stroke="black"></path>
                   <path d="M 216,112 L 232,112" fill="none" stroke="black"></path>
@@ -3152,7 +3153,7 @@ Before forwarding it to the client, the proxy stores the response in its cache u
                   <path d="M 232,400 L 408,400" fill="none" stroke="black"></path>
                   <path d="M 224,464 L 248,464" fill="none" stroke="black"></path>
                   <path d="M 232,496 L 248,496" fill="none" stroke="black"></path>
-                  <path d="M 48,592 L 224,592" fill="none" stroke="black"></path>
+                  <path d="M 48,608 L 224,608" fill="none" stroke="black"></path>
                   <path d="M 216,48 C 207.16936,48 200,55.16936 200,64" fill="none" stroke="black"></path>
                   <path d="M 232,48 C 240.83064,48 248,55.16936 248,64" fill="none" stroke="black"></path>
                   <path d="M 408,48 C 399.16936,48 392,55.16936 392,64" fill="none" stroke="black"></path>
@@ -3175,7 +3176,7 @@ Before forwarding it to the client, the proxy stores the response in its cache u
                   <polygon class="arrowhead" points="240,400 228,394.4 228,405.6" fill="black" transform="rotate(180,232,400)"></polygon>
                   <polygon class="arrowhead" points="240,192 228,186.4 228,197.6" fill="black" transform="rotate(180,232,192)"></polygon>
                   <polygon class="arrowhead" points="224,144 212,138.4 212,149.6" fill="black" transform="rotate(0,216,144)"></polygon>
-                  <polygon class="arrowhead" points="56,592 44,586.4 44,597.6" fill="black" transform="rotate(180,48,592)"></polygon>
+                  <polygon class="arrowhead" points="56,608 44,602.4 44,613.6" fill="black" transform="rotate(180,48,608)"></polygon>
                   <circle cx="40" cy="64" r="6" class="opendot" fill="white" stroke="black"></circle>
                   <g class="text">
                     <text x="28" y="36">client</text>
@@ -3218,7 +3219,9 @@ Before forwarding it to the client, the proxy stores the response in its cache u
                     <text x="152" y="548">s-maxage=3600</text>
                     <text x="80" y="564">ETag:</text>
                     <text x="128" y="564">"xyz"</text>
-                    <text x="108" y="580">#6.18([...])</text>
+                    <text x="76" y="580">Age:</text>
+                    <text x="104" y="580">0</text>
+                    <text x="108" y="596">#6.18([...])</text>
                   </g>
                 </svg><a href="#section-6.1.4.3-5.1" class="pilcrow">¶</a>
 </div>
@@ -3227,26 +3230,28 @@ Before forwarding it to the client, the proxy stores the response in its cache u
 This time, the request generates a "cache hit" event on the proxy.
 The response is therefore served from the public cache, bypassing the origin.
 This reduces the load on the origin, where computing the result set is generally costly, as well as reducing the overall latency of the transaction.
-Client B operates a local cache, where it stores a copy of the response.<a href="#section-6.1.4.3-6" class="pilcrow">¶</a></p>
+Once again, the cache inserts an <code>Age</code> header into the response, now set to 120 to reflect the two minutes of elapsed time since the response was added to the cache.
+Client B additionally operates a local cache, where it stores a copy of the response.
+Client B's local cache entry has a time-to-live (TTL) value of 480, which is computed from the <code>max-age</code> of the publicly-cached entry (600), minus the value in the <code>Age</code> header (120).<a href="#section-6.1.4.3-6" class="pilcrow">¶</a></p>
 <div id="section-6.1.4.3-7">
               <div class="alignLeft art-svg artwork" id="section-6.1.4.3-7.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="432" width="472" viewBox="0 0 472 432" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="448" width="472" viewBox="0 0 472 448" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 24,80 L 24,96" fill="none" stroke="black"></path>
-                  <path d="M 40,112 L 40,416" fill="none" stroke="black"></path>
+                  <path d="M 40,112 L 40,432" fill="none" stroke="black"></path>
                   <path d="M 56,80 L 56,96" fill="none" stroke="black"></path>
                   <path d="M 200,64 L 200,96" fill="none" stroke="black"></path>
-                  <path d="M 224,112 L 224,416" fill="none" stroke="black"></path>
+                  <path d="M 224,112 L 224,432" fill="none" stroke="black"></path>
                   <path d="M 248,64 L 248,96" fill="none" stroke="black"></path>
-                  <path d="M 408,80 L 408,416" fill="none" stroke="black"></path>
+                  <path d="M 408,80 L 408,432" fill="none" stroke="black"></path>
                   <path d="M 216,48 L 232,48" fill="none" stroke="black"></path>
                   <path d="M 216,80 L 232,80" fill="none" stroke="black"></path>
                   <path d="M 216,112 L 232,112" fill="none" stroke="black"></path>
                   <path d="M 40,144 L 216,144" fill="none" stroke="black"></path>
                   <path d="M 224,160 L 248,160" fill="none" stroke="black"></path>
                   <path d="M 232,192 L 248,192" fill="none" stroke="black"></path>
-                  <path d="M 48,304 L 224,304" fill="none" stroke="black"></path>
-                  <path d="M 40,368 L 64,368" fill="none" stroke="black"></path>
-                  <path d="M 48,400 L 64,400" fill="none" stroke="black"></path>
+                  <path d="M 48,320 L 224,320" fill="none" stroke="black"></path>
+                  <path d="M 40,384 L 64,384" fill="none" stroke="black"></path>
+                  <path d="M 48,416 L 64,416" fill="none" stroke="black"></path>
                   <path d="M 216,48 C 207.16936,48 200,55.16936 200,64" fill="none" stroke="black"></path>
                   <path d="M 232,48 C 240.83064,48 248,55.16936 248,64" fill="none" stroke="black"></path>
                   <path d="M 408,48 C 399.16936,48 392,55.16936 392,64" fill="none" stroke="black"></path>
@@ -3265,12 +3270,12 @@ Client B operates a local cache, where it stores a copy of the response.<a href=
                   <path d="M 232,112 C 240.83064,112 248,104.83064 248,96" fill="none" stroke="black"></path>
                   <path d="M 248,160 C 256.83064,160 264,167.16936 264,176" fill="none" stroke="black"></path>
                   <path d="M 248,192 C 256.83064,192 264,184.83064 264,176" fill="none" stroke="black"></path>
-                  <path d="M 64,368 C 72.83064,368 80,375.16936 80,384" fill="none" stroke="black"></path>
-                  <path d="M 64,400 C 72.83064,400 80,392.83064 80,384" fill="none" stroke="black"></path>
+                  <path d="M 64,384 C 72.83064,384 80,391.16936 80,400" fill="none" stroke="black"></path>
+                  <path d="M 64,416 C 72.83064,416 80,408.83064 80,400" fill="none" stroke="black"></path>
                   <polygon class="arrowhead" points="240,192 228,186.4 228,197.6" fill="black" transform="rotate(180,232,192)"></polygon>
                   <polygon class="arrowhead" points="224,144 212,138.4 212,149.6" fill="black" transform="rotate(0,216,144)"></polygon>
-                  <polygon class="arrowhead" points="56,400 44,394.4 44,405.6" fill="black" transform="rotate(180,48,400)"></polygon>
-                  <polygon class="arrowhead" points="56,304 44,298.4 44,309.6" fill="black" transform="rotate(180,48,304)"></polygon>
+                  <polygon class="arrowhead" points="56,416 44,410.4 44,421.6" fill="black" transform="rotate(180,48,416)"></polygon>
+                  <polygon class="arrowhead" points="56,320 44,314.4 44,325.6" fill="black" transform="rotate(180,48,320)"></polygon>
                   <g class="text">
                     <text x="28" y="36">client</text>
                     <text x="64" y="36">B</text>
@@ -3283,15 +3288,17 @@ Client B operates a local cache, where it stores a copy of the response.<a href=
                     <text x="72" y="228">200</text>
                     <text x="100" y="228">OK</text>
                     <text x="76" y="244">C-C:</text>
-                    <text x="148" y="244">max-age=480,</text>
-                    <text x="152" y="260">s-maxage=3480</text>
+                    <text x="148" y="244">max-age=600,</text>
+                    <text x="152" y="260">s-maxage=3600</text>
                     <text x="80" y="276">Etag:</text>
                     <text x="128" y="276">"xyz"</text>
-                    <text x="108" y="292">#6.18([...])</text>
-                    <text x="132" y="340">store(K=ogB4I3RhZ..,</text>
-                    <text x="144" y="356">ETag="xyz",</text>
-                    <text x="156" y="372">V=#6.18([...],</text>
-                    <text x="132" y="388">TTL=480)</text>
+                    <text x="76" y="292">Age:</text>
+                    <text x="112" y="292">120</text>
+                    <text x="108" y="308">#6.18([...])</text>
+                    <text x="132" y="356">store(K=ogB4I3RhZ..,</text>
+                    <text x="144" y="372">ETag="xyz",</text>
+                    <text x="156" y="388">V=#6.18([...],</text>
+                    <text x="132" y="404">TTL=480)</text>
                   </g>
                 </svg><a href="#section-6.1.4.3-7.1" class="pilcrow">¶</a>
 </div>
@@ -3301,17 +3308,18 @@ The request generates a "cache hit" event on the local cache.
 However, the cached resource has become stale and needs to be revalidated.
 Therefore, B sends a conditional request to the proxy.
 The request generates a "cache hit" event on the proxy where the resource is still fresh due to the differential caching behaviour dictated by the original response from the origin.
+The cached response includes an <code>Age</code> header set to 660, reflecting the total 11 minutes of elapsed time since the proxy cache was populated.
 The proxy returns a 304 (Not modified) status code, which instructs the client to reuse its local copy of the response.<a href="#section-6.1.4.3-8" class="pilcrow">¶</a></p>
 <div id="section-6.1.4.3-9">
               <div class="alignLeft art-svg artwork" id="section-6.1.4.3-9.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="416" width="480" viewBox="0 0 480 416" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="432" width="480" viewBox="0 0 480 432" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 24,80 L 24,96" fill="none" stroke="black"></path>
-                  <path d="M 40,112 L 40,400" fill="none" stroke="black"></path>
+                  <path d="M 40,112 L 40,416" fill="none" stroke="black"></path>
                   <path d="M 56,80 L 56,96" fill="none" stroke="black"></path>
                   <path d="M 200,64 L 200,96" fill="none" stroke="black"></path>
-                  <path d="M 224,112 L 224,400" fill="none" stroke="black"></path>
+                  <path d="M 224,112 L 224,416" fill="none" stroke="black"></path>
                   <path d="M 248,64 L 248,96" fill="none" stroke="black"></path>
-                  <path d="M 408,80 L 408,400" fill="none" stroke="black"></path>
+                  <path d="M 408,80 L 408,416" fill="none" stroke="black"></path>
                   <path d="M 216,48 L 232,48" fill="none" stroke="black"></path>
                   <path d="M 216,80 L 232,80" fill="none" stroke="black"></path>
                   <path d="M 216,112 L 232,112" fill="none" stroke="black"></path>
@@ -3320,7 +3328,7 @@ The proxy returns a 304 (Not modified) status code, which instructs the client t
                   <path d="M 40,256 L 216,256" fill="none" stroke="black"></path>
                   <path d="M 224,272 L 248,272" fill="none" stroke="black"></path>
                   <path d="M 232,304 L 248,304" fill="none" stroke="black"></path>
-                  <path d="M 48,384 L 224,384" fill="none" stroke="black"></path>
+                  <path d="M 48,400 L 224,400" fill="none" stroke="black"></path>
                   <path d="M 216,48 C 207.16936,48 200,55.16936 200,64" fill="none" stroke="black"></path>
                   <path d="M 232,48 C 240.83064,48 248,55.16936 248,64" fill="none" stroke="black"></path>
                   <path d="M 408,48 C 399.16936,48 392,55.16936 392,64" fill="none" stroke="black"></path>
@@ -3343,7 +3351,7 @@ The proxy returns a 304 (Not modified) status code, which instructs the client t
                   <path d="M 248,304 C 256.83064,304 264,296.83064 264,288" fill="none" stroke="black"></path>
                   <polygon class="arrowhead" points="240,304 228,298.4 228,309.6" fill="black" transform="rotate(180,232,304)"></polygon>
                   <polygon class="arrowhead" points="224,256 212,250.4 212,261.6" fill="black" transform="rotate(0,216,256)"></polygon>
-                  <polygon class="arrowhead" points="56,384 44,378.4 44,389.6" fill="black" transform="rotate(180,48,384)"></polygon>
+                  <polygon class="arrowhead" points="56,400 44,394.4 44,405.6" fill="black" transform="rotate(180,48,400)"></polygon>
                   <polygon class="arrowhead" points="56,176 44,170.4 44,181.6" fill="black" transform="rotate(180,48,176)"></polygon>
                   <g class="text">
                     <text x="28" y="36">client</text>
@@ -3361,8 +3369,10 @@ The proxy returns a 304 (Not modified) status code, which instructs the client t
                     <text x="104" y="340">Not</text>
                     <text x="156" y="340">modified</text>
                     <text x="76" y="356">C-C:</text>
-                    <text x="140" y="356">max-age=0,</text>
-                    <text x="152" y="372">s-maxage=3060</text>
+                    <text x="148" y="356">max-age=600,</text>
+                    <text x="152" y="372">s-maxage=3600</text>
+                    <text x="76" y="388">Age:</text>
+                    <text x="112" y="388">660</text>
                   </g>
                 </svg><a href="#section-6.1.4.3-9.1" class="pilcrow">¶</a>
 </div>
