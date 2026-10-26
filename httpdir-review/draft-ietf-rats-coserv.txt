@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Standards Track                              T. Fossati
-Expires: 8 March 2027                                             Linaro
+Expires: 29 April 2027                                            Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 8 March 2027                                             Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                        4 September 2026
+                                                         26 October 2026
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 March 2027.
+   This Internet-Draft will expire on 29 April 2027.
 
 Copyright Notice
 
@@ -129,6 +129,7 @@ Table of Contents
    9.  Privacy Considerations
      9.1.  Aggregators
      9.2.  Domains
+     9.3.  Caching
    10. IANA Considerations
      10.1.  Media Types Registrations
        10.1.1.  application/coserv+cbor
@@ -318,20 +319,20 @@ Table of Contents
    verification is useful because it mitigates security threats arising
    from any untrusted infrastructure or intermediaries that might reside
    between the producer and the consumer.  An example of this is caching
-   in HTTP [HTTP] and CoAP [RFC7252].  It might be expensive to compute
-   the result set for a query, which would make caching desirable.
-   However, if caching is managed by an untrusted intermediary, then
-   there is a risk that such an untrusted intermediary might return
-   incorrect results, either accidentally or maliciously.  Pairing the
-   original query with each result set provides an end-to-end contract
-   between the consumer and producer, mitigating such risks.  The
-   transactional pattern between the producer and the consumer would be
-   that the consumer begins the transaction by authoring a query and
-   sending it to the producer as a CoSERV object.  The producer receives
-   the query, computes results, and returns a new CoSERV object formed
-   from the results along with the original query.  Notionally, the
-   producer is "adding" the results to the query before sending it back
-   to the consumer.
+   in HTTP [HTTP-CACHING] and CoAP [RFC7252].  It might be expensive to
+   compute the result set for a query, which would make caching
+   desirable.  However, if caching is managed by an untrusted
+   intermediary, then there is a risk that such an untrusted
+   intermediary might return incorrect results, either accidentally or
+   maliciously.  Pairing the original query with each result set
+   provides an end-to-end contract between the consumer and producer,
+   mitigating such risks.  The transactional pattern between the
+   producer and the consumer would be that the consumer begins the
+   transaction by authoring a query and sending it to the producer as a
+   CoSERV object.  The producer receives the query, computes results,
+   and returns a new CoSERV object formed from the results along with
+   the original query.  Notionally, the producer is "adding" the results
+   to the query before sending it back to the consumer.
 
 3.2.  Artifacts
 
@@ -709,7 +710,7 @@ Table of Contents
    Each key in the map MUST correspond to one of the RIM identifiers in
    the original query.  Each mapped value is the corresponding RIM data
    object, contained within a Conceptual Message Wrapper (CMW) as per
-   [I-D.ietf-rats-msg-wrap].
+   [RFC9999].
 
    The permitted RIM content for each map entry depends upon the type of
    key used in the query.
@@ -954,7 +955,7 @@ Table of Contents
    SELECT *
      FROM endorsed_values
     WHERE ( instance-id = "At6tvu/erQ==" ) OR
-          ( instance-id = "iZl4ZVY=" )`
+          ( instance-id = "iZl4ZVY=" )
 
    The same applies for class-based selectors; however, since class
    selectors are themselves composed of multiple inner fields, the
@@ -1002,7 +1003,7 @@ Table of Contents
    }
 
    environment-result = (
-     ; result-type: collectect-artifacts
+     ; result-type: collected-artifacts
      result-set //
 
      ; result-type: source-artifacts
@@ -1129,7 +1130,7 @@ Table of Contents
 
    signed-coserv-protected-hdr = {
      1 => int                            ; alg
-     2 => "application/coserv+cbor" / 10000 ; cty
+     3 => "application/coserv+cbor" / 10000 ; cty
      * cose.label => cose.values
    }
 
@@ -1325,9 +1326,9 @@ Table of Contents
    query criteria.
 
    Compared with the previous example, the rvq entry is empty, while the
-   source-artifacts (codepoint 11) contain two CMW records
-   [I-D.ietf-rats-msg-wrap], each of which contains a (made up) manifest
-   with the type "application/vnd.example.refvals".
+   source-artifacts (codepoint 11) contain two CMW records [RFC9999],
+   each of which contains a (made up) manifest with the type
+   "application/vnd.example.refvals".
 
    {
      / profile / 0: "tag:example.com,2025:cc-platform#1.0.0",
@@ -1479,10 +1480,10 @@ Table of Contents
 
 6.1.1.  Errors
 
-   For error responses (4xx or 5xx status codes), the Content-Type
-   header field MUST be application/concise-problem-details+cbor, and
-   the content MUST be a Concise Problem Details object [RFC9290]
-   containing the following:
+   When returning error responses (4xx or 5xx status codes), CoSERV
+   origin servers MUST set the Content-Type header field to application/
+   concise-problem-details+cbor, and the content MUST be a Concise
+   Problem Details object [RFC9290] containing the following:
 
    title:
       A human-readable string that identifies the error that prevented
@@ -1493,6 +1494,11 @@ Table of Contents
       A human-readable string that describes the error in more depth.
       This should ideally provide sufficient detail to enable the error
       to be rectified.
+
+   The above requirement is for CoSERV origin servers only.  Clients
+   cannot assume that error responses will contain these contents, or
+   indeed any contents, since errors might be generated by
+   infrastructure layers other than the origin server.
 
 6.1.2.  Discovery
 
@@ -1510,20 +1516,22 @@ Table of Contents
 
    The response content can be formatted using either JSON [STD90] or
    CBOR, governed by standard HTTP content negotiation (Section 12 of
-   [HTTP-CACHING]).  The media types defined for this purpose are
-   application/coserv-discovery+json (for JSON-formatted documents) or
-   application/coserv-discovery+cbor (for CBOR-formatted documents).  If
-   the client presents any media type other than these two options in
-   its HTTP Accept header, the implementation SHOULD respond with an
-   HTTP 406 (Not Acceptable) status code.  If the client presents one of
-   the two valid media types, then the implementation MUST respond with
-   the HTTP 200 (OK) status code, unless it is prevented from doing so
-   by an error condition beyond the scope of this specification.  When
-   the 200 (OK) status code is returned, the response MUST contain
-   exactly one discovery document in the requested format (JSON or
-   CBOR).  The contents of the discovery document MUST conform to the
-   CDDL data model given below, which is common to both the JSON and
-   CBOR encodings.
+   [HTTP]).  The media types defined for this purpose are application/
+   coserv-discovery+json (for JSON-formatted documents) or application/
+   coserv-discovery+cbor (for CBOR-formatted documents).  If the client
+   presents one of the two valid media types, then the implementation
+   MUST respond with the HTTP 200 (OK) status code, unless it is
+   prevented from doing so by an error condition beyond the scope of
+   this specification.  When the 200 (OK) status code is returned, the
+   response MUST contain exactly one discovery document in the requested
+   format (JSON or CBOR).  Server implementations MUST support both
+   formats.  In deployments where the discovery document might be stored
+   in an HTTP cache, server implementations SHOULD add the Vary:
+   Content-Type header to the HTTP response to ensure that the client
+   does not received a cached document in the wrong format.  The
+   contents of the discovery document MUST conform to the CDDL data
+   model given below, which is common to both the JSON and CBOR
+   encodings.
 
    ;# import rfc9711 as eat
    ;# import cmw-autogen as cmw
@@ -1621,14 +1629,14 @@ Table of Contents
 
    The API endpoints field is denoted by the label "api-endpoints" in
    JSON documents and by the codepoint 3 in CBOR documents.  This field
-   allows clients to derive the correct URL for making HTTP API calls.
+   allows clients to derive the correct URI for making HTTP API calls.
    The field is a map whose keys are the symbolic names of the APIs, and
-   whose values are the URL path for the API endpoint.
+   whose values are the URI path for the API endpoint.
 
    The symbolic name CoSERVRequestResponse is defined for services that
    offer the transactional API described in Section 6.1.3.  Service
    implementations that offer this API MUST include a key with this name
-   in the endpoints map field, and the corresponding endpoint URL path
+   in the endpoints map field, and the corresponding endpoint URI path
    MUST end with /{query}. This allows the consumer to form a valid
    CoSERV query URI using variable expansion as per [RFC6570], replacing
    the {query} variable with the Base64Url-encoded CoSERV query object.
@@ -1688,6 +1696,7 @@ Table of Contents
 
    HTTP/1.1 200 OK
    Content-Type: application/coserv-discovery+json
+   Vary: Content-Type
 
    Content (JSON)
 
@@ -1732,6 +1741,7 @@ Table of Contents
 
    HTTP/1.1 200 OK
    Content-Type: application/coserv-discovery+cbor
+   Vary: Content-Type
 
    Content (in CBOR Extended Diagnostic Notation (EDN))
 
@@ -1772,15 +1782,17 @@ Table of Contents
 
    The HTTP method is GET.
 
-   The URL path is formed of the discovered coserv endpoint (as set out
+   The URI path is formed of the discovered coserv endpoint (as set out
    in Section 6.1.2), where the {query} template variable is substituted
    with the CoSERV query to be executed, which is represented as a
    Base64Url encoding of the query's serialized CBOR byte sequence.
 
-   There are no additional URL query parameters.
+   There are no additional URI query parameters.
 
-   Clients MUST set the Accept header field to a suitably-profiled
-   application/coserv+cose or application/coserv+cbor media type.
+   Clients MUST set the Accept header field to one of the profiled
+   application/coserv+cose or application/coserv+cbor media types that
+   is supported by the server according to the discovery document (see
+   Section 6.1.2).
 
    Endpoint implementations MUST respond with an HTTP status code and
    content according to one of the subheadings below.
@@ -1814,7 +1826,7 @@ Table of Contents
    / signed-coserv / 18([
      / protected / << {
        / alg / 1: -7 / ECDSA 256 /,
-       / cty / 2 : "application/coserv+cbor"
+       / cty / 3 : "application/coserv+cbor"
      } >>,
      / unprotected / {},
      / payload / <<
@@ -1905,8 +1917,13 @@ Table of Contents
 6.1.3.1.3.  Failure to Negotiate Profile (406)
 
    This response indicates that the client has specified a CoSERV
-   profile that is not understood or serviceable by the receiving
-   endpoint implementation.
+   profile that is not understood or serviceable by the server.
+   Conformant clients will not encounter this error, since this
+   specification constrains clients to request only those CoSERV
+   profiles that are listed in the discovery document.
+
+   When returning this error, the server MAY also provide an Accept
+   header that lists the supported media types.
 
    Example HTTP request:
 
@@ -1934,37 +1951,13 @@ Table of Contents
 
 6.1.3.2.  Too Many Requests (429)
 
-   A server could apply rate limiting to requests received from clients.
-   This is a common practice for services that require significant
-   processing power to generate a response, such as a CoSERV endpoint.
-   If this is the case, and a client exceeds their request quota, the
-   server can return a 429 (Too Many Requests) response.  The response
-   headers MAY include a Retry-After header field indicating how long
-   the client should wait before making a new request.
-
-   Example HTTP request:
-
-   # NOTE: '\' line wrapping per RFC 8792
-
-   GET /coserv/ogB4I3R... HTTP/1.1
-   Host: endorsements-distributor.example
-   Accept: application/coserv+cose; \
-           profile="tag:vendor.com,2025:cc_platform#1.0.0"
-
-   Example HTTP response:
-
-   # NOTE: '\' line wrapping per RFC 8792
-
-   HTTP/1.1 429 Too Many Requests
-   Content-Type: application/concise-problem-details+cbor
-   Retry-After: 120
-
-   Content (in CBOR Extended Diagnostic Notation (EDN))
-
-   {
-     / title /  -1: "Too many requests",
-     / detail / -2: "You're doing that too often! Try again in 2 minutes",
-   }
+   A server (or infrastructure layer) could apply rate limiting to
+   requests received from clients.  If this is the case, and a client
+   exceeds their request quota, the client may receive a 429 (Too Many
+   Requests) response.  Example HTTP messages are not shown for this
+   case.  Rate limiting is often implemented in infrastructure layers
+   (such as gateways or load balancers).  The contents of their error
+   responses are not governed by this specification.
 
 6.1.4.  Caching
 
@@ -1984,12 +1977,12 @@ Table of Contents
 
    CoSERV is designed to facilitate both client-side and server-side
    caching by use of the standard HTTP caching mechanisms specified in
-   [HTTP].  This includes use of the Cache-Control header field and its
-   associated directives.  It also includes the use of entity-tags
-   (ETags).  The following features of CoSERV and its HTTP binding are
-   specifically designed to favor caching implementations:
+   [HTTP-CACHING].  This includes use of the Cache-Control header field
+   and its associated directives.  It also includes the use of entity-
+   tags (ETags).  The following features of CoSERV and its HTTP binding
+   are specifically designed to favor caching implementations:
 
-   *  CoSERV queries form stable URL paths.  As specified in
+   *  CoSERV queries form stable URI paths.  As specified in
       Section 4.5, any given CoSERV query will always serialize to the
       same fixed sequence of bytes.  This allows queries to be used as
       canonical and stable resource identifiers, which in turn allows
@@ -2008,9 +2001,20 @@ Table of Contents
       does not modify any state on the server, which creates more
       opportunities for the re-use of cached results.
 
+   *  Discovery documents are cacheable resources.  Discovery documents
+      (as described in Section 6.1.2) are used by clients to locate
+      suitable API endpoints for transacting CoSERV queries.  These
+      documents, like CoSERV responses themselves, can be cached to
+      avoid round trips to the origin server during this bootstrapping
+      phase.
+
    Although reusing cached responses is generally desirable, clients
    that need to bypass the caching infrastructure can do so by
    specifying Cache-Control: no-cache in their requests.
+
+   Implementations should be aware that there are specific privacy
+   considerations related to caching.  These are outlined in
+   Section 9.3.
 
 6.1.4.1.  HTTP Caching and Result Set Expiry
 
@@ -2026,7 +2030,34 @@ Table of Contents
    exceeds the result set expiry timestamp contained within the CoSERV
    results.
 
-6.1.4.2.  Example HTTP Messages with Caching
+   To avoid the risk of infrastructure layers providing default cache
+   lifetimes that are unsuitable for the returned content, origin
+   servers SHOULD set Cache-Control headers explicitly in all CoSERV
+   responses.
+
+6.1.4.2.  Weak Validators for Signed Responses
+
+   For CoSERV origin servers that return signed responses (of type
+   application/coserv+cose), attention should be paid to the generation
+   of suitable ETag headers for cache validation.  Any non-determinism
+   in the signing process could give rise to sets of results that are
+   semantically identical, but not byte-for-byte identical due to
+   differences in the signature.  Populating cache infrastructure with
+   such spuriously-differing results would be undesirable.  This problem
+   can be addressed by the use of a weak validator, which computes the
+   ETag in such a way that the signature is excluded.  This would allow
+   semantically-identical result sets to validate successfully, even
+   when the signature differs.  Precise details of ETag generation are
+   beyond the scope of this document, but a suitable validator might be
+   one that combines the unsigned payload with the public key (or key
+   identity) as input to a strong hash function.  Such a validator would
+   still behave correctly if the signing key were to be rotated, in
+   which case it would not be appropriate to validate any results that
+   were signed with the previous key.
+
+   For unsigned responses, strong validators are preferred.
+
+6.1.4.3.  Example HTTP Messages with Caching
 
    This section illustrates a caching scenario.
 
@@ -2056,40 +2087,43 @@ Table of Contents
       |  cached entries [RFC8007].  For instance, in CoSERV, this
       |  feature could be used in case of an unexpected revocation.
 
- client A             cache.example          coserv.example
-                          .---.                   .-.
-     o                   |     |                 |   |
-     |                   |'---'|                  '+'
-     |                   |     |                   |
-     |                    '-+-'                    |
-     |   GET ogB4I3RhZ..    |                      |
-     +--------------------->| lookup(obB4I3RhZ..)  |
-     |                      +---.                  |
-     |                      |    |                 |
-     |                      |<--'                  |
-     |                      | MISS                 |
-     |                      |                      |
-     |                      |   GET ogB4I3RhZ..    |
-     |                      +--------------------->|
-     |                      |                      +---.  compute
-     |                      |                      |    | result
-     |                      |                      |<--'  set
-     |                      |  200 OK              | (expiry = now + 1h)
-     |                      |  C-C: max-age=600,   |
-     |                      |       s-maxage=3600  |
-     |                      |  #6.18([...])        |
-     |                      |<---------------------+
-     |                      |                      |
-     |                      | store(K=obB4I3RhZ.., |
-     |                      +---.   V=#6.18([...], |
-     |                      |    |  TTL=3600)      |
-     |                      |<--'                  |
-     |  200 OK              |                      |
-     |  C-C: max-age=600,   |                      |
-     |       s-maxage=3600  |                      |
-     |  #6.18([...])        |                      |
-     |<---------------------+                      |
-     |                      |                      |
+client A             cache.example          coserv.example
+                         .---.                   .-.
+    o                   |     |                 |   |
+    |                   |'---'|                  '+'
+    |                   |     |                   |
+    |                    '-+-'                    |
+    |   GET ogB4I3RhZ..    |                      |
+    +--------------------->| lookup(ogB4I3RhZ..)  |
+    |                      +---.                  |
+    |                      |    |                 |
+    |                      |<--'                  |
+    |                      | MISS                 |
+    |                      |                      |
+    |                      |   GET ogB4I3RhZ..    |
+    |                      +--------------------->|
+    |                      |                      +---.  compute
+    |                      |                      |    | result
+    |                      |                      |<--'  set
+    |                      |  200 OK              | (expiry = now + 1h, ETag = "xyz")
+    |                      |  C-C: max-age=600,   |
+    |                      |       s-maxage=3600  |
+    |                      |  Etag: "xyz"         |
+    |                      |  #6.18([...])        |
+    |                      |<---------------------+
+    |                      |                      |
+    |                      | store(K=obB4I3RhZ.., |
+    |                      |       ETag="xyz",    |
+    |                      +---.   V=#6.18([...], |
+    |                      |    |  TTL=3600)      |
+    |                      |<--'                  |
+    |  200 OK              |                      |
+    |  C-C: max-age=600,   |                      |
+    |       s-maxage=3600  |                      |
+    |  ETag: "xyz"         |                      |
+    |  #6.18([...])        |                      |
+    |<---------------------+                      |
+    |                      |                      |
 
    At a later point, after 2 minutes, a different client B makes the
    same request.  This time, the request generates a "cache hit" event
@@ -2106,7 +2140,7 @@ Table of Contents
      |'-'|                 |     |                   |
       '+'                   '-+-'                    |
        |   GET ogB4I3RhZ..    |                      |
-       +--------------------->| lookup(obB4I3RhZ..)  |
+       +--------------------->| lookup(ogB4I3RhZ..)  |
        |                      +---.                  |
        |                      |    |                 |
        |                      |<--'                  |
@@ -2118,7 +2152,8 @@ Table of Contents
        |  #6.18([...])        |                      |
        |<---------------------+                      |
        |                      |                      |
-       | store(K=obB4I3RhZ.., |                      |
+       | store(K=ogB4I3RhZ.., |                      |
+       |       ETag="xyz",    |                      |
        +---.   V=#6.18([...], |                      |
        |    |  TTL=480)       |                      |
        |<--'                  |                      |
@@ -2126,7 +2161,7 @@ Table of Contents
 
    After 9 more minutes, B is instructed to make the same request again.
    The request generates a "cache hit" event on the local cache.
-   However, the cached resource is become stale and needs to be
+   However, the cached resource has become stale and needs to be
    revalidated.  Therefore, B sends a conditional request to the proxy.
    The request generates a "cache hit" event on the proxy where the
    resource is still fresh due to the differential caching behaviour
@@ -2140,7 +2175,7 @@ Table of Contents
      |   |                 |'---'|                  '+'
      |'-'|                 |     |                   |
       '+'                   '-+-'                    |
-       | lookup(obB4I3RhZ..)  |                      |
+       | lookup(ogB4I3RhZ..)  |                      |
        +---.                  |                      |
        |    |                 |                      |
        |<--'                  |                      |
@@ -2280,7 +2315,7 @@ Table of Contents
    convenience layer for the Verifier, rather than to be a subversive
    authority.  The design features of CoSERV can be used alongside
    judicious deployment practices to mitigate the risks.  An informative
-   and non-exhaustive list of mitigations follows:-
+   and non-exhaustive list of mitigations follows:
 
    *  *Use independent chains of trust.* It is established above that
       aggregators are trusted components.  This does not mean that they
@@ -2375,6 +2410,28 @@ Table of Contents
    apply the same access-control, confidentiality, and minimization
    considerations to Domain artifacts as to other privacy-sensitive
    CoSERV query and result data.
+
+9.3.  Caching
+
+   Caching is an important characteristic of CoSERV in general, and of
+   the CoSERV HTTP bindings in particular.  CoSERV transactions are
+   expected to benefit from the use of HTTP caching infrastructure as
+   explained in Section 6.1.4.  CoSERV's deterministic encoding rules
+   allow for encoded queries to be used as cache keys.  Where queries
+   contain privacy-sensitive information, such as references to
+   individual Attester instances or other small anonymity groups, there
+   is a risk of HTTP caches themselves becoming an oracle.  For
+   instance, the time taken to generate a response could indicate
+   whether a client has already queried the same information previously.
+   An attacker could use these timings to gain intelligence about the
+   use of those instances or groups.
+
+   Implementations should be intentional about their use of caching, and
+   avoid relying on default behaviours that could lead to side channels.
+   For example, the Cache-Control: no-store or Cache-Control: private
+   directives can be used selectively in situations where very fine-
+   grained information is being queried, while still allowing broader
+   queries to benefit from caching.
 
 10.  IANA Considerations
 
@@ -2547,15 +2604,15 @@ Table of Contents
               <https://www.rfc-editor.org/rfc/rfc9052>.
 
    [HTTP]     Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
-              Ed., "HTTP Caching", STD 98, RFC 9111,
-              DOI 10.17487/RFC9111, June 2022,
-              <https://www.rfc-editor.org/rfc/rfc9111>.
-
-   [HTTP-CACHING]
-              Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
               Ed., "HTTP Semantics", STD 97, RFC 9110,
               DOI 10.17487/RFC9110, June 2022,
               <https://www.rfc-editor.org/rfc/rfc9110>.
+
+   [HTTP-CACHING]
+              Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
+              Ed., "HTTP Caching", STD 98, RFC 9111,
+              DOI 10.17487/RFC9111, June 2022,
+              <https://www.rfc-editor.org/rfc/rfc9111>.
 
    [I-D.ietf-rats-corim]
               Birkholz, H., Fossati, T., Deshpande, Y., Smith, N., and
@@ -2563,13 +2620,6 @@ Table of Contents
               Progress, Internet-Draft, draft-ietf-rats-corim-11, 6 July
               2026, <https://datatracker.ietf.org/doc/html/draft-ietf-
               rats-corim-11>.
-
-   [I-D.ietf-rats-msg-wrap]
-              Birkholz, H., Smith, N., Fossati, T., Tschofenig, H., and
-              D. Glaze, "RATS Conceptual Messages Wrapper (CMW)", Work
-              in Progress, Internet-Draft, draft-ietf-rats-msg-wrap-23,
-              11 December 2025, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-rats-msg-wrap-23>.
 
    [IANA.core-parameters]
               IANA, "Constrained RESTful Environments (CoRE)
@@ -2631,6 +2681,11 @@ Table of Contents
               RFC 9393, DOI 10.17487/RFC9393, June 2023,
               <https://www.rfc-editor.org/rfc/rfc9393>.
 
+   [RFC9999]  Birkholz, H., Smith, N., Fossati, T., and H. Tschofenig,
+              "Remote ATtestation procedureS (RATS) Conceptual Message
+              Wrapper (CMW)", RFC 9999, DOI 10.17487/RFC9999, July 2026,
+              <https://www.rfc-editor.org/rfc/rfc9999>.
+
    [SEMVER]   "Semantic Versioning 2.0.0", 2013,
               <https://semver.org/spec/v2.0.0.html>.
 
@@ -2649,11 +2704,11 @@ Table of Contents
               mud-rats-03>.
 
    [I-D.ietf-rats-endorsements]
-              Thaler, D., Birkholz, H., and T. Fossati, "RATS
-              Endorsements", Work in Progress, Internet-Draft, draft-
-              ietf-rats-endorsements-09, 2 March 2026,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-rats-
-              endorsements-09>.
+              Thaler, D., Birkholz, H., and T. Fossati, "Remote
+              Attestation Procedures (RATS) Endorsements", Work in
+              Progress, Internet-Draft, draft-ietf-rats-endorsements-13,
+              14 October 2026, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-rats-endorsements-13>.
 
    [RFC6024]  Reddy, R. and C. Wallace, "Trust Anchor Management
               Requirements", RFC 6024, DOI 10.17487/RFC6024, October
@@ -2693,7 +2748,7 @@ A.1.  CoSERV Data Model
    ])
    signed-coserv-protected-hdr = {
      1 => int,
-     2 => "application/coserv+cbor" / 10000,
+     3 => "application/coserv+cbor" / 10000,
      * cose.label => cose.values,
    }
    signed-coserv-unprotected-hdr = {* cose.label => cose.values}
@@ -4114,14 +4169,14 @@ Appendix C.  Locating CoSERV Services
    services might be located.  This list is neither exhaustive nor
    prescriptive.  Deployments are free to use whatever logistics are
    sensible.  Note that the goal here is solely one of bootstrapping.
-   Once the base URL of a suitable service is known, CoSERV provides in-
+   Once the base URI of a suitable service is known, CoSERV provides in-
    protocol discovery mechanisms, such as the one described in
    Section 6.1.2, which cater for the discovery of more specific API
    endpoints and capabilities.
 
    *  Some CoSERV-enabled services might exist in locations that are
       documented publicly by supply chain actors.  A hardware vendor,
-      for example, might document the base URL for the service that
+      for example, might document the base URI for the service that
       endorses their products.  In such a case, the location would be
       prior knowledge within the Verifier or aggregator that needs to
       consume the service.  It could be hard-coded, or made available
