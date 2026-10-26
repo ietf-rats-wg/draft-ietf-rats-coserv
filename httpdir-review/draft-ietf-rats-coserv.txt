@@ -1768,9 +1768,11 @@ Table of Contents
          / kty / 1: 2,
          / alg / 3: -7,
          / crv / -1: 1,
-         / x / -2: h'1A2B3C4D',
-         / y / -3: h'5E6F7A8B',
-         / kid / 2: h'ABCDEF1234'
+         / x / -2: h'\
+      BAC5B11CAD8F99F9C72B05CF4B9E26D244DC189F745228255A219A86D6A09EFF',
+         / y / -3: h'\
+      20138BF82DC1B6D562BE0FA54AB7804A3A64B6D72CCFED6B6FB6ED28BBFC117E',
+         / kid / 2: h'6B657931'
        }
      ]
    }
