@@ -1737,7 +1737,9 @@ Table of Contents
      ],
      "api-endpoints": {
        "CoSERVRequestResponse": "/endorsement-distribution/v1/coserv/{\
-                                                                 query}"
+                                                                query}",
+       "CoSERVRequestResponseQUERY": "/endorsement-distribution/v1/\
+                                                                 coserv"
      },
      "result-verification-key": [
        {
@@ -1782,7 +1784,9 @@ Table of Contents
      ],
      / api-endpoints / 3: {
        "CoSERVRequestResponse": "/endorsement-distribution/v1/coserv/{\
-                                                                 query}"
+                                                                query}",
+       "CoSERVRequestResponseQUERY": "/endorsement-distribution/v1/\
+                                                                 coserv"
      },
      / result-verification-key / 4: [
        {
