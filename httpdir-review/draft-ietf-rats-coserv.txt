@@ -1953,11 +1953,25 @@ Table of Contents
      / signature / h'face5190'
    ])
 
-6.1.3.1.2.  Failure to Validate Query (400)
+6.1.3.1.2.  Invalid Query (400)
 
-   This response indicates that the supplied query is badly formed.
+   This response indicates that the supplied CoSERV query is badly
+   formed, or is otherwise un-processable by the server.
 
-   Example HTTP request:
+   Conditions resulting in this error include the following:
+
+   *  The request is badly formed.  This could mean that the query is
+      not valid CBOR, or does not conform to the CoSERV data model
+      specified in Section 4.
+
+   *  The request is well-formed, but cannot be executed by the server.
+      This could happen when the query goes beyond the advertised
+      capabilities of the server according to the server's discovery
+      document (see Section 6.1.2).  An example would be a query that
+      uses the RIM Identifier query style, where the server supports
+      only the Environment query style, or vice versa.
+
+   The following example shows a badly-formed request with its response:
 
    # NOTE: '\' line wrapping per RFC 8792
 
@@ -1965,8 +1979,6 @@ Table of Contents
    Host: endorsements-distributor.example
    Accept: application/coserv+cose; \
            profile="tag:vendor.com,2025:cc_platform#1.0.0"
-
-   Example HTTP response:
 
    # NOTE: '\' line wrapping per RFC 8792
 
@@ -1978,6 +1990,28 @@ Table of Contents
    {
      / title /  -1: "Query validation failed",
      / detail / -2: "The query payload is not in CBOR format"
+   }
+
+   The following example shows a well-formed but un-processable request,
+   with response:
+
+   # NOTE: '\' line wrapping per RFC 8792
+
+   GET /coserv/ogB4I3R... HTTP/1.1
+   Host: endorsements-distributor.example
+   Accept: application/coserv+cose; \
+           profile="tag:vendor.com,2025:cc_platform#1.0.0"
+
+   # NOTE: '\' line wrapping per RFC 8792
+
+   HTTP/1.1 400 Bad Request
+   Content-Type: application/concise-problem-details+cbor
+
+   Content (in CBOR Extended Diagnostic Notation (EDN))
+
+   {
+     / title /  -1: "Query cannot be processed",
+     / detail / -2: "The query style is not supported"
    }
 
 6.1.3.1.3.  Failure to Negotiate Profile (406)
