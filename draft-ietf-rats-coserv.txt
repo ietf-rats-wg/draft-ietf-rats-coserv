@@ -5,7 +5,7 @@
 Remote ATtestation ProcedureS                                  P. Howard
 Internet-Draft                                                       Arm
 Intended status: Standards Track                              T. Fossati
-Expires: 13 March 2027                                            Linaro
+Expires: 3 May 2027                                               Linaro
                                                              H. Birkholz
                                                           Fraunhofer SIT
                                                                 S. Kamal
@@ -14,7 +14,7 @@ Expires: 13 March 2027                                            Linaro
                                                                      AMD
                                                                    D. Ma
                                                            Alibaba Cloud
-                                                        9 September 2026
+                                                         30 October 2026
 
 
          Concise Selector for Endorsements and Reference Values
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 March 2027.
+   This Internet-Draft will expire on 3 May 2027.
 
 Copyright Notice
 
@@ -119,27 +119,33 @@ Table of Contents
        6.1.1.  Errors
        6.1.2.  Discovery
        6.1.3.  Execute Query
-       6.1.4.  Caching
+       6.1.4.  Execute Query with the QUERY Method
+       6.1.5.  Caching
    7.  Implementation Status
      7.1.  Veraison
-   8.  Security Considerations
-     8.1.  In Relation to CoRIM
-     8.2.  Forming Native Database Queries from CoSERV
-     8.3.  Aggregators
-   9.  Privacy Considerations
-     9.1.  Aggregators
-     9.2.  Domains
-   10. IANA Considerations
-     10.1.  Media Types Registrations
-       10.1.1.  application/coserv+cbor
-       10.1.2.  application/coserv+cose
-       10.1.3.  application/coserv-discovery+cbor
-       10.1.4.  application/coserv-discovery+json
-     10.2.  CoAP Content-Formats
-     10.3.  Well-Known URI for CoSERV Configuration
-   11. References
-     11.1.  Normative References
-     11.2.  Informative References
+   8.  Operational Considerations
+     8.1.  Redirects
+     8.2.  Deployment of the QUERY Method
+   9.  Security Considerations
+     9.1.  In Relation to CoRIM
+     9.2.  Forming Native Database Queries from CoSERV
+     9.3.  Aggregators
+   10. Privacy Considerations
+     10.1.  Aggregators
+     10.2.  Domains
+     10.3.  Query URIs
+     10.4.  Caching
+   11. IANA Considerations
+     11.1.  Media Types Registrations
+       11.1.1.  application/coserv+cbor
+       11.1.2.  application/coserv+cose
+       11.1.3.  application/coserv-discovery+cbor
+       11.1.4.  application/coserv-discovery+json
+     11.2.  CoAP Content-Formats
+     11.3.  Well-Known URI for CoSERV Configuration
+   12. References
+     12.1.  Normative References
+     12.2.  Informative References
    Appendix A.  Collated CDDL
      A.1.  CoSERV Data Model
      A.2.  API Discovery Data Model
@@ -318,20 +324,20 @@ Table of Contents
    verification is useful because it mitigates security threats arising
    from any untrusted infrastructure or intermediaries that might reside
    between the producer and the consumer.  An example of this is caching
-   in HTTP [HTTP] and CoAP [RFC7252].  It might be expensive to compute
-   the result set for a query, which would make caching desirable.
-   However, if caching is managed by an untrusted intermediary, then
-   there is a risk that such an untrusted intermediary might return
-   incorrect results, either accidentally or maliciously.  Pairing the
-   original query with each result set provides an end-to-end contract
-   between the consumer and producer, mitigating such risks.  The
-   transactional pattern between the producer and the consumer would be
-   that the consumer begins the transaction by authoring a query and
-   sending it to the producer as a CoSERV object.  The producer receives
-   the query, computes results, and returns a new CoSERV object formed
-   from the results along with the original query.  Notionally, the
-   producer is "adding" the results to the query before sending it back
-   to the consumer.
+   in HTTP [HTTP-CACHING] and CoAP [RFC7252].  It might be expensive to
+   compute the result set for a query, which would make caching
+   desirable.  However, if caching is managed by an untrusted
+   intermediary, then there is a risk that such an untrusted
+   intermediary might return incorrect results, either accidentally or
+   maliciously.  Pairing the original query with each result set
+   provides an end-to-end contract between the consumer and producer,
+   mitigating such risks.  The transactional pattern between the
+   producer and the consumer would be that the consumer begins the
+   transaction by authoring a query and sending it to the producer as a
+   CoSERV object.  The producer receives the query, computes results,
+   and returns a new CoSERV object formed from the results along with
+   the original query.  Notionally, the producer is "adding" the results
+   to the query before sending it back to the consumer.
 
 3.2.  Artifacts
 
@@ -601,7 +607,7 @@ Table of Contents
    Section 4.5, it means that a query can be used as a stable and
    canonical identifier of artifacts.  This property of queries is an
    important enabler of efficient CoSERV transactions.  See, for
-   example, the HTTP caching design described in Section 6.1.4.
+   example, the HTTP caching design described in Section 6.1.5.
 
 3.4.4.  Query Logging
 
@@ -1479,10 +1485,10 @@ Table of Contents
 
 6.1.1.  Errors
 
-   For error responses (4xx or 5xx status codes), the Content-Type
-   header field MUST be application/concise-problem-details+cbor, and
-   the content MUST be a Concise Problem Details object [RFC9290]
-   containing the following:
+   When returning error responses (4xx or 5xx status codes), CoSERV
+   origin servers MUST set the Content-Type header field to application/
+   concise-problem-details+cbor, and the content MUST be a Concise
+   Problem Details object [RFC9290] containing the following:
 
    title:
       A human-readable string that identifies the error that prevented
@@ -1493,6 +1499,35 @@ Table of Contents
       A human-readable string that describes the error in more depth.
       This should ideally provide sufficient detail to enable the error
       to be rectified.
+
+   As specified by Section 2 of [RFC9290], the title and detail values
+   use oltext, which is either an unadorned CBOR text string (text) or a
+   language-tagged text string (tag38).  When a language needs to be
+   identified explicitly, tag38 carries a BCP 47 language tag as
+   described in Appendix A of [RFC9290].  If no explicit or implicit
+   language context is available, unadorned text is interpreted with the
+   language tag en.
+
+   CoSERV's HTTP binding is not a CoAP API, but Constrained Problem
+   Details objects [RFC9290] provide a useful encoding for problem
+   details and avoid the need to mix CBOR and JSON in resource or client
+   implementations.
+
+   Per the guidance in Section 4.6 of [RFC9205], the specific HTTP
+   status codes shown in the examples throughout this document are
+   illustrative.  Status codes can be generated by generic HTTP
+   components (caches, intermediaries, captive portals, gateways, etc.)
+   that are not part of the CoSERV server, and the set of registered
+   HTTP status codes can be extended over time.  Clients MUST therefore
+   be prepared to handle any HTTP status code by falling back to the
+   generic class semantics (1xx, 2xx, 3xx, 4xx, or 5xx) of the response
+   when a more specific code is not recognized, and MUST rely on the
+   Concise Problem Details [RFC9290] object (when present) rather than
+   the status code alone to determine the application-level cause of an
+   error.
+
+   Clients handle 5xx responses as defined in Section 15.6 of [HTTP] and
+   Section 9.2.2 of [HTTP].
 
 6.1.2.  Discovery
 
@@ -1510,20 +1545,21 @@ Table of Contents
 
    The response content can be formatted using either JSON [STD90] or
    CBOR, governed by standard HTTP content negotiation (Section 12 of
-   [HTTP-CACHING]).  The media types defined for this purpose are
-   application/coserv-discovery+json (for JSON-formatted documents) or
-   application/coserv-discovery+cbor (for CBOR-formatted documents).  If
-   the client presents any media type other than these two options in
-   its HTTP Accept header, the implementation SHOULD respond with an
-   HTTP 406 (Not Acceptable) status code.  If the client presents one of
-   the two valid media types, then the implementation MUST respond with
-   the HTTP 200 (OK) status code, unless it is prevented from doing so
-   by an error condition beyond the scope of this specification.  When
-   the 200 (OK) status code is returned, the response MUST contain
-   exactly one discovery document in the requested format (JSON or
-   CBOR).  The contents of the discovery document MUST conform to the
-   CDDL data model given below, which is common to both the JSON and
-   CBOR encodings.
+   [HTTP]).  The media types defined for this purpose are application/
+   coserv-discovery+json (for JSON-formatted documents) or application/
+   coserv-discovery+cbor (for CBOR-formatted documents).  If the client
+   presents one of the two valid media types, then the implementation
+   MUST respond with the HTTP 200 (OK) status code, unless it is
+   prevented from doing so by an error condition beyond the scope of
+   this specification.  When the 200 (OK) status code is returned, the
+   response MUST contain exactly one discovery document in the requested
+   format (JSON or CBOR).  Server implementations MUST support both
+   formats.  In deployments where the discovery document might be stored
+   in an HTTP cache, server implementations SHOULD add the Vary: Accept
+   header to the HTTP response to ensure that the client does not
+   receive a cached document in the wrong format.  The contents of the
+   discovery document MUST conform to the CDDL data model given below,
+   which is common to both the JSON and CBOR encodings.
 
    ;# import rfc9711 as eat
    ;# import cmw-autogen as cmw
@@ -1621,18 +1657,35 @@ Table of Contents
 
    The API endpoints field is denoted by the label "api-endpoints" in
    JSON documents and by the codepoint 3 in CBOR documents.  This field
-   allows clients to derive the correct URL for making HTTP API calls.
+   allows clients to derive the correct URI for making HTTP API calls.
    The field is a map whose keys are the symbolic names of the APIs, and
-   whose values are the URL path for the API endpoint.
+   whose values are the URI path for the API endpoint.
 
    The symbolic name CoSERVRequestResponse is defined for services that
    offer the transactional API described in Section 6.1.3.  Service
    implementations that offer this API MUST include a key with this name
-   in the endpoints map field, and the corresponding endpoint URL path
+   in the endpoints map field, and the corresponding endpoint URI path
    MUST end with /{query}. This allows the consumer to form a valid
    CoSERV query URI using variable expansion as per [RFC6570], replacing
    the {query} variable with the Base64Url-encoded CoSERV query object.
    There MUST NOT be any other variables that require substitution.
+
+   The symbolic name CoSERVRequestResponseQUERY is defined for services
+   that offer the transactional API using the QUERY method, as described
+   in Section 6.1.4.  The corresponding value is a plain URI path with
+   no URI template: the query is carried in the request content, so
+   there are no variables to substitute.  Services that support the
+   QUERY method MUST include a key with this name in the endpoints map
+   field.  Service implementations that include this key SHOULD also
+   include CoSERVRequestResponse, since clients cannot always rely on
+   QUERY being usable (see Section 8.2).
+
+   Responses from a CoSERVRequestResponseQUERY endpoint SHOULD include
+   the Accept-Query header field (Section 3 of [RFC10008]) listing
+   application/coserv+cbor.  This allows a client to confirm that the
+   endpoint, as reached through any infrastructure layers, accepts QUERY
+   requests with that media type, independently of the discovery
+   document.
 
 6.1.2.1.4.  Result Verification Key
 
@@ -1688,6 +1741,7 @@ Table of Contents
 
    HTTP/1.1 200 OK
    Content-Type: application/coserv-discovery+json
+   Vary: Accept
 
    Content (JSON)
 
@@ -1707,7 +1761,9 @@ Table of Contents
      ],
      "api-endpoints": {
        "CoSERVRequestResponse": "/endorsement-distribution/v1/coserv/{\
-                                                                 query}"
+                                                                query}",
+       "CoSERVRequestResponseQUERY": "/endorsement-distribution/v1/\
+                                                                 coserv"
      },
      "result-verification-key": [
        {
@@ -1732,6 +1788,7 @@ Table of Contents
 
    HTTP/1.1 200 OK
    Content-Type: application/coserv-discovery+cbor
+   Vary: Accept
 
    Content (in CBOR Extended Diagnostic Notation (EDN))
 
@@ -1751,16 +1808,20 @@ Table of Contents
      ],
      / api-endpoints / 3: {
        "CoSERVRequestResponse": "/endorsement-distribution/v1/coserv/{\
-                                                                 query}"
+                                                                query}",
+       "CoSERVRequestResponseQUERY": "/endorsement-distribution/v1/\
+                                                                 coserv"
      },
      / result-verification-key / 4: [
        {
          / kty / 1: 2,
          / alg / 3: -7,
          / crv / -1: 1,
-         / x / -2: h'1A2B3C4D',
-         / y / -3: h'5E6F7A8B',
-         / kid / 2: h'ABCDEF1234'
+         / x / -2: h'\
+      BAC5B11CAD8F99F9C72B05CF4B9E26D244DC189F745228255A219A86D6A09EFF',
+         / y / -3: h'\
+      20138BF82DC1B6D562BE0FA54AB7804A3A64B6D72CCFED6B6FB6ED28BBFC117E',
+         / kid / 2: h'6B657931'
        }
      ]
    }
@@ -1772,18 +1833,35 @@ Table of Contents
 
    The HTTP method is GET.
 
-   The URL path is formed of the discovered coserv endpoint (as set out
+   The URI path is formed of the discovered coserv endpoint (as set out
    in Section 6.1.2), where the {query} template variable is substituted
    with the CoSERV query to be executed, which is represented as a
    Base64Url encoding of the query's serialized CBOR byte sequence.
 
-   There are no additional URL query parameters.
+   There are no additional URI query parameters.
 
-   Clients MUST set the Accept header field to a suitably-profiled
-   application/coserv+cose or application/coserv+cbor media type.
+   The serialized query is carried in the URI, so its size is bounded by
+   the URI length limits of the HTTP infrastructure in use, which are
+   often not known in advance.  Section 4.1 of [HTTP] recommends that
+   senders and recipients support URIs of at least 8000 octets.  Typical
+   CoSERV queries are small: the serialized examples in this document
+   are in the order of 100 to 200 octets, which Base64Url encoding
+   expands by about one third.  A query that is too large for some
+   component on the path can cause that component to return a 414 (URI
+   Too Long) status code, which clients need to be prepared to handle.
+
+   As an optional alternative to GET, an implementation MAY also accept
+   CoSERV queries using the QUERY method, as described in Section 6.1.4.
+
+   Clients MUST set the Accept header field to one of the profiled
+   application/coserv+cose or application/coserv+cbor media types that
+   is supported by the server according to the discovery document (see
+   Section 6.1.2).
 
    Endpoint implementations MUST respond with an HTTP status code and
-   content according to one of the subheadings below.
+   content according to one of the subheadings below, except where the
+   response is generated by infrastructure layers other than the origin
+   server.
 
 6.1.3.1.  Responses
 
@@ -1875,11 +1953,25 @@ Table of Contents
      / signature / h'face5190'
    ])
 
-6.1.3.1.2.  Failure to Validate Query (400)
+6.1.3.1.2.  Invalid Query (400)
 
-   This response indicates that the supplied query is badly formed.
+   This response indicates that the supplied CoSERV query is badly
+   formed, or is otherwise un-processable by the server.
 
-   Example HTTP request:
+   Conditions resulting in this error include the following:
+
+   *  The request is badly formed.  This could mean that the query is
+      not valid CBOR, or does not conform to the CoSERV data model
+      specified in Section 4.
+
+   *  The request is well-formed, but cannot be executed by the server.
+      This could happen when the query goes beyond the advertised
+      capabilities of the server according to the server's discovery
+      document (see Section 6.1.2).  An example would be a query that
+      uses the RIM Identifier query style, where the server supports
+      only the Environment query style, or vice versa.
+
+   The following example shows a badly-formed request with its response:
 
    # NOTE: '\' line wrapping per RFC 8792
 
@@ -1887,8 +1979,6 @@ Table of Contents
    Host: endorsements-distributor.example
    Accept: application/coserv+cose; \
            profile="tag:vendor.com,2025:cc_platform#1.0.0"
-
-   Example HTTP response:
 
    # NOTE: '\' line wrapping per RFC 8792
 
@@ -1902,11 +1992,38 @@ Table of Contents
      / detail / -2: "The query payload is not in CBOR format"
    }
 
+   The following example shows a well-formed but un-processable request,
+   with response:
+
+   # NOTE: '\' line wrapping per RFC 8792
+
+   GET /coserv/ogB4I3R... HTTP/1.1
+   Host: endorsements-distributor.example
+   Accept: application/coserv+cose; \
+           profile="tag:vendor.com,2025:cc_platform#1.0.0"
+
+   # NOTE: '\' line wrapping per RFC 8792
+
+   HTTP/1.1 400 Bad Request
+   Content-Type: application/concise-problem-details+cbor
+
+   Content (in CBOR Extended Diagnostic Notation (EDN))
+
+   {
+     / title /  -1: "Query cannot be processed",
+     / detail / -2: "The query style is not supported"
+   }
+
 6.1.3.1.3.  Failure to Negotiate Profile (406)
 
    This response indicates that the client has specified a CoSERV
-   profile that is not understood or serviceable by the receiving
-   endpoint implementation.
+   profile that is not understood or serviceable by the server.
+   Conformant clients will not encounter this error, since this
+   specification constrains clients to request only those CoSERV
+   profiles that are listed in the discovery document.
+
+   Clients can consult the discovery document (Section 6.1.2) to
+   determine the supported media types.
 
    Example HTTP request:
 
@@ -1932,41 +2049,59 @@ Table of Contents
                      not supported",
    }
 
-6.1.3.2.  Too Many Requests (429)
+6.1.3.1.4.  Too Many Requests (429)
 
-   A server could apply rate limiting to requests received from clients.
-   This is a common practice for services that require significant
-   processing power to generate a response, such as a CoSERV endpoint.
-   If this is the case, and a client exceeds their request quota, the
-   server can return a 429 (Too Many Requests) response.  The response
-   headers MAY include a Retry-After header field indicating how long
-   the client should wait before making a new request.
+   A server (or infrastructure layer) could apply rate limiting to
+   requests received from clients.  If a client exceeds its request
+   quota, it might receive a 429 (Too Many Requests) response, which can
+   carry a Retry-After header field (Section 10.2.3 of [HTTP])
+   indicating how long to wait before retrying.  Rate limiting is often
+   implemented in infrastructure layers (such as gateways or load
+   balancers), whose error responses are not governed by this
+   specification.  Example HTTP messages are not shown for this case.
+
+6.1.4.  Execute Query with the QUERY Method
+
+   The QUERY method [RFC10008] is a safe, idempotent method that carries
+   the query in the request content instead of the URI.  This avoids the
+   URI size limits and keeps the query out of URIs, which are more
+   likely to be logged.  Support for this method is optional, and
+   clients MUST NOT assume it is available unless the discovery document
+   advertises it (see Section 6.1.2).
+
+   The request is sent to the URI path given by the
+   CoSERVRequestResponseQUERY key of the discovery document.  The
+   Content-Type header field MUST be application/coserv+cbor, and the
+   content MUST be a CoSERV object with the results field absent, which
+   is the serialized CBOR CoSERV query encoded as per Section 4.5.  The
+   profile media type parameter is optional in this context, since the
+   profile is carried in the query itself.  The content is not
+   Base64Url-encoded.  The Accept header field is set as for GET
+   (Section 6.1.3).
+
+   Successful and unsuccessful transactions use the same status codes
+   and response contents as for GET.  In addition, a server that does
+   not support the media type of the request content responds with 415
+   (Unsupported Media Type) (Section 2.1 of [RFC10008]) and SHOULD
+   include the Accept-Query header field in that response.
 
    Example HTTP request:
 
    # NOTE: '\' line wrapping per RFC 8792
 
-   GET /coserv/ogB4I3R... HTTP/1.1
+   QUERY /endorsement-distribution/v1/coserv HTTP/1.1
    Host: endorsements-distributor.example
+   Content-Type: application/coserv+cbor
    Accept: application/coserv+cose; \
            profile="tag:vendor.com,2025:cc_platform#1.0.0"
 
-   Example HTTP response:
+   Content (binary CBOR-encoded CoSERV query)
 
-   # NOTE: '\' line wrapping per RFC 8792
+   The response to a QUERY request is cacheable as described in
+   Section 2.7 of [RFC10008].  The cache key incorporates the request
+   content, so the considerations in Section 6.1.5 apply equally.
 
-   HTTP/1.1 429 Too Many Requests
-   Content-Type: application/concise-problem-details+cbor
-   Retry-After: 120
-
-   Content (in CBOR Extended Diagnostic Notation (EDN))
-
-   {
-     / title /  -1: "Too many requests",
-     / detail / -2: "You're doing that too often! Try again in 2 minutes",
-   }
-
-6.1.4.  Caching
+6.1.5.  Caching
 
    In practical usage, the artifacts transacted via CoSERV queries (such
    as trust anchors and reference values) may change significantly less
@@ -1984,16 +2119,21 @@ Table of Contents
 
    CoSERV is designed to facilitate both client-side and server-side
    caching by use of the standard HTTP caching mechanisms specified in
-   [HTTP].  This includes use of the Cache-Control header field and its
-   associated directives.  It also includes the use of entity-tags
-   (ETags).  The following features of CoSERV and its HTTP binding are
-   specifically designed to favor caching implementations:
+   [HTTP-CACHING].  This includes use of the Cache-Control header field
+   and its associated directives.  It also includes the use of entity-
+   tags (ETags).  The following features of CoSERV and its HTTP binding
+   are specifically designed to favor caching implementations:
 
-   *  CoSERV queries form stable URL paths.  As specified in
+   *  CoSERV queries form stable URI paths.  As specified in
       Section 4.5, any given CoSERV query will always serialize to the
       same fixed sequence of bytes.  This allows queries to be used as
       canonical and stable resource identifiers, which in turn allows
-      them to function effectively as cache keys.
+      them to function effectively as cache keys.  If a service can
+      return more than one representation for the same query URI,
+      depending on the Accept header field of the request (see
+      Section 6.1.3), the origin server MUST include Vary: Accept in its
+      responses, so that caches do not serve a representation in a
+      different format or profile from the one the client requested.
 
    *  The result set is cryptographically bound to the query.  As
       specified in Section 4.6, the origin server is required to return
@@ -2008,11 +2148,26 @@ Table of Contents
       does not modify any state on the server, which creates more
       opportunities for the re-use of cached results.
 
+   *  Discovery documents are cacheable resources.  Discovery documents
+      (as described in Section 6.1.2) are used by clients to locate
+      suitable API endpoints for transacting CoSERV queries.  These
+      documents, like CoSERV responses themselves, can be cached to
+      avoid round trips to the origin server during this bootstrapping
+      phase.
+
    Although reusing cached responses is generally desirable, clients
    that need to bypass the caching infrastructure can do so by
-   specifying Cache-Control: no-cache in their requests.
+   specifying Cache-Control: no-cache in their requests.  Note that this
+   only prevents a stored response from being used to satisfy the
+   request: the response to such a request can still be stored by
+   caches.  Preventing storage is a matter for the origin server's
+   Cache-Control response directives, as discussed in Section 10.4.
 
-6.1.4.1.  HTTP Caching and Result Set Expiry
+   Implementations should be aware that there are specific privacy
+   considerations related to caching.  These are outlined in
+   Section 10.4.
+
+6.1.5.1.  HTTP Caching and Result Set Expiry
 
    CoSERV's data model includes a mandatory expiration timestamp on
    every result set.  This is an authoritative marker of the point in
@@ -2026,7 +2181,45 @@ Table of Contents
    exceeds the result set expiry timestamp contained within the CoSERV
    results.
 
-6.1.4.2.  Example HTTP Messages with Caching
+   To avoid the risk of infrastructure layers providing default cache
+   lifetimes that are unsuitable for the returned content, origin
+   servers SHOULD set Cache-Control headers explicitly in all CoSERV
+   responses.
+
+6.1.5.2.  Weak Validators for Signed Responses
+
+   For CoSERV origin servers that return signed responses (of type
+   application/coserv+cose), attention should be paid to the generation
+   of suitable ETag headers for cache validation.  Any non-determinism
+   in the signing process could give rise to sets of results that are
+   semantically identical, but not byte-for-byte identical due to
+   differences in the signature.  Populating cache infrastructure with
+   such spuriously-differing results would be undesirable.  This problem
+   can be addressed by the use of a weak validator, which computes the
+   ETag in such a way that the signature and the result set expiry
+   timestamp are excluded.  The expiry timestamp changes whenever a
+   result set is recomputed, even if the artifacts it carries are
+   unchanged.  Excluding the signature and the expiry timestamp allows
+   semantically-identical result sets to validate successfully, even
+   when they differ in these respects.  Precise details of ETag
+   generation are beyond the scope of this document, but a suitable
+   validator might be one that combines the unsigned payload (minus the
+   expiry timestamp) with the public key (or key identity) as input to a
+   strong hash function.  Such a validator would still behave correctly
+   if the signing key were to be rotated, in which case it would not be
+   appropriate to validate any results that were signed with the
+   previous key.  A 304 (Not Modified) response does not update the
+   stored content, so it does not refresh the expiry timestamp embedded
+   in the result set.  A client whose stored result set has passed its
+   embedded expiry therefore needs a full response, even if the HTTP
+   cache considers the entry fresh or revalidated.  Origin servers using
+   this approach MUST label the ETag as weak (W/ prefix), as in the
+   examples below, and MUST evaluate If-None-Match using the weak
+   comparison function (Section 8.8.3.2 of [HTTP]).
+
+   For unsigned responses, strong validators are preferred.
+
+6.1.5.3.  Example HTTP Messages with Caching
 
    This section illustrates a caching scenario.
 
@@ -2048,7 +2241,9 @@ Table of Contents
    content for longer, while ensuring that clients receive fresher
    content.  Before forwarding it to the client, the proxy stores the
    response in its cache using the request URI as the cache key
-   alongside the entry's time-to-live value.
+   alongside the entry's time-to-live value.  The proxy also inserts an
+   Age header, with a value of zero, to signal that the response has
+   been freshly computed by the origin server.
 
       |  This "differential caching" strategy could be useful if the
       |  origin and its CDN have control plane APIs that the origin
@@ -2056,48 +2251,58 @@ Table of Contents
       |  cached entries [RFC8007].  For instance, in CoSERV, this
       |  feature could be used in case of an unexpected revocation.
 
- client A             cache.example          coserv.example
-                          .---.                   .-.
-     o                   |     |                 |   |
-     |                   |'---'|                  '+'
-     |                   |     |                   |
-     |                    '-+-'                    |
-     |   GET ogB4I3RhZ..    |                      |
-     +--------------------->| lookup(obB4I3RhZ..)  |
-     |                      +---.                  |
-     |                      |    |                 |
-     |                      |<--'                  |
-     |                      | MISS                 |
-     |                      |                      |
-     |                      |   GET ogB4I3RhZ..    |
-     |                      +--------------------->|
-     |                      |                      +---.  compute
-     |                      |                      |    | result
-     |                      |                      |<--'  set
-     |                      |  200 OK              | (expiry = now + 1h)
-     |                      |  C-C: max-age=600,   |
-     |                      |       s-maxage=3600  |
-     |                      |  #6.18([...])        |
-     |                      |<---------------------+
-     |                      |                      |
-     |                      | store(K=obB4I3RhZ.., |
-     |                      +---.   V=#6.18([...], |
-     |                      |    |  TTL=3600)      |
-     |                      |<--'                  |
-     |  200 OK              |                      |
-     |  C-C: max-age=600,   |                      |
-     |       s-maxage=3600  |                      |
-     |  #6.18([...])        |                      |
-     |<---------------------+                      |
-     |                      |                      |
+client A             cache.example          coserv.example
+                         .---.                   .-.
+    o                   |     |                 |   |
+    |                   |'---'|                  '+'
+    |                   |     |                   |
+    |                    '-+-'                    |
+    |   GET ogB4I3RhZ..    |                      |
+    +--------------------->| lookup(ogB4I3RhZ..)  |
+    |                      +---.                  |
+    |                      |    |                 |
+    |                      |<--'                  |
+    |                      | MISS                 |
+    |                      |                      |
+    |                      |   GET ogB4I3RhZ..    |
+    |                      +--------------------->|
+    |                      |                      +---.  compute
+    |                      |                      |    | result
+    |                      |                      |<--'  set
+    |                      |  200 OK              | (expiry = now + 1h, ETag = "xyz")
+    |                      |  C-C: max-age=600,   |
+    |                      |       s-maxage=3600  |
+    |                      |  ETag: W/"xyz"       |
+    |                      |  #6.18([...])        |
+    |                      |<---------------------+
+    |                      |                      |
+    |                      | store(K=ogB4I3RhZ.., |
+    |                      |       ETag="xyz",    |
+    |                      +---.   V=#6.18([...], |
+    |                      |    |  TTL=3600)      |
+    |                      |<--'                  |
+    |  200 OK              |                      |
+    |  C-C: max-age=600,   |                      |
+    |       s-maxage=3600  |                      |
+    |  ETag: W/"xyz"       |                      |
+    |  Age: 0              |                      |
+    |  #6.18([...])        |                      |
+    |<---------------------+                      |
+    |                      |                      |
 
    At a later point, after 2 minutes, a different client B makes the
    same request.  This time, the request generates a "cache hit" event
    on the proxy.  The response is therefore served from the public
    cache, bypassing the origin.  This reduces the load on the origin,
    where computing the result set is generally costly, as well as
-   reducing the overall latency of the transaction.  Client B operates a
-   local cache, where it stores a copy of the response.
+   reducing the overall latency of the transaction.  Once again, the
+   cache inserts an Age header into the response, now set to 120 to
+   reflect the two minutes of elapsed time since the response was added
+   to the cache.  Client B additionally operates a local cache, where it
+   stores a copy of the response.  Client B's local cache entry has a
+   time-to-live (TTL) value of 480, which is computed from the max-age
+   of the publicly-cached entry (600), minus the value in the Age header
+   (120).
 
    client B             cache.example          coserv.example
                             .---.                   .-.
@@ -2106,19 +2311,21 @@ Table of Contents
      |'-'|                 |     |                   |
       '+'                   '-+-'                    |
        |   GET ogB4I3RhZ..    |                      |
-       +--------------------->| lookup(obB4I3RhZ..)  |
+       +--------------------->| lookup(ogB4I3RhZ..)  |
        |                      +---.                  |
        |                      |    |                 |
        |                      |<--'                  |
        |                      | HIT                  |
        |  200 OK              |                      |
-       |  C-C: max-age=480,   |                      |
-       |       s-maxage=3480  |                      |
-       |  Etag: "xyz"         |                      |
+       |  C-C: max-age=600,   |                      |
+       |       s-maxage=3600  |                      |
+       |  ETag: W/"xyz"       |                      |
+       |  Age: 120            |                      |
        |  #6.18([...])        |                      |
        |<---------------------+                      |
        |                      |                      |
-       | store(K=obB4I3RhZ.., |                      |
+       | store(K=ogB4I3RhZ.., |                      |
+       |       ETag="xyz",    |                      |
        +---.   V=#6.18([...], |                      |
        |    |  TTL=480)       |                      |
        |<--'                  |                      |
@@ -2130,9 +2337,11 @@ Table of Contents
    revalidated.  Therefore, B sends a conditional request to the proxy.
    The request generates a "cache hit" event on the proxy where the
    resource is still fresh due to the differential caching behaviour
-   dictated by the original response from the origin.  The proxy returns
-   a 304 (Not modified) status code, which instructs the client to reuse
-   its local copy of the response.
+   dictated by the original response from the origin.  The cached
+   response includes an Age header set to 660, reflecting the total 11
+   minutes of elapsed time since the proxy cache was populated.  The
+   proxy returns a 304 (Not modified) status code, which instructs the
+   client to reuse its local copy of the response.
 
    client B              cache.example          coserv.example
                             .---.                   .-.
@@ -2140,7 +2349,7 @@ Table of Contents
      |   |                 |'---'|                  '+'
      |'-'|                 |     |                   |
       '+'                   '-+-'                    |
-       | lookup(obB4I3RhZ..)  |                      |
+       | lookup(ogB4I3RhZ..)  |                      |
        +---.                  |                      |
        |    |                 |                      |
        |<--'                  |                      |
@@ -2154,8 +2363,10 @@ Table of Contents
        |                      |<--'                  |
        |                      | HIT                  |
        |  304 Not modified    |                      |
-       |  C-C: max-age=0,     |                      |
-       |       s-maxage=3060  |                      |
+       |  C-C: max-age=600,   |                      |
+       |       s-maxage=3600  |                      |
+       |  ETag: W/"xyz"       |                      |
+       |  Age: 660            |                      |
        |<---------------------+                      |
        |                      |                      |
 
@@ -2208,7 +2419,44 @@ Table of Contents
 
    Contact: Thomas Fossati, Thomas.Fossati@linaro.org
 
-8.  Security Considerations
+8.  Operational Considerations
+
+8.1.  Redirects
+
+   Redirects are handled as for any other HTTP resource (Section 15.4 of
+   [HTTP]).  A redirect can change other parts of the URI, such as the
+   authority or the path prefix of the endpoint, but is not expected to
+   alter the final path segment, which carries the query.  Since the
+   result set is bound to the query it answers (Section 4.6), consumers
+   can detect a response that does not correspond to their query.  No
+   CoSERV-specific handling of redirects is needed beyond this.
+
+8.2.  Deployment of the QUERY Method
+
+   The QUERY method [RFC10008] is new, and support for it is still being
+   rolled out.  Servers, proxies, gateways, CDNs, and client libraries
+   that predate it, or that have not enabled it, can reject QUERY
+   requests (for example with 405 (Method Not Allowed), 501 (Not
+   Implemented) or 400 (Bad Request)), drop them, or fail to cache the
+   responses.  A CoSERV origin server that supports QUERY is therefore
+   not sufficient: every infrastructure layer between client and origin
+   has to support it too.
+
+   Clients thus need to establish that QUERY works on the path to the
+   service before relying on it.  Advertisement by the
+   CoSERVRequestResponseQUERY entry of the discovery document
+   (Section 6.1.2) only reflects the origin server's capabilities.  A
+   client can additionally look for the Accept-Query header field in
+   responses from the endpoint, and can fall back to GET (Section 6.1.3)
+   if the QUERY request fails in a way that indicates lack of support.
+   A fallback to GET is not possible for a query that exceeds URI length
+   limits, so services that expect large queries need to ensure that
+   their infrastructure supports QUERY.
+
+   Services that offer QUERY SHOULD continue to offer GET, so that
+   clients unable to use QUERY can still interoperate.
+
+9.  Security Considerations
 
    CoSERV implements a conveyance protocol for specific categories of
    Conceptual Message in [RFC9334], namely Endorsements and Reference
@@ -2235,7 +2483,7 @@ Table of Contents
       entity that is interposed between the Verifier and the Endorser or
       Reference Value Provider.
 
-8.1.  In Relation to CoRIM
+9.1.  In Relation to CoRIM
 
    CoSERV's data model inherits heavily from that of
    [I-D.ietf-rats-corim].  CoSERV responses can contain one or more
@@ -2244,7 +2492,7 @@ Table of Contents
    privacy considerations set out in Section 11 of [I-D.ietf-rats-corim]
    therefore apply equally to CoSERV.
 
-8.2.  Forming Native Database Queries from CoSERV
+9.2.  Forming Native Database Queries from CoSERV
 
    Implementations should take care when transforming CoSERV queries
    into native query types that are compatible with their underlying
@@ -2254,7 +2502,7 @@ Table of Contents
    sanitization procedures are in place when performing such
    translations.
 
-8.3.  Aggregators
+9.3.  Aggregators
 
    Aggregation (see Section 2) is the process of combining artifacts
    from multiple Endorser or Reference Value Provider sources, which is
@@ -2336,7 +2584,7 @@ Table of Contents
       described in Section 2, with a greater reliance on collected
       artifacts rather than source artifacts.
 
-9.  Privacy Considerations
+10.  Privacy Considerations
 
    A CoSERV query can potentially contain privacy-sensitive information.
    Specifically, the environment-selector field of the query may
@@ -2353,7 +2601,7 @@ Table of Contents
    *  Collating Attester instances into anonymity groups, and
       referencing the groups rather than the individual instances.
 
-9.1.  Aggregators
+10.1.  Aggregators
 
    Aggregators (as described in Section 2) can pose a specific privacy
    risk.  This is because they necessarily correlate inputs from
@@ -2365,7 +2613,7 @@ Table of Contents
    Provider roles.  There is consequently a risk that such inferred
    details could be misused to create a covert channel.
 
-9.2.  Domains
+10.2.  Domains
 
    Domain queries and domain result sets can reveal the topology of a
    Composite Attester, including the relationship between parent and
@@ -2376,12 +2624,48 @@ Table of Contents
    considerations to Domain artifacts as to other privacy-sensitive
    CoSERV query and result data.
 
-10.  IANA Considerations
+10.3.  Query URIs
+
+   In the HTTP binding, the serialized query is carried in the request
+   URI.  URIs are more likely than request content to be logged by
+   clients, servers and intermediaries.  Where a query identifies
+   individual Attester instances or other small anonymity groups, such
+   logging can disclose them.  Deployments should treat logs containing
+   CoSERV query URIs as sensitive, and can use the QUERY method
+   (Section 6.1.4) where it is available.
+
+10.4.  Caching
+
+   Caching is an important characteristic of CoSERV in general, and of
+   the CoSERV HTTP bindings in particular.  CoSERV transactions are
+   expected to benefit from the use of HTTP caching infrastructure as
+   explained in Section 6.1.5.  CoSERV's deterministic encoding rules
+   allow for encoded queries to be used as cache keys.  Where queries
+   contain privacy-sensitive information, such as references to
+   individual Attester instances or other small anonymity groups, there
+   is a risk of HTTP caches themselves becoming an oracle.  For
+   instance, the time taken to generate a response could indicate
+   whether a client has already queried the same information previously.
+   An attacker could use these timings to gain intelligence about the
+   use of those instances or groups.
+
+   Safe methods can be replayed, including in TLS 0-RTT early data, so
+   the cost of executing queries is a consideration for origin servers
+   independently of caching.
+
+   Implementations should be intentional about their use of caching, and
+   avoid relying on default behaviours that could lead to side channels.
+   For example, the Cache-Control: no-store or Cache-Control: private
+   directives can be used selectively in situations where very fine-
+   grained information is being queried, while still allowing broader
+   queries to benefit from caching.
+
+11.  IANA Considerations
 
    [^rfced] replace "RFCthis" with the RFC number assigned to this
    document.
 
-10.1.  Media Types Registrations
+11.1.  Media Types Registrations
 
    IANA is requested to add the following media types to the "Media
    Types" registry [IANA.media-types].
@@ -2404,7 +2688,7 @@ Table of Contents
 
                         Table 1: CoSERV Media Types
 
-10.1.1.  application/coserv+cbor
+11.1.1.  application/coserv+cbor
 
    Type name:  application
    Subtype name:  coserv+cbor
@@ -2412,7 +2696,7 @@ Table of Contents
    Optional parameters:  "profile" (CoSERV profile in string format.
       OIDs must use the dotted-decimal notation.)
    Encoding considerations:  binary (CBOR)
-   Security considerations:  Section 8 of RFCthis
+   Security considerations:  Section 9 of RFCthis
    Interoperability considerations:  n/a
    Published specification:  RFCthis
    Applications that use this media type:  Verifiers, Endorsers,
@@ -2428,7 +2712,7 @@ Table of Contents
    Author/Change controller:  IETF
    Provisional registration:  no
 
-10.1.2.  application/coserv+cose
+11.1.2.  application/coserv+cose
 
    Type name:  application
    Subtype name:  coserv+cose
@@ -2439,7 +2723,7 @@ Table of Contents
       type parameter is explicitly not supported, as it is understood to
       be "cose-sign1".
    Encoding considerations:  binary
-   Security considerations:  Section 8 of RFCthis
+   Security considerations:  Section 9 of RFCthis
    Interoperability considerations:  n/a
    Published specification:  RFCthis
    Applications that use this media type:  Verifiers, Endorsers,
@@ -2452,14 +2736,14 @@ Table of Contents
    Author/Change controller:  IETF
    Provisional registration?  no
 
-10.1.3.  application/coserv-discovery+cbor
+11.1.3.  application/coserv-discovery+cbor
 
    Type name:  application
    Subtype name:  coserv-discovery+cbor
    Required parameters:  n/a
    Optional parameters:  n/a
    Encoding considerations:  binary (CBOR)
-   Security considerations:  Section 8 of RFCthis
+   Security considerations:  Section 9 of RFCthis
    Interoperability considerations:  n/a
    Published specification:  RFCthis
    Applications that use this media type:  Verifiers, Endorsers,
@@ -2475,14 +2759,14 @@ Table of Contents
    Author/Change controller:  IETF
    Provisional registration:  no
 
-10.1.4.  application/coserv-discovery+json
+11.1.4.  application/coserv-discovery+json
 
    Type name:  application
    Subtype name:  coserv-discovery+json
    Required parameters:  n/a
    Optional parameters:  n/a
    Encoding considerations:  binary (JSON is UTF-8-encoded text)
-   Security considerations:  Section 8 of RFCthis
+   Security considerations:  Section 9 of RFCthis
    Interoperability considerations:  n/a
    Published specification:  RFCthis
    Applications that use this media type:  Verifiers, Endorsers,
@@ -2498,7 +2782,7 @@ Table of Contents
    Author/Change controller:  IETF
    Provisional registration:  no
 
-10.2.  CoAP Content-Formats
+11.2.  CoAP Content-Formats
 
    IANA is requested to register the following Content-Format IDs in the
    "CoAP Content-Formats" registry, within the "Constrained RESTful
@@ -2519,7 +2803,7 @@ Table of Contents
 
    If possible, TBD1 and TBD2 should be assigned in the 256..9999 range.
 
-10.3.  Well-Known URI for CoSERV Configuration
+11.3.  Well-Known URI for CoSERV Configuration
 
    IANA is requested to register the following in the "Well-Known URIs"
    registry [IANA.well-known-uris]:
@@ -2532,9 +2816,9 @@ Table of Contents
 
    Related information: N/A
 
-11.  References
+12.  References
 
-11.1.  Normative References
+12.1.  Normative References
 
    [CBOR]     Bormann, C. and P. Hoffman, "Concise Binary Object
               Representation (CBOR)", STD 94, RFC 8949,
@@ -2547,15 +2831,15 @@ Table of Contents
               <https://www.rfc-editor.org/rfc/rfc9052>.
 
    [HTTP]     Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
-              Ed., "HTTP Caching", STD 98, RFC 9111,
-              DOI 10.17487/RFC9111, June 2022,
-              <https://www.rfc-editor.org/rfc/rfc9111>.
-
-   [HTTP-CACHING]
-              Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
               Ed., "HTTP Semantics", STD 97, RFC 9110,
               DOI 10.17487/RFC9110, June 2022,
               <https://www.rfc-editor.org/rfc/rfc9110>.
+
+   [HTTP-CACHING]
+              Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
+              Ed., "HTTP Caching", STD 98, RFC 9111,
+              DOI 10.17487/RFC9111, June 2022,
+              <https://www.rfc-editor.org/rfc/rfc9111>.
 
    [I-D.ietf-rats-corim]
               Birkholz, H., Fossati, T., Deshpande, Y., Smith, N., and
@@ -2609,6 +2893,10 @@ Table of Contents
               (URIs)", RFC 8615, DOI 10.17487/RFC8615, May 2019,
               <https://www.rfc-editor.org/rfc/rfc8615>.
 
+   [RFC9205]  Nottingham, M., "Building Protocols with HTTP", BCP 56,
+              RFC 9205, DOI 10.17487/RFC9205, June 2022,
+              <https://www.rfc-editor.org/rfc/rfc9205>.
+
    [RFC9290]  Fossati, T. and C. Bormann, "Concise Problem Details for
               Constrained Application Protocol (CoAP) APIs", RFC 9290,
               DOI 10.17487/RFC9290, October 2022,
@@ -2637,7 +2925,7 @@ Table of Contents
               DOI 10.17487/RFC8259, December 2017,
               <https://www.rfc-editor.org/rfc/rfc8259>.
 
-11.2.  Informative References
+12.2.  Informative References
 
    [I-D.ietf-iotops-mud-rats]
               Birkholz, H., Richardson, M., and P. C. Liu, "MUD-Based
@@ -2647,11 +2935,11 @@ Table of Contents
               mud-rats-03>.
 
    [I-D.ietf-rats-endorsements]
-              Thaler, D., Birkholz, H., and T. Fossati, "RATS
-              Endorsements", Work in Progress, Internet-Draft, draft-
-              ietf-rats-endorsements-09, 2 March 2026,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-rats-
-              endorsements-09>.
+              Thaler, D., Birkholz, H., and T. Fossati, "Remote
+              Attestation Procedures (RATS) Endorsements", Work in
+              Progress, Internet-Draft, draft-ietf-rats-endorsements-13,
+              14 October 2026, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-rats-endorsements-13>.
 
    [RFC6024]  Reddy, R. and C. Wallace, "Trust Anchor Management
               Requirements", RFC 6024, DOI 10.17487/RFC6024, October
@@ -2676,6 +2964,10 @@ Table of Contents
               Wallace, "The Entity Attestation Token (EAT)", RFC 9711,
               DOI 10.17487/RFC9711, April 2025,
               <https://www.rfc-editor.org/rfc/rfc9711>.
+
+   [RFC10008] Reschke, J., Snell, J.M., and M. Bishop, "The HTTP QUERY
+              Method", RFC 10008, DOI 10.17487/RFC10008, June 2026,
+              <https://www.rfc-editor.org/rfc/rfc10008>.
 
 Appendix A.  Collated CDDL
 
@@ -4112,14 +4404,14 @@ Appendix C.  Locating CoSERV Services
    services might be located.  This list is neither exhaustive nor
    prescriptive.  Deployments are free to use whatever logistics are
    sensible.  Note that the goal here is solely one of bootstrapping.
-   Once the base URL of a suitable service is known, CoSERV provides in-
+   Once the base URI of a suitable service is known, CoSERV provides in-
    protocol discovery mechanisms, such as the one described in
    Section 6.1.2, which cater for the discovery of more specific API
    endpoints and capabilities.
 
    *  Some CoSERV-enabled services might exist in locations that are
       documented publicly by supply chain actors.  A hardware vendor,
-      for example, might document the base URL for the service that
+      for example, might document the base URI for the service that
       endorses their products.  In such a case, the location would be
       prior knowledge within the Verifier or aggregator that needs to
       consume the service.  It could be hard-coded, or made available
@@ -4212,8 +4504,8 @@ Acknowledgments
 
    Henk Birkholz and Jag Raman are puppeteering in the shadows.
 
-   The authors would like to thank Carl Wallace for their reviews and
-   suggestions. [^rfced]: RFC Editor:
+   The authors would like to thank Carl Wallace, Lucas Pardue, Mark
+   Nottingham for their reviews and suggestions. [^rfced]: RFC Editor:
 
 Contributors
 

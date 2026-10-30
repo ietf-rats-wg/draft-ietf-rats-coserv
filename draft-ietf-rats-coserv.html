@@ -16,26 +16,26 @@
 This document specifies the Concise Selector for Endorsements and Reference Values (CoSERV), a structured query/result format designed to facilitate the discovery and retrieval of these artifacts from various providers.
 CoSERV defines a query language and corresponding result structure using CDDL, which can be serialized in CBOR format, enabling efficient interoperability across diverse systems. 
     " name="description">
-<meta content="xml2rfc 3.34.0" name="generator">
+<meta content="xml2rfc 3.34.1" name="generator">
 <meta content="RATS" name="keyword">
 <meta content="attestation" name="keyword">
 <meta content="endorsement" name="keyword">
 <meta content="reference value" name="keyword">
 <meta content="draft-ietf-rats-coserv-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.34.0
-    Python 3.14.7
-    ConfigArgParse 1.7.5
+  xml2rfc 3.34.1
+    Python 3.14.8
+    ConfigArgParse 1.8.0
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.1.1
     natsort 8.4.0
-    platformdirs 4.11.7
+    platformdirs 4.13.4
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.8.3
+    wcwidth 0.9.2
 -->
 <link href="draft-ietf-rats-coserv.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1051,11 +1051,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CoSERV</td>
-<td class="right">September 2026</td>
+<td class="right">October 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Howard, et al.</td>
-<td class="center">Expires 13 March 2027</td>
+<td class="center">Expires 3 May 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1068,12 @@ svg {
 <dd class="internet-draft">draft-ietf-rats-coserv-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-09-09" class="published">9 September 2026</time>
+<time datetime="2026-10-30" class="published">30 October 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-03-13">13 March 2027</time></dd>
+<dd class="expires"><time datetime="2027-05-03">3 May 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1145,7 +1145,7 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 13 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 3 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1302,7 +1302,10 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
                     <p id="section-toc.1-1.6.2.1.2.3.1"><a href="#section-6.1.3" class="auto internal xref">6.1.3</a>.  <a href="#name-execute-query" class="internal xref">Execute Query</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.4">
-                    <p id="section-toc.1-1.6.2.1.2.4.1"><a href="#section-6.1.4" class="auto internal xref">6.1.4</a>.  <a href="#name-caching" class="internal xref">Caching</a></p>
+                    <p id="section-toc.1-1.6.2.1.2.4.1"><a href="#section-6.1.4" class="auto internal xref">6.1.4</a>.  <a href="#name-execute-query-with-the-quer" class="internal xref">Execute Query with the QUERY Method</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.5">
+                    <p id="section-toc.1-1.6.2.1.2.5.1"><a href="#section-6.1.5" class="auto internal xref">6.1.5</a>.  <a href="#name-caching" class="internal xref">Caching</a></p>
 </li>
                 </ul>
 </li>
@@ -1317,94 +1320,111 @@ CoSERV defines a query language and corresponding result structure using CDDL, w
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-operational-considerations" class="internal xref">Operational Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
-                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-in-relation-to-corim" class="internal xref">In Relation to CoRIM</a></p>
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-redirects" class="internal xref">Redirects</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
-                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-forming-native-database-que" class="internal xref">Forming Native Database Queries from CoSERV</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
-                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-aggregators" class="internal xref">Aggregators</a></p>
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-deployment-of-the-query-met" class="internal xref">Deployment of the QUERY Method</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
-                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-aggregators-2" class="internal xref">Aggregators</a></p>
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-in-relation-to-corim" class="internal xref">In Relation to CoRIM</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
-                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-domains" class="internal xref">Domains</a></p>
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-forming-native-database-que" class="internal xref">Forming Native Database Queries from CoSERV</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3">
+                <p id="section-toc.1-1.9.2.3.1"><a href="#section-9.3" class="auto internal xref">9.3</a>.  <a href="#name-aggregators" class="internal xref">Aggregators</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
-                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-media-types-registrations" class="internal xref">Media Types Registrations</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1.2.1">
-                    <p id="section-toc.1-1.10.2.1.2.1.1"><a href="#section-10.1.1" class="auto internal xref">10.1.1</a>.  <a href="#name-application-coservcbor" class="internal xref"><code>application/coserv+cbor</code></a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1.2.2">
-                    <p id="section-toc.1-1.10.2.1.2.2.1"><a href="#section-10.1.2" class="auto internal xref">10.1.2</a>.  <a href="#name-application-coservcose" class="internal xref"><code>application/coserv+cose</code></a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1.2.3">
-                    <p id="section-toc.1-1.10.2.1.2.3.1"><a href="#section-10.1.3" class="auto internal xref">10.1.3</a>.  <a href="#name-application-coserv-discover" class="internal xref"><code>application/coserv-discovery+cbor</code></a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1.2.4">
-                    <p id="section-toc.1-1.10.2.1.2.4.1"><a href="#section-10.1.4" class="auto internal xref">10.1.4</a>.  <a href="#name-application-coserv-discovery" class="internal xref"><code>application/coserv-discovery+json</code></a></p>
-</li>
-                </ul>
+                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-aggregators-2" class="internal xref">Aggregators</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2">
-                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-coap-content-formats" class="internal xref">CoAP Content-Formats</a></p>
+                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-domains" class="internal xref">Domains</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3">
-                <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="auto internal xref">10.3</a>.  <a href="#name-well-known-uri-for-coserv-c" class="internal xref">Well-Known URI for CoSERV Configuration</a></p>
+                <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="auto internal xref">10.3</a>.  <a href="#name-query-uris" class="internal xref">Query URIs</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.4">
+                <p id="section-toc.1-1.10.2.4.1"><a href="#section-10.4" class="auto internal xref">10.4</a>.  <a href="#name-caching-2" class="internal xref">Caching</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-references" class="internal xref">References</a></p>
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
-                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-media-types-registrations" class="internal xref">Media Types Registrations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1.2.1">
+                    <p id="section-toc.1-1.11.2.1.2.1.1"><a href="#section-11.1.1" class="auto internal xref">11.1.1</a>.  <a href="#name-application-coservcbor" class="internal xref"><code>application/coserv+cbor</code></a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1.2.2">
+                    <p id="section-toc.1-1.11.2.1.2.2.1"><a href="#section-11.1.2" class="auto internal xref">11.1.2</a>.  <a href="#name-application-coservcose" class="internal xref"><code>application/coserv+cose</code></a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1.2.3">
+                    <p id="section-toc.1-1.11.2.1.2.3.1"><a href="#section-11.1.3" class="auto internal xref">11.1.3</a>.  <a href="#name-application-coserv-discover" class="internal xref"><code>application/coserv-discovery+cbor</code></a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1.2.4">
+                    <p id="section-toc.1-1.11.2.1.2.4.1"><a href="#section-11.1.4" class="auto internal xref">11.1.4</a>.  <a href="#name-application-coserv-discovery" class="internal xref"><code>application/coserv-discovery+json</code></a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
-                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-coap-content-formats" class="internal xref">CoAP Content-Formats</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
+                <p id="section-toc.1-1.11.2.3.1"><a href="#section-11.3" class="auto internal xref">11.3</a>.  <a href="#name-well-known-uri-for-coserv-c" class="internal xref">Well-Known URI for CoSERV Configuration</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-collated-cddl" class="internal xref">Collated CDDL</a></p>
+            <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-references" class="internal xref">References</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
-                <p id="section-toc.1-1.12.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-coserv-data-model-2" class="internal xref">CoSERV Data Model</a></p>
+                <p id="section-toc.1-1.12.2.1.1"><a href="#section-12.1" class="auto internal xref">12.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2">
-                <p id="section-toc.1-1.12.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-api-discovery-data-model" class="internal xref">API Discovery Data Model</a></p>
+                <p id="section-toc.1-1.12.2.2.1"><a href="#section-12.2" class="auto internal xref">12.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-openapi-schema" class="internal xref">OpenAPI Schema</a></p>
+            <p id="section-toc.1-1.13.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-collated-cddl" class="internal xref">Collated CDDL</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13.2.1">
+                <p id="section-toc.1-1.13.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-coserv-data-model-2" class="internal xref">CoSERV Data Model</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13.2.2">
+                <p id="section-toc.1-1.13.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-api-discovery-data-model" class="internal xref">API Discovery Data Model</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
-            <p id="section-toc.1-1.14.1"><a href="#appendix-C" class="auto internal xref">Appendix C</a>.  <a href="#name-locating-coserv-services" class="internal xref">Locating CoSERV Services</a></p>
+            <p id="section-toc.1-1.14.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-openapi-schema" class="internal xref">OpenAPI Schema</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
-            <p id="section-toc.1-1.15.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.15.1"><a href="#appendix-C" class="auto internal xref">Appendix C</a>.  <a href="#name-locating-coserv-services" class="internal xref">Locating CoSERV Services</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
-            <p id="section-toc.1-1.16.1"><a href="#appendix-E" class="auto internal xref"></a><a href="#name-contributors" class="internal xref">Contributors</a></p>
+            <p id="section-toc.1-1.16.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.17">
-            <p id="section-toc.1-1.17.1"><a href="#appendix-F" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.17.1"><a href="#appendix-E" class="auto internal xref"></a><a href="#name-contributors" class="internal xref">Contributors</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.18">
+            <p id="section-toc.1-1.18.1"><a href="#appendix-F" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1449,7 +1469,7 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 For a complete glossary, see <span><a href="https://rfc-editor.org/rfc/rfc9334#section-4" class="relref">Section 4</a> of [<a href="#RFC9334" class="cite xref">RFC9334</a>]</span>.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.1-3">This document uses terms and concepts defined by the CoRIM specification.
 For a complete glossary, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-11#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
-<p id="section-1.1-4">This document uses the terms <em>"actual state"</em> and <em>"reference state"</em> as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-09#section-2" class="relref">Section 2</a> of [<a href="#I-D.ietf-rats-endorsements" class="cite xref">I-D.ietf-rats-endorsements</a>]</span>.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+<p id="section-1.1-4">This document uses the terms <em>"actual state"</em> and <em>"reference state"</em> as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-13#section-2" class="relref">Section 2</a> of [<a href="#I-D.ietf-rats-endorsements" class="cite xref">I-D.ietf-rats-endorsements</a>]</span>.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
 <p id="section-1.1-5">The terminology from CBOR <span>[<a href="#STD94" class="cite xref">CBOR</a>]</span>, CDDL <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> and COSE <span>[<a href="#STD96" class="cite xref">COSE</a>]</span> applies;
 in particular, CBOR diagnostic notation is defined in <span><a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">Section 8</a> of [<a href="#STD94" class="cite xref">CBOR</a>]</span>
 and <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>. Terms and concepts are always referenced as proper nouns, i.e., with Capital Letters.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
@@ -1519,7 +1539,7 @@ A CoSERV data object always contains a query.
 When CoSERV is used to express a result set, the query is retained alongside the result set that was yielded by that query.
 This allows consumers to verify a match between the query that was sent to the producer, and the query that was subsequently returned with the result set.
 Such verification is useful because it mitigates security threats arising from any untrusted infrastructure or intermediaries that might reside between the producer and the consumer.
-An example of this is caching in HTTP <span>[<a href="#STD98" class="cite xref">HTTP</a>]</span> and CoAP <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.
+An example of this is caching in HTTP <span>[<a href="#STD98" class="cite xref">HTTP-CACHING</a>]</span> and CoAP <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.
 It might be expensive to compute the result set for a query, which would make caching desirable.
 However, if caching is managed by an untrusted intermediary, then there is a risk that such an untrusted intermediary might return incorrect results, either accidentally or maliciously.
 Pairing the original query with each result set provides an end-to-end contract between the consumer and producer, mitigating such risks.
@@ -1542,7 +1562,7 @@ An example of a trust anchor would be the public part of the asymmetric signing 
 This is just one example.
 Other forms of trust anchor are possible.
 CoSERV does not place any additional requirements or constraints on the conveyance or use of trust anchors, beyond what is already described in <span>[<a href="#RFC9334" class="cite xref">RFC9334</a>]</span> and <span>[<a href="#I-D.ietf-rats-endorsements" class="cite xref">I-D.ietf-rats-endorsements</a>]</span>.
-<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-09#section-4" class="relref">Section 4</a> of [<a href="#I-D.ietf-rats-endorsements" class="cite xref">I-D.ietf-rats-endorsements</a>]</span> sets out the applicable patterns for the endorsement of verification keys, all of which apply equally here.<a href="#section-3.2-2.1.1" class="pilcrow">¶</a></p>
+<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-13#section-4" class="relref">Section 4</a> of [<a href="#I-D.ietf-rats-endorsements" class="cite xref">I-D.ietf-rats-endorsements</a>]</span> sets out the applicable patterns for the endorsement of verification keys, all of which apply equally here.<a href="#section-3.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.2-2.2">
             <p id="section-3.2-2.2.1"><strong>Endorsed Value</strong>: An endorsed value is as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-11#section-1.1.1" class="relref">Section 1.1.1</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
@@ -1743,7 +1763,7 @@ A single query may contain identifiers of different types.<a href="#section-3.4.
 This is to ensure that any set of materially-identical queries will always yield the same encoded sequence of CBOR bytes, regardless of the time when they were issued, or of other volatile factors.
 Along with the other encoding rules set out in <a href="#secencoding" class="auto internal xref">Section 4.5</a>, it means that a query can be used as a stable and canonical identifier of artifacts.
 This property of queries is an important enabler of efficient CoSERV transactions.
-See, for example, the HTTP caching design described in <a href="#secrrapicaching" class="auto internal xref">Section 6.1.4</a>.<a href="#section-3.4.3-1" class="pilcrow">¶</a></p>
+See, for example, the HTTP caching design described in <a href="#secrrapicaching" class="auto internal xref">Section 6.1.5</a>.<a href="#section-3.4.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="query-logging">
@@ -2577,7 +2597,7 @@ Implementations <span class="bcp14">MAY</span> authenticate clients, for example
           <h4 id="name-errors">
 <a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-errors" class="section-name selfRef">Errors</a>
           </h4>
-<p id="section-6.1.1-1">For error responses (4xx or 5xx status codes), the <code>Content-Type</code> header field <span class="bcp14">MUST</span> be <code>application/concise-problem-details+cbor</code>, and the content <span class="bcp14">MUST</span> be a Concise Problem Details object <span>[<a href="#RFC9290" class="cite xref">RFC9290</a>]</span> containing the following:<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-1">When returning error responses (4xx or 5xx status codes), CoSERV origin servers <span class="bcp14">MUST</span> set the <code>Content-Type</code> header field to <code>application/concise-problem-details+cbor</code>, and the content <span class="bcp14">MUST</span> be a Concise Problem Details object <span>[<a href="#RFC9290" class="cite xref">RFC9290</a>]</span> containing the following:<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlNewline" id="section-6.1.1-2">
             <dt id="section-6.1.1-2.1">title:</dt>
             <dd style="margin-left: 1.5em" id="section-6.1.1-2.2">
@@ -2592,6 +2612,14 @@ This should ideally provide sufficient detail to enable the error to be rectifie
 </dd>
           <dd class="break"></dd>
 </dl>
+<p id="section-6.1.1-3">As specified by <span><a href="https://rfc-editor.org/rfc/rfc9290#section-2" class="relref">Section 2</a> of [<a href="#RFC9290" class="cite xref">RFC9290</a>]</span>, the <code>title</code> and <code>detail</code> values use <code>oltext</code>, which is either an unadorned CBOR text string (<code>text</code>) or a language-tagged text string (<code>tag38</code>).
+When a language needs to be identified explicitly, <code>tag38</code> carries a BCP 47 language tag as described in <span><a href="https://rfc-editor.org/rfc/rfc9290#appendix-A" class="relref">Appendix A</a> of [<a href="#RFC9290" class="cite xref">RFC9290</a>]</span>.
+If no explicit or implicit language context is available, unadorned text is interpreted with the language tag <code>en</code>.<a href="#section-6.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-4">CoSERV's HTTP binding is not a CoAP API, but Constrained Problem Details objects <span>[<a href="#RFC9290" class="cite xref">RFC9290</a>]</span> provide a useful encoding for problem details and avoid the need to mix CBOR and JSON in resource or client implementations.<a href="#section-6.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-5">Per the guidance in <span><a href="https://rfc-editor.org/rfc/rfc9205#section-4.6" class="relref">Section 4.6</a> of [<a href="#RFC9205" class="cite xref">RFC9205</a>]</span>, the specific HTTP status codes shown in the examples throughout this document are illustrative.
+Status codes can be generated by generic HTTP components (caches, intermediaries, captive portals, gateways, etc.) that are not part of the CoSERV server, and the set of registered HTTP status codes can be extended over time.
+Clients <span class="bcp14">MUST</span> therefore be prepared to handle any HTTP status code by falling back to the generic class semantics (1xx, 2xx, 3xx, 4xx, or 5xx) of the response when a more specific code is not recognized, and <span class="bcp14">MUST</span> rely on the Concise Problem Details <span>[<a href="#RFC9290" class="cite xref">RFC9290</a>]</span> object (when present) rather than the status code alone to determine the application-level cause of an error.<a href="#section-6.1.1-5" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-6">Clients handle 5xx responses as defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.6" class="relref">Section 15.6</a> of [<a href="#STD97" class="cite xref">HTTP</a>]</span> and <span><a href="https://rfc-editor.org/rfc/rfc9110#section-9.2.2" class="relref">Section 9.2.2</a> of [<a href="#STD97" class="cite xref">HTTP</a>]</span>.<a href="#section-6.1.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="secrrapidisco">
@@ -2603,11 +2631,12 @@ This should ideally provide sufficient detail to enable the error to be rectifie
 This URI supplies a single discovery document that clients can use to locate the URIs of other API endpoints, in addition to finding out other relevant information about the configuration and capabilities of the service.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
 <p id="section-6.1.2-2">Implementations that provide CoSERV HTTP API endpoints <span class="bcp14">MUST</span> also provide the discovery endpoint at the path <code>/.well-known/coserv-configuration</code>.
 This endpoint <span class="bcp14">MUST</span> be accessible via GET with no additional query parameters.<a href="#section-6.1.2-2" class="pilcrow">¶</a></p>
-<p id="section-6.1.2-3">The response content can be formatted using either JSON <span>[<a href="#STD90" class="cite xref">STD90</a>]</span> or CBOR, governed by standard HTTP content negotiation (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-12" class="relref">Section 12</a> of [<a href="#STD97" class="cite xref">HTTP-CACHING</a>]</span>).
+<p id="section-6.1.2-3">The response content can be formatted using either JSON <span>[<a href="#STD90" class="cite xref">STD90</a>]</span> or CBOR, governed by standard HTTP content negotiation (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-12" class="relref">Section 12</a> of [<a href="#STD97" class="cite xref">HTTP</a>]</span>).
 The media types defined for this purpose are <code>application/coserv-discovery+json</code> (for JSON-formatted documents) or <code>application/coserv-discovery+cbor</code> (for CBOR-formatted documents).
-If the client presents any media type other than these two options in its HTTP <code>Accept</code> header, the implementation <span class="bcp14">SHOULD</span> respond with an HTTP 406 (Not Acceptable) status code.
 If the client presents one of the two valid media types, then the implementation <span class="bcp14">MUST</span> respond with the HTTP 200 (OK) status code, unless it is prevented from doing so by an error condition beyond the scope of this specification.
 When the 200 (OK) status code is returned, the response <span class="bcp14">MUST</span> contain exactly one discovery document in the requested format (JSON or CBOR).
+Server implementations <span class="bcp14">MUST</span> support both formats.
+In deployments where the discovery document might be stored in an HTTP cache, server implementations <span class="bcp14">SHOULD</span> add the <code>Vary: Accept</code> header to the HTTP response to ensure that the client does not receive a cached document in the wrong format.
 The contents of the discovery document <span class="bcp14">MUST</span> conform to the CDDL data model given below, which is common to both the JSON and CBOR encodings.<a href="#section-6.1.2-3" class="pilcrow">¶</a></p>
 <div class="lang-cddl sourcecode" id="section-6.1.2-4">
 <pre>
@@ -2693,12 +2722,18 @@ The availability of particular artifact types, such as Reference Values or Domai
 <a href="#section-6.1.2.1.3" class="section-number selfRef">6.1.2.1.3. </a><a href="#name-api-endpoints" class="section-name selfRef">API Endpoints</a>
               </h6>
 <p id="section-6.1.2.1.3-1">The API endpoints field is denoted by the label <code>"api-endpoints"</code> in JSON documents and by the codepoint <code>3</code> in CBOR documents.
-This field allows clients to derive the correct URL for making HTTP API calls.
-The field is a map whose keys are the symbolic names of the APIs, and whose values are the URL path for the API endpoint.<a href="#section-6.1.2.1.3-1" class="pilcrow">¶</a></p>
+This field allows clients to derive the correct URI for making HTTP API calls.
+The field is a map whose keys are the symbolic names of the APIs, and whose values are the URI path for the API endpoint.<a href="#section-6.1.2.1.3-1" class="pilcrow">¶</a></p>
 <p id="section-6.1.2.1.3-2">The symbolic name <code>CoSERVRequestResponse</code> is defined for services that offer the transactional API described in <a href="#secrrapiquery" class="auto internal xref">Section 6.1.3</a>.
-Service implementations that offer this API <span class="bcp14">MUST</span> include a key with this name in the endpoints map field, and the corresponding endpoint URL path <span class="bcp14">MUST</span> end with <code>/{query}</code>.
+Service implementations that offer this API <span class="bcp14">MUST</span> include a key with this name in the endpoints map field, and the corresponding endpoint URI path <span class="bcp14">MUST</span> end with <code>/{query}</code>.
 This allows the consumer to form a valid CoSERV query URI using variable expansion as per <span>[<a href="#RFC6570" class="cite xref">RFC6570</a>]</span>, replacing the <code>{query}</code> variable with the Base64Url-encoded CoSERV query object.
 There <span class="bcp14">MUST NOT</span> be any other variables that require substitution.<a href="#section-6.1.2.1.3-2" class="pilcrow">¶</a></p>
+<p id="section-6.1.2.1.3-3">The symbolic name <code>CoSERVRequestResponseQUERY</code> is defined for services that offer the transactional API using the <code>QUERY</code> method, as described in <a href="#secrrapiquerymethod" class="auto internal xref">Section 6.1.4</a>.
+The corresponding value is a plain URI path with no URI template: the query is carried in the request content, so there are no variables to substitute.
+Services that support the <code>QUERY</code> method <span class="bcp14">MUST</span> include a key with this name in the endpoints map field.
+Service implementations that include this key <span class="bcp14">SHOULD</span> also include <code>CoSERVRequestResponse</code>, since clients cannot always rely on <code>QUERY</code> being usable (see <a href="#secopquery" class="auto internal xref">Section 8.2</a>).<a href="#section-6.1.2.1.3-3" class="pilcrow">¶</a></p>
+<p id="section-6.1.2.1.3-4">Responses from a <code>CoSERVRequestResponseQUERY</code> endpoint <span class="bcp14">SHOULD</span> include the <code>Accept-Query</code> header field (<span><a href="https://rfc-editor.org/rfc/rfc10008#section-3" class="relref">Section 3</a> of [<a href="#RFC10008" class="cite xref">RFC10008</a>]</span>) listing <code>application/coserv+cbor</code>.
+This allows a client to confirm that the endpoint, as reached through any infrastructure layers, accepts <code>QUERY</code> requests with that media type, independently of the discovery document.<a href="#section-6.1.2.1.3-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="result-verification-key">
@@ -2751,6 +2786,7 @@ Accept: application/coserv-discovery+json
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/coserv-discovery+json
+Vary: Accept
 
 Content (JSON)
 
@@ -2770,7 +2806,9 @@ Content (JSON)
   ],
   "api-endpoints": {
     "CoSERVRequestResponse": "/endorsement-distribution/v1/coserv/{\
-                                                              query}"
+                                                             query}",
+    "CoSERVRequestResponseQUERY": "/endorsement-distribution/v1/\
+                                                              coserv"
   },
   "result-verification-key": [
     {
@@ -2798,6 +2836,7 @@ Accept: application/coserv-discovery+cbor
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/coserv-discovery+cbor
+Vary: Accept
 
 Content (in CBOR Extended Diagnostic Notation (EDN))
 
@@ -2817,16 +2856,20 @@ Content (in CBOR Extended Diagnostic Notation (EDN))
   ],
   / api-endpoints / 3: {
     "CoSERVRequestResponse": "/endorsement-distribution/v1/coserv/{\
-                                                              query}"
+                                                             query}",
+    "CoSERVRequestResponseQUERY": "/endorsement-distribution/v1/\
+                                                              coserv"
   },
   / result-verification-key / 4: [
     {
       / kty / 1: 2,
       / alg / 3: -7,
       / crv / -1: 1,
-      / x / -2: h'1A2B3C4D',
-      / y / -3: h'5E6F7A8B',
-      / kid / 2: h'ABCDEF1234'
+      / x / -2: h'\
+   BAC5B11CAD8F99F9C72B05CF4B9E26D244DC189F745228255A219A86D6A09EFF',
+      / y / -3: h'\
+   20138BF82DC1B6D562BE0FA54AB7804A3A64B6D72CCFED6B6FB6ED28BBFC117E',
+      / kid / 2: h'6B657931'
     }
   ]
 }
@@ -2843,10 +2886,15 @@ Content (in CBOR Extended Diagnostic Notation (EDN))
           </h4>
 <p id="section-6.1.3-1">This endpoint executes a single CoSERV query and returns a CoSERV result set.<a href="#section-6.1.3-1" class="pilcrow">¶</a></p>
 <p id="section-6.1.3-2">The HTTP method is <code>GET</code>.<a href="#section-6.1.3-2" class="pilcrow">¶</a></p>
-<p id="section-6.1.3-3">The URL path is formed of the discovered <code>coserv</code> endpoint (as set out in <a href="#secrrapidisco" class="auto internal xref">Section 6.1.2</a>), where the <code>{query}</code> template variable is substituted with the CoSERV query to be executed, which is represented as a Base64Url encoding of the query's serialized CBOR byte sequence.<a href="#section-6.1.3-3" class="pilcrow">¶</a></p>
-<p id="section-6.1.3-4">There are no additional URL query parameters.<a href="#section-6.1.3-4" class="pilcrow">¶</a></p>
-<p id="section-6.1.3-5">Clients <span class="bcp14">MUST</span> set the <code>Accept</code> header field to a suitably-profiled <code>application/coserv+cose</code> or <code>application/coserv+cbor</code> media type.<a href="#section-6.1.3-5" class="pilcrow">¶</a></p>
-<p id="section-6.1.3-6">Endpoint implementations <span class="bcp14">MUST</span> respond with an HTTP status code and content according to one of the subheadings below.<a href="#section-6.1.3-6" class="pilcrow">¶</a></p>
+<p id="section-6.1.3-3">The URI path is formed of the discovered <code>coserv</code> endpoint (as set out in <a href="#secrrapidisco" class="auto internal xref">Section 6.1.2</a>), where the <code>{query}</code> template variable is substituted with the CoSERV query to be executed, which is represented as a Base64Url encoding of the query's serialized CBOR byte sequence.<a href="#section-6.1.3-3" class="pilcrow">¶</a></p>
+<p id="section-6.1.3-4">There are no additional URI query parameters.<a href="#section-6.1.3-4" class="pilcrow">¶</a></p>
+<p id="section-6.1.3-5">The serialized query is carried in the URI, so its size is bounded by the URI length limits of the HTTP infrastructure in use, which are often not known in advance.
+<span><a href="https://rfc-editor.org/rfc/rfc9110#section-4.1" class="relref">Section 4.1</a> of [<a href="#STD97" class="cite xref">HTTP</a>]</span> recommends that senders and recipients support URIs of at least 8000 octets.
+Typical CoSERV queries are small: the serialized examples in this document are in the order of 100 to 200 octets, which Base64Url encoding expands by about one third.
+A query that is too large for some component on the path can cause that component to return a 414 (URI Too Long) status code, which clients need to be prepared to handle.<a href="#section-6.1.3-5" class="pilcrow">¶</a></p>
+<p id="section-6.1.3-6">As an optional alternative to <code>GET</code>, an implementation <span class="bcp14">MAY</span> also accept CoSERV queries using the <code>QUERY</code> method, as described in <a href="#secrrapiquerymethod" class="auto internal xref">Section 6.1.4</a>.<a href="#section-6.1.3-6" class="pilcrow">¶</a></p>
+<p id="section-6.1.3-7">Clients <span class="bcp14">MUST</span> set the <code>Accept</code> header field to one of the profiled <code>application/coserv+cose</code> or <code>application/coserv+cbor</code> media types that is supported by the server according to the discovery document (see <a href="#secrrapidisco" class="auto internal xref">Section 6.1.2</a>).<a href="#section-6.1.3-7" class="pilcrow">¶</a></p>
+<p id="section-6.1.3-8">Endpoint implementations <span class="bcp14">MUST</span> respond with an HTTP status code and content according to one of the subheadings below, except where the response is generated by infrastructure layers other than the origin server.<a href="#section-6.1.3-8" class="pilcrow">¶</a></p>
 <div id="responses">
 <section id="section-6.1.3.1">
             <h5 id="name-responses">
@@ -2947,14 +2995,26 @@ Content (in CBOR Extended Diagnostic Notation (EDN))
 </div>
 </section>
 </div>
-<div id="failure-to-validate-query-400">
+<div id="invalid-query-400">
 <section id="section-6.1.3.1.2">
-              <h6 id="name-failure-to-validate-query-4">
-<a href="#section-6.1.3.1.2" class="section-number selfRef">6.1.3.1.2. </a><a href="#name-failure-to-validate-query-4" class="section-name selfRef">Failure to Validate Query (400)</a>
+              <h6 id="name-invalid-query-400">
+<a href="#section-6.1.3.1.2" class="section-number selfRef">6.1.3.1.2. </a><a href="#name-invalid-query-400" class="section-name selfRef">Invalid Query (400)</a>
               </h6>
-<p id="section-6.1.3.1.2-1">This response indicates that the supplied query is badly formed.<a href="#section-6.1.3.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.3.1.2-2">Example HTTP request:<a href="#section-6.1.3.1.2-2" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.3.1.2-3">
+<p id="section-6.1.3.1.2-1">This response indicates that the supplied CoSERV query is badly formed, or is otherwise un-processable by the server.<a href="#section-6.1.3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.3.1.2-2">Conditions resulting in this error include the following:<a href="#section-6.1.3.1.2-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.1.3.1.2-3.1">
+                  <p id="section-6.1.3.1.2-3.1.1">The request is badly formed.
+This could mean that the query is not valid CBOR, or does not conform to the CoSERV data model specified in <a href="#secdatamodel" class="auto internal xref">Section 4</a>.<a href="#section-6.1.3.1.2-3.1.1" class="pilcrow">¶</a></p>
+</li>
+                <li class="normal" id="section-6.1.3.1.2-3.2">
+                  <p id="section-6.1.3.1.2-3.2.1">The request is well-formed, but cannot be executed by the server.
+This could happen when the query goes beyond the advertised capabilities of the server according to the server's discovery document (see <a href="#secrrapidisco" class="auto internal xref">Section 6.1.2</a>).
+An example would be a query that uses the RIM Identifier query style, where the server supports only the Environment query style, or vice versa.<a href="#section-6.1.3.1.2-3.2.1" class="pilcrow">¶</a></p>
+</li>
+              </ul>
+<p id="section-6.1.3.1.2-4">The following example shows a badly-formed request with its response:<a href="#section-6.1.3.1.2-4" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.3.1.2-5">
 <pre>
 # NOTE: '\' line wrapping per RFC 8792
 
@@ -2962,10 +3022,9 @@ GET /coserv/badquery... HTTP/1.1
 Host: endorsements-distributor.example
 Accept: application/coserv+cose; \
         profile="tag:vendor.com,2025:cc_platform#1.0.0"
-</pre><a href="#section-6.1.3.1.2-3" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.3.1.2-5" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1.3.1.2-4">Example HTTP response:<a href="#section-6.1.3.1.2-4" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.3.1.2-5">
+<div class="lang-http-message sourcecode" id="section-6.1.3.1.2-6">
 <pre>
 # NOTE: '\' line wrapping per RFC 8792
 
@@ -2978,7 +3037,33 @@ Content (in CBOR Extended Diagnostic Notation (EDN))
   / title /  -1: "Query validation failed",
   / detail / -2: "The query payload is not in CBOR format"
 }
-</pre><a href="#section-6.1.3.1.2-5" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.3.1.2-6" class="pilcrow">¶</a>
+</div>
+<p id="section-6.1.3.1.2-7">The following example shows a well-formed but un-processable request, with response:<a href="#section-6.1.3.1.2-7" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.3.1.2-8">
+<pre>
+# NOTE: '\' line wrapping per RFC 8792
+
+GET /coserv/ogB4I3R... HTTP/1.1
+Host: endorsements-distributor.example
+Accept: application/coserv+cose; \
+        profile="tag:vendor.com,2025:cc_platform#1.0.0"
+</pre><a href="#section-6.1.3.1.2-8" class="pilcrow">¶</a>
+</div>
+<div class="lang-http-message sourcecode" id="section-6.1.3.1.2-9">
+<pre>
+# NOTE: '\' line wrapping per RFC 8792
+
+HTTP/1.1 400 Bad Request
+Content-Type: application/concise-problem-details+cbor
+
+Content (in CBOR Extended Diagnostic Notation (EDN))
+
+{
+  / title /  -1: "Query cannot be processed",
+  / detail / -2: "The query style is not supported"
+}
+</pre><a href="#section-6.1.3.1.2-9" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -2987,9 +3072,11 @@ Content (in CBOR Extended Diagnostic Notation (EDN))
               <h6 id="name-failure-to-negotiate-profil">
 <a href="#section-6.1.3.1.3" class="section-number selfRef">6.1.3.1.3. </a><a href="#name-failure-to-negotiate-profil" class="section-name selfRef">Failure to Negotiate Profile (406)</a>
               </h6>
-<p id="section-6.1.3.1.3-1">This response indicates that the client has specified a CoSERV profile that is not understood or serviceable by the receiving endpoint implementation.<a href="#section-6.1.3.1.3-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.3.1.3-2">Example HTTP request:<a href="#section-6.1.3.1.3-2" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.3.1.3-3">
+<p id="section-6.1.3.1.3-1">This response indicates that the client has specified a CoSERV profile that is not understood or serviceable by the server.
+Conformant clients will not encounter this error, since this specification constrains clients to request only those CoSERV profiles that are listed in the discovery document.<a href="#section-6.1.3.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.3.1.3-2">Clients can consult the discovery document (<a href="#secrrapidisco" class="auto internal xref">Section 6.1.2</a>) to determine the supported media types.<a href="#section-6.1.3.1.3-2" class="pilcrow">¶</a></p>
+<p id="section-6.1.3.1.3-3">Example HTTP request:<a href="#section-6.1.3.1.3-3" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.3.1.3-4">
 <pre>
 # NOTE: '\' line wrapping per RFC 8792
 
@@ -2997,10 +3084,10 @@ GET /coserv/ogB4I3R... HTTP/1.1
 Host: endorsements-distributor.example
 Accept: application/coserv+cose; \
         profile="tag:vendor.com,2025:cc_platform#2.0.0"
-</pre><a href="#section-6.1.3.1.3-3" class="pilcrow">¶</a>
+</pre><a href="#section-6.1.3.1.3-4" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1.3.1.3-4">Example HTTP response:<a href="#section-6.1.3.1.3-4" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.3.1.3-5">
+<p id="section-6.1.3.1.3-5">Example HTTP response:<a href="#section-6.1.3.1.3-5" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.3.1.3-6">
 <pre>
 # NOTE: '\' line wrapping per RFC 8792
 
@@ -3014,124 +3101,160 @@ Content (in CBOR Extended Diagnostic Notation (EDN))
   / detail / -2: "Profile tag:vendor.com,2025:cc_platform#2.0.0 \
                   not supported",
 }
-</pre><a href="#section-6.1.3.1.3-5" class="pilcrow">¶</a>
-</div>
-</section>
+</pre><a href="#section-6.1.3.1.3-6" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="too-many-requests-429">
-<section id="section-6.1.3.2">
-            <h5 id="name-too-many-requests-429">
-<a href="#section-6.1.3.2" class="section-number selfRef">6.1.3.2. </a><a href="#name-too-many-requests-429" class="section-name selfRef">Too Many Requests (429)</a>
-            </h5>
-<p id="section-6.1.3.2-1">A server could apply rate limiting to requests received from clients.
-This is a common practice for services that require significant processing power to generate a response, such as a CoSERV endpoint.
-If this is the case, and a client exceeds their request quota, the server can return a 429 (Too Many Requests) response.
-The response headers <span class="bcp14">MAY</span> include a <code>Retry-After</code> header field indicating how long the client should wait before making a new request.<a href="#section-6.1.3.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.3.2-2">Example HTTP request:<a href="#section-6.1.3.2-2" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.3.2-3">
-<pre>
-# NOTE: '\' line wrapping per RFC 8792
-
-GET /coserv/ogB4I3R... HTTP/1.1
-Host: endorsements-distributor.example
-Accept: application/coserv+cose; \
-        profile="tag:vendor.com,2025:cc_platform#1.0.0"
-</pre><a href="#section-6.1.3.2-3" class="pilcrow">¶</a>
-</div>
-<p id="section-6.1.3.2-4">Example HTTP response:<a href="#section-6.1.3.2-4" class="pilcrow">¶</a></p>
-<div class="lang-http-message sourcecode" id="section-6.1.3.2-5">
-<pre>
-# NOTE: '\' line wrapping per RFC 8792
-
-HTTP/1.1 429 Too Many Requests
-Content-Type: application/concise-problem-details+cbor
-Retry-After: 120
-
-Content (in CBOR Extended Diagnostic Notation (EDN))
-
-{
-  / title /  -1: "Too many requests",
-  / detail / -2: "You're doing that too often! Try again in 2 minutes",
-}
-</pre><a href="#section-6.1.3.2-5" class="pilcrow">¶</a>
+<section id="section-6.1.3.1.4">
+              <h6 id="name-too-many-requests-429">
+<a href="#section-6.1.3.1.4" class="section-number selfRef">6.1.3.1.4. </a><a href="#name-too-many-requests-429" class="section-name selfRef">Too Many Requests (429)</a>
+              </h6>
+<p id="section-6.1.3.1.4-1">A server (or infrastructure layer) could apply rate limiting to requests received from clients.
+If a client exceeds its request quota, it might receive a 429 (Too Many Requests) response, which can carry a <code>Retry-After</code> header field (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-10.2.3" class="relref">Section 10.2.3</a> of [<a href="#STD97" class="cite xref">HTTP</a>]</span>) indicating how long to wait before retrying.
+Rate limiting is often implemented in infrastructure layers (such as gateways or load balancers), whose error responses are not governed by this specification.
+Example HTTP messages are not shown for this case.<a href="#section-6.1.3.1.4-1" class="pilcrow">¶</a></p>
+</section>
 </div>
 </section>
 </div>
+</section>
+</div>
+<div id="secrrapiquerymethod">
+<section id="section-6.1.4">
+          <h4 id="name-execute-query-with-the-quer">
+<a href="#section-6.1.4" class="section-number selfRef">6.1.4. </a><a href="#name-execute-query-with-the-quer" class="section-name selfRef">Execute Query with the QUERY Method</a>
+          </h4>
+<p id="section-6.1.4-1">The <code>QUERY</code> method <span>[<a href="#RFC10008" class="cite xref">RFC10008</a>]</span> is a safe, idempotent method that carries the query in the request content instead of the URI.
+This avoids the URI size limits and keeps the query out of URIs, which are more likely to be logged.
+Support for this method is optional, and clients <span class="bcp14">MUST NOT</span> assume it is available unless the discovery document advertises it (see <a href="#secrrapidisco" class="auto internal xref">Section 6.1.2</a>).<a href="#section-6.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.4-2">The request is sent to the URI path given by the <code>CoSERVRequestResponseQUERY</code> key of the discovery document.
+The <code>Content-Type</code> header field <span class="bcp14">MUST</span> be <code>application/coserv+cbor</code>, and the content <span class="bcp14">MUST</span> be a CoSERV object with the <code>results</code> field absent, which is the serialized CBOR CoSERV query encoded as per <a href="#secencoding" class="auto internal xref">Section 4.5</a>.
+The <code>profile</code> media type parameter is optional in this context, since the profile is carried in the query itself.
+The content is not Base64Url-encoded.
+The <code>Accept</code> header field is set as for <code>GET</code> (<a href="#secrrapiquery" class="auto internal xref">Section 6.1.3</a>).<a href="#section-6.1.4-2" class="pilcrow">¶</a></p>
+<p id="section-6.1.4-3">Successful and unsuccessful transactions use the same status codes and response contents as for <code>GET</code>.
+In addition, a server that does not support the media type of the request content responds with 415 (Unsupported Media Type) (<span><a href="https://rfc-editor.org/rfc/rfc10008#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC10008" class="cite xref">RFC10008</a>]</span>) and <span class="bcp14">SHOULD</span> include the <code>Accept-Query</code> header field in that response.<a href="#section-6.1.4-3" class="pilcrow">¶</a></p>
+<p id="section-6.1.4-4">Example HTTP request:<a href="#section-6.1.4-4" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-6.1.4-5">
+<pre>
+# NOTE: '\' line wrapping per RFC 8792
+
+QUERY /endorsement-distribution/v1/coserv HTTP/1.1
+Host: endorsements-distributor.example
+Content-Type: application/coserv+cbor
+Accept: application/coserv+cose; \
+        profile="tag:vendor.com,2025:cc_platform#1.0.0"
+
+Content (binary CBOR-encoded CoSERV query)
+</pre><a href="#section-6.1.4-5" class="pilcrow">¶</a>
+</div>
+<p id="section-6.1.4-6">The response to a <code>QUERY</code> request is cacheable as described in <span><a href="https://rfc-editor.org/rfc/rfc10008#section-2.7" class="relref">Section 2.7</a> of [<a href="#RFC10008" class="cite xref">RFC10008</a>]</span>.
+The cache key incorporates the request content, so the considerations in <a href="#secrrapicaching" class="auto internal xref">Section 6.1.5</a> apply equally.<a href="#section-6.1.4-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="secrrapicaching">
-<section id="section-6.1.4">
+<section id="section-6.1.5">
           <h4 id="name-caching">
-<a href="#section-6.1.4" class="section-number selfRef">6.1.4. </a><a href="#name-caching" class="section-name selfRef">Caching</a>
+<a href="#section-6.1.5" class="section-number selfRef">6.1.5. </a><a href="#name-caching" class="section-name selfRef">Caching</a>
           </h4>
-<p id="section-6.1.4-1">In practical usage, the artifacts transacted via CoSERV queries (such as trust anchors and reference values) may change significantly less often than they are used.
+<p id="section-6.1.5-1">In practical usage, the artifacts transacted via CoSERV queries (such as trust anchors and reference values) may change significantly less often than they are used.
 For example, a Verifier needs to use the artifacts whenever it needs to verify or appraise Evidence from an Attester.
 This might be a very frequent operation, for which a low latency is desirable.
 By contrast, the artifacts themselves would vary only as a consequence of impactful changes to the Attester's desired state or environment.
 One example of such an impactful change might be the roll-out of a firmware update, which would result in a new reference value for the impacted firmware component(s).
 Such changes would tend to be relatively infrequent.
-The caching of CoSERV artifacts is therefore beneficial for overall system performance.<a href="#section-6.1.4-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.4-2">CoSERV is designed to facilitate both client-side and server-side caching by use of the standard HTTP caching mechanisms specified in <span>[<a href="#STD98" class="cite xref">HTTP</a>]</span>.
+The caching of CoSERV artifacts is therefore beneficial for overall system performance.<a href="#section-6.1.5-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.5-2">CoSERV is designed to facilitate both client-side and server-side caching by use of the standard HTTP caching mechanisms specified in <span>[<a href="#STD98" class="cite xref">HTTP-CACHING</a>]</span>.
 This includes use of the <code>Cache-Control</code> header field and its associated directives.
 It also includes the use of entity-tags (ETags).
-The following features of CoSERV and its HTTP binding are specifically designed to favor caching implementations:<a href="#section-6.1.4-2" class="pilcrow">¶</a></p>
+The following features of CoSERV and its HTTP binding are specifically designed to favor caching implementations:<a href="#section-6.1.5-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.1.4-3.1">
-              <p id="section-6.1.4-3.1.1">CoSERV queries form stable URL paths.
+<li class="normal" id="section-6.1.5-3.1">
+              <p id="section-6.1.5-3.1.1">CoSERV queries form stable URI paths.
 As specified in <a href="#secencoding" class="auto internal xref">Section 4.5</a>, any given CoSERV query will always serialize to the same fixed sequence of bytes.
-This allows queries to be used as canonical and stable resource identifiers, which in turn allows them to function effectively as cache keys.<a href="#section-6.1.4-3.1.1" class="pilcrow">¶</a></p>
+This allows queries to be used as canonical and stable resource identifiers, which in turn allows them to function effectively as cache keys.
+If a service can return more than one representation for the same query URI, depending on the <code>Accept</code> header field of the request (see <a href="#secrrapiquery" class="auto internal xref">Section 6.1.3</a>), the origin server <span class="bcp14">MUST</span> include <code>Vary: Accept</code> in its responses, so that caches do not serve a representation in a different format or profile from the one the client requested.<a href="#section-6.1.5-3.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-6.1.4-3.2">
-              <p id="section-6.1.4-3.2.1">The result set is cryptographically bound to the query.
+            <li class="normal" id="section-6.1.5-3.2">
+              <p id="section-6.1.5-3.2.1">The result set is cryptographically bound to the query.
 As specified in <a href="#signed-coserv" class="auto internal xref">Section 4.6</a>, the origin server is required to return a signed response that combines the result set with the client's original query, in any deployment where untrusted intermediaries might exist.
-This means that the client can always verify the integrity of the result on an end-to-end basis, even in the presence of caching infrastructure.<a href="#section-6.1.4-3.2.1" class="pilcrow">¶</a></p>
+This means that the client can always verify the integrity of the result on an end-to-end basis, even in the presence of caching infrastructure.<a href="#section-6.1.5-3.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-6.1.4-3.3">
-              <p id="section-6.1.4-3.3.1">Only safe HTTP methods are used.
+            <li class="normal" id="section-6.1.5-3.3">
+              <p id="section-6.1.5-3.3.1">Only safe HTTP methods are used.
 CoSERV queries are executed as read-only operations using HTTP <code>GET</code>.
-The execution of a query does not modify any state on the server, which creates more opportunities for the re-use of cached results.<a href="#section-6.1.4-3.3.1" class="pilcrow">¶</a></p>
+The execution of a query does not modify any state on the server, which creates more opportunities for the re-use of cached results.<a href="#section-6.1.5-3.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.5-3.4">
+              <p id="section-6.1.5-3.4.1">Discovery documents are cacheable resources.
+Discovery documents (as described in <a href="#secrrapidisco" class="auto internal xref">Section 6.1.2</a>) are used by clients to locate suitable API endpoints for transacting CoSERV queries.
+These documents, like CoSERV responses themselves, can be cached to avoid round trips to the origin server during this bootstrapping phase.<a href="#section-6.1.5-3.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-6.1.4-4">Although reusing cached responses is generally desirable, clients that need to bypass the caching infrastructure can do so by specifying <code>Cache-Control: no-cache</code> in their requests.<a href="#section-6.1.4-4" class="pilcrow">¶</a></p>
+<p id="section-6.1.5-4">Although reusing cached responses is generally desirable, clients that need to bypass the caching infrastructure can do so by specifying <code>Cache-Control: no-cache</code> in their requests.
+Note that this only prevents a stored response from being used to satisfy the request: the response to such a request can still be stored by caches.
+Preventing storage is a matter for the origin server's <code>Cache-Control</code> response directives, as discussed in <a href="#secprivcaching" class="auto internal xref">Section 10.4</a>.<a href="#section-6.1.5-4" class="pilcrow">¶</a></p>
+<p id="section-6.1.5-5">Implementations should be aware that there are specific privacy considerations related to caching.
+These are outlined in <a href="#secprivcaching" class="auto internal xref">Section 10.4</a>.<a href="#section-6.1.5-5" class="pilcrow">¶</a></p>
 <div id="http-caching-and-result-set-expiry">
-<section id="section-6.1.4.1">
+<section id="section-6.1.5.1">
             <h5 id="name-http-caching-and-result-set">
-<a href="#section-6.1.4.1" class="section-number selfRef">6.1.4.1. </a><a href="#name-http-caching-and-result-set" class="section-name selfRef">HTTP Caching and Result Set Expiry</a>
+<a href="#section-6.1.5.1" class="section-number selfRef">6.1.5.1. </a><a href="#name-http-caching-and-result-set" class="section-name selfRef">HTTP Caching and Result Set Expiry</a>
             </h5>
-<p id="section-6.1.4.1-1">CoSERV's data model includes a mandatory expiration timestamp on every result set.
+<p id="section-6.1.5.1-1">CoSERV's data model includes a mandatory expiration timestamp on every result set.
 This is an authoritative marker of the point in time at which the entire result set becomes invalid, and the query must be re-executed to obtain fresh results.
-This timestamp is established by the origin server.<a href="#section-6.1.4.1-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.4.1-2">In the presence of HTTP caching infrastructure, the origin server <span class="bcp14">MUST NOT</span> set HTTP cache directives (e.g. <code>Cache-Control: max-age</code>, <code>Expires</code>) such that the freshness lifetime of the HTTP response exceeds the result set expiry timestamp contained within the CoSERV results.<a href="#section-6.1.4.1-2" class="pilcrow">¶</a></p>
+This timestamp is established by the origin server.<a href="#section-6.1.5.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.5.1-2">In the presence of HTTP caching infrastructure, the origin server <span class="bcp14">MUST NOT</span> set HTTP cache directives (e.g. <code>Cache-Control: max-age</code>, <code>Expires</code>) such that the freshness lifetime of the HTTP response exceeds the result set expiry timestamp contained within the CoSERV results.<a href="#section-6.1.5.1-2" class="pilcrow">¶</a></p>
+<p id="section-6.1.5.1-3">To avoid the risk of infrastructure layers providing default cache lifetimes that are unsuitable for the returned content, origin servers <span class="bcp14">SHOULD</span> set <code>Cache-Control</code> headers explicitly in all CoSERV responses.<a href="#section-6.1.5.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="weak-validators-for-signed-responses">
+<section id="section-6.1.5.2">
+            <h5 id="name-weak-validators-for-signed-">
+<a href="#section-6.1.5.2" class="section-number selfRef">6.1.5.2. </a><a href="#name-weak-validators-for-signed-" class="section-name selfRef">Weak Validators for Signed Responses</a>
+            </h5>
+<p id="section-6.1.5.2-1">For CoSERV origin servers that return signed responses (of type <code>application/coserv+cose</code>), attention should be paid to the generation of suitable <code>ETag</code> headers for cache validation.
+Any non-determinism in the signing process could give rise to sets of results that are semantically identical, but not byte-for-byte identical due to differences in the signature.
+Populating cache infrastructure with such spuriously-differing results would be undesirable.
+This problem can be addressed by the use of a weak validator, which computes the <code>ETag</code> in such a way that the signature and the result set expiry timestamp are excluded.
+The expiry timestamp changes whenever a result set is recomputed, even if the artifacts it carries are unchanged.
+Excluding the signature and the expiry timestamp allows semantically-identical result sets to validate successfully, even when they differ in these respects.
+Precise details of <code>ETag</code> generation are beyond the scope of this document, but a suitable validator might be one that combines the unsigned payload (minus the expiry timestamp) with the public key (or key identity) as input to a strong hash function.
+Such a validator would still behave correctly if the signing key were to be rotated, in which case it would not be appropriate to validate any results that were signed with the previous key.
+A 304 (Not Modified) response does not update the stored content, so it does not refresh the expiry timestamp embedded in the result set.
+A client whose stored result set has passed its embedded expiry therefore needs a full response, even if the HTTP cache considers the entry fresh or revalidated.
+Origin servers using this approach <span class="bcp14">MUST</span> label the <code>ETag</code> as weak (<code>W/</code> prefix), as in the examples below, and <span class="bcp14">MUST</span> evaluate <code>If-None-Match</code> using the weak comparison function (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-8.8.3.2" class="relref">Section 8.8.3.2</a> of [<a href="#STD97" class="cite xref">HTTP</a>]</span>).<a href="#section-6.1.5.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.5.2-2">For unsigned responses, strong validators are preferred.<a href="#section-6.1.5.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="example-http-messages-with-caching">
-<section id="section-6.1.4.2">
+<section id="section-6.1.5.3">
             <h5 id="name-example-http-messages-with-">
-<a href="#section-6.1.4.2" class="section-number selfRef">6.1.4.2. </a><a href="#name-example-http-messages-with-" class="section-name selfRef">Example HTTP Messages with Caching</a>
+<a href="#section-6.1.5.3" class="section-number selfRef">6.1.5.3. </a><a href="#name-example-http-messages-with-" class="section-name selfRef">Example HTTP Messages with Caching</a>
             </h5>
-<p id="section-6.1.4.2-1">This section illustrates a caching scenario.<a href="#section-6.1.4.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.4.2-2">In this example, the CoSERV HTTP API server endpoint is hosted by an HTTP origin (coserv.example), while a reverse proxy (cache.example) operates a public cache in front of the origin.<a href="#section-6.1.4.2-2" class="pilcrow">¶</a></p>
-<p id="section-6.1.4.2-3">Client A sends a request using a specific CoSERV query.
+<p id="section-6.1.5.3-1">This section illustrates a caching scenario.<a href="#section-6.1.5.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.5.3-2">In this example, the CoSERV HTTP API server endpoint is hosted by an HTTP origin (coserv.example), while a reverse proxy (cache.example) operates a public cache in front of the origin.<a href="#section-6.1.5.3-2" class="pilcrow">¶</a></p>
+<p id="section-6.1.5.3-3">Client A sends a request using a specific CoSERV query.
 As the reverse proxy has a "cache miss" for the resource, it forwards the request to the origin.
 The origin then constructs the response and returns it to the proxy.
 The response includes cache-control headers that are compatible with the time-to-live associated with the computed result set.
 For the purposes of this example, the HTTP response <code>max-age</code> has been set to 10 minutes and the <code>s-maxage</code> to 1 hour.
 This means that the origin allows intermediaries (e.g., its CDN) to cache this resource for longer than the client.
 The result is different caching behaviours between clients and intermediaries, which reduces the load on the origin by enabling CDNs to cache content for longer, while ensuring that clients receive fresher content.
-Before forwarding it to the client, the proxy stores the response in its cache using the request URI as the cache key alongside the entry's time-to-live value.<a href="#section-6.1.4.2-3" class="pilcrow">¶</a></p>
-<aside id="section-6.1.4.2-4">
-              <p id="section-6.1.4.2-4.1">This "differential caching" strategy could be useful if the origin and its CDN have control plane APIs that the origin owner can use to instruct the CDN operator to purge certain cached entries <span>[<a href="#RFC8007" class="cite xref">RFC8007</a>]</span>. For instance, in CoSERV, this feature could be used in case of an unexpected revocation.<a href="#section-6.1.4.2-4.1" class="pilcrow">¶</a></p>
+Before forwarding it to the client, the proxy stores the response in its cache using the request URI as the cache key alongside the entry's time-to-live value.
+The proxy also inserts an <code>Age</code> header, with a value of zero, to signal that the response has been freshly computed by the origin server.<a href="#section-6.1.5.3-3" class="pilcrow">¶</a></p>
+<aside id="section-6.1.5.3-4">
+              <p id="section-6.1.5.3-4.1">This "differential caching" strategy could be useful if the origin and its CDN have control plane APIs that the origin owner can use to instruct the CDN operator to purge certain cached entries <span>[<a href="#RFC8007" class="cite xref">RFC8007</a>]</span>. For instance, in CoSERV, this feature could be used in case of an unexpected revocation.<a href="#section-6.1.5.3-4.1" class="pilcrow">¶</a></p>
 </aside>
-<div id="section-6.1.4.2-5">
-              <div class="alignLeft art-svg artwork" id="section-6.1.4.2-5.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="576" width="576" viewBox="0 0 576 576" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
-                  <path d="M 40,64 L 40,560" fill="none" stroke="black"></path>
+<div id="section-6.1.5.3-5">
+              <div class="alignLeft art-svg artwork" id="section-6.1.5.3-5.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="640" width="688" viewBox="0 0 688 640" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+                  <path d="M 40,64 L 40,624" fill="none" stroke="black"></path>
                   <path d="M 200,64 L 200,96" fill="none" stroke="black"></path>
-                  <path d="M 224,112 L 224,560" fill="none" stroke="black"></path>
+                  <path d="M 224,112 L 224,624" fill="none" stroke="black"></path>
                   <path d="M 248,64 L 248,96" fill="none" stroke="black"></path>
-                  <path d="M 408,80 L 408,560" fill="none" stroke="black"></path>
+                  <path d="M 408,80 L 408,624" fill="none" stroke="black"></path>
                   <path d="M 216,48 L 232,48" fill="none" stroke="black"></path>
                   <path d="M 216,80 L 232,80" fill="none" stroke="black"></path>
                   <path d="M 216,112 L 232,112" fill="none" stroke="black"></path>
@@ -3141,10 +3264,10 @@ Before forwarding it to the client, the proxy stores the response in its cache u
                   <path d="M 224,256 L 400,256" fill="none" stroke="black"></path>
                   <path d="M 408,272 L 432,272" fill="none" stroke="black"></path>
                   <path d="M 416,304 L 432,304" fill="none" stroke="black"></path>
-                  <path d="M 232,384 L 408,384" fill="none" stroke="black"></path>
-                  <path d="M 224,432 L 248,432" fill="none" stroke="black"></path>
-                  <path d="M 232,464 L 248,464" fill="none" stroke="black"></path>
-                  <path d="M 48,544 L 224,544" fill="none" stroke="black"></path>
+                  <path d="M 232,400 L 408,400" fill="none" stroke="black"></path>
+                  <path d="M 224,464 L 248,464" fill="none" stroke="black"></path>
+                  <path d="M 232,496 L 248,496" fill="none" stroke="black"></path>
+                  <path d="M 48,608 L 224,608" fill="none" stroke="black"></path>
                   <path d="M 216,48 C 207.16936,48 200,55.16936 200,64" fill="none" stroke="black"></path>
                   <path d="M 232,48 C 240.83064,48 248,55.16936 248,64" fill="none" stroke="black"></path>
                   <path d="M 408,48 C 399.16936,48 392,55.16936 392,64" fill="none" stroke="black"></path>
@@ -3159,15 +3282,15 @@ Before forwarding it to the client, the proxy stores the response in its cache u
                   <path d="M 248,192 C 256.83064,192 264,184.83064 264,176" fill="none" stroke="black"></path>
                   <path d="M 432,272 C 440.83064,272 448,279.16936 448,288" fill="none" stroke="black"></path>
                   <path d="M 432,304 C 440.83064,304 448,296.83064 448,288" fill="none" stroke="black"></path>
-                  <path d="M 248,432 C 256.83064,432 264,439.16936 264,448" fill="none" stroke="black"></path>
-                  <path d="M 248,464 C 256.83064,464 264,456.83064 264,448" fill="none" stroke="black"></path>
+                  <path d="M 248,464 C 256.83064,464 264,471.16936 264,480" fill="none" stroke="black"></path>
+                  <path d="M 248,496 C 256.83064,496 264,488.83064 264,480" fill="none" stroke="black"></path>
                   <polygon class="arrowhead" points="424,304 412,298.4 412,309.6" fill="black" transform="rotate(180,416,304)"></polygon>
                   <polygon class="arrowhead" points="408,256 396,250.4 396,261.6" fill="black" transform="rotate(0,400,256)"></polygon>
-                  <polygon class="arrowhead" points="240,464 228,458.4 228,469.6" fill="black" transform="rotate(180,232,464)"></polygon>
-                  <polygon class="arrowhead" points="240,384 228,378.4 228,389.6" fill="black" transform="rotate(180,232,384)"></polygon>
+                  <polygon class="arrowhead" points="240,496 228,490.4 228,501.6" fill="black" transform="rotate(180,232,496)"></polygon>
+                  <polygon class="arrowhead" points="240,400 228,394.4 228,405.6" fill="black" transform="rotate(180,232,400)"></polygon>
                   <polygon class="arrowhead" points="240,192 228,186.4 228,197.6" fill="black" transform="rotate(180,232,192)"></polygon>
                   <polygon class="arrowhead" points="224,144 212,138.4 212,149.6" fill="black" transform="rotate(0,216,144)"></polygon>
-                  <polygon class="arrowhead" points="56,544 44,538.4 44,549.6" fill="black" transform="rotate(180,48,544)"></polygon>
+                  <polygon class="arrowhead" points="56,608 44,602.4 44,613.6" fill="black" transform="rotate(180,48,608)"></polygon>
                   <circle cx="40" cy="64" r="6" class="opendot" fill="white" stroke="black"></circle>
                   <g class="text">
                     <text x="28" y="36">client</text>
@@ -3176,7 +3299,7 @@ Before forwarding it to the client, the proxy stores the response in its cache u
                     <text x="412" y="36">coserv.example</text>
                     <text x="80" y="132">GET</text>
                     <text x="144" y="132">ogB4I3RhZ..</text>
-                    <text x="312" y="148">lookup(obB4I3RhZ..)</text>
+                    <text x="312" y="148">lookup(ogB4I3RhZ..)</text>
                     <text x="252" y="212">MISS</text>
                     <text x="264" y="244">GET</text>
                     <text x="328" y="244">ogB4I3RhZ..</text>
@@ -3189,48 +3312,60 @@ Before forwarding it to the client, the proxy stores the response in its cache u
                     <text x="488" y="324">=</text>
                     <text x="512" y="324">now</text>
                     <text x="536" y="324">+</text>
-                    <text x="560" y="324">1h)</text>
+                    <text x="560" y="324">1h,</text>
+                    <text x="596" y="324">ETag</text>
+                    <text x="624" y="324">=</text>
+                    <text x="660" y="324">"xyz")</text>
                     <text x="260" y="340">C-C:</text>
                     <text x="332" y="340">max-age=600,</text>
                     <text x="336" y="356">s-maxage=3600</text>
-                    <text x="292" y="372">#6.18([...])</text>
-                    <text x="316" y="420">store(K=obB4I3RhZ..,</text>
-                    <text x="340" y="436">V=#6.18([...],</text>
-                    <text x="320" y="452">TTL=3600)</text>
-                    <text x="72" y="484">200</text>
-                    <text x="100" y="484">OK</text>
-                    <text x="76" y="500">C-C:</text>
-                    <text x="148" y="500">max-age=600,</text>
-                    <text x="152" y="516">s-maxage=3600</text>
-                    <text x="108" y="532">#6.18([...])</text>
+                    <text x="264" y="372">ETag:</text>
+                    <text x="320" y="372">W/"xyz"</text>
+                    <text x="292" y="388">#6.18([...])</text>
+                    <text x="316" y="436">store(K=ogB4I3RhZ..,</text>
+                    <text x="328" y="452">ETag="xyz",</text>
+                    <text x="340" y="468">V=#6.18([...],</text>
+                    <text x="320" y="484">TTL=3600)</text>
+                    <text x="72" y="516">200</text>
+                    <text x="100" y="516">OK</text>
+                    <text x="76" y="532">C-C:</text>
+                    <text x="148" y="532">max-age=600,</text>
+                    <text x="152" y="548">s-maxage=3600</text>
+                    <text x="80" y="564">ETag:</text>
+                    <text x="136" y="564">W/"xyz"</text>
+                    <text x="76" y="580">Age:</text>
+                    <text x="104" y="580">0</text>
+                    <text x="108" y="596">#6.18([...])</text>
                   </g>
-                </svg><a href="#section-6.1.4.2-5.1" class="pilcrow">¶</a>
+                </svg><a href="#section-6.1.5.3-5.1" class="pilcrow">¶</a>
 </div>
 </div>
-<p id="section-6.1.4.2-6">At a later point, after 2 minutes, a different client B makes the same request.
+<p id="section-6.1.5.3-6">At a later point, after 2 minutes, a different client B makes the same request.
 This time, the request generates a "cache hit" event on the proxy.
 The response is therefore served from the public cache, bypassing the origin.
 This reduces the load on the origin, where computing the result set is generally costly, as well as reducing the overall latency of the transaction.
-Client B operates a local cache, where it stores a copy of the response.<a href="#section-6.1.4.2-6" class="pilcrow">¶</a></p>
-<div id="section-6.1.4.2-7">
-              <div class="alignLeft art-svg artwork" id="section-6.1.4.2-7.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="416" width="472" viewBox="0 0 472 416" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+Once again, the cache inserts an <code>Age</code> header into the response, now set to 120 to reflect the two minutes of elapsed time since the response was added to the cache.
+Client B additionally operates a local cache, where it stores a copy of the response.
+Client B's local cache entry has a time-to-live (TTL) value of 480, which is computed from the <code>max-age</code> of the publicly-cached entry (600), minus the value in the <code>Age</code> header (120).<a href="#section-6.1.5.3-6" class="pilcrow">¶</a></p>
+<div id="section-6.1.5.3-7">
+              <div class="alignLeft art-svg artwork" id="section-6.1.5.3-7.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="448" width="472" viewBox="0 0 472 448" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 24,80 L 24,96" fill="none" stroke="black"></path>
-                  <path d="M 40,112 L 40,400" fill="none" stroke="black"></path>
+                  <path d="M 40,112 L 40,432" fill="none" stroke="black"></path>
                   <path d="M 56,80 L 56,96" fill="none" stroke="black"></path>
                   <path d="M 200,64 L 200,96" fill="none" stroke="black"></path>
-                  <path d="M 224,112 L 224,400" fill="none" stroke="black"></path>
+                  <path d="M 224,112 L 224,432" fill="none" stroke="black"></path>
                   <path d="M 248,64 L 248,96" fill="none" stroke="black"></path>
-                  <path d="M 408,80 L 408,400" fill="none" stroke="black"></path>
+                  <path d="M 408,80 L 408,432" fill="none" stroke="black"></path>
                   <path d="M 216,48 L 232,48" fill="none" stroke="black"></path>
                   <path d="M 216,80 L 232,80" fill="none" stroke="black"></path>
                   <path d="M 216,112 L 232,112" fill="none" stroke="black"></path>
                   <path d="M 40,144 L 216,144" fill="none" stroke="black"></path>
                   <path d="M 224,160 L 248,160" fill="none" stroke="black"></path>
                   <path d="M 232,192 L 248,192" fill="none" stroke="black"></path>
-                  <path d="M 48,304 L 224,304" fill="none" stroke="black"></path>
-                  <path d="M 40,352 L 64,352" fill="none" stroke="black"></path>
-                  <path d="M 48,384 L 64,384" fill="none" stroke="black"></path>
+                  <path d="M 48,320 L 224,320" fill="none" stroke="black"></path>
+                  <path d="M 40,384 L 64,384" fill="none" stroke="black"></path>
+                  <path d="M 48,416 L 64,416" fill="none" stroke="black"></path>
                   <path d="M 216,48 C 207.16936,48 200,55.16936 200,64" fill="none" stroke="black"></path>
                   <path d="M 232,48 C 240.83064,48 248,55.16936 248,64" fill="none" stroke="black"></path>
                   <path d="M 408,48 C 399.16936,48 392,55.16936 392,64" fill="none" stroke="black"></path>
@@ -3249,12 +3384,12 @@ Client B operates a local cache, where it stores a copy of the response.<a href=
                   <path d="M 232,112 C 240.83064,112 248,104.83064 248,96" fill="none" stroke="black"></path>
                   <path d="M 248,160 C 256.83064,160 264,167.16936 264,176" fill="none" stroke="black"></path>
                   <path d="M 248,192 C 256.83064,192 264,184.83064 264,176" fill="none" stroke="black"></path>
-                  <path d="M 64,352 C 72.83064,352 80,359.16936 80,368" fill="none" stroke="black"></path>
-                  <path d="M 64,384 C 72.83064,384 80,376.83064 80,368" fill="none" stroke="black"></path>
+                  <path d="M 64,384 C 72.83064,384 80,391.16936 80,400" fill="none" stroke="black"></path>
+                  <path d="M 64,416 C 72.83064,416 80,408.83064 80,400" fill="none" stroke="black"></path>
                   <polygon class="arrowhead" points="240,192 228,186.4 228,197.6" fill="black" transform="rotate(180,232,192)"></polygon>
                   <polygon class="arrowhead" points="224,144 212,138.4 212,149.6" fill="black" transform="rotate(0,216,144)"></polygon>
-                  <polygon class="arrowhead" points="56,384 44,378.4 44,389.6" fill="black" transform="rotate(180,48,384)"></polygon>
-                  <polygon class="arrowhead" points="56,304 44,298.4 44,309.6" fill="black" transform="rotate(180,48,304)"></polygon>
+                  <polygon class="arrowhead" points="56,416 44,410.4 44,421.6" fill="black" transform="rotate(180,48,416)"></polygon>
+                  <polygon class="arrowhead" points="56,320 44,314.4 44,325.6" fill="black" transform="rotate(180,48,320)"></polygon>
                   <g class="text">
                     <text x="28" y="36">client</text>
                     <text x="64" y="36">B</text>
@@ -3262,39 +3397,43 @@ Client B operates a local cache, where it stores a copy of the response.<a href=
                     <text x="412" y="36">coserv.example</text>
                     <text x="80" y="132">GET</text>
                     <text x="144" y="132">ogB4I3RhZ..</text>
-                    <text x="312" y="148">lookup(obB4I3RhZ..)</text>
+                    <text x="312" y="148">lookup(ogB4I3RhZ..)</text>
                     <text x="248" y="212">HIT</text>
                     <text x="72" y="228">200</text>
                     <text x="100" y="228">OK</text>
                     <text x="76" y="244">C-C:</text>
-                    <text x="148" y="244">max-age=480,</text>
-                    <text x="152" y="260">s-maxage=3480</text>
-                    <text x="80" y="276">Etag:</text>
-                    <text x="128" y="276">"xyz"</text>
-                    <text x="108" y="292">#6.18([...])</text>
-                    <text x="132" y="340">store(K=obB4I3RhZ..,</text>
-                    <text x="156" y="356">V=#6.18([...],</text>
-                    <text x="132" y="372">TTL=480)</text>
+                    <text x="148" y="244">max-age=600,</text>
+                    <text x="152" y="260">s-maxage=3600</text>
+                    <text x="80" y="276">ETag:</text>
+                    <text x="136" y="276">W/"xyz"</text>
+                    <text x="76" y="292">Age:</text>
+                    <text x="112" y="292">120</text>
+                    <text x="108" y="308">#6.18([...])</text>
+                    <text x="132" y="356">store(K=ogB4I3RhZ..,</text>
+                    <text x="144" y="372">ETag="xyz",</text>
+                    <text x="156" y="388">V=#6.18([...],</text>
+                    <text x="132" y="404">TTL=480)</text>
                   </g>
-                </svg><a href="#section-6.1.4.2-7.1" class="pilcrow">¶</a>
+                </svg><a href="#section-6.1.5.3-7.1" class="pilcrow">¶</a>
 </div>
 </div>
-<p id="section-6.1.4.2-8">After 9 more minutes, B is instructed to make the same request again.
+<p id="section-6.1.5.3-8">After 9 more minutes, B is instructed to make the same request again.
 The request generates a "cache hit" event on the local cache.
 However, the cached resource has become stale and needs to be revalidated.
 Therefore, B sends a conditional request to the proxy.
 The request generates a "cache hit" event on the proxy where the resource is still fresh due to the differential caching behaviour dictated by the original response from the origin.
-The proxy returns a 304 (Not modified) status code, which instructs the client to reuse its local copy of the response.<a href="#section-6.1.4.2-8" class="pilcrow">¶</a></p>
-<div id="section-6.1.4.2-9">
-              <div class="alignLeft art-svg artwork" id="section-6.1.4.2-9.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="416" width="480" viewBox="0 0 480 416" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+The cached response includes an <code>Age</code> header set to 660, reflecting the total 11 minutes of elapsed time since the proxy cache was populated.
+The proxy returns a 304 (Not modified) status code, which instructs the client to reuse its local copy of the response.<a href="#section-6.1.5.3-8" class="pilcrow">¶</a></p>
+<div id="section-6.1.5.3-9">
+              <div class="alignLeft art-svg artwork" id="section-6.1.5.3-9.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="448" width="480" viewBox="0 0 480 448" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 24,80 L 24,96" fill="none" stroke="black"></path>
-                  <path d="M 40,112 L 40,400" fill="none" stroke="black"></path>
+                  <path d="M 40,112 L 40,432" fill="none" stroke="black"></path>
                   <path d="M 56,80 L 56,96" fill="none" stroke="black"></path>
                   <path d="M 200,64 L 200,96" fill="none" stroke="black"></path>
-                  <path d="M 224,112 L 224,400" fill="none" stroke="black"></path>
+                  <path d="M 224,112 L 224,432" fill="none" stroke="black"></path>
                   <path d="M 248,64 L 248,96" fill="none" stroke="black"></path>
-                  <path d="M 408,80 L 408,400" fill="none" stroke="black"></path>
+                  <path d="M 408,80 L 408,432" fill="none" stroke="black"></path>
                   <path d="M 216,48 L 232,48" fill="none" stroke="black"></path>
                   <path d="M 216,80 L 232,80" fill="none" stroke="black"></path>
                   <path d="M 216,112 L 232,112" fill="none" stroke="black"></path>
@@ -3303,7 +3442,7 @@ The proxy returns a 304 (Not modified) status code, which instructs the client t
                   <path d="M 40,256 L 216,256" fill="none" stroke="black"></path>
                   <path d="M 224,272 L 248,272" fill="none" stroke="black"></path>
                   <path d="M 232,304 L 248,304" fill="none" stroke="black"></path>
-                  <path d="M 48,384 L 224,384" fill="none" stroke="black"></path>
+                  <path d="M 48,416 L 224,416" fill="none" stroke="black"></path>
                   <path d="M 216,48 C 207.16936,48 200,55.16936 200,64" fill="none" stroke="black"></path>
                   <path d="M 232,48 C 240.83064,48 248,55.16936 248,64" fill="none" stroke="black"></path>
                   <path d="M 408,48 C 399.16936,48 392,55.16936 392,64" fill="none" stroke="black"></path>
@@ -3326,14 +3465,14 @@ The proxy returns a 304 (Not modified) status code, which instructs the client t
                   <path d="M 248,304 C 256.83064,304 264,296.83064 264,288" fill="none" stroke="black"></path>
                   <polygon class="arrowhead" points="240,304 228,298.4 228,309.6" fill="black" transform="rotate(180,232,304)"></polygon>
                   <polygon class="arrowhead" points="224,256 212,250.4 212,261.6" fill="black" transform="rotate(0,216,256)"></polygon>
-                  <polygon class="arrowhead" points="56,384 44,378.4 44,389.6" fill="black" transform="rotate(180,48,384)"></polygon>
+                  <polygon class="arrowhead" points="56,416 44,410.4 44,421.6" fill="black" transform="rotate(180,48,416)"></polygon>
                   <polygon class="arrowhead" points="56,176 44,170.4 44,181.6" fill="black" transform="rotate(180,48,176)"></polygon>
                   <g class="text">
                     <text x="28" y="36">client</text>
                     <text x="64" y="36">B</text>
                     <text x="232" y="36">cache.example</text>
                     <text x="420" y="36">coserv.example</text>
-                    <text x="128" y="132">lookup(obB4I3RhZ..)</text>
+                    <text x="128" y="132">lookup(ogB4I3RhZ..)</text>
                     <text x="64" y="196">HIT</text>
                     <text x="112" y="196">(stale)</text>
                     <text x="64" y="228">GET</text>
@@ -3344,10 +3483,14 @@ The proxy returns a 304 (Not modified) status code, which instructs the client t
                     <text x="104" y="340">Not</text>
                     <text x="156" y="340">modified</text>
                     <text x="76" y="356">C-C:</text>
-                    <text x="140" y="356">max-age=0,</text>
-                    <text x="152" y="372">s-maxage=3060</text>
+                    <text x="148" y="356">max-age=600,</text>
+                    <text x="152" y="372">s-maxage=3600</text>
+                    <text x="80" y="388">ETag:</text>
+                    <text x="136" y="388">W/"xyz"</text>
+                    <text x="76" y="404">Age:</text>
+                    <text x="112" y="404">660</text>
                   </g>
-                </svg><a href="#section-6.1.4.2-9.1" class="pilcrow">¶</a>
+                </svg><a href="#section-6.1.5.3-9.1" class="pilcrow">¶</a>
 </div>
 </div>
 </section>
@@ -3390,92 +3533,125 @@ This includes library code to assist with the creation, parsing and manipulation
 </div>
 </section>
 </div>
-<div id="seccons">
+<div id="secopcons">
 <section id="section-8">
-      <h2 id="name-security-considerations">
-<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      <h2 id="name-operational-considerations">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-operational-considerations" class="section-name selfRef">Operational Considerations</a>
       </h2>
-<p id="section-8-1">CoSERV implements a conveyance protocol for specific categories of Conceptual Message in <span>[<a href="#RFC9334" class="cite xref">RFC9334</a>]</span>, namely Endorsements and Reference Values.
+<div id="secredirects">
+<section id="section-8.1">
+        <h3 id="name-redirects">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-redirects" class="section-name selfRef">Redirects</a>
+        </h3>
+<p id="section-8.1-1">Redirects are handled as for any other HTTP resource (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.4" class="relref">Section 15.4</a> of [<a href="#STD97" class="cite xref">HTTP</a>]</span>).
+A redirect can change other parts of the URI, such as the authority or the path prefix of the endpoint, but is not expected to alter the final path segment, which carries the query.
+Since the result set is bound to the query it answers (<a href="#signed-coserv" class="auto internal xref">Section 4.6</a>), consumers can detect a response that does not correspond to their query.
+No CoSERV-specific handling of redirects is needed beyond this.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="secopquery">
+<section id="section-8.2">
+        <h3 id="name-deployment-of-the-query-met">
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-deployment-of-the-query-met" class="section-name selfRef">Deployment of the QUERY Method</a>
+        </h3>
+<p id="section-8.2-1">The <code>QUERY</code> method <span>[<a href="#RFC10008" class="cite xref">RFC10008</a>]</span> is new, and support for it is still being rolled out.
+Servers, proxies, gateways, CDNs, and client libraries that predate it, or that have not enabled it, can reject <code>QUERY</code> requests (for example with 405 (Method Not Allowed), 501 (Not Implemented) or 400 (Bad Request)), drop them, or fail to cache the responses.
+A CoSERV origin server that supports <code>QUERY</code> is therefore not sufficient: every infrastructure layer between client and origin has to support it too.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.2-2">Clients thus need to establish that <code>QUERY</code> works on the path to the service before relying on it.
+Advertisement by the <code>CoSERVRequestResponseQUERY</code> entry of the discovery document (<a href="#secrrapidisco" class="auto internal xref">Section 6.1.2</a>) only reflects the origin server's capabilities.
+A client can additionally look for the <code>Accept-Query</code> header field in responses from the endpoint, and can fall back to <code>GET</code> (<a href="#secrrapiquery" class="auto internal xref">Section 6.1.3</a>) if the <code>QUERY</code> request fails in a way that indicates lack of support.
+A fallback to <code>GET</code> is not possible for a query that exceeds URI length limits, so services that expect large queries need to ensure that their infrastructure supports <code>QUERY</code>.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
+<p id="section-8.2-3">Services that offer <code>QUERY</code> <span class="bcp14">SHOULD</span> continue to offer <code>GET</code>, so that clients unable to use <code>QUERY</code> can still interoperate.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="seccons">
+<section id="section-9">
+      <h2 id="name-security-considerations">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-9-1">CoSERV implements a conveyance protocol for specific categories of Conceptual Message in <span>[<a href="#RFC9334" class="cite xref">RFC9334</a>]</span>, namely Endorsements and Reference Values.
 Consequently, it is used only between the Endorser and Verifier roles, or between the Reference Value Provider and Verifier roles of the RATS architecture.
-The relevant security considerations are therefore the ones associated with those roles and their interactions.<a href="#section-8-1" class="pilcrow">¶</a></p>
-<p id="section-8-2">Certain security characteristics are desirable for interactions between the Verifier and the Endorser or Reference Value Provider.
+The relevant security considerations are therefore the ones associated with those roles and their interactions.<a href="#section-9-1" class="pilcrow">¶</a></p>
+<p id="section-9-2">Certain security characteristics are desirable for interactions between the Verifier and the Endorser or Reference Value Provider.
 However, these characteristics would be the province of the specific implementations of these roles, and of the transport protocols in between them.
 They would not be the province of the CoSERV data object itself.
-Examples of such desirable characteristics might be:<a href="#section-8-2" class="pilcrow">¶</a></p>
+Examples of such desirable characteristics might be:<a href="#section-9-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-8-3.1">
-          <p id="section-8-3.1.1">The Endorser or Reference Value Provider is available to the Verifier when needed.<a href="#section-8-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-9-3.1">
+          <p id="section-9-3.1.1">The Endorser or Reference Value Provider is available to the Verifier when needed.<a href="#section-9-3.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-8-3.2">
-          <p id="section-8-3.2.1">The Verifier is authorised to query data from the Endorser or Reference Value Provider.<a href="#section-8-3.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-9-3.2">
+          <p id="section-9-3.2.1">The Verifier is authorised to query data from the Endorser or Reference Value Provider.<a href="#section-9-3.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-8-3.3">
-          <p id="section-8-3.3.1">Queries cannot be intercepted or undetectably modified by an entity that is interposed between the Verifier and the Endorser or Reference Value Provider.<a href="#section-8-3.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-9-3.3">
+          <p id="section-9-3.3.1">Queries cannot be intercepted or undetectably modified by an entity that is interposed between the Verifier and the Endorser or Reference Value Provider.<a href="#section-9-3.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="in-relation-to-corim">
-<section id="section-8.1">
+<section id="section-9.1">
         <h3 id="name-in-relation-to-corim">
-<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-in-relation-to-corim" class="section-name selfRef">In Relation to CoRIM</a>
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-in-relation-to-corim" class="section-name selfRef">In Relation to CoRIM</a>
         </h3>
-<p id="section-8.1-1">CoSERV's data model inherits heavily from that of <span>[<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
+<p id="section-9.1-1">CoSERV's data model inherits heavily from that of <span>[<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span>.
 CoSERV responses can contain one or more complete CoRIM artifacts.
 They can also contain aggregated views that are composed of multiple CoRIM fragments.
-The security and privacy considerations set out in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-11#section-11" class="relref">Section 11</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span> therefore apply equally to CoSERV.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+The security and privacy considerations set out in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-corim-11#section-11" class="relref">Section 11</a> of [<a href="#I-D.ietf-rats-corim" class="cite xref">I-D.ietf-rats-corim</a>]</span> therefore apply equally to CoSERV.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="forming-native-database-queries-from-coserv">
-<section id="section-8.2">
+<section id="section-9.2">
         <h3 id="name-forming-native-database-que">
-<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-forming-native-database-que" class="section-name selfRef">Forming Native Database Queries from CoSERV</a>
+<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-forming-native-database-que" class="section-name selfRef">Forming Native Database Queries from CoSERV</a>
         </h3>
-<p id="section-8.2-1">Implementations should take care when transforming CoSERV queries into native query types that are compatible with their underlying storage technology (such as SQL queries).
+<p id="section-9.2-1">Implementations should take care when transforming CoSERV queries into native query types that are compatible with their underlying storage technology (such as SQL queries).
 There is a risk of injection attacks arising from poorly-formed or maliciously-formed CoSERV queries.
-Implementations must ensure that suitable sanitization procedures are in place when performing such translations.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
+Implementations must ensure that suitable sanitization procedures are in place when performing such translations.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="aggregators">
-<section id="section-8.3">
+<section id="section-9.3">
         <h3 id="name-aggregators">
-<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-aggregators" class="section-name selfRef">Aggregators</a>
+<a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-aggregators" class="section-name selfRef">Aggregators</a>
         </h3>
-<p id="section-8.3-1">Aggregation (see <a href="#secaggregation" class="auto internal xref">Section 2</a>) is the process of combining artifacts from multiple Endorser or Reference Value Provider sources, which is a necessary step in some supply chains.
+<p id="section-9.3-1">Aggregation (see <a href="#secaggregation" class="auto internal xref">Section 2</a>) is the process of combining artifacts from multiple Endorser or Reference Value Provider sources, which is a necessary step in some supply chains.
 CoSERV supports aggregation explicitly at the protocol level, but is agnostic with regards to how (or whether) such support is used.
-However, there are specific security considerations for deployments that make use of aggregators.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
-<p id="section-8.3-2">When used, aggregators feed Endorsements and Reference Values to the Verifier (possibly via further aggregators).
+However, there are specific security considerations for deployments that make use of aggregators.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
+<p id="section-9.3-2">When used, aggregators feed Endorsements and Reference Values to the Verifier (possibly via further aggregators).
 This means that they act in the Endorser and/or Reference Value Provider roles of RATS, both of which are trusted roles.
 Aggregators are therefore trusted components.
 Further, since the purpose of an aggregator is to provide a consolidated point of consumption for the Verifier, there is a risk of its becoming a single point of failure or vulnerability.
 An aggregator that is unavailable, malfunctioning, or malicious, has the potential to impact the security of the overall deployment.
-For example, a malicious aggregator might attempt to impersonate or otherwise subvert the authority of other actors in the supply chain, such as hardware or firmware vendors.<a href="#section-8.3-2" class="pilcrow">¶</a></p>
-<p id="section-8.3-3">The intent of CoSERV is for aggregators to provide an optional convenience layer for the Verifier, rather than to be a subversive authority.
+For example, a malicious aggregator might attempt to impersonate or otherwise subvert the authority of other actors in the supply chain, such as hardware or firmware vendors.<a href="#section-9.3-2" class="pilcrow">¶</a></p>
+<p id="section-9.3-3">The intent of CoSERV is for aggregators to provide an optional convenience layer for the Verifier, rather than to be a subversive authority.
 The design features of CoSERV can be used alongside judicious deployment practices to mitigate the risks.
-An informative and non-exhaustive list of mitigations follows:<a href="#section-8.3-3" class="pilcrow">¶</a></p>
+An informative and non-exhaustive list of mitigations follows:<a href="#section-9.3-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-8.3-4.1">
-            <p id="section-8.3-4.1.1"><strong>Use independent chains of trust.</strong>
+<li class="normal" id="section-9.3-4.1">
+            <p id="section-9.3-4.1.1"><strong>Use independent chains of trust.</strong>
 It is established above that aggregators are trusted components.
 This does not mean that they necessarily become a sole or replacement trust authority.
 CoSERV's aggregation model allows for deference to other authorities that exist in the supply chain.
 This is true even when an aggregator is acting in the Endorser role.
 A hardware Endorsement, for example, might be delivered to the Verifier via an aggregator (along with multiple other artifacts, such as Reference Values).
-But the authority of that Endorsement can still be chained back to the hardware provider, and this authority can be checked by the Verifier using a trust anchor associated with that hardware provider.<a href="#section-8.3-4.1.1" class="pilcrow">¶</a></p>
+But the authority of that Endorsement can still be chained back to the hardware provider, and this authority can be checked by the Verifier using a trust anchor associated with that hardware provider.<a href="#section-9.3-4.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-8.3-4.2">
-            <p id="section-8.3-4.2.1"><strong>Inspect the authority delegation chains.</strong>
+          <li class="normal" id="section-9.3-4.2">
+            <p id="section-9.3-4.2.1"><strong>Inspect the authority delegation chains.</strong>
 The "quads" feature of the CoSERV data model provides explicit tracking of supply chain sources.
 Each inner CoMID triple of an aggregated CoSERV response is annotated with an authority delegation chain.
 This is a sequence of delegated trust authorities, each of which might be either a further upstream aggregator or a primary supply chain actor.
-This information allows the consumer (Verifier) to inspect the provenance of each aggregated result, which can be checked against its own independent record of trustworthy sources.<a href="#section-8.3-4.2.1" class="pilcrow">¶</a></p>
+This information allows the consumer (Verifier) to inspect the provenance of each aggregated result, which can be checked against its own independent record of trustworthy sources.<a href="#section-9.3-4.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-8.3-4.3">
-            <p id="section-8.3-4.3.1"><strong>Use source artifacts.</strong>
+          <li class="normal" id="section-9.3-4.3">
+            <p id="section-9.3-4.3.1"><strong>Use source artifacts.</strong>
 CoSERV's aggregation model supports the pass-through of artifacts from upstream supply-chain actors, known as "source artifacts" in the data model.
 Source artifacts are passed verbatim in CoSERV, meaning that they retain any original signatures.
-This provides another means of checking the provenance and integrity of such artifacts, independently of any signature that is applied to the CoSERV result by the aggregator (see <a href="#signed-coserv" class="auto internal xref">Section 4.6</a>).<a href="#section-8.3-4.3.1" class="pilcrow">¶</a></p>
+This provides another means of checking the provenance and integrity of such artifacts, independently of any signature that is applied to the CoSERV result by the aggregator (see <a href="#signed-coserv" class="auto internal xref">Section 4.6</a>).<a href="#section-9.3-4.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-8.3-4.4">
-            <p id="section-8.3-4.4.1"><strong>Mutual trust between aggregators and primary supply chain actors.</strong>
+          <li class="normal" id="section-9.3-4.4">
+            <p id="section-9.3-4.4.1"><strong>Mutual trust between aggregators and primary supply chain actors.</strong>
 The default assumption of CoSERV is that trust flows in one direction only: CoSERV consumers trust CoSERV producers, but not the reverse.
 When a Verifier sends a CoSERV query to an aggregator, the Verifier is trusting that aggregator, but not the reverse.
 Likewise, when an aggregator calls a primary supply chain source (whether using CoSERV or some proprietary mechanism), then the aggregator is trusting that primary supply chain source, but not the reverse.
@@ -3483,7 +3659,7 @@ Indeed, a primary supply chain source might not even be aware of the existence o
 However, it is perfectly valid for a deployment to deviate from this baseline, provided that the suitable technical and contractual enablers are put in place.
 There could exist an aggregator that is trusted - and vouched for - by the primary supply chain actor(s) from which it consumes.
 Supply chain actors might even actively provision their artifacts into the aggregator for onward distribution.
-The clients of such an aggregator might then be able to make more use of the "shallow trust" model described in <a href="#secaggregation" class="auto internal xref">Section 2</a>, with a greater reliance on collected artifacts rather than source artifacts.<a href="#section-8.3-4.4.1" class="pilcrow">¶</a></p>
+The clients of such an aggregator might then be able to make more use of the "shallow trust" model described in <a href="#secaggregation" class="auto internal xref">Section 2</a>, with a greater reliance on collected artifacts rather than source artifacts.<a href="#section-9.3-4.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -3491,59 +3667,86 @@ The clients of such an aggregator might then be able to make more use of the "sh
 </section>
 </div>
 <div id="privacy-considerations">
-<section id="section-9">
+<section id="section-10">
       <h2 id="name-privacy-considerations">
-<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
       </h2>
-<p id="section-9-1">A CoSERV query can potentially contain privacy-sensitive information.
+<p id="section-10-1">A CoSERV query can potentially contain privacy-sensitive information.
 Specifically, the <code>environment-selector</code> field of the query may reference identifiable Attester instances in some cases.
 This concern naturally also extends to the data objects that might be returned to the consumer in response to the query, although the specifications of such data objects are beyond the scope of this document.
 Implementations should ensure that appropriate attention is paid to this.
-Suitable mitigations include the following:<a href="#section-9-1" class="pilcrow">¶</a></p>
+Suitable mitigations include the following:<a href="#section-10-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-9-2.1">
-          <p id="section-9-2.1.1">The use of authenticated secure channels between the producers and the consumers of CoSERV queries and returned artifacts.<a href="#section-9-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-10-2.1">
+          <p id="section-10-2.1.1">The use of authenticated secure channels between the producers and the consumers of CoSERV queries and returned artifacts.<a href="#section-10-2.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-9-2.2">
-          <p id="section-9-2.2.1">Collating Attester instances into anonymity groups, and referencing the groups rather than the individual instances.<a href="#section-9-2.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-10-2.2">
+          <p id="section-10-2.2.1">Collating Attester instances into anonymity groups, and referencing the groups rather than the individual instances.<a href="#section-10-2.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="aggregators-1">
-<section id="section-9.1">
+<section id="section-10.1">
         <h3 id="name-aggregators-2">
-<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-aggregators-2" class="section-name selfRef">Aggregators</a>
+<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-aggregators-2" class="section-name selfRef">Aggregators</a>
         </h3>
-<p id="section-9.1-1">Aggregators (as described in <a href="#secaggregation" class="auto internal xref">Section 2</a>) can pose a specific privacy risk.
+<p id="section-10.1-1">Aggregators (as described in <a href="#secaggregation" class="auto internal xref">Section 2</a>) can pose a specific privacy risk.
 This is because they necessarily correlate inputs from multiple supply-chain actors, and can observe repeated CoSERV queries over time.
 In doing so, an aggregator might be able to infer details about the composition of an Attester's hardware, firmware or software components.
 Such details would not be accessible to individual supply-chain actors implementing the Endorser or Reference Value Provider roles.
-There is consequently a risk that such inferred details could be misused to create a covert channel.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
+There is consequently a risk that such inferred details could be misused to create a covert channel.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="domains">
-<section id="section-9.2">
+<section id="section-10.2">
         <h3 id="name-domains">
-<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-domains" class="section-name selfRef">Domains</a>
+<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-domains" class="section-name selfRef">Domains</a>
         </h3>
-<p id="section-9.2-1">Domain queries and domain result sets can reveal the topology of a Composite Attester, including the relationship between parent and child environments and the trust dependencies between domains.
+<p id="section-10.2-1">Domain queries and domain result sets can reveal the topology of a Composite Attester, including the relationship between parent and child environments and the trust dependencies between domains.
 This information can be sensitive even when the environment identifiers themselves are not individually identifying.
-Implementations should apply the same access-control, confidentiality, and minimization considerations to Domain artifacts as to other privacy-sensitive CoSERV query and result data.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
+Implementations should apply the same access-control, confidentiality, and minimization considerations to Domain artifacts as to other privacy-sensitive CoSERV query and result data.<a href="#section-10.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="query-uris">
+<section id="section-10.3">
+        <h3 id="name-query-uris">
+<a href="#section-10.3" class="section-number selfRef">10.3. </a><a href="#name-query-uris" class="section-name selfRef">Query URIs</a>
+        </h3>
+<p id="section-10.3-1">In the HTTP binding, the serialized query is carried in the request URI.
+URIs are more likely than request content to be logged by clients, servers and intermediaries.
+Where a query identifies individual Attester instances or other small anonymity groups, such logging can disclose them.
+Deployments should treat logs containing CoSERV query URIs as sensitive, and can use the <code>QUERY</code> method (<a href="#secrrapiquerymethod" class="auto internal xref">Section 6.1.4</a>) where it is available.<a href="#section-10.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="secprivcaching">
+<section id="section-10.4">
+        <h3 id="name-caching-2">
+<a href="#section-10.4" class="section-number selfRef">10.4. </a><a href="#name-caching-2" class="section-name selfRef">Caching</a>
+        </h3>
+<p id="section-10.4-1">Caching is an important characteristic of CoSERV in general, and of the CoSERV HTTP bindings in particular.
+CoSERV transactions are expected to benefit from the use of HTTP caching infrastructure as explained in <a href="#secrrapicaching" class="auto internal xref">Section 6.1.5</a>.
+CoSERV's deterministic encoding rules allow for encoded queries to be used as cache keys.
+Where queries contain privacy-sensitive information, such as references to individual Attester instances or other small anonymity groups, there is a risk of HTTP caches themselves becoming an oracle.
+For instance, the time taken to generate a response could indicate whether a client has already queried the same information previously.
+An attacker could use these timings to gain intelligence about the use of those instances or groups.<a href="#section-10.4-1" class="pilcrow">¶</a></p>
+<p id="section-10.4-2">Safe methods can be replayed, including in TLS 0-RTT early data, so the cost of executing queries is a consideration for origin servers independently of caching.<a href="#section-10.4-2" class="pilcrow">¶</a></p>
+<p id="section-10.4-3">Implementations should be intentional about their use of caching, and avoid relying on default behaviours that could lead to side channels.
+For example, the <code>Cache-Control: no-store</code> or <code>Cache-Control: private</code> directives can be used selectively in situations where very fine-grained information is being queried, while still allowing broader queries to benefit from caching.<a href="#section-10.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-10">
+<section id="section-11">
       <h2 id="name-iana-considerations">
-<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-10-1">[^rfced] replace "RFCthis" with the RFC number assigned to this document.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<p id="section-11-1">[^rfced] replace "RFCthis" with the RFC number assigned to this document.<a href="#section-11-1" class="pilcrow">¶</a></p>
 <div id="media-types-registrations">
-<section id="section-10.1">
+<section id="section-11.1">
         <h3 id="name-media-types-registrations">
-<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-media-types-registrations" class="section-name selfRef">Media Types Registrations</a>
+<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-media-types-registrations" class="section-name selfRef">Media Types Registrations</a>
         </h3>
-<p id="section-10.1-1">IANA is requested to add the following media types to the "Media Types" registry <span>[<a href="#IANA.media-types" class="cite xref">IANA.media-types</a>]</span>.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
+<p id="section-11.1-1">IANA is requested to add the following media types to the "Media Types" registry <span>[<a href="#IANA.media-types" class="cite xref">IANA.media-types</a>]</span>.<a href="#section-11.1-1" class="pilcrow">¶</a></p>
 <span id="name-coserv-media-types"></span><div id="tab-mc-regs">
 <table class="center" id="table-1">
           <caption>
@@ -3602,338 +3805,338 @@ Implementations should apply the same access-control, confidentiality, and minim
         </table>
 </div>
 <div id="applicationcoservcbor">
-<section id="section-10.1.1">
+<section id="section-11.1.1">
           <h4 id="name-application-coservcbor">
-<a href="#section-10.1.1" class="section-number selfRef">10.1.1. </a><a href="#name-application-coservcbor" class="section-name selfRef"><code>application/coserv+cbor</code></a>
+<a href="#section-11.1.1" class="section-number selfRef">11.1.1. </a><a href="#name-application-coservcbor" class="section-name selfRef"><code>application/coserv+cbor</code></a>
           </h4>
-<span class="break"></span><dl class="dlCompact dlParallel" id="section-10.1.1-1">
-            <dt id="section-10.1.1-1.1">Type name:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.2">
-              <p id="section-10.1.1-1.2.1">application<a href="#section-10.1.1-1.2.1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlCompact dlParallel" id="section-11.1.1-1">
+            <dt id="section-11.1.1-1.1">Type name:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.2">
+              <p id="section-11.1.1-1.2.1">application<a href="#section-11.1.1-1.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.1-1.3">Subtype name:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.4">
-              <p id="section-10.1.1-1.4.1">coserv+cbor<a href="#section-10.1.1-1.4.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.1-1.3">Subtype name:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.4">
+              <p id="section-11.1.1-1.4.1">coserv+cbor<a href="#section-11.1.1-1.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.1-1.5">Required parameters:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.6">
-              <p id="section-10.1.1-1.6.1">n/a<a href="#section-10.1.1-1.6.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.1-1.5">Required parameters:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.6">
+              <p id="section-11.1.1-1.6.1">n/a<a href="#section-11.1.1-1.6.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.1-1.7">Optional parameters:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.8">
-              <p id="section-10.1.1-1.8.1">"profile" (CoSERV profile in string format.  OIDs must use the dotted-decimal notation.)<a href="#section-10.1.1-1.8.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.1-1.7">Optional parameters:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.8">
+              <p id="section-11.1.1-1.8.1">"profile" (CoSERV profile in string format.  OIDs must use the dotted-decimal notation.)<a href="#section-11.1.1-1.8.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.1-1.9">Encoding considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.10">
-              <p id="section-10.1.1-1.10.1">binary (CBOR)<a href="#section-10.1.1-1.10.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.1-1.9">Encoding considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.10">
+              <p id="section-11.1.1-1.10.1">binary (CBOR)<a href="#section-11.1.1-1.10.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.1-1.11">Security considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.12">
-              <p id="section-10.1.1-1.12.1"><a href="#seccons" class="auto internal xref">Section 8</a> of RFCthis<a href="#section-10.1.1-1.12.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.1-1.11">Security considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.12">
+              <p id="section-11.1.1-1.12.1"><a href="#seccons" class="auto internal xref">Section 9</a> of RFCthis<a href="#section-11.1.1-1.12.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.1-1.13">Interoperability considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.14">
-              <p id="section-10.1.1-1.14.1">n/a<a href="#section-10.1.1-1.14.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.1-1.13">Interoperability considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.14">
+              <p id="section-11.1.1-1.14.1">n/a<a href="#section-11.1.1-1.14.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.1-1.15">Published specification:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.16">
-              <p id="section-10.1.1-1.16.1">RFCthis<a href="#section-10.1.1-1.16.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.1-1.15">Published specification:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.16">
+              <p id="section-11.1.1-1.16.1">RFCthis<a href="#section-11.1.1-1.16.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.1-1.17">Applications that use this media type:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.18">
-              <p id="section-10.1.1-1.18.1">Verifiers, Endorsers, Reference Value Providers<a href="#section-10.1.1-1.18.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.1-1.17">Applications that use this media type:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.18">
+              <p id="section-11.1.1-1.18.1">Verifiers, Endorsers, Reference Value Providers<a href="#section-11.1.1-1.18.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.1-1.19">Fragment identifier considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.20">
-              <p id="section-10.1.1-1.20.1">The syntax and semantics of fragment identifiers are as specified for "application/cbor". (No fragment identification syntax is currently defined for "application/cbor".)<a href="#section-10.1.1-1.20.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.1-1.19">Fragment identifier considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.20">
+              <p id="section-11.1.1-1.20.1">The syntax and semantics of fragment identifiers are as specified for "application/cbor". (No fragment identification syntax is currently defined for "application/cbor".)<a href="#section-11.1.1-1.20.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.1-1.21">Person &amp; email address to contact for further information:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.22">
-              <p id="section-10.1.1-1.22.1">RATS WG mailing list (rats@ietf.org)<a href="#section-10.1.1-1.22.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.1-1.21">Person &amp; email address to contact for further information:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.22">
+              <p id="section-11.1.1-1.22.1">RATS WG mailing list (rats@ietf.org)<a href="#section-11.1.1-1.22.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.1-1.23">Intended usage:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.24">
-              <p id="section-10.1.1-1.24.1">COMMON<a href="#section-10.1.1-1.24.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.1-1.23">Intended usage:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.24">
+              <p id="section-11.1.1-1.24.1">COMMON<a href="#section-11.1.1-1.24.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.1-1.25">Restrictions on usage:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.26">
-              <p id="section-10.1.1-1.26.1">none<a href="#section-10.1.1-1.26.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.1-1.25">Restrictions on usage:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.26">
+              <p id="section-11.1.1-1.26.1">none<a href="#section-11.1.1-1.26.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.1-1.27">Author/Change controller:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.28">
-              <p id="section-10.1.1-1.28.1">IETF<a href="#section-10.1.1-1.28.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.1-1.27">Author/Change controller:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.28">
+              <p id="section-11.1.1-1.28.1">IETF<a href="#section-11.1.1-1.28.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.1-1.29">Provisional registration:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.1-1.30">
-              <p id="section-10.1.1-1.30.1">no<a href="#section-10.1.1-1.30.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.1-1.29">Provisional registration:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.1-1.30">
+              <p id="section-11.1.1-1.30.1">no<a href="#section-11.1.1-1.30.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
 </section>
 </div>
 <div id="applicationcoservcose">
-<section id="section-10.1.2">
+<section id="section-11.1.2">
           <h4 id="name-application-coservcose">
-<a href="#section-10.1.2" class="section-number selfRef">10.1.2. </a><a href="#name-application-coservcose" class="section-name selfRef"><code>application/coserv+cose</code></a>
+<a href="#section-11.1.2" class="section-number selfRef">11.1.2. </a><a href="#name-application-coservcose" class="section-name selfRef"><code>application/coserv+cose</code></a>
           </h4>
-<span class="break"></span><dl class="dlCompact dlParallel" id="section-10.1.2-1">
-            <dt id="section-10.1.2-1.1">Type name:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.2">
-              <p id="section-10.1.2-1.2.1"><code>application</code><a href="#section-10.1.2-1.2.1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlCompact dlParallel" id="section-11.1.2-1">
+            <dt id="section-11.1.2-1.1">Type name:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.2">
+              <p id="section-11.1.2-1.2.1"><code>application</code><a href="#section-11.1.2-1.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-1.3">Subtype name:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.4">
-              <p id="section-10.1.2-1.4.1"><code>coserv+cose</code><a href="#section-10.1.2-1.4.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.2-1.3">Subtype name:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.4">
+              <p id="section-11.1.2-1.4.1"><code>coserv+cose</code><a href="#section-11.1.2-1.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-1.5">Required parameters:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.6">
-              <p id="section-10.1.2-1.6.1">n/a (cose-type is explicitly not supported, as it is understood to be "cose-sign1")<a href="#section-10.1.2-1.6.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.2-1.5">Required parameters:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.6">
+              <p id="section-11.1.2-1.6.1">n/a (cose-type is explicitly not supported, as it is understood to be "cose-sign1")<a href="#section-11.1.2-1.6.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-1.7">Optional parameters:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.8">
-              <p id="section-10.1.2-1.8.1">"profile" CoSERV profile in string format.
+<dt id="section-11.1.2-1.7">Optional parameters:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.8">
+              <p id="section-11.1.2-1.8.1">"profile" CoSERV profile in string format.
 OIDs must use the dotted-decimal notation.
-Note that the <code>cose-type</code> parameter is explicitly not supported, as it is understood to be <code>"cose-sign1"</code>.<a href="#section-10.1.2-1.8.1" class="pilcrow">¶</a></p>
+Note that the <code>cose-type</code> parameter is explicitly not supported, as it is understood to be <code>"cose-sign1"</code>.<a href="#section-11.1.2-1.8.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-1.9">Encoding considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.10">
-              <p id="section-10.1.2-1.10.1">binary<a href="#section-10.1.2-1.10.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.2-1.9">Encoding considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.10">
+              <p id="section-11.1.2-1.10.1">binary<a href="#section-11.1.2-1.10.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-1.11">Security considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.12">
-              <p id="section-10.1.2-1.12.1"><a href="#seccons" class="auto internal xref">Section 8</a> of RFCthis<a href="#section-10.1.2-1.12.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.2-1.11">Security considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.12">
+              <p id="section-11.1.2-1.12.1"><a href="#seccons" class="auto internal xref">Section 9</a> of RFCthis<a href="#section-11.1.2-1.12.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-1.13">Interoperability considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.14">
-              <p id="section-10.1.2-1.14.1">n/a<a href="#section-10.1.2-1.14.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.2-1.13">Interoperability considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.14">
+              <p id="section-11.1.2-1.14.1">n/a<a href="#section-11.1.2-1.14.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-1.15">Published specification:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.16">
-              <p id="section-10.1.2-1.16.1">RFCthis<a href="#section-10.1.2-1.16.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.2-1.15">Published specification:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.16">
+              <p id="section-11.1.2-1.16.1">RFCthis<a href="#section-11.1.2-1.16.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-1.17">Applications that use this media type:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.18">
-              <p id="section-10.1.2-1.18.1">Verifiers, Endorsers, Reference Value Providers<a href="#section-10.1.2-1.18.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.2-1.17">Applications that use this media type:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.18">
+              <p id="section-11.1.2-1.18.1">Verifiers, Endorsers, Reference Value Providers<a href="#section-11.1.2-1.18.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-1.19">Fragment identifier considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.20">
-              <p id="section-10.1.2-1.20.1">n/a<a href="#section-10.1.2-1.20.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.2-1.19">Fragment identifier considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.20">
+              <p id="section-11.1.2-1.20.1">n/a<a href="#section-11.1.2-1.20.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-1.21">Person and email address to contact for further information:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.22">
-              <p id="section-10.1.2-1.22.1">RATS WG mailing list (rats@ietf.org)<a href="#section-10.1.2-1.22.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.2-1.21">Person and email address to contact for further information:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.22">
+              <p id="section-11.1.2-1.22.1">RATS WG mailing list (rats@ietf.org)<a href="#section-11.1.2-1.22.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-1.23">Intended usage:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.24">
-              <p id="section-10.1.2-1.24.1">COMMON<a href="#section-10.1.2-1.24.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.2-1.23">Intended usage:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.24">
+              <p id="section-11.1.2-1.24.1">COMMON<a href="#section-11.1.2-1.24.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-1.25">Restrictions on usage:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.26">
-              <p id="section-10.1.2-1.26.1">none<a href="#section-10.1.2-1.26.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.2-1.25">Restrictions on usage:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.26">
+              <p id="section-11.1.2-1.26.1">none<a href="#section-11.1.2-1.26.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-1.27">Author/Change controller:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.28">
-              <p id="section-10.1.2-1.28.1">IETF<a href="#section-10.1.2-1.28.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.2-1.27">Author/Change controller:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.28">
+              <p id="section-11.1.2-1.28.1">IETF<a href="#section-11.1.2-1.28.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-1.29">Provisional registration?</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-1.30">
-              <p id="section-10.1.2-1.30.1">no<a href="#section-10.1.2-1.30.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.2-1.29">Provisional registration?</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-1.30">
+              <p id="section-11.1.2-1.30.1">no<a href="#section-11.1.2-1.30.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
 </section>
 </div>
 <div id="applicationcoserv-discoverycbor">
-<section id="section-10.1.3">
+<section id="section-11.1.3">
           <h4 id="name-application-coserv-discover">
-<a href="#section-10.1.3" class="section-number selfRef">10.1.3. </a><a href="#name-application-coserv-discover" class="section-name selfRef"><code>application/coserv-discovery+cbor</code></a>
+<a href="#section-11.1.3" class="section-number selfRef">11.1.3. </a><a href="#name-application-coserv-discover" class="section-name selfRef"><code>application/coserv-discovery+cbor</code></a>
           </h4>
-<span class="break"></span><dl class="dlCompact dlParallel" id="section-10.1.3-1">
-            <dt id="section-10.1.3-1.1">Type name:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.2">
-              <p id="section-10.1.3-1.2.1">application<a href="#section-10.1.3-1.2.1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlCompact dlParallel" id="section-11.1.3-1">
+            <dt id="section-11.1.3-1.1">Type name:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.2">
+              <p id="section-11.1.3-1.2.1">application<a href="#section-11.1.3-1.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.3-1.3">Subtype name:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.4">
-              <p id="section-10.1.3-1.4.1">coserv-discovery+cbor<a href="#section-10.1.3-1.4.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.3-1.3">Subtype name:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.4">
+              <p id="section-11.1.3-1.4.1">coserv-discovery+cbor<a href="#section-11.1.3-1.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.3-1.5">Required parameters:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.6">
-              <p id="section-10.1.3-1.6.1">n/a<a href="#section-10.1.3-1.6.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.3-1.5">Required parameters:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.6">
+              <p id="section-11.1.3-1.6.1">n/a<a href="#section-11.1.3-1.6.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.3-1.7">Optional parameters:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.8">
-              <p id="section-10.1.3-1.8.1">n/a<a href="#section-10.1.3-1.8.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.3-1.7">Optional parameters:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.8">
+              <p id="section-11.1.3-1.8.1">n/a<a href="#section-11.1.3-1.8.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.3-1.9">Encoding considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.10">
-              <p id="section-10.1.3-1.10.1">binary (CBOR)<a href="#section-10.1.3-1.10.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.3-1.9">Encoding considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.10">
+              <p id="section-11.1.3-1.10.1">binary (CBOR)<a href="#section-11.1.3-1.10.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.3-1.11">Security considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.12">
-              <p id="section-10.1.3-1.12.1"><a href="#seccons" class="auto internal xref">Section 8</a> of RFCthis<a href="#section-10.1.3-1.12.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.3-1.11">Security considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.12">
+              <p id="section-11.1.3-1.12.1"><a href="#seccons" class="auto internal xref">Section 9</a> of RFCthis<a href="#section-11.1.3-1.12.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.3-1.13">Interoperability considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.14">
-              <p id="section-10.1.3-1.14.1">n/a<a href="#section-10.1.3-1.14.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.3-1.13">Interoperability considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.14">
+              <p id="section-11.1.3-1.14.1">n/a<a href="#section-11.1.3-1.14.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.3-1.15">Published specification:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.16">
-              <p id="section-10.1.3-1.16.1">RFCthis<a href="#section-10.1.3-1.16.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.3-1.15">Published specification:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.16">
+              <p id="section-11.1.3-1.16.1">RFCthis<a href="#section-11.1.3-1.16.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.3-1.17">Applications that use this media type:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.18">
-              <p id="section-10.1.3-1.18.1">Verifiers, Endorsers, Reference Value Providers<a href="#section-10.1.3-1.18.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.3-1.17">Applications that use this media type:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.18">
+              <p id="section-11.1.3-1.18.1">Verifiers, Endorsers, Reference Value Providers<a href="#section-11.1.3-1.18.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.3-1.19">Fragment identifier considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.20">
-              <p id="section-10.1.3-1.20.1">The syntax and semantics of fragment identifiers are as specified for "application/cbor". (No fragment identification syntax is currently defined for "application/cbor".)<a href="#section-10.1.3-1.20.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.3-1.19">Fragment identifier considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.20">
+              <p id="section-11.1.3-1.20.1">The syntax and semantics of fragment identifiers are as specified for "application/cbor". (No fragment identification syntax is currently defined for "application/cbor".)<a href="#section-11.1.3-1.20.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.3-1.21">Person &amp; email address to contact for further information:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.22">
-              <p id="section-10.1.3-1.22.1">RATS WG mailing list (rats@ietf.org)<a href="#section-10.1.3-1.22.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.3-1.21">Person &amp; email address to contact for further information:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.22">
+              <p id="section-11.1.3-1.22.1">RATS WG mailing list (rats@ietf.org)<a href="#section-11.1.3-1.22.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.3-1.23">Intended usage:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.24">
-              <p id="section-10.1.3-1.24.1">COMMON<a href="#section-10.1.3-1.24.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.3-1.23">Intended usage:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.24">
+              <p id="section-11.1.3-1.24.1">COMMON<a href="#section-11.1.3-1.24.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.3-1.25">Restrictions on usage:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.26">
-              <p id="section-10.1.3-1.26.1">none<a href="#section-10.1.3-1.26.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.3-1.25">Restrictions on usage:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.26">
+              <p id="section-11.1.3-1.26.1">none<a href="#section-11.1.3-1.26.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.3-1.27">Author/Change controller:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.28">
-              <p id="section-10.1.3-1.28.1">IETF<a href="#section-10.1.3-1.28.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.3-1.27">Author/Change controller:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.28">
+              <p id="section-11.1.3-1.28.1">IETF<a href="#section-11.1.3-1.28.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.3-1.29">Provisional registration:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.3-1.30">
-              <p id="section-10.1.3-1.30.1">no<a href="#section-10.1.3-1.30.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.3-1.29">Provisional registration:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.3-1.30">
+              <p id="section-11.1.3-1.30.1">no<a href="#section-11.1.3-1.30.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
 </section>
 </div>
 <div id="applicationcoserv-discoveryjson">
-<section id="section-10.1.4">
+<section id="section-11.1.4">
           <h4 id="name-application-coserv-discovery">
-<a href="#section-10.1.4" class="section-number selfRef">10.1.4. </a><a href="#name-application-coserv-discovery" class="section-name selfRef"><code>application/coserv-discovery+json</code></a>
+<a href="#section-11.1.4" class="section-number selfRef">11.1.4. </a><a href="#name-application-coserv-discovery" class="section-name selfRef"><code>application/coserv-discovery+json</code></a>
           </h4>
-<span class="break"></span><dl class="dlCompact dlParallel" id="section-10.1.4-1">
-            <dt id="section-10.1.4-1.1">Type name:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.2">
-              <p id="section-10.1.4-1.2.1">application<a href="#section-10.1.4-1.2.1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlCompact dlParallel" id="section-11.1.4-1">
+            <dt id="section-11.1.4-1.1">Type name:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.2">
+              <p id="section-11.1.4-1.2.1">application<a href="#section-11.1.4-1.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.4-1.3">Subtype name:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.4">
-              <p id="section-10.1.4-1.4.1">coserv-discovery+json<a href="#section-10.1.4-1.4.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.4-1.3">Subtype name:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.4">
+              <p id="section-11.1.4-1.4.1">coserv-discovery+json<a href="#section-11.1.4-1.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.4-1.5">Required parameters:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.6">
-              <p id="section-10.1.4-1.6.1">n/a<a href="#section-10.1.4-1.6.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.4-1.5">Required parameters:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.6">
+              <p id="section-11.1.4-1.6.1">n/a<a href="#section-11.1.4-1.6.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.4-1.7">Optional parameters:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.8">
-              <p id="section-10.1.4-1.8.1">n/a<a href="#section-10.1.4-1.8.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.4-1.7">Optional parameters:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.8">
+              <p id="section-11.1.4-1.8.1">n/a<a href="#section-11.1.4-1.8.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.4-1.9">Encoding considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.10">
-              <p id="section-10.1.4-1.10.1">binary (JSON is UTF-8-encoded text)<a href="#section-10.1.4-1.10.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.4-1.9">Encoding considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.10">
+              <p id="section-11.1.4-1.10.1">binary (JSON is UTF-8-encoded text)<a href="#section-11.1.4-1.10.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.4-1.11">Security considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.12">
-              <p id="section-10.1.4-1.12.1"><a href="#seccons" class="auto internal xref">Section 8</a> of RFCthis<a href="#section-10.1.4-1.12.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.4-1.11">Security considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.12">
+              <p id="section-11.1.4-1.12.1"><a href="#seccons" class="auto internal xref">Section 9</a> of RFCthis<a href="#section-11.1.4-1.12.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.4-1.13">Interoperability considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.14">
-              <p id="section-10.1.4-1.14.1">n/a<a href="#section-10.1.4-1.14.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.4-1.13">Interoperability considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.14">
+              <p id="section-11.1.4-1.14.1">n/a<a href="#section-11.1.4-1.14.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.4-1.15">Published specification:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.16">
-              <p id="section-10.1.4-1.16.1">RFCthis<a href="#section-10.1.4-1.16.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.4-1.15">Published specification:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.16">
+              <p id="section-11.1.4-1.16.1">RFCthis<a href="#section-11.1.4-1.16.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.4-1.17">Applications that use this media type:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.18">
-              <p id="section-10.1.4-1.18.1">Verifiers, Endorsers, Reference Value Providers<a href="#section-10.1.4-1.18.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.4-1.17">Applications that use this media type:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.18">
+              <p id="section-11.1.4-1.18.1">Verifiers, Endorsers, Reference Value Providers<a href="#section-11.1.4-1.18.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.4-1.19">Fragment identifier considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.20">
-              <p id="section-10.1.4-1.20.1">The syntax and semantics of fragment identifiers are as specified for "application/json". (No fragment identification syntax is currently defined for "application/json".)<a href="#section-10.1.4-1.20.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.4-1.19">Fragment identifier considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.20">
+              <p id="section-11.1.4-1.20.1">The syntax and semantics of fragment identifiers are as specified for "application/json". (No fragment identification syntax is currently defined for "application/json".)<a href="#section-11.1.4-1.20.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.4-1.21">Person &amp; email address to contact for further information:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.22">
-              <p id="section-10.1.4-1.22.1">RATS WG mailing list (rats@ietf.org)<a href="#section-10.1.4-1.22.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.4-1.21">Person &amp; email address to contact for further information:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.22">
+              <p id="section-11.1.4-1.22.1">RATS WG mailing list (rats@ietf.org)<a href="#section-11.1.4-1.22.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.4-1.23">Intended usage:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.24">
-              <p id="section-10.1.4-1.24.1">COMMON<a href="#section-10.1.4-1.24.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.4-1.23">Intended usage:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.24">
+              <p id="section-11.1.4-1.24.1">COMMON<a href="#section-11.1.4-1.24.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.4-1.25">Restrictions on usage:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.26">
-              <p id="section-10.1.4-1.26.1">none<a href="#section-10.1.4-1.26.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.4-1.25">Restrictions on usage:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.26">
+              <p id="section-11.1.4-1.26.1">none<a href="#section-11.1.4-1.26.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.4-1.27">Author/Change controller:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.28">
-              <p id="section-10.1.4-1.28.1">IETF<a href="#section-10.1.4-1.28.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.4-1.27">Author/Change controller:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.28">
+              <p id="section-11.1.4-1.28.1">IETF<a href="#section-11.1.4-1.28.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.4-1.29">Provisional registration:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.4-1.30">
-              <p id="section-10.1.4-1.30.1">no<a href="#section-10.1.4-1.30.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.4-1.29">Provisional registration:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.4-1.30">
+              <p id="section-11.1.4-1.30.1">no<a href="#section-11.1.4-1.30.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
@@ -3942,11 +4145,11 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 </section>
 </div>
 <div id="coap-content-formats">
-<section id="section-10.2">
+<section id="section-11.2">
         <h3 id="name-coap-content-formats">
-<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-coap-content-formats" class="section-name selfRef">CoAP Content-Formats</a>
+<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-coap-content-formats" class="section-name selfRef">CoAP Content-Formats</a>
         </h3>
-<p id="section-10.2-1">IANA is requested to register the following Content-Format IDs in the "CoAP Content-Formats" registry, within the "Constrained RESTful Environments (CoRE) Parameters" registry group <span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>:<a href="#section-10.2-1" class="pilcrow">¶</a></p>
+<p id="section-11.2-1">IANA is requested to register the following Content-Format IDs in the "CoAP Content-Formats" registry, within the "Constrained RESTful Environments (CoRE) Parameters" registry group <span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>:<a href="#section-11.2-1" class="pilcrow">¶</a></p>
 <span id="name-new-coap-content-formats"></span><table class="left" id="table-2">
           <caption>
 <a href="#table-2" class="selfRef">Table 2</a>:
@@ -3977,32 +4180,32 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
             </tr>
           </tbody>
         </table>
-<p id="section-10.2-3">If possible, TBD1 and TBD2 should be assigned in the 256..9999 range.<a href="#section-10.2-3" class="pilcrow">¶</a></p>
+<p id="section-11.2-3">If possible, TBD1 and TBD2 should be assigned in the 256..9999 range.<a href="#section-11.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="well-known-uri-for-coserv-configuration">
-<section id="section-10.3">
+<section id="section-11.3">
         <h3 id="name-well-known-uri-for-coserv-c">
-<a href="#section-10.3" class="section-number selfRef">10.3. </a><a href="#name-well-known-uri-for-coserv-c" class="section-name selfRef">Well-Known URI for CoSERV Configuration</a>
+<a href="#section-11.3" class="section-number selfRef">11.3. </a><a href="#name-well-known-uri-for-coserv-c" class="section-name selfRef">Well-Known URI for CoSERV Configuration</a>
         </h3>
-<p id="section-10.3-1">IANA is requested to register the following in the "Well-Known URIs" registry <span>[<a href="#IANA.well-known-uris" class="cite xref">IANA.well-known-uris</a>]</span>:<a href="#section-10.3-1" class="pilcrow">¶</a></p>
-<p id="section-10.3-2">URI suffix: coserv-configuration<a href="#section-10.3-2" class="pilcrow">¶</a></p>
-<p id="section-10.3-3">Change controller: IETF<a href="#section-10.3-3" class="pilcrow">¶</a></p>
-<p id="section-10.3-4">Specification document: RFCthis<a href="#section-10.3-4" class="pilcrow">¶</a></p>
-<p id="section-10.3-5">Related information: N/A<a href="#section-10.3-5" class="pilcrow">¶</a></p>
+<p id="section-11.3-1">IANA is requested to register the following in the "Well-Known URIs" registry <span>[<a href="#IANA.well-known-uris" class="cite xref">IANA.well-known-uris</a>]</span>:<a href="#section-11.3-1" class="pilcrow">¶</a></p>
+<p id="section-11.3-2">URI suffix: coserv-configuration<a href="#section-11.3-2" class="pilcrow">¶</a></p>
+<p id="section-11.3-3">Change controller: IETF<a href="#section-11.3-3" class="pilcrow">¶</a></p>
+<p id="section-11.3-4">Specification document: RFCthis<a href="#section-11.3-4" class="pilcrow">¶</a></p>
+<p id="section-11.3-5">Related information: N/A<a href="#section-11.3-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="sec-combined-references">
-<section id="section-11">
+<section id="section-12">
       <h2 id="name-references">
-<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-references" class="section-name selfRef">References</a>
+<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
 <div id="sec-normative-references">
-<section id="section-11.1">
+<section id="section-12.1">
         <h3 id="name-normative-references">
-<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-12.1" class="section-number selfRef">12.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
 <dt id="STD94">[CBOR]</dt>
@@ -4013,13 +4216,13 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
         <dd>
 <span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Structures and Process"</span>, <span class="seriesInfo">STD 96</span>, <span class="seriesInfo">RFC 9052</span>, <span class="seriesInfo">DOI 10.17487/RFC9052</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9052">https://www.rfc-editor.org/rfc/rfc9052</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="STD98">[HTTP]</dt>
-        <dd>
-<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Caching"</span>, <span class="seriesInfo">STD 98</span>, <span class="seriesInfo">RFC 9111</span>, <span class="seriesInfo">DOI 10.17487/RFC9111</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9111">https://www.rfc-editor.org/rfc/rfc9111</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="STD97">[HTTP-CACHING]</dt>
+<dt id="STD97">[HTTP]</dt>
         <dd>
 <span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="STD98">[HTTP-CACHING]</dt>
+        <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Caching"</span>, <span class="seriesInfo">STD 98</span>, <span class="seriesInfo">RFC 9111</span>, <span class="seriesInfo">DOI 10.17487/RFC9111</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9111">https://www.rfc-editor.org/rfc/rfc9111</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-rats-corim">[I-D.ietf-rats-corim]</dt>
         <dd>
@@ -4065,6 +4268,10 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
         <dd>
 <span class="refAuthor">Nottingham, M.</span>, <span class="refTitle">"Well-Known Uniform Resource Identifiers (URIs)"</span>, <span class="seriesInfo">RFC 8615</span>, <span class="seriesInfo">DOI 10.17487/RFC8615</span>, <time datetime="2019-05" class="refDate">May 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8615">https://www.rfc-editor.org/rfc/rfc8615</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC9205">[RFC9205]</dt>
+        <dd>
+<span class="refAuthor">Nottingham, M.</span>, <span class="refTitle">"Building Protocols with HTTP"</span>, <span class="seriesInfo">BCP 56</span>, <span class="seriesInfo">RFC 9205</span>, <span class="seriesInfo">DOI 10.17487/RFC9205</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9205">https://www.rfc-editor.org/rfc/rfc9205</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC9290">[RFC9290]</dt>
         <dd>
 <span class="refAuthor">Fossati, T.</span> and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Problem Details for Constrained Application Protocol (CoAP) APIs"</span>, <span class="seriesInfo">RFC 9290</span>, <span class="seriesInfo">DOI 10.17487/RFC9290</span>, <time datetime="2022-10" class="refDate">October 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9290">https://www.rfc-editor.org/rfc/rfc9290</a>&gt;</span>. </dd>
@@ -4093,9 +4300,9 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 </section>
 </div>
 <div id="sec-informative-references">
-<section id="section-11.2">
+<section id="section-12.2">
         <h3 id="name-informative-references">
-<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-12.2" class="section-number selfRef">12.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="I-D.ietf-iotops-mud-rats">[I-D.ietf-iotops-mud-rats]</dt>
@@ -4104,7 +4311,7 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <dd class="break"></dd>
 <dt id="I-D.ietf-rats-endorsements">[I-D.ietf-rats-endorsements]</dt>
         <dd>
-<span class="refAuthor">Thaler, D.</span>, <span class="refAuthor">Birkholz, H.</span>, and <span class="refAuthor">T. Fossati</span>, <span class="refTitle">"RATS Endorsements"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-endorsements-09</span>, <time datetime="2026-03-02" class="refDate">2 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-09">https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-09</a>&gt;</span>. </dd>
+<span class="refAuthor">Thaler, D.</span>, <span class="refAuthor">Birkholz, H.</span>, and <span class="refAuthor">T. Fossati</span>, <span class="refTitle">"Remote Attestation Procedures (RATS) Endorsements"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-endorsements-13</span>, <time datetime="2026-10-14" class="refDate">14 October 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-13">https://datatracker.ietf.org/doc/html/draft-ietf-rats-endorsements-13</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6024">[RFC6024]</dt>
         <dd>
@@ -4123,8 +4330,12 @@ Note that the <code>cose-type</code> parameter is explicitly not supported, as i
 <span class="refAuthor">Murray, R.</span> and <span class="refAuthor">B. Niven-Jenkins</span>, <span class="refTitle">"Content Delivery Network Interconnection (CDNI) Control Interface / Triggers"</span>, <span class="seriesInfo">RFC 8007</span>, <span class="seriesInfo">DOI 10.17487/RFC8007</span>, <time datetime="2016-12" class="refDate">December 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8007">https://www.rfc-editor.org/rfc/rfc8007</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9711">[RFC9711]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Lundblade, L.</span>, <span class="refAuthor">Mandyam, G.</span>, <span class="refAuthor">O'Donoghue, J.</span>, and <span class="refAuthor">C. Wallace</span>, <span class="refTitle">"The Entity Attestation Token (EAT)"</span>, <span class="seriesInfo">RFC 9711</span>, <span class="seriesInfo">DOI 10.17487/RFC9711</span>, <time datetime="2025-04" class="refDate">April 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9711">https://www.rfc-editor.org/rfc/rfc9711</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC10008">[RFC10008]</dt>
+      <dd>
+<span class="refAuthor">Reschke, J.</span>, <span class="refAuthor">Snell, J.M.</span>, and <span class="refAuthor">M. Bishop</span>, <span class="refTitle">"The HTTP QUERY Method"</span>, <span class="seriesInfo">RFC 10008</span>, <span class="seriesInfo">DOI 10.17487/RFC10008</span>, <time datetime="2026-06" class="refDate">June 2026</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc10008">https://www.rfc-editor.org/rfc/rfc10008</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -5594,11 +5805,11 @@ This non-normative appendix sets out some illustrative examples of how services 
 This list is neither exhaustive nor prescriptive.
 Deployments are free to use whatever logistics are sensible.
 Note that the goal here is solely one of bootstrapping.
-Once the base URL of a suitable service is known, CoSERV provides in-protocol discovery mechanisms, such as the one described in <a href="#secrrapidisco" class="auto internal xref">Section 6.1.2</a>, which cater for the discovery of more specific API endpoints and capabilities.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+Once the base URI of a suitable service is known, CoSERV provides in-protocol discovery mechanisms, such as the one described in <a href="#secrrapidisco" class="auto internal xref">Section 6.1.2</a>, which cater for the discovery of more specific API endpoints and capabilities.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-C-2.1">
           <p id="appendix-C-2.1.1">Some CoSERV-enabled services might exist in locations that are documented publicly by supply chain actors.
-A hardware vendor, for example, might document the base URL for the service that endorses their products.
+A hardware vendor, for example, might document the base URI for the service that endorses their products.
 In such a case, the location would be prior knowledge within the Verifier or aggregator that needs to consume the service.
 It could be hard-coded, or made available via a configuration file.<a href="#appendix-C-2.1.1" class="pilcrow">¶</a></p>
 </li>
@@ -5695,7 +5906,9 @@ As part of the verification process, the Verifier would process this claim and u
 </div>
 <p id="appendix-D-3">Henk Birkholz and Jag Raman are puppeteering in the shadows.<a href="#appendix-D-3" class="pilcrow">¶</a></p>
 <p id="appendix-D-4">The authors would like to thank
-Carl Wallace
+Carl Wallace,
+Lucas Pardue,
+Mark Nottingham
 for their reviews and suggestions.
 [^rfced]: RFC Editor:<a href="#appendix-D-4" class="pilcrow">¶</a></p>
 </section>
