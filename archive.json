@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-29T03:10:47.966524+00:00",
+  "timestamp": "2026-11-01T02:53:56.416685+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1744,7 +1744,7 @@
       "id": "I_kwDOOAZd1M8AAAABNEv6wQ",
       "title": "Issues arising from httpdir review",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/121",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "paulhowardarm",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -1753,9 +1753,17 @@
       "labels": [],
       "body": "From Lucas Pardue:\n\n> Document: draft-ietf-rats-coserv\nTitle: Concise Selector for Endorsements and Reference Values\nReviewer: Lucas Pardue\nReview result: Not Ready\n\nThe document defines a query/response format named CoSERV that operates with the\nRATS architecture. In addition, a concrete \"API binding\" describes how HTTP can\nbe used to transfer the CoSERV query and response. This binding pays special\nattention to request format and its role in HTTP caching, which appears to\naddress operation performance goals. A CoSERV query is serialized into a URI\nusing a well defined mechanism and sent in an HTTP request; a CoSERV response is\nserialized in a new media type that is sent as response content. The document\nalso defines a discovery mechanism based on /.well-known.\n\nI apologise for posting the review later than the deadline (2026-07-31). I\nwanted to ensure I could give a thorough review. Having now completed that, I\nfeel obliged to record a \"Not Ready\" result. There are some fundamental issues\nrelated to caching that raise questions that likely need to be answered by\nthe WG/authors. I do not think these issues are _that_ complicated but resolving\nthem now will help avoid future interop issues (especially within the HTTP\necosystem that the design seems to want to leverage).\n\nI have no background knowledge of RATS and so have focused the httpdir review on\nHTTP topics, and only touched the RATS / CoSERV aspects needed to facilitate\nunderstanding the HTTP parts. Therefore, I may have misunderstood something at\nthat layer. I am also not an HTTP caching expert, so have reviewed those aspects\nonly to the best of my capability. To complete this review, I performed a manual\nreview, combined with an automated review based on tooling in the repo\nhttps://github.com/mnot/ietf-skill, and Claude to assist with background,\nresearch, and cross referencing. I have checked and validated the review outcome\nto the best of my ability. All text in this review report has been manually\ngenerated based on the above and may still have mistakes.\n\n# Major issues\n\n1. Privacy concerns of the caching design wrt HTTP caching\n\nIIUC this topic has been discussed in the WG. However, I think the current text,\nin combination with fundamental design choices wrt HTTP caching, leaves a\npotential adjacent privacy issue.\n\nA CoSERV query is serialized into a URI using a well defined, **deterministic**\nmechanism and sent in an HTTP request e.g. GET\n/coserv/{base64url-encoded-string}. The protocol expects this URI to be used as\na cache key. The data that forms the input to the CoSERV query can contain\nsensitive information for a small anonymity set. In my simplified comprehension\nof RATS terms, an `instance` can identify a single unique device or component,\nwhile a `group` is a group whose anonymity is only as good as its size.\n\nWhile the document addresses some of this topic in RATS terms, the use of\ngeneric HTTP caching, IIUC, introduces some potential new threats. The HTTP\ncache itself can become an oracle; the timing of serving responses can indicate\nif someone has already queried the information. An attack could come in the form\nof scraping a list of predictable identifiers (correlating to a deterministic\nURI) to gain intel on instances or groups based on the performance of HTTP\nresults. A generic HTTP cache makes itself available to any generic client to\nperform such an attack.\n\nThe AI tooling suggests that this has been touched on in issue 81 and 67.\nHowever, the text following text in the document is likely insufficient to\naddress the oracle problem:\n\n> Although reusing cached responses is generally desirable, clients that need to\n> bypass the caching infrastructure can do so by specifying Cache-Control:\n> no-cache in their requests.\n\nThis cache control directive affects one aspect, skipping any cached value and\ngoing to origin. However, that doesn't prevent the issue. The result of the\nno-cache request **can be stored in the cache**. Its unclear to me if the\nauthors meant to specify the usage of the **no-store** directive. Importantly,\nother clients can do other things; if they can probe a shared cache with private\ninfo, a side channel exists.\n\nA possible improvement is to lean on HTTP's toolkit more. The \"private\"\ndirective might be appropriate for very-fine-grained information in the query\nsuch as instance or group. This would stop caching for those queries while\nallowing broader queries to benefit.\n\nIf the WG/authors agree this oracle is an issue but cannot find consensus on a\nstandard mitigation, then security consideration text that highlights the\nthreats and HTTP toolkit might be sufficient. Sometimes its really up to\ndeployments to decide on the privacy/performance tradeoff. The important thing\nis the ensure no naive use of shared caching; an \"off-the-shelf\" caching HTTP\nserver might just do that.\n\n2. Safe methods and HEAD\n\nThe document states \"only safe HTTP methods are used\" and goes on to specify how\nGET is used to make queries. But this is not an s/methods/method editorial-level\nmatter.\n\nRFC 9110 states \"All general-purpose servers MUST support the methods GET and\nHEAD. All other methods are OPTIONAL.\".\n\nThis document is silent on HEAD, which is problematic. HEAD is functionally\nequivalent to GET (\"SHOULD send the same header fields in response to a HEAD\nrequest as it would have sent if the request method had been GET), implying that\na CoSERV server would run the same processing as the GET request. Is that\ndesirable?\n\nThere's also some deeper consideration to make wrt caching. Various freshness\nvalidators _could_ be used with GET. However, RFC 9111 Section 4.3.5 states how\nHEAD requests interact with caching in the absence of conditional GET.\n\nThis issue is somewhat elevated by the lack of explicit guidance on validators,\nsee (3).\n\nFor the purposes of CoSERV, it may be appropriate to disallow HEAD. This would\nprevent clients from having a cheap way to trigger work on the server (i.e. a\nlow-bandwidth CPU amplification attack). Safe methods can be trivially replayed\nand things like 0-RTT early data could make a server more liable to attack.\n\n4. Query size bounds, URI privacy and QUERY method\n\nThis is probably going to be one of the more controversial comments.\n\nThe CoSERV HTTP binding requires converting a query into a base64url string\ncarried in the URI. I don't know how big the underlying query data tends to be\nin practice but the HTTP ecosystem does tend to limit the size of URI they\nsupport. IIUC query size is unbounded but there may be real practical limits to\nsending them via HTTP.\n\nThe recently published QUERY method (RFC 10008) summarizes the potential\nproblems quite well:\n\n> when the data conveyed is too voluminous to be encoded in the request's URI,\nthis pattern becomes problematic:\n\n>  *  size limits often are not known ahead of time because a request can pass\nthrough many uncoordinated systems (but note that Section 4.1 of [HTTP]\nrecommends senders and recipients to support at least 8000 octets),\n\n>  *  expressing certain kinds of data in the target URI is inefficient because\nof the overhead of encoding that data into a valid URI,\n\n>  *  request URIs are more likely to be logged than request content and may\nalso turn up in bookmarks,\n\nThe simplest thing to do is consider adding some text to highlight the potential\nfailure mode. A 414 (URI too Long) mention might be useful. You may also want to\nhighlight the privacy issues with logging URIs that contain any potential PII.\n\nPossibly unpalatable: consider adding/substituting support for QUERY. This would\nallow you to have a safe method to send the query in a more efficient binary\nrepresentation. A valid reason not to adopt QUERY wholesale at this time is that\nsupport is still rolling out. A future binding might want to consider it though,\nespecially if you need larger queries and bump into limits.\n\n3. Validators and ETags\n\nThe document is quite quiet on conditional GETs. Perhaps thats ok since it\nthings might \"just work\". However, the document does mention use of ETags in an\nexample. And as presented, the example is both invalid and raises some\nquestions.\n\nThe AI was very concerned about the **determinism of the response** (in contrast\nto the determinism of the request). While RFC 9110 describes its the origin\nservers prerogative to calculate ETags however they like, this doc might have to\ndo more. The AI raised the requirement in section 3.5 \"Result sets always\ninclude a timestamp indicating the expiry time of the entire result set.\" and\nhighlighted that results are signed via COSE (section 4.6) which may not be\nbyte-for-byte identical unless the server uses RFC 6979. I am not qualified to\ncomment authoritatively on these aspects of the payload. However, RFC 9110\nsection 8.8.1 does have text on this type of thing. The document might want to\nconsider spec'ing the use of weak validators if that's a better representation\nof the information. SCIM appears to have had to do so. Strong validators based\non a hash of the content might cause all conditional requests to fail, which\nwould defeat the caching purposes of this protocol.\n\nMore specifically on ETags, the examples that use them are invalid - the origin\nshould be the ones generating them.\n\n5. Freshness\n\nThis one is borderline minor. The document attempts to align CoSERV result\n\"embedded freshness\" with HTTP freshness and provides a recommendation:\n\n> the origin server MUST NOT set HTTP cache directives (e.g. Cache-Control:\n> max-age, Expires) such that the freshness lifetime of the HTTP response\n> exceeds the result set expiry timestamp contained within the CoSERV results.\n\nThat's good, but an origin might not set any Cache-Control directive in\nresponses. That could trigger an HTTP cache to use its own heuristics for\ndeciding on the cache freshness; see RFC 9111 section 4.2.2:\n\n> Since origin servers do not always provide explicit expiration times, a cache\n> MAY assign a heuristic expiration time when an explicit time is not specified,\n> employing algorithms that use other field values (such as the Last-Modified\n> time) to estimate a plausible expiration time. This specification does not\n> provide specific algorithms, but it does impose worst-case constraints on\n> their results.\n\nThe document might want to highlight the possibility for such an origin to\nbehave this way, even if there's not much that can be done to make genric HTTP\ncaches deal with it.\n\n# Minor issues\n\n6. Discovery content negotiation and response caching\n\nIt seems #94 was not properly resolved. There was a comment \"I think we need to\nsay that servers MUST support both formats\" but no text was actually added to do\nit.\n\nLeading on from that, the discovery document has two formats, JSON or CBOR. By\ndefault, the responses for these objects is going to be cachable too. However,\nthe spec doesn't mention it. For scalability, I suspect you might want to\nembrace it. If so, consider adding text about the `Vary: Accept` field in the\norigin's response to ensure that a HTTP cache doesn't accidentally serve\na different type than a client might expect.\n\n7. Accept looseness\n\nThe document levies some requirements on the Accept header:\n\n> If the client presents any media type other than these two options in its HTTP\n> Accept header, the implementation SHOULD respond with an HTTP 406 (Not\n> Acceptable) status code\n\nRFC 9110 section 12.4.1 has some text too:\n\n>  For each of the content negotiation fields, a request that does not contain\n>  the field implies that the sender has no preference on that dimension of\n>  negotiation.\n\n> If a content negotiation header field is present in a request and none of the\n> available representations for the response can be considered acceptable\n> according to it, the origin server can either honor the header field by\n> sending a 406 (Not Acceptable) response or disregard the header field by\n> treating the response as if it is not subject to content negotiation for that\n> request header field. This does not imply, however, that the client will be\n> able to use the representation.\n\nI'm not sure if this spec is trying to be stricter than RFC 9110 or not. This\nprobably needs tightening up with a MUST, or just defer to RFC 9110 if it\ndoesn't matter much.\n\n8. Error Content-Type broadness\n\nThe doc states:\n\n> For error responses (4xx or 5xx status codes), the Content-Type header field\n> MUST be application/concise-problem-details+cbor... containing [title,\n> detail].\n\nThis is a bit broad because HTTP layered. the CoSERV app is running atop\nlower-layer HTTP things, which could generate their own errors. It's more\ncorrect to state something along the liens that a CoSERVER MUST send\napplication/concise-problem-details+cbor... content when returning error\nresponses (including the useful details like content-type and fields etc). That\naccomodates for a client seeing any kind of error status with any content (or\nnone at all), that might be generated in an Internet deployment.\n\n9. Rate limiting\n\nThere is an example about ratelimiting. I'm not sure it fits this document well.\nIts possible that a layer beneath CoSERV could be implementing the rate\nlimiting, yet this example seems to imply its the CoSERV server?\n\nThe use of 429 overlaps a bit with issue 7. What should a client expect to do\nwith a rate limiting response, especially if it isn't the\napplication/concise-problem-details+cbor you're mandating at the CoSERV level.\n\nThe document might want to nix the example and instead describe the possibility\nof rate limiting in the binding or security consideration sections. HTTP\nratelimiting is also evolving, using one very specific example might lead people\nup the garden path.\n\nIf you want to keep this, the \"MAY\" is an issue and should be rephrased.\n\n10. Truncated examples\n\nThe request examples have truncated URIs such as \"/coserv/ogB4I3R...\". Given how\nimportant these are to the whole caching story it would be really useful to have\na fully worked value in the document somewhere. Even if the examples use a\nshort-hand for presentation.\n\n11. Redirects\n\nThere is no definition of how redirects are to be handled. This seems\nproblematic given that there seems to be some expectation that the URI is\nclosely related the response content.\n\n12. Inconsistent discovery responses\n\nSection 6.1.2.3 has examples. The requests are to the same /.well-known endpoint\nand vary only by the Accept header. However, the AI suggests the\n\"result-verification-key\" doesn't match. This contrasts with other normative\ntext that states the responses should be equivalent apart from the\nserialization.\n\n13. Caching examples and time\n\nThe AI states the examples in 6.1.4.2 misuse HTTP fields. Its worth double\nchecking this once the ETag stuff is decided upon. RFC 9111 states\n\n> When a stored response is used to satisfy a request without validation, a\n> cache MUST generate an Age header field (Section 5.1), replacing any present\n> in the response with a value equal to the stored response's current_age; see\n> Section 4.2.3.\n\nThe example decrements values in Cache-Control and doesn't use Age. This is not\ncorrect.\n\n# Nits\n\n14. The [HTTP] and [HTTP-CACHING] references seem to have been inverted :-)\n\n15. Use URI consistently. Aside from base64url encoding, there seems to be a few\n    \"URLs\" that have crept in.\n",
       "createdAt": "2026-08-17T13:22:46Z",
-      "updatedAt": "2026-09-13T09:51:18Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-10-30T15:36:47Z",
+      "closedAt": "2026-10-30T15:36:47Z",
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "All addressed in #129 ",
+          "createdAt": "2026-10-30T15:36:47Z",
+          "updatedAt": "2026-10-30T15:36:47Z"
+        }
+      ]
     },
     {
       "number": 122,
@@ -1822,22 +1830,59 @@
       "id": "I_kwDOOAZd1M8AAAABUKoVwQ",
       "title": "Improve error reporting in the HTTP API",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/128",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DhanusML",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "paulhowardarm"
+      ],
       "labels": [],
       "body": "The draft states:\n\n>Endpoint implementations MUST respond with an HTTP status code and content\n>according to one of the subheadings...\n\nThis might be too restrictive because the responses that are allowed\nare limited to -- success, bad request, unknown profile, too many requests\n([section 6.1.3.1]). This means the response to a well-formed CoSERV query with\nprofile that is recognized by the server should always result in a successful\ntransaction (ignoring rate limiting). But here are few scenarios where that may\nnot be ideal:\n\n1. Results not found: If no results matching the query environment is found,\n a CoSERV containing empty result set is returned with a 200 status code. The\n more appropriate respose would be a 404 not found.\n\n2. Query mode not supported: It is possible that an endpoint only supports\n environment query but the request was a rim query; or source artifacts were\n queried to an endpoint that does not support it. The suitable response here\n would be 406 Not Acceptable.\n\n3. Internal errors: The endpoint cannot respond with 5xx code in case of an\n internal error because of the restriction.\n\n[section 6.1.3.1]: https://www.ietf.org/archive/id/draft-ietf-rats-coserv-07.html#section-6.1.3.1",
       "createdAt": "2026-09-30T14:44:35Z",
-      "updatedAt": "2026-10-27T17:31:10Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-30T18:41:24Z",
+      "closedAt": "2026-10-30T18:41:23Z",
       "comments": [
         {
           "author": "thomas-fossati",
           "authorAssociation": "COLLABORATOR",
-          "body": "in #129 we have slightly changed the line:\n\n> _\"Endpoint implementations MUST respond with an HTTP status code and content according to one of the subheadings below, except where the response is generated by infrastructure layers other than the origin server.\"_\n\nHowever, that is not the meat of your comment.  See below.\n\n> Results not found: If no results matching the query environment is found, a CoSERV containing empty result set is returned with a 200 status code. The more appropriate respose would be a 404 not found.\n\nhmm, I don't think so.  The coserv resource exists and is returned to the client.  In HTTP terms this is a straight 200.\n\n> Query mode not supported: It is possible that an endpoint only supports environment query but the request was a rim query; or source artifacts were queried to an endpoint that does not support it. The suitable response here would be 406 Not Acceptable.\n\nStrictly speaking, this is not a client error, it's the server that doesn't implement the feature.  To me, this is a 501 Not Implemented.\n\n> Internal errors: The endpoint cannot respond with 5xx code in case of an internal error because of the restriction.\n\nCorrect.",
+          "body": "in #129 we have slightly changed the line:\n\n> _\"Endpoint implementations MUST respond with an HTTP status code and content according to one of the subheadings below, except where the response is generated by infrastructure layers other than the origin server.\"_\n\nHowever, that is not the meat of your comment.  See below.\n\n> Results not found: If no results matching the query environment is found, a CoSERV containing empty result set is returned with a 200 status code. The more appropriate respose would be a 404 not found.\n\nhmm, I don't think so.  The coserv resource exists and is returned to the client.  In HTTP terms this is a straight 200.\n\n> Query mode not supported: It is possible that an endpoint only supports environment query but the request was a rim query; or source artifacts were queried to an endpoint that does not support it. The suitable response here would be 406 Not Acceptable.\n\nStrictly speaking, this is not a client error, it's the server that doesn't implement the feature.  To me, this is a 501 Not Implemented.\n\n> Internal errors: The endpoint cannot respond with 5xx code in case of an internal error because of the restriction.\n\nYes, this should be noted.",
           "createdAt": "2026-10-27T17:31:09Z",
-          "updatedAt": "2026-10-27T17:31:09Z"
+          "updatedAt": "2026-10-29T08:28:52Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "For the case of unsupported query styles, this _is_ a client-side error, because the discovery document already contains the information on what the server supports. The client should not form a RIM-based query when only environment-based queries are supported, or vice versa. It's arguable what the correct HTTP response should be in this case. I think `406` is not correct, because the content type is acceptable in this case - it's not a profile negotiation issue. The best return code appears to be the generic `400` (bad request). There is a precedent for this in [\u00a72.3.3 of draft-ietf-scitt-scrapi-11](https://www.ietf.org/archive/id/draft-ietf-scitt-scrapi-11.html#name-status-400-invalid-client-r), which demonstrates the `400` response in multiple contexts, including situations where the API request is demanding unsupported capabilities on the server.\n\n`400` is rather generic, but the CBOR Problem Details would be provided to disambiguate the specific cases.",
+          "createdAt": "2026-10-29T17:10:42Z",
+          "updatedAt": "2026-10-29T17:10:42Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We also found that the SCRAPI document included some very useful boilerplate text on general error handling, which I'm copying directly into CoSERV as part of #129 .",
+          "createdAt": "2026-10-29T17:12:37Z",
+          "updatedAt": "2026-10-29T17:12:37Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "About the suggestion to return `404` when there are no results, this thought did occur to me as well. There is an argument for doing so when one considers that the encoded query forms part of the URL, and therefore effectively represents the collection of artifacts. If there are no artifacts, then the query does not resolve to any existing resource. A `404` instinctively feels right in this case. But on balance, I think `200` with an empty result set is the better choice, and this is reinforced by the introduction of the `QUERY` method as an alternative to `GET`. Returning `404` would surely be wrong in that case, because the query is no longer part of the path. And I think it's beneficial for the `GET` and `QUERY` cases to have equivalent contracts and semantics.",
+          "createdAt": "2026-10-30T15:34:32Z",
+          "updatedAt": "2026-10-30T15:34:32Z"
+        },
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@DhanusML if you are satisfied with the analysis above, and with the changes that were bundled as part of #129, I will go ahead and close this issue. Let me know if you think anything has not been addressed.",
+          "createdAt": "2026-10-30T15:36:16Z",
+          "updatedAt": "2026-10-30T15:36:16Z"
+        },
+        {
+          "author": "DhanusML",
+          "authorAssociation": "NONE",
+          "body": "Sorry for not responding earlier. Just went through the discussion here and the pull request, and I am satisfied with the responses. Thank you both.",
+          "createdAt": "2026-10-30T18:41:23Z",
+          "updatedAt": "2026-10-30T18:41:23Z"
         }
       ]
     }
@@ -6618,25 +6663,35 @@
       "id": "PR_kwDOOAZd1M8AAAABLByg5Q",
       "title": "Address issues from the httpdir review",
       "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/129",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "paulhowardarm",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This PR addresses the multiple issues that were raised in the [HTTP Directorate review](https://datatracker.ietf.org/doc/review-ietf-rats-coserv-07-httpdir-early-pardue-2026-08-14/) of CoSERV at version 07.\n\nIssues have been addressed according to the outline that was agreed among the CoSERV editors and is logged [here](https://mailarchive.ietf.org/arch/msg/rats/fEiKoYYGabI3va9ZleNAREmyyDE/).\n\nAs per the on-list discussion, there are no changes related to the use of the HTTP `HEAD` method. The draft continues to avoid mentioning the use of `HEAD` in relation to CoSERV.\n\nSupport for the `QUERY` method has been added, along with a way for the origin server to explicitly signal its support via a separate endpoint in the discovery document.\n\nSigned-off-by: Paul Howard <paul.howard@arm.com>",
       "createdAt": "2026-10-27T13:51:32Z",
-      "updatedAt": "2026-10-27T14:10:39Z",
+      "updatedAt": "2026-10-30T15:27:12Z",
       "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "baseRefName": "main",
       "baseRefOid": "9f840fa3f2b799515fc33997824791908b9934f1",
       "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
       "headRefName": "httpdir-review",
-      "headRefOid": "2a91da771b1cccb3c45ea08fed3d3c3b7530cf26",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "headRefOid": "4402bdf92a861ab071090d0ea99d23a3ae2153cf",
+      "closedAt": "2026-10-30T15:27:12Z",
+      "mergedAt": "2026-10-30T15:27:12Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "9e2fcd65ddd5218db42aed33f46d2f78c715db9c"
+      },
+      "comments": [
+        {
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Note to all CoSERV co-authors: if there are any objections to merging this, please log them before 15:00 UTC/GMT tomorrow (Fri 30th Oct) so that I can address comments over the weekend. I'd like to merge this for publication before the IETF-127 cut-off. Many thanks!",
+          "createdAt": "2026-10-29T18:12:55Z",
+          "updatedAt": "2026-10-29T18:12:55Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOOAZd1M8AAAABUdrGXQ",
@@ -6650,6 +6705,26 @@
           "createdAt": "2026-10-27T14:00:05Z",
           "updatedAt": "2026-10-27T14:00:05Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABU6Q4lw",
+          "commit": {
+            "abbreviatedOid": "571b2da"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-10-29T13:12:51Z",
+          "updatedAt": "2026-10-29T13:13:18Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "s/RFC9290/-concise-pd/",
+              "createdAt": "2026-10-29T13:12:52Z",
+              "updatedAt": "2026-10-29T13:13:18Z"
+            }
+          ]
         }
       ]
     }
