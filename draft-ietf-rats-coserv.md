@@ -1705,6 +1705,8 @@ Change controller: IETF
 
 Specification document: {{&SELF}}
 
+Status: "permanent"
+
 Related information: N/A
 
 --- back
