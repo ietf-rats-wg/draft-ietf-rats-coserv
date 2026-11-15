@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-01T02:53:56.416685+00:00",
+  "timestamp": "2026-11-15T03:30:21.302264+00:00",
   "repo": "ietf-rats-wg/draft-ietf-rats-coserv",
   "labels": [
     {
@@ -1885,6 +1885,22 @@
           "updatedAt": "2026-10-30T18:41:23Z"
         }
       ]
+    },
+    {
+      "number": 130,
+      "id": "I_kwDOOAZd1M8AAAABe7pVSg",
+      "title": "Integrate the CoSERV query model with CoTS",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/issues/130",
+      "state": "OPEN",
+      "author": "paulhowardarm",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Summary\nCoSERV has a normative dependency on [Concise Trust Anchor Stores (CoTS)](https://datatracker.ietf.org/doc/draft-ietf-rats-concise-ta-stores/). This includes a dependency at the CDDL data model level. But the integration is incomplete. We need a design for how CoSERV queries can select and obtain CoTS-based trust anchors.\n\n### Detail\nTrust anchors are an explicit artifact type in CoSERV. A query can specify that it expects trust anchors, and a result set can convey those trust anchors. The data model allows for trust anchors to be either an attestation key or a CoTS object:\n\n```\ntrust-anchors = (\n  &(akq: 3) => [ * ak-quad ]\n  &(tas: 4) => [ * cots-stmt ]\n)\n```\n\nThe attestation key case is already fully satisfied by the CoRIM dependency - CoSERV just wraps up the comid AK Triple type from CoRIM:\n\n```\nak-quad = {\n  &(authorities: 1) => [ + comid.$crypto-key-type-choice ]\n  &(ak-triple: 2) => comid.attest-key-triple-record\n}\n```\n\nThe CoTS case is not fully satisfied. The integration is a TODO in the CDDL:\n\n```\ncots-stmt = {\n  &(authorities: 1) => [ + comid.$crypto-key-type-choice ]\n  &(cots: 2) => cots\n}\n\n;\n; import CoTS\n;\ncots = \"TODO COTS\"\n```\n\nSimply importing CoTS to complete the CDDL dependency graph is not enough (although it is necessary). We also need an end-to-end design for how CoSERV queries can be used to retrieve CoTS-based trust anchors.\n\nEnvironment-based queries are a particular problem. Firstly, the client has no way to specify that it is looking for CoTS trust anchors as opposed to CoMID AKs. There is only a \"trust anchor\" artifact type (code point 1) in query, which is ambiguous:\n\n```\nartifact-type = &(endorsed-values: 0)\n                / &(trust-anchors: 1)\n                / &(reference-values: 2)\n                / &(domains: 3)\n```\n\nCombined with this, there is an unclear mapping between CoSERV's environment model and CoTS's notion of an environment. CoSERV only permits instances, groups and classes. CoTS also permits environments based on SWID tags or arbitrary store names.\n\nFor environment-based queries to work for CoTS, we probably need to introduce a richer form of selector - not necessarily a whole new query style, but perhaps an optional extra field in the environment query. All TBD - needs discussion among the draft authors or in the WG.\n\nWhen considering a suitable design, we should also think more generally about how a verifier would match CoTS stores in order to verify evidence. For instance, if the evidence is bundled with a leaf X509 cert for the public AK, and the verifier has ingested multiple CoTS objects from different vendors, how would it choose the correct one? Whatever this algorithm looks like, it would provide hints as to how a CoSERV query would need to be structured in order to find it.\n\n### A Step Forward: RIM Identifier Queries\nCoSERV now supports a separate query style based on RIM identifiers instead of environments. This query style offers a straightforward CoTS integration that might work in some/many cases. If the client knows the precise identifier of the CoTS store that it needs to retrieve, or knows the precise identifier of the CoRIM that contains it, then it can easily write a RIM-ID-based query.\n\nThe only data model change that would be needed in this case is a small extension to the CDDL for RIM-identifier queries. This means extending this:\n\n```\nrim-selector-id =\n    [ &(comid: 0), ... ]\n  / [ &(coswid: 1), ... ]\n  / [ &(corim: 2), ... ]\n```\n\nwith this:\n\n```\n  / [ &(cots: 3), cots-store-id ]\n```\n\nThere would be no need to change the result set model, because the CoTS would simply be contained in a CoRIM and conveyed verbatim, just like in any other RIM-based query. This would be a functional step forward, but would still leave the TODO in terms of representing CoTS artifacts for environment-based queries.\n\n\n\n\n",
+      "createdAt": "2026-11-13T11:59:21Z",
+      "updatedAt": "2026-11-13T11:59:21Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -6725,6 +6741,48 @@
               "updatedAt": "2026-10-29T13:13:18Z"
             }
           ]
+        }
+      ]
+    },
+    {
+      "number": 131,
+      "id": "PR_kwDOOAZd1M8AAAABPEWF9A",
+      "title": "Add status field to the well-known URI registration",
+      "url": "https://github.com/ietf-rats-wg/draft-ietf-rats-coserv/pull/131",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Address IANA pre-127 review",
+      "createdAt": "2026-11-14T02:24:05Z",
+      "updatedAt": "2026-11-14T08:00:55Z",
+      "baseRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "baseRefName": "main",
+      "baseRefOid": "9e2fcd65ddd5218db42aed33f46d2f78c715db9c",
+      "headRepository": "ietf-rats-wg/draft-ietf-rats-coserv",
+      "headRefName": "iana-review-wku",
+      "headRefOid": "1b78bc8ddaac68b9e297b23530dfbd497175725c",
+      "closedAt": "2026-11-14T08:00:55Z",
+      "mergedAt": "2026-11-14T08:00:55Z",
+      "mergedBy": "paulhowardarm",
+      "mergeCommit": {
+        "oid": "889be39106bd6ca3abb641d7db5a579d10b1f1ab"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOAZd1M8AAAABX9elCg",
+          "commit": {
+            "abbreviatedOid": "1b78bc8"
+          },
+          "author": "paulhowardarm",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks good, thanks.",
+          "createdAt": "2026-11-14T07:59:36Z",
+          "updatedAt": "2026-11-14T07:59:36Z",
+          "comments": []
         }
       ]
     }
